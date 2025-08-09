@@ -8,9 +8,12 @@ header .title{font-weight:700}
 nav a{margin-right:12px;text-decoration:none}
 nav a:hover{text-decoration:underline}
 main{max-width:var(--max);padding:24px;margin:0 auto}
-footer{padding:24px 16px;border-top:1px solid #eee;color:#666;font-size:.9rem}
+footer{padding:24px 16px;border-top:1px solid #eee;color:#666;font-size:.95rem}
 .container{max-width:var(--max);margin:0 auto}
 .small{font-size:.95rem}
 .lang-switch{float:right}
 img{max-width:100%;height:auto}
 pre,code{white-space:pre-wrap;word-break:break-word}
+.brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+.brand img{height:42px;width:auto;vertical-align:middle}
+@media (max-width:520px){ .brand .title{display:none} }
