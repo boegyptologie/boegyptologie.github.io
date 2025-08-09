@@ -28,3 +28,8 @@ html, body, button, input, select, textarea {
   letter-spacing: 0.01em; /* un poil d'espacement pour la lisibilité */
   line-height: 1.55;      /* un peu plus d'interligne */
 }
+/* FORCER Courier partout */
+:root { --boe-font: "Courier New", Courier, ui-monospace, monospace; }
+html, body, body * {
+  font-family: var(--boe-font) !important;
+}
