@@ -1,21 +1,12 @@
 <!doctype html>
-<html lang="en">
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BOE</title>
-<link rel="stylesheet" href="/assets/style.css">
-<body>
-<main class="container">
-  <h1>BOE — Bibliothèque Ouverte d’Égyptologie</h1>
-  <p>Choose your language / Choisissez votre langue:</p>
-  <p><a href="/fr/">Français</a> · <a href="/en/">English</a></p>
-</main>
+<noscript><meta http-equiv="refresh" content="0; url=/fr/a-propos.html"></noscript>
 <script>
-  (function(){
-    var lang = (navigator.language || '').toLowerCase();
-    if (lang.startsWith('fr')) window.location.replace('/fr/');
-    else if (lang) window.location.replace('/en/');
+  (function () {
+    var frAbout = "/fr/a-propos.html";  // ← mets ici l’URL exacte de ta page À propos (FR)
+    var enAbout = "/en/about.html";     // ← et ici l’URL de la page About (EN)
+    var lang = (navigator.language || "").toLowerCase();
+    location.replace(lang.startsWith("fr") ? frAbout : enAbout);
   })();
 </script>
-</body>
-</html>
