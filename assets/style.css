@@ -17,3 +17,7 @@ pre,code{white-space:pre-wrap;word-break:break-word}
 .brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
 .brand img{height:42px;width:auto;vertical-align:middle}
 @media (max-width:520px){ .brand .title{display:none} }
+/* plus petit + pas de retour à la ligne dans chaque item */
+nav { font-size: .95rem; }
+nav a { margin-right: 10px; white-space: nowrap; }
+
