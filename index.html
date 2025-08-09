@@ -4,8 +4,8 @@
 <noscript><meta http-equiv="refresh" content="0; url=/fr/about.html"></noscript>
 <script>
   (function () {
-    var frAbout = "/fr/about.html";  // confirmé
-    var enAbout = "/en/about.html";  // adapte si l'URL EN est différente
+    var frAbout = "/fr/about.html";
+    var enAbout = "/en/about-2.html"; // ← ta page EN
     var lang = (navigator.language || "").toLowerCase();
     location.replace(lang.startsWith("fr") ? frAbout : enAbout);
   })();
