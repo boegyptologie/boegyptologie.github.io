@@ -1,11 +1,13 @@
 /* =========================================
-   BOE — style.css (Times New Roman)
+   BOE — style.css (Times partout)
    ========================================= */
 
 /* 1) Variables */
 :root {
-  --max: 900px;                          /* largeur max du contenu */
+  --max: 900px;                               /* largeur max du contenu */
   --font-body: "Times New Roman", Times, serif;
+  --size-body: 1rem;                          /* taille du corps & du menu */
+  --size-title: 1.15rem;                      /* titre à côté du logo (un peu plus grand) */
 }
 
 /* 2) Reset / base */
@@ -13,15 +15,16 @@
 html, body { margin: 0; padding: 0; }
 img { max-width: 100%; height: auto; }
 
-/* 3) Typo globale */
+/* 3) Typo globale (Times partout) */
 html, body, body * {
   font-family: var(--font-body) !important;
   line-height: 1.6;
   letter-spacing: 0;
   color: #222;
+  font-size: var(--size-body);
 }
 
-/* 4) Layout générique */
+/* 4) Layout */
 main { max-width: var(--max); padding: 24px; margin: 0 auto; }
 .container { max-width: var(--max); margin: 0 auto; }
 .small { font-size: .95rem; }
@@ -33,7 +36,7 @@ footer { padding: 24px 16px; border-top: 1px solid #eee; color: #666; font-size:
 /* 6) Marque (logo + titre) */
 .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
 .brand img { height: 42px; width: auto; vertical-align: middle; }
-header .title { font-weight: 700; }
+header .title { font-weight: 700; font-size: var(--size-title); }
 
 /* Masquer le long titre sur petits écrans */
 @media (max-width: 520px) { .brand .title { display: none; } }
@@ -41,9 +44,9 @@ header .title { font-weight: 700; }
 /* 7) Sélecteur de langue */
 .lang-switch { float: right; }
 
-/* 8) Navigation */
-nav { font-size: .9rem; }                          /* ajuste si besoin (.85rem, etc.) */
-nav a { margin-right: 8px; text-decoration: none; white-space: nowrap; }
+/* 8) Navigation (même taille que le corps) */
+nav { font-size: inherit; }                  /* hérite de --size-body */
+nav a { margin-right: 10px; text-decoration: none; white-space: nowrap; }
 nav a:hover { text-decoration: underline; }
 
 /* 9) Contenu : justification & césure */
@@ -59,17 +62,4 @@ main blockquote {
 
 /* éviter les débordements de mots très longs */
 main p, main li { overflow-wrap: break-word; }
-/* ===== Header plus grand ===== */
-header { padding: 18px 16px; }                 /* ↑ hauteur de la barre */
-header .title { font-size: 1.25rem; }          /* ↑ taille du titre à côté du logo */
-.brand img { height: 46px; }                   /* logo un peu plus grand */
-
-/* Si tu veux aussi des liens de menu un peu plus grands : */
-nav { font-size: .95rem; }                     /* (avant c’était .9rem) */
-
-/* Sur petits écrans, on garde compact */
-@media (max-width: 520px) {
-  header { padding: 14px 12px; }
-  nav { font-size: .9rem; }
-}
 
