@@ -28,6 +28,20 @@ html, body, button, input, select, textarea {
   letter-spacing: 0.01em; /* un poil d'espacement pour la lisibilité */
   line-height: 1.55;      /* un peu plus d'interligne */
 }
+/* Justifier le texte du contenu (paragraphes & listes) */
+main p,
+main li,
+main blockquote {
+  text-align: justify;
+  text-justify: inter-word;           /* utile pour vieux navigateurs */
+  hyphens: auto;                      /* césure automatique */
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+}
+
+/* (optionnel) éviter les mots qui débordent */
+main p, main li { overflow-wrap: break-word; }
+
 /* FORCER Courier partout */
 :root { --boe-font: "Courier New", Courier, ui-monospace, monospace; }
 html, body, body * {
