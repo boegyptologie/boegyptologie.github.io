@@ -1,11 +1,11 @@
 <!doctype html>
 <meta charset="utf-8">
 <title>BOE</title>
-<noscript><meta http-equiv="refresh" content="0; url=/fr/a-propos.html"></noscript>
+<noscript><meta http-equiv="refresh" content="0; url=/fr/about.html"></noscript>
 <script>
   (function () {
-    var frAbout = "/fr/a-propos.html";  // ← mets ici l’URL exacte de ta page À propos (FR)
-    var enAbout = "/en/about.html";     // ← et ici l’URL de la page About (EN)
+    var frAbout = "/fr/about.html";  // confirmé
+    var enAbout = "/en/about.html";  // adapte si l'URL EN est différente
     var lang = (navigator.language || "").toLowerCase();
     location.replace(lang.startsWith("fr") ? frAbout : enAbout);
   })();
