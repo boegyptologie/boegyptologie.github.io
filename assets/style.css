@@ -62,4 +62,20 @@ main blockquote {
 
 /* éviter les débordements de mots très longs */
 main p, main li { overflow-wrap: break-word; }
+/* ===== Fix mobile: autoriser le retour à la ligne + gagner de la place ===== */
+@media (max-width: 800px) {
+  /* cacher le long titre à côté du logo pour libérer de la place */
+  .brand .title { display: none; }
+
+  /* le menu peut passer sur 2 lignes proprement */
+  nav { display: flex; flex-wrap: wrap; gap: 6px 10px; font-size: .95rem; }
+
+  /* permettre les retours à la ligne et la césure du long libellé */
+  nav a {
+    white-space: normal;         /* annule le nowrap global */
+    overflow-wrap: anywhere;
+    word-break: normal;
+    hyphens: auto;
+  }
+}
 
