@@ -59,3 +59,17 @@ main blockquote {
 
 /* éviter les débordements de mots très longs */
 main p, main li { overflow-wrap: break-word; }
+/* ===== Header plus grand ===== */
+header { padding: 18px 16px; }                 /* ↑ hauteur de la barre */
+header .title { font-size: 1.25rem; }          /* ↑ taille du titre à côté du logo */
+.brand img { height: 46px; }                   /* logo un peu plus grand */
+
+/* Si tu veux aussi des liens de menu un peu plus grands : */
+nav { font-size: .95rem; }                     /* (avant c’était .9rem) */
+
+/* Sur petits écrans, on garde compact */
+@media (max-width: 520px) {
+  header { padding: 14px 12px; }
+  nav { font-size: .9rem; }
+}
+
