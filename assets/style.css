@@ -1,49 +1,74 @@
-:root{--max:900px}
-*{box-sizing:border-box}
-body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Noto Sans","Helvetica Neue",Arial,sans-serif;line-height:1.6;margin:0;color:#222}
-header,footer{border-bottom:1px solid #eee}
-header{padding:12px 16px}
-header .title{font-weight:700}
-nav a{margin-right:12px;text-decoration:none}
-nav a:hover{text-decoration:underline}
-main{max-width:var(--max);padding:24px;margin:0 auto}
-footer{padding:24px 16px;border-top:1px solid #eee;color:#666;font-size:.95rem}
-.container{max-width:var(--max);margin:0 auto}
-.small{font-size:.95rem}
-.lang-switch{float:right}
-img{max-width:100%;height:auto}
-pre,code{white-space:pre-wrap;word-break:break-word}
+/* =========================================
+   BOE — Styles de base (propre)
+   ========================================= */
 
-/* brand */
-.brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
-.brand img{height:42px;width:auto;vertical-align:middle}
-@media (max-width:520px){ .brand .title{display:none} }
-
-/* menu sizing + no wrap for long items */
-nav { font-size: .9rem; }
-nav a { margin-right: 8px; white-space: nowrap; }
-/* Tout en Courier / monospace */
-html, body, button, input, select, textarea {
-  font-family: "Courier New", Courier, ui-monospace, monospace !important;
-  letter-spacing: 0.01em; /* un poil d'espacement pour la lisibilité */
-  line-height: 1.55;      /* un peu plus d'interligne */
+/* 1) Variables */
+:root {
+  --max: 900px; /* largeur max du contenu (augmente si besoin) */
+  --font-body: "Courier New", Courier, ui-monospace, monospace;
 }
-/* Justifier le texte du contenu (paragraphes & listes) */
+
+/* 2) Reset léger / base */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+img { max-width: 100%; height: auto; }
+
+/* 3) Typo globale (Courier partout) */
+html, body, body * {
+  font-family: var(--font-body) !important;
+  line-height: 1.55;
+  letter-spacing: 0.01em;
+  color: #222;
+}
+
+/* 4) Layout générique */
+main { max-width: var(--max); padding: 24px; margin: 0 auto; }
+.container { max-width: var(--max); margin: 0 auto; }
+.small { font-size: .95rem; }
+
+/* 5) En-tête & pied de page */
+header, footer { border-bottom: 1px solid #eee; }
+footer { border-top: 1px solid #eee; padding: 24px 16px; color: #666; font-size: .95rem; }
+header { padding: 12px 16px; }
+
+/* 6) Marque (logo + titre) */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+.brand img { height: 42px; width: auto; vertical-align: middle; }
+header .title { font-weight: 700; }
+
+/* Masquer le long titre sur petits écrans (ajuste le seuil si besoin) */
+@media (max-width: 520px) {
+  .brand .title { display: none; }
+}
+
+/* 7) Navigation (menu) */
+nav a {
+  margin-right: 8px;       /* espace entre items */
+  text-decoration: none;
+  white-space: nowrap;     /* évite les retours à la ligne dans un item long */
+}
+nav a:hover { text-decoration: underline; }
+
+/* Taille du menu (réduite pour tenir sur une ligne) */
+nav { font-size: .9rem; }
+
+/* 8) Contenu : justification & césure */
 main p,
 main li,
 main blockquote {
   text-align: justify;
-  text-justify: inter-word;           /* utile pour vieux navigateurs */
-  hyphens: auto;                      /* césure automatique */
+  text-justify: inter-word; /* compat anciens navigateurs */
+  hyphens: auto;
   -webkit-hyphens: auto;
   -ms-hyphens: auto;
 }
 
-/* (optionnel) éviter les mots qui débordent */
+/* (optionnel) éviter le dépassement de mots très longs */
 main p, main li { overflow-wrap: break-word; }
 
-/* FORCER Courier partout */
-:root { --boe-font: "Courier New", Courier, ui-monospace, monospace; }
-html, body, body * {
-  font-family: var(--boe-font) !important;
-}
