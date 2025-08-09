@@ -22,3 +22,9 @@ pre,code{white-space:pre-wrap;word-break:break-word}
 /* menu sizing + no wrap for long items */
 nav { font-size: .9rem; }
 nav a { margin-right: 8px; white-space: nowrap; }
+/* Tout en Courier / monospace */
+html, body, button, input, select, textarea {
+  font-family: "Courier New", Courier, ui-monospace, monospace !important;
+  letter-spacing: 0.01em; /* un poil d'espacement pour la lisibilité */
+  line-height: 1.55;      /* un peu plus d'interligne */
+}
