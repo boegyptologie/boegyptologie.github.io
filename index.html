@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BOE</title>
+<link rel="stylesheet" href="/assets/style.css">
+<body>
+<main class="container">
+  <h1>BOE — Bibliothèque Ouverte d’Égyptologie</h1>
+  <p>Choose your language / Choisissez votre langue:</p>
+  <p><a href="/fr/">Français</a> · <a href="/en/">English</a></p>
+</main>
+<script>
+  (function(){
+    var lang = (navigator.language || '').toLowerCase();
+    if (lang.startsWith('fr')) window.location.replace('/fr/');
+    else if (lang) window.location.replace('/en/');
+  })();
+</script>
+</body>
+</html>
