@@ -79,8 +79,10 @@ main p, main li { overflow-wrap: break-word; }
   }
 }
 .issn {
-  font-size: 0.8em;
-  font-weight: normal;
-  margin: 0;
-  color: #555;
-}
+  display: block;
+  font-size: 0.7em;   /* plus petit que le texte normal */
+  font-weight: bold;  /* en gras */
+  margin-top: 2px;
+  color: #555;        /* gris discret, tu peux changer */
+  line-height: 1.2;
+  text-align: left;
