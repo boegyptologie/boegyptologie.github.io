@@ -78,13 +78,3 @@ main p, main li { overflow-wrap: break-word; }
     hyphens: auto;
   }
 }
-.issn {
-  display: block;
-  font-size: 0.7em;
-  font-weight: bold;
-  margin-top: 2px;
-  color: #555;
-  text-align: center;       /* garde le centrage */
-  position: relative;
-  left: 40px;               /* décale vers la droite (ajuste la valeur) */
-}
