@@ -134,7 +134,7 @@ main li {
   line-height: 1;
   display: inline-block;
   transform: translateY(-0.00em);
-  margin-left: 0.03em;
+  margin-left: 0.01em;
 }
 
 /* ===== Fix mobile ===== */
