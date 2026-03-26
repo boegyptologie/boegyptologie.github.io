@@ -1,5 +1,5 @@
 /* =========================================
-   BOE — style.css (EB Garamond partout)
+   BOE — style.css
    ========================================= */
 
 /* Chargement de la police */
@@ -11,7 +11,7 @@
   --font-body: "EB Garamond", Garamond, serif;
   --size-body: 1rem;
   --size-title: 1.15rem;
-  --accent-red: #b30000;
+  --accent-red: #FF2E17;
 }
 
 /* 2) Reset / base */
@@ -29,28 +29,79 @@ html, body, body * {
 }
 
 /* 4) Layout */
-main { max-width: var(--max); padding: 24px; margin: 0 auto; }
+main {
+  max-width: var(--max);
+  padding: 24px;
+  padding-left: 32px; /* espace entre la ligne verticale et le texte */
+  margin: 0 auto;
+  border-left: 1px solid var(--accent-red);
+}
+
 .container { max-width: var(--max); margin: 0 auto; }
 .small { font-size: .95rem; }
 
 /* 5) En-tête & pied de page */
-header { padding: 12px 16px; border-bottom: 1px solid var(--accent-red); }
-footer { padding: 24px 16px; border-top: 1px solid var(--accent-red); color: #666; font-size: .95rem; }
+header {
+  position: relative;
+  padding: 12px 16px;
+  border-bottom: none;
+}
+
+header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2mm;
+  border-top: 1px solid var(--accent-red);
+  border-bottom: 1px solid var(--accent-red);
+}
+
+footer {
+  padding: 24px 16px;
+  border-top: none;
+  color: #666;
+  font-size: .95rem;
+}
 
 /* 6) Marque (logo + titre) */
-.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
-.brand img { height: 42px; width: auto; vertical-align: middle; }
-header .title { font-weight: 700; font-size: var(--size-title); }
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brand img {
+  height: 42px;
+  width: auto;
+  vertical-align: middle;
+}
+
+header .title {
+  font-weight: 700;
+  font-size: var(--size-title);
+}
 
 /* Masquer le long titre sur petits écrans */
-@media (max-width: 520px) { .brand .title { display: none; } }
+@media (max-width: 520px) {
+  .brand .title { display: none; }
+}
 
 /* 7) Sélecteur de langue */
 .lang-switch { float: right; }
 
 /* 8) Navigation */
 nav { font-size: inherit; }
-nav a { margin-right: 10px; text-decoration: none; white-space: nowrap; }
+
+nav a {
+  margin-right: 10px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
 nav a:hover { text-decoration: underline; }
 
 /* 9) Contenu : justification & césure */
@@ -64,7 +115,20 @@ main blockquote {
   -ms-hyphens: auto;
 }
 
-main p, main li { overflow-wrap: break-word; }
+main p,
+main li {
+  overflow-wrap: break-word;
+}
+
+/* 10) Verspunkt manuel à insérer dans le HTML */
+.verspunkt {
+  color: var(--accent-red);
+  font-size: 1.75em;              /* environ 21 pour un texte à 12 */
+  line-height: 1;
+  display: inline-block;
+  transform: translateY(-0.28em); /* remonte le point */
+  margin-left: 0.15em;
+}
 
 /* ===== Fix mobile ===== */
 @media (max-width: 800px) {
@@ -82,5 +146,9 @@ main p, main li { overflow-wrap: break-word; }
     overflow-wrap: anywhere;
     word-break: normal;
     hyphens: auto;
+  }
+
+  main {
+    padding-left: 24px;
   }
 }
