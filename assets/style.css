@@ -130,11 +130,11 @@ main li {
 /* 10) Verspunkt manuel à insérer dans le HTML */
 .verspunkt {
   color: var(--accent-red);
-  font-size: 4.5em;
+  font-size: 4.0em;
   line-height: 1;
   display: inline-block;
   transform: translateY(-0.00em);
-  margin-left: 0.08em;
+  margin-left: 0.05em;
 }
 
 /* ===== Fix mobile ===== */
