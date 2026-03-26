@@ -120,7 +120,7 @@ nav a:hover { text-decoration: underline; }
   }
 }
 
-/* 9) Contenu : justification & césure */
+/* 9) Contenu : justification, césure et espacement */
 main p,
 main li,
 main blockquote {
@@ -129,6 +129,11 @@ main blockquote {
   hyphens: auto;
   -webkit-hyphens: auto;
   -ms-hyphens: auto;
+}
+
+main p {
+  margin-top: 0.55em;
+  margin-bottom: 0.55em;
 }
 
 main p,
@@ -140,9 +145,10 @@ main li {
 .verspunkt {
   color: var(--accent-red);
   font-size: 3.6em;
-  line-height: 1;
+  line-height: 0;
   display: inline-block;
-  transform: translateY(0);
+  position: relative;
+  top: -0.02em;
   margin-left: 0.01em;
 }
 
@@ -166,6 +172,13 @@ main li {
   }
 
   main {
+    border-left: none;
     padding-left: 24px;
+    background-image:
+      linear-gradient(var(--accent-red), var(--accent-red)),
+      linear-gradient(var(--accent-red), var(--accent-red));
+    background-repeat: no-repeat, no-repeat;
+    background-size: 1px 100%, 1px 100%;
+    background-position: 0 0, 6px 0;
   }
 }
