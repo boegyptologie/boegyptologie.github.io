@@ -32,7 +32,7 @@ html, body, body * {
 main {
   max-width: var(--max);
   padding: 24px;
-  padding-left: 32px; /* espace entre la ligne verticale et le texte */
+  padding-left: 32px;
   margin: 0 auto;
   border-left: 1px solid var(--accent-red);
 }
@@ -63,6 +63,13 @@ footer {
   border-top: 1px solid var(--accent-red);
   color: #666;
   font-size: .95rem;
+}
+
+/* supprime toute ancienne double ligne éventuelle */
+footer::before,
+footer::after {
+  content: none !important;
+  display: none !important;
 }
 
 /* 6) Marque (logo + titre) */
@@ -123,11 +130,11 @@ main li {
 /* 10) Verspunkt manuel à insérer dans le HTML */
 .verspunkt {
   color: var(--accent-red);
-  font-size: 1.75em;              /* environ 21 pour un texte à 12 */
+  font-size: 5.25em;
   line-height: 1;
   display: inline-block;
-  transform: translateY(-0.28em); /* remonte le point */
-  margin-left: 0.15em;
+  transform: translateY(-0.32em);
+  margin-left: 0.08em;
 }
 
 /* ===== Fix mobile ===== */
