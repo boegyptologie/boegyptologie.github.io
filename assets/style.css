@@ -43,7 +43,7 @@ main {
 /* 5) En-tête & pied de page */
 header {
   position: relative;
-  padding: 20px 16px 18px 16px;
+  padding: 30px 16px 26px 16px; /* header desktop un peu plus aéré */
   border-bottom: none;
 }
 
@@ -92,7 +92,7 @@ header .title {
   font-size: var(--size-title);
 }
 
-/* Masquer le long titre sur petits écrans */
+/* Masquer le long titre sur très petits écrans */
 @media (max-width: 520px) {
   .brand .title { display: none; }
 }
@@ -199,11 +199,18 @@ main li {
     margin-right: 0;
   }
 
-  /* petits traits rouges entre les liens du menu sur mobile */
+  /* traits rouges sur mobile */
   nav a + a {
     border-left: 1px solid var(--accent-red);
     padding-left: 8px;
     margin-left: 2px;
+  }
+
+  /* le script ajoutera cette classe au premier lien de chaque ligne */
+  nav a.row-start {
+    border-left: none;
+    padding-left: 0;
+    margin-left: 0;
   }
 
   main {
