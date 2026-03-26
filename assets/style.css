@@ -133,7 +133,7 @@ main li {
   font-size: 3.5em;
   line-height: 1;
   display: inline-block;
-  transform: translateY(-0.18em);
+  transform: translateY(-0.03em);
   margin-left: 0.08em;
 }
 
