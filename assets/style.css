@@ -231,3 +231,8 @@ main li {
     border-bottom: none;
   }
 }
+@media (min-width: 801px) {
+  nav {
+    margin-top: 14px;
+  }
+}
