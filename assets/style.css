@@ -132,8 +132,8 @@ main blockquote {
 }
 
 main p {
-  margin-top: 0.75em;
-  margin-bottom: 0.75em;
+  margin-top: 1.0em;
+  margin-bottom: 1.0em;
 }
 
 main p,
@@ -155,7 +155,7 @@ main li {
 /* 11) Logos */
 .boma-logo-wrap {
   text-align: center;
-  margin: 1.4rem auto 1rem auto;
+  margin: 3.5rem auto 0.5rem auto;
 }
 
 .boma-logo {
