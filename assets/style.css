@@ -225,6 +225,17 @@ main li {
     background-position: 0 0, 6px 0;
   }
 
+  /* pas de césure sur mobile dans le corps du texte */
+  main p,
+  main li,
+  main blockquote {
+    hyphens: none;
+    -webkit-hyphens: none;
+    -ms-hyphens: none;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+
   /* sur mobile : une seule ligne sous le header */
   header::after {
     height: 0;
@@ -232,6 +243,7 @@ main li {
     border-bottom: none;
   }
 }
+
 @media (min-width: 801px) {
   nav {
     margin-top: 18px;
