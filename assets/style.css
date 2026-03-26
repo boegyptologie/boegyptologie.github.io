@@ -152,6 +152,29 @@ main li {
   margin-left: 0.01em;
 }
 
+/* 11) Logos */
+.boma-logo-wrap {
+  text-align: center;
+  margin: 0 auto 0.8rem auto;
+}
+
+.boma-logo {
+  display: block;
+  width: 240px;
+  max-width: 240px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.section-logo {
+  height: 2em;
+  width: auto;
+  max-width: none;
+  margin-left: 0.35em;
+  vertical-align: middle;
+  display: inline-block;
+}
+
 /* ===== Fix mobile ===== */
 @media (max-width: 800px) {
   .brand .title { display: none; }
@@ -180,5 +203,12 @@ main li {
     background-repeat: no-repeat, no-repeat;
     background-size: 1px 100%, 1px 100%;
     background-position: 0 0, 6px 0;
+  }
+
+  /* sur mobile : une seule ligne sous le header */
+  header::after {
+    height: 0;
+    border-top: 1px solid var(--accent-red);
+    border-bottom: none;
   }
 }
