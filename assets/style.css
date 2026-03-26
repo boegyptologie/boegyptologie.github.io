@@ -43,7 +43,7 @@ main {
 /* 5) En-tête & pied de page */
 header {
   position: relative;
-  padding: 30px 16px 26px 16px; /* header desktop un peu plus aéré */
+  padding: 30px 16px 26px 16px;
   border-bottom: none;
 }
 
@@ -120,15 +120,15 @@ nav a:hover { text-decoration: underline; }
   }
 }
 
-/* 9) Contenu : justification, césure et espacement */
+/* 9) Contenu : justification, sans césure */
 main p,
 main li,
 main blockquote {
   text-align: justify;
   text-justify: inter-word;
-  hyphens: auto;
-  -webkit-hyphens: auto;
-  -ms-hyphens: auto;
+  hyphens: none;
+  -webkit-hyphens: none;
+  -ms-hyphens: none;
 }
 
 main p {
@@ -138,7 +138,8 @@ main p {
 
 main p,
 main li {
-  overflow-wrap: break-word;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 /* 10) Verspunkt manuel à insérer dans le HTML */
@@ -223,17 +224,6 @@ main li {
     background-repeat: no-repeat, no-repeat;
     background-size: 1px 100%, 1px 100%;
     background-position: 0 0, 6px 0;
-  }
-
-  /* pas de césure sur mobile dans le corps du texte */
-  main p,
-  main li,
-  main blockquote {
-    hyphens: none;
-    -webkit-hyphens: none;
-    -ms-hyphens: none;
-    overflow-wrap: normal;
-    word-break: normal;
   }
 
   /* sur mobile : une seule ligne sous le header */
