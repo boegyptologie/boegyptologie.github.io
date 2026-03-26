@@ -160,5 +160,25 @@
     <a href="/fr/mentions-legales.html">Mentions légales</a>
   </div>
 </footer>
+<script>
+function updateMobileMenuSeparators() {
+  const links = Array.from(document.querySelectorAll('nav a'));
+  let previousTop = null;
+
+  links.forEach((link, index) => {
+    link.classList.remove('row-start');
+    const currentTop = link.offsetTop;
+
+    if (index === 0 || currentTop > previousTop) {
+      link.classList.add('row-start');
+    }
+
+    previousTop = currentTop;
+  });
+}
+
+window.addEventListener('load', updateMobileMenuSeparators);
+window.addEventListener('resize', updateMobileMenuSeparators);
+</script>
 </body>
 </html>
