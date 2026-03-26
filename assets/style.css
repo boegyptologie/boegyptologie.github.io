@@ -111,6 +111,15 @@ nav a {
 
 nav a:hover { text-decoration: underline; }
 
+/* séparateurs verticaux rouges entre les liens du menu */
+@media (min-width: 801px) {
+  nav a + a {
+    border-left: 1px solid var(--accent-red);
+    padding-left: 10px;
+    margin-left: 2px;
+  }
+}
+
 /* 9) Contenu : justification & césure */
 main p,
 main li,
@@ -133,7 +142,7 @@ main li {
   font-size: 3.6em;
   line-height: 1;
   display: inline-block;
-  transform: translateY(-0.00em);
+  transform: translateY(0);
   margin-left: 0.01em;
 }
 
@@ -153,6 +162,7 @@ main li {
     overflow-wrap: anywhere;
     word-break: normal;
     hyphens: auto;
+    margin-right: 0;
   }
 
   main {
