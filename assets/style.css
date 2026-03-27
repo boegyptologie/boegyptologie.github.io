@@ -212,20 +212,22 @@ main li {
 }
 
 /* 15) Note de bas de page */
-.footnote-note {
+.footnote-note,
+.footnote-note * {
   font-size: 0.82em !important;
-  font-style: normal !important;
   line-height: 1.45 !important;
-  text-align: left !important;
-  text-justify: auto !important;
+}
+
+.footnote-note {
+  font-style: normal !important;
+  text-align: justify !important;
+  text-justify: inter-word !important;
   border-top: 1px solid var(--accent-red);
   padding-top: 0.55em;
   margin-top: 1.2em;
 }
 
 .footnote-note a {
-  font-size: inherit !important;
-  line-height: inherit !important;
   font-style: inherit !important;
 }
 
@@ -300,14 +302,10 @@ main li {
     text-indent: 0;
   }
 
-  /* note de bas de page : même rendu sur mobile */
-  .footnote-note {
+  /* note : même rendu sur mobile */
+  .footnote-note,
+  .footnote-note * {
     font-size: 0.82em !important;
     line-height: 1.45 !important;
-  }
-
-  .footnote-note a {
-    font-size: inherit !important;
-    line-height: inherit !important;
   }
 }
