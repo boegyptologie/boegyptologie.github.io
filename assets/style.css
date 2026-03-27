@@ -120,6 +120,13 @@ nav a:hover { text-decoration: underline; }
   }
 }
 
+/* espace supplémentaire entre bloc logo+titre et menu sur desktop */
+@media (min-width: 801px) {
+  nav {
+    margin-top: 18px;
+  }
+}
+
 /* 9) Contenu : justification, sans césure */
 main p,
 main li,
@@ -177,6 +184,32 @@ main li {
   display: inline-block;
 }
 
+/* 12) Membres des comités */
+.committee-member {
+  text-align: left !important;
+  text-justify: auto !important;
+  padding-left: 1.1em;
+  text-indent: -1.1em;
+}
+
+/* 13) Segments japonais à ne pas couper */
+.jp-nowrap {
+  white-space: nowrap;
+}
+
+/* 14) Notices bibliographiques / numéros */
+.boe-entry {
+  text-align: left !important;
+  text-justify: auto !important;
+  padding-left: 1.5em;
+  text-indent: -1.5em;
+}
+
+.boe-entry-download {
+  display: block;
+  margin-left: 1.5em;
+}
+
 /* ===== Fix mobile ===== */
 @media (max-width: 800px) {
   header {
@@ -208,7 +241,7 @@ main li {
     margin-left: 2px;
   }
 
-  /* le script ajoutera cette classe au premier lien de chaque ligne */
+  /* le script ajoute cette classe au premier lien de chaque ligne */
   nav a.row-start {
     border-left: none;
     padding-left: 0;
@@ -232,30 +265,14 @@ main li {
     border-top: 1px solid var(--accent-red);
     border-bottom: none;
   }
-}
 
-@media (min-width: 801px) {
-  nav {
-    margin-top: 18px;
+  /* retrait un peu plus discret pour les notices sur petit écran */
+  .boe-entry {
+    padding-left: 1.2em;
+    text-indent: -1.2em;
   }
-}
-.committee-member {
-  text-align: left !important;
-  text-justify: auto !important;
-  padding-left: 1.1em;
-  text-indent: -1.1em;
-}
-.jp-nowrap {
-  white-space: nowrap;
-}
-.boe-entry {
-  text-align: left !important;
-  text-justify: auto !important;
-  padding-left: 1.5em;
-  text-indent: -1.5em;
-}
 
-.boe-entry-download {
-  display: inline-block;
-  margin-left: 1.5em;
+  .boe-entry-download {
+    margin-left: 1.2em;
+  }
 }
