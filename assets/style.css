@@ -208,6 +208,7 @@ main li {
 .boe-entry-download {
   display: block;
   margin-left: 1.5em;
+  text-indent: 0;
 }
 
 /* ===== Fix mobile ===== */
@@ -274,5 +275,6 @@ main li {
 
   .boe-entry-download {
     margin-left: 1.2em;
+    text-indent: 0;
   }
 }
