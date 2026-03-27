@@ -248,3 +248,14 @@ main li {
 .jp-nowrap {
   white-space: nowrap;
 }
+.boe-entry {
+  text-align: left !important;
+  text-justify: auto !important;
+  padding-left: 1.5em;
+  text-indent: -1.5em;
+}
+
+.boe-entry-download {
+  display: inline-block;
+  margin-left: 1.5em;
+}
