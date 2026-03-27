@@ -278,3 +278,17 @@ main li {
     text-indent: 0;
   }
 }
+.footnote-note {
+  font-size: 0.75em;
+  font-style: normal;
+  line-height: 1.45;
+  text-align: left !important;
+  text-justify: auto !important;
+  border-top: 1px solid var(--accent-red);
+  padding-top: 0.5em;
+  margin-top: 1.2em;
+}
+
+.footnote-star {
+  color: var(--accent-red);
+}
