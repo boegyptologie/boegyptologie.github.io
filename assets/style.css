@@ -315,4 +315,9 @@ main li {
     font-size: inherit !important;
     line-height: inherit !important;
   }
+
+  .footnote-star {
+    font-size: 1rem !important;
+    line-height: 1 !important;
+  }
 }
