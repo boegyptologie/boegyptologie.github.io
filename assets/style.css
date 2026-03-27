@@ -242,13 +242,8 @@ main li {
 .committee-member {
   text-align: left !important;
   text-justify: auto !important;
-}
-
-@media (max-width: 800px) {
-  .committee-member {
-    padding-left: 1.1em;
-    text-indent: -1.1em;
-  }
+  padding-left: 1.1em;
+  text-indent: -1.1em;
 }
 .jp-nowrap {
   white-space: nowrap;
