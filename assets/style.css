@@ -239,9 +239,14 @@ main li {
     margin-top: 18px;
   }
 }
+.committee-member {
+  text-align: left !important;
+  text-justify: auto !important;
+}
+
 @media (max-width: 800px) {
   .committee-member {
-    padding-left: 1.5em;
-    text-indent: -1.5em;
+    padding-left: 0;
+    text-indent: 0;
   }
 }
