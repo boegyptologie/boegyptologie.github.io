@@ -234,7 +234,8 @@ main li {
 
 .footnote-star {
   color: var(--accent-red);
-  font-size: 1.08em !important;
+  font-size: 1rem !important;
+  line-height: 1 !important;
 }
 
 /* ===== Fix mobile ===== */
