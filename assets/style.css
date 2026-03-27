@@ -250,3 +250,6 @@ main li {
     text-indent: -1.1em;
   }
 }
+.jp-nowrap {
+  white-space: nowrap;
+}
