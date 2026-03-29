@@ -234,6 +234,13 @@ main li {
   margin-top: 0.25em;
   margin-left: 2.3em;
   text-indent: 0;
+  font-size: 0.9em !important;
+  line-height: 1.4 !important;
+}
+
+.boe-entry-download a {
+  font-size: inherit !important;
+  line-height: inherit !important;
 }
 
 /* 15) Note de bas de page */
@@ -339,6 +346,13 @@ main li {
   .boe-entry-download {
     margin-left: 1.9em;
     text-indent: 0;
+    font-size: 0.9em !important;
+    line-height: 1.4 !important;
+  }
+
+  .boe-entry-download a {
+    font-size: inherit !important;
+    line-height: inherit !important;
   }
 
   /* note : même rendu sur mobile */
