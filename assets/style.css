@@ -205,6 +205,22 @@ main li {
   text-indent: -1.5em;
 }
 
+.boe-entry-abstract {
+  display: block;
+  font-size: 0.82em !important;
+  line-height: 1.45 !important;
+  text-indent: 0;
+  margin-top: 0.5em;
+  margin-left: 1.5em;
+  padding-left: 0.8em;
+  border-left: 1px solid var(--accent-red);
+}
+
+.boe-entry-abstract * {
+  font-size: inherit !important;
+  line-height: inherit !important;
+}
+
 .boe-entry-download {
   display: block;
   margin-left: 1.5em;
@@ -298,6 +314,11 @@ main li {
   .boe-entry {
     padding-left: 1.2em;
     text-indent: -1.2em;
+  }
+
+  .boe-entry-abstract {
+    margin-left: 1.2em;
+    padding-left: 0.7em;
   }
 
   .boe-entry-download {
