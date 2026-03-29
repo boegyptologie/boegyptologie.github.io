@@ -213,7 +213,7 @@ main li {
   text-justify: inter-word !important;
   text-indent: 0;
   margin-top: 0.8em;
-  margin-bottom: 0.9em;
+  margin-bottom: 0.95em;
   margin-left: 1.5em;
   padding-left: 0.8em;
   border-left: 1px solid var(--accent-red);
@@ -224,17 +224,14 @@ main li {
   line-height: inherit !important;
 }
 
-.boe-entry-abstract-part {
+.boe-entry-abstract-gap {
   display: block;
-}
-
-.boe-entry-abstract-part + .boe-entry-abstract-part {
-  margin-top: 0.7em;
+  height: 0.85em;
 }
 
 .boe-entry-download {
   display: block;
-  margin-top: 0.2em;
+  margin-top: 0.25em;
   margin-left: 2.3em;
   text-indent: 0;
 }
@@ -332,11 +329,11 @@ main li {
     margin-left: 1.2em;
     padding-left: 0.7em;
     margin-top: 0.75em;
-    margin-bottom: 0.85em;
+    margin-bottom: 0.9em;
   }
 
-  .boe-entry-abstract-part + .boe-entry-abstract-part {
-    margin-top: 0.65em;
+  .boe-entry-abstract-gap {
+    height: 0.75em;
   }
 
   .boe-entry-download {
