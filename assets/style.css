@@ -234,8 +234,8 @@ main li {
   margin-top: 0.25em;
   margin-left: 2.3em;
   text-indent: 0;
-  font-size: 0.9em !important;
-  line-height: 1.4 !important;
+  font-size: 0.82em !important;
+  line-height: 1.45 !important;
 }
 
 .boe-entry-download a {
@@ -346,8 +346,8 @@ main li {
   .boe-entry-download {
     margin-left: 1.9em;
     text-indent: 0;
-    font-size: 0.9em !important;
-    line-height: 1.4 !important;
+    font-size: 0.82em !important;
+    line-height: 1.45 !important;
   }
 
   .boe-entry-download a {
