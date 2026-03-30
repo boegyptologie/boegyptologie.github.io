@@ -434,3 +434,21 @@ main li {
     padding-left: 0.7em;
   }
 }
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.header-issn {
+  display: none;
+}
+
+@media (min-width: 801px) {
+  .header-issn {
+    display: block;
+    font-size: 0.62rem !important;
+    opacity: 0.4;
+    margin-top: 0.15em;
+  }
+}
