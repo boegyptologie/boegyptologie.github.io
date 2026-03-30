@@ -422,6 +422,9 @@ main li {
   .submission-list li + li {
     margin-top: 0.4em;
   }
+.submission-declaration em {
+  font-style: italic !important;
+}
 
   .submission-declaration {
     margin-left: 1.2em;
