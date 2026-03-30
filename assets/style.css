@@ -440,7 +440,7 @@ main li {
   flex-direction: column;
   line-height: 1.1;
   position: relative;
-  top: 0.1em;
+  top: 0.15em;
 }
 
 .header-issn {
