@@ -281,7 +281,7 @@ main li {
 }
 
 .submission-list li + li {
-  margin-top: 0.6em;
+  margin-top: 0.7em;
 }
 
 .submission-list li::marker {
@@ -426,7 +426,7 @@ main li {
   }
 
   .submission-list li + li {
-    margin-top: 0.6em;
+    margin-top: 0.7em;
   }
 
   .submission-declaration {
