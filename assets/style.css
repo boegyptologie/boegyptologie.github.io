@@ -90,6 +90,7 @@ footer::after {
 header .title {
   font-weight: 700;
   font-size: var(--size-title);
+  line-height: 1;
 }
 
 /* Masquer le long titre sur très petits écrans */
@@ -434,10 +435,11 @@ main li {
     padding-left: 0.7em;
   }
 }
+
 .brand-text {
   display: flex;
   flex-direction: column;
-  line-height: 1.1;
+  line-height: 1;
 }
 
 .header-issn {
@@ -448,7 +450,9 @@ main li {
   .header-issn {
     display: block;
     font-size: 0.62rem !important;
-    opacity: 0.4;
+    line-height: 1 !important;
+    opacity: 0.7;
     margin-top: -0.28em;
+    margin-left: 0.08em;
   }
 }
