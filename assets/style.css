@@ -270,6 +270,55 @@ main li {
   line-height: 1 !important;
 }
 
+/* 16) Liste de soumission */
+.submission-list {
+  padding-left: 1.1em;
+  margin: 0.45em 0 1.2em 0;
+}
+
+.submission-list li {
+  padding-left: 0.1em;
+}
+
+.submission-list li + li {
+  margin-top: 0.45em;
+}
+
+.submission-list li::marker {
+  color: var(--accent-red);
+}
+
+/* 17) Déclaration de soumission */
+.submission-declaration {
+  display: block;
+  margin: 0.9em 0 1.15em 1.5em;
+  padding-left: 0.8em;
+  border-left: 1px solid var(--accent-red);
+  font-size: 0.82em !important;
+  line-height: 1.45 !important;
+  text-align: justify !important;
+  text-justify: inter-word !important;
+}
+
+.submission-declaration,
+.submission-declaration * {
+  font-size: inherit !important;
+  line-height: inherit !important;
+}
+
+.submission-declaration {
+  font-style: normal !important;
+}
+
+.submission-declaration em {
+  font-style: italic !important;
+}
+
+.submission-declaration p {
+  margin: 0;
+  text-align: inherit !important;
+}
+
 /* ===== Fix mobile ===== */
 @media (max-width: 800px) {
   header {
@@ -370,51 +419,8 @@ main li {
     font-size: 1rem !important;
     line-height: 1 !important;
   }
-}
-/* 16) Liste de soumission */
-.submission-list {
-  padding-left: 1.1em;
-  margin: 0.45em 0 1.2em 0;
-}
 
-.submission-list li {
-  padding-left: 0.1em;
-}
-
-.submission-list li + li {
-  margin-top: 0.45em;
-}
-
-.submission-list li::marker {
-  color: var(--accent-red);
-}
-
-/* 17) Déclaration de soumission */
-.submission-declaration {
-  display: block;
-  margin: 0.9em 0 1.15em 1.5em;
-  padding-left: 0.8em;
-  border-left: 1px solid var(--accent-red);
-  font-size: 0.82em !important;
-  line-height: 1.45 !important;
-  text-align: justify !important;
-  text-justify: inter-word !important;
-}
-
-.submission-declaration,
-.submission-declaration * {
-  font-size: inherit !important;
-  line-height: inherit !important;
-  font-style: normal !important;
-}
-
-.submission-declaration p {
-  margin: 0;
-  text-align: inherit !important;
-}
-
-/* Ajustements mobile */
-@media (max-width: 800px) {
+  /* ajustements mobile soumission */
   .submission-list {
     padding-left: 1em;
   }
@@ -422,9 +428,6 @@ main li {
   .submission-list li + li {
     margin-top: 0.4em;
   }
-.submission-declaration em {
-  font-style: italic !important;
-}
 
   .submission-declaration {
     margin-left: 1.2em;
