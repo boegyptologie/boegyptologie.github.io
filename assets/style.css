@@ -439,6 +439,8 @@ main li {
   display: flex;
   flex-direction: column;
   line-height: 1.1;
+  position: relative;
+  top: 0.06em;
 }
 
 .header-issn {
@@ -450,7 +452,7 @@ main li {
     display: block;
     font-size: 0.62rem !important;
     opacity: 0.4;
-    margin-top: -0.45em;
-    margin-left: 0.50em;
+    margin-top: -0.28em;
+    margin-left: 0.14em;
   }
 }
