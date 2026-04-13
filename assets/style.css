@@ -456,3 +456,11 @@ main li {
     margin-left: 0.70em;
   }
 }
+/* Neutralisation des styles navigateur sur les titres sémantiques */
+h1, h2, h3 {
+  font-size: inherit;
+  font-weight: inherit;
+  margin: 0;
+  padding: 0;
+  line-height: inherit;
+}
