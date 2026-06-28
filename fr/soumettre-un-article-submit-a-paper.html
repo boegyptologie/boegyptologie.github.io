@@ -4,58 +4,157 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bibliothèque Ouverte d'Égyptologie (BOE) | Soumettre un article – Revue en libre accès – BOMA</title>
-  <meta name="description" content="Soumettez un article à la BOE : envoi par e-mail en PDF anonymisé, résumé en anglais, 6 mots-clés. Accepte jusqu'à 60 000 caractères en allemand, anglais, arabe, espagnol, français, italien ou portugais. Sans frais, CC BY 4.0.">
-  <meta name="keywords" content="soumettre article égyptologie, appel à contributions, revue égyptologie libre accès, soumission PDF, évaluation par les pairs, multilinguisme, translittération Unicode, CC BY 4.0, BOE, BOMA, Zenodo, Égypte ancienne">
-  <meta name="author" content="Bibliothèque Ouverte des Mondes Anciens (BOMA)">
+  <meta name="description" content="Soumettez un article à la BOE : PDF anonymisé, résumé en anglais, 6 mots-clés. Sans frais, CC BY 4.0.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://boegyptologie.github.io/fr/soumettre-un-article-submit-a-paper.html">
   <link rel="alternate" hreflang="fr" href="https://boegyptologie.github.io/fr/soumettre-un-article-submit-a-paper.html">
   <link rel="alternate" hreflang="en" href="https://boegyptologie.github.io/en/soumettre-un-article-submit-a-paper.html">
   <link rel="alternate" hreflang="x-default" href="https://boegyptologie.github.io/fr/soumettre-un-article-submit-a-paper.html">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Soumettre un article – Bibliothèque Ouverte d'Égyptologie (BOE)">
-  <meta property="og:description" content="Instructions de soumission à la BOE : PDF anonymisé, résumé anglais, 6 mots-clés, jusqu'à 60 000 caractères. Multilingue, sans frais, CC BY 4.0.">
-  <meta property="og:url" content="https://boegyptologie.github.io/fr/soumettre-un-article-submit-a-paper.html">
-  <meta property="og:image" content="https://boegyptologie.github.io/assets/logo.png">
-  <meta property="og:image:alt" content="Logo de la Bibliothèque Ouverte d'Égyptologie">
-  <meta property="og:locale" content="fr_FR">
-  <meta property="og:site_name" content="Bibliothèque Ouverte d'Égyptologie (BOE)">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Soumettre un article – BOE">
-  <meta name="twitter:description" content="Appel à contributions en égyptologie. PDF anonymisé, multilingue, sans frais, CC BY 4.0. Délai estimé : 4 mois.">
-  <meta name="twitter:image" content="https://boegyptologie.github.io/assets/logo.png">
-  <meta name="DC.title" content="Bibliothèque Ouverte d'Égyptologie – Soumettre un article">
-  <meta name="DC.creator" content="Bibliothèque Ouverte des Mondes Anciens (BOMA)">
-  <meta name="DC.subject" content="soumission article; égyptologie; appel à contributions; multilinguisme; libre accès; évaluation par les pairs; translittération Unicode">
-  <meta name="DC.description" content="Instructions pour soumettre un article à la BOE : format, langues acceptées, résumé, mots-clés et droits d'auteur.">
-  <meta name="DC.publisher" content="Bibliothèque Ouverte des Mondes Anciens (BOMA)">
-  <meta name="DC.language" content="fr">
-  <meta name="DC.rights" content="CC BY 4.0 https://creativecommons.org/licenses/by/4.0/">
-  <meta name="DC.type" content="Text">
-  <meta name="DC.format" content="text/html">
   <link rel="icon" type="image/png" href="/favicon.png">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Soumettre un article – Bibliothèque Ouverte d'Égyptologie",
-    "url": "https://boegyptologie.github.io/fr/soumettre-un-article-submit-a-paper.html",
-    "description": "Instructions pour soumettre un article à la BOE : envoi par e-mail en PDF anonymisé, résumé en anglais, 6 mots-clés, jusqu'à 60 000 caractères, multilingue, sans frais.",
-    "isPartOf": {
-      "@type": "Periodical",
-      "name": "Bibliothèque Ouverte d'Égyptologie",
-      "alternateName": "BOE",
-      "issn": "3129-6424"
-    },
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "email": "boegyptologie@gmail.com",
-      "contactType": "editorial"
-    }
-  }
-  </script>
   <link rel="stylesheet" href="/assets/style.css">
+  <style>
+    .f-field { margin: 0.7em 0; }
+    .f-label { display: block; margin-bottom: 0.2em; }
+    .f-req   { color: var(--accent-red); }
+    .f-hint  { display: block; font-size: 0.82em !important; color: #777; font-style: italic; margin-top: 0.15em; }
+
+    input[type="text"].f-input,
+    input[type="email"].f-input,
+    input[type="url"].f-input,
+    select.f-input,
+    textarea.f-input {
+      display: block;
+      width: 100%;
+      padding: 0.32em 0.5em;
+      border: 1px solid #bbb;
+      background: #fff;
+      font-family: var(--font-body) !important;
+      font-size: 1em !important;
+      color: #222;
+      outline: none;
+      transition: border-color 0.15s;
+      border-radius: 0;
+    }
+
+    input[type="text"].f-input:focus,
+    input[type="email"].f-input:focus,
+    input[type="url"].f-input:focus,
+    select.f-input:focus,
+    textarea.f-input:focus {
+      border-color: var(--accent-red);
+      box-shadow: 0 0 0 1px var(--accent-red);
+    }
+
+    textarea.f-input { resize: vertical; min-height: 88px; }
+    select.f-input   { cursor: pointer; }
+
+    .f-kw-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.4em 0.75em;
+      margin-top: 0.3em;
+    }
+
+    .f-counter { font-size: 0.8em !important; color: #999; text-align: right; margin-top: 0.2em; }
+    .f-counter.over { color: var(--accent-red) !important; font-weight: bold; }
+    .f-counter.ok   { color: #2a5c45 !important; }
+
+    input[type="file"].f-file { width: 100%; font-size: 0.9em !important; color: #666; }
+
+    input[type="file"].f-file::file-selector-button {
+      background: #fff;
+      border: 1px solid #bbb;
+      padding: 0.2em 0.7em;
+      font-family: var(--font-body) !important;
+      font-size: 0.88em !important;
+      color: #444;
+      cursor: pointer;
+      margin-right: 0.5em;
+      transition: border-color 0.15s;
+    }
+
+    input[type="file"].f-file::file-selector-button:hover { border-color: var(--accent-red); }
+
+    .f-declaration {
+      font-size: 0.88em !important;
+      line-height: 1.55 !important;
+      text-align: justify !important;
+      text-justify: inter-word !important;
+      background: #fafafa;
+      border-left: 2px solid var(--accent-red);
+      padding: 0.75em 0.9em;
+      margin: 0.6em 0;
+      color: #333;
+    }
+
+    .f-checkbox-wrap {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.55em;
+      margin-top: 0.75em;
+      padding: 0.6em 0.8em;
+      border: 1px solid #bbb;
+      border-left: 2px solid var(--accent-red);
+      cursor: pointer;
+      font-size: 0.9em !important;
+      line-height: 1.5 !important;
+      transition: background 0.14s;
+    }
+
+    .f-checkbox-wrap:has(input:checked) { background: #fff5f4; border-color: var(--accent-red); }
+
+    .f-checkbox-wrap input[type="checkbox"] {
+      margin-top: 3px;
+      flex-shrink: 0;
+      accent-color: var(--accent-red);
+      width: 1em;
+      height: 1em;
+    }
+
+    .f-btn {
+      display: inline-block;
+      background: var(--accent-red);
+      color: #fff !important;
+      border: none;
+      padding: 0.42em 1.8em;
+      font-family: var(--font-body) !important;
+      font-size: 1em !important;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      margin-top: 1em;
+      transition: opacity 0.15s;
+    }
+
+    .f-btn:hover    { opacity: 0.85; }
+    .f-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .f-msg {
+      display: none;
+      padding: 0.75em 1em;
+      margin-top: 1.2em;
+      font-size: 0.9em !important;
+      line-height: 1.6 !important;
+    }
+
+    .f-msg.success { border-left: 3px solid #2a5c45; background: #eaf4ee; color: #2a5c45 !important; }
+    .f-msg.error   { border-left: 3px solid var(--accent-red); background: #fff5f4; color: #c03 !important; }
+
+    .f-hr { border: none; border-top: 1px solid #eee; margin: 1.5em 0 1em; }
+
+    .f-uploading {
+      font-size: 0.85em !important;
+      color: #888;
+      font-style: italic;
+      margin-top: 0.4em;
+      display: none;
+    }
+
+    @media (max-width: 520px) {
+      .f-kw-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
+
 <body>
 <header>
   <div class="container">
@@ -78,37 +177,190 @@
 </header>
 
 <main>
-  <article>
-    <p>Pour proposer un article à la revue <em>Bibliothèque ouverte d'égyptologie</em>, veuillez envoyer un e-mail à l'adresse suivante : <strong><a href="mailto:boegyptologie@gmail.com">boegyptologie@gmail.com</a></strong>, en joignant votre article <strong>anonymisé</strong> au format PDF et en version originale éditable (.odt, .docx, etc.). Dans le corps de votre message, indiquez</p>
+<article>
 
-    <ul class="submission-list">
-      <li>vos nom, prénom et affiliation institutionnelle (le cas échéant) ;</li>
-      <li>un résumé en anglais de 450 à 1500 caractères (espaces compris), accompagné si possible d'une traduction en français ;</li>
-      <li>6 mots-clés en anglais avec, si possible, leurs équivalents en français ;</li>
-      <li>toute déclaration ou mention utile (remerciements, financement, conflits d'intérêts) ;</li>
-      <li>la déclaration suivante, concernant les droits d'auteur et l'autorisation de publication :</li>
-    </ul>
+<p>Pour proposer un article à la revue <em>Bibliothèque ouverte d'égyptologie</em>, veuillez compléter le formulaire ci-dessous. Pour la translittération et la transcription, veuillez vous assurer que tous les caractères sont encodés en Unicode. Un outil pratique est le <a href="https://pnm.uni-mainz.de/tools/unicode/" target="_blank" rel="noopener noreferrer">Transliteration to Unicode Converter</a> (Université Johannes Gutenberg de Mayence). Le délai estimé entre la soumission et la publication est de 4 mois.</p>
 
-    <blockquote class="submission-declaration">
-      <p>En soumettant cet article, je certifie détenir les droits nécessaires sur l'ensemble des contenus transmis (texte, illustrations, etc.) et j'autorise la maison d'édition associative Bibliothèque Ouverte des Mondes Anciens à en assurer la publication dans la revue <em>Bibliothèque ouverte d'égyptologie</em>, y compris dans un volume annuel imprimé proposé à la vente sans contrepartie financière pour l'auteur, conformément au processus éditorial décrit. Je garantis également que ces éléments ne contreviennent pas aux droits d'auteur ni aux droits des tiers.</p>
-    </blockquote>
+<form id="submit-form" novalidate>
 
-    <section aria-labelledby="mise-en-forme">
-      <h2 id="mise-en-forme"><br><strong>Mise en forme et délais<span class="verspunkt">·</span></strong></h2>
+  <!-- Honeypot anti-spam — invisible pour les humains -->
+  <input type="text" id="hp" style="display:none" tabindex="-1" autocomplete="off">
 
-      <p>Nous acceptons des articles allant jusqu'à 60 000 caractères (espaces et notes de bas de page inclus) en allemand, anglais, arabe, espagnol, français, italien, portugais ou autre sur demande. Il est possible d'ajouter, en annexe, des feuilles de calcul ou des modèles 3D jusqu'à 50 Go, après accord préalable.</p>
+  <!-- ① Informations sur l'auteur·rice ─────────────────────── -->
+  <section aria-labelledby="s-auteur">
+    <h2 id="s-auteur"><br><strong>Informations sur l'auteur·rice<span class="verspunkt">·</span></strong></h2>
 
-      <p>Merci de ne pas utiliser les titres automatiques et de préférer une structuration simple.</p>
+    <div class="f-field">
+      <label class="f-label" for="f-name">Nom et prénom <span class="f-req">*</span></label>
+      <input class="f-input" type="text" id="f-name" placeholder="Prénom Nom" required autocomplete="name">
+    </div>
 
-      <p>Pour la translittération et la transcription, les contributeurs doivent utiliser des polices Unicode compatibles avec la licence CC BY 4.0 afin d'assurer l'accessibilité et la fiabilité à long terme des articles.<br>
-      Un outil pratique est le <a href="https://pnm.uni-mainz.de/tools/unicode/" target="_blank" rel="noopener noreferrer">Transliteration to Unicode Converter</a> (Université Johannes Gutenberg de Mayence, projet PNM).<br>
-      Voir aussi : Jones, C. E. (2024, 10 avril). <em>Egyptological open access journals.</em> AWOL – The Ancient World Online. <a href="https://ancientworldonline.blogspot.com/2024/04/egyptological-open-access-journals.html" target="_blank" rel="noopener noreferrer">Lien</a>.</p>
+    <div class="f-field">
+      <label class="f-label" for="f-email">Adresse e-mail <span class="f-req">*</span></label>
+      <input class="f-input" type="email" id="f-email" placeholder="votre@adresse.fr" required autocomplete="email">
+    </div>
 
-      <p>Toutes les conventions bibliographiques sont acceptées, à condition d'être correctement appliquées.</p>
+    <div class="f-field">
+      <label class="f-label" for="f-affil">Affiliation institutionnelle <span style="font-style:italic;font-size:0.88em">(le cas échéant)</span></label>
+      <input class="f-input" type="text" id="f-affil" placeholder="Université, Centre de recherche…">
+    </div>
 
-      <p>Le délai estimé entre la soumission et la publication est de 4 mois.</p>
-    </section>
-  </article>
+    <div class="f-field">
+      <label class="f-label" for="f-orcid">ORCID <span style="font-style:italic;font-size:0.88em">(facultatif)</span></label>
+      <input class="f-input" type="url" id="f-orcid" placeholder="https://orcid.org/0000-0000-0000-0000">
+    </div>
+  </section>
+
+  <!-- ② Informations sur l'article ───────────────────────── -->
+  <section aria-labelledby="s-article">
+    <hr class="f-hr">
+    <h2 id="s-article"><strong>Informations sur l'article<span class="verspunkt">·</span></strong></h2>
+
+    <div class="f-field">
+      <label class="f-label" for="f-title">Titre <span class="f-req">*</span></label>
+      <input class="f-input" type="text" id="f-title" placeholder="Titre de l'article" required>
+    </div>
+
+    <div class="f-field">
+      <label class="f-label" for="f-lang">Langue du manuscrit <span class="f-req">*</span></label>
+      <select class="f-input" id="f-lang" required>
+        <option value="" disabled selected>Sélectionner une langue</option>
+        <option value="Allemand">Allemand</option>
+        <option value="Anglais">Anglais</option>
+        <option value="Arabe">Arabe</option>
+        <option value="Espagnol">Espagnol</option>
+        <option value="Français">Français</option>
+        <option value="Italien">Italien</option>
+        <option value="Portugais">Portugais</option>
+        <option value="Autre">Autre</option>
+      </select>
+    </div>
+
+    <div class="f-field">
+      <label class="f-label" for="f-abstract-en">Résumé en anglais <span class="f-req">*</span></label>
+      <span class="f-hint">Entre 450 et 1 500 caractères, espaces compris.</span>
+      <textarea class="f-input" id="f-abstract-en" style="min-height:120px" required placeholder="Abstract in English…"></textarea>
+      <div class="f-counter" id="counter-en">0 caractère</div>
+    </div>
+
+    <div class="f-field">
+      <label class="f-label" for="f-abstract-fr">Résumé en français <span style="font-style:italic;font-size:0.88em">(si possible)</span></label>
+      <span class="f-hint">Entre 450 et 1 500 caractères, espaces compris.</span>
+      <textarea class="f-input" id="f-abstract-fr" style="min-height:120px" placeholder="Résumé en français…"></textarea>
+      <div class="f-counter" id="counter-fr">0 caractère</div>
+    </div>
+
+    <!-- Résumé en langue du manuscrit (affiché si langue ≠ Anglais et ≠ Français) -->
+    <div class="f-field f-lang-section" id="lang-abstract-wrap" style="display:none">
+      <label class="f-label" for="f-abstract-lang">Résumé en <span class="lang-name">la langue du manuscrit</span> <span style="font-style:italic;font-size:0.88em">(facultatif)</span></label>
+      <span class="f-hint">Entre 450 et 1 500 caractères, espaces compris.</span>
+      <textarea class="f-input" id="f-abstract-lang" style="min-height:120px" placeholder="Résumé en langue du manuscrit…"></textarea>
+      <div class="f-counter" id="counter-lang">0 caractère</div>
+    </div>
+
+    <div class="f-field">
+      <label class="f-label">Mots-clés en anglais <span class="f-req">*</span></label>
+      <span class="f-hint">Merci d'indiquer 6 mots-clés.</span>
+      <div class="f-kw-grid">
+        <input class="f-input" type="text" id="kw-en-1" placeholder="Mot-clé 1" required>
+        <input class="f-input" type="text" id="kw-en-2" placeholder="Mot-clé 2" required>
+        <input class="f-input" type="text" id="kw-en-3" placeholder="Mot-clé 3" required>
+        <input class="f-input" type="text" id="kw-en-4" placeholder="Mot-clé 4" required>
+        <input class="f-input" type="text" id="kw-en-5" placeholder="Mot-clé 5" required>
+        <input class="f-input" type="text" id="kw-en-6" placeholder="Mot-clé 6" required>
+      </div>
+    </div>
+
+    <div class="f-field">
+      <label class="f-label">Mots-clés en français <span style="font-style:italic;font-size:0.88em">(si possible)</span></label>
+      <div class="f-kw-grid">
+        <input class="f-input" type="text" id="kw-fr-1" placeholder="Mot-clé 1">
+        <input class="f-input" type="text" id="kw-fr-2" placeholder="Mot-clé 2">
+        <input class="f-input" type="text" id="kw-fr-3" placeholder="Mot-clé 3">
+        <input class="f-input" type="text" id="kw-fr-4" placeholder="Mot-clé 4">
+        <input class="f-input" type="text" id="kw-fr-5" placeholder="Mot-clé 5">
+        <input class="f-input" type="text" id="kw-fr-6" placeholder="Mot-clé 6">
+      </div>
+    </div>
+
+    <!-- Mots-clés en langue du manuscrit (affiché si langue ≠ Anglais et ≠ Français) -->
+    <div class="f-field f-lang-section" id="lang-kw-wrap" style="display:none">
+      <label class="f-label">Mots-clés en <span class="lang-name">la langue du manuscrit</span> <span style="font-style:italic;font-size:0.88em">(facultatif)</span></label>
+      <div class="f-kw-grid">
+        <input class="f-input" type="text" id="kw-lang-1" placeholder="Mot-clé 1">
+        <input class="f-input" type="text" id="kw-lang-2" placeholder="Mot-clé 2">
+        <input class="f-input" type="text" id="kw-lang-3" placeholder="Mot-clé 3">
+        <input class="f-input" type="text" id="kw-lang-4" placeholder="Mot-clé 4">
+        <input class="f-input" type="text" id="kw-lang-5" placeholder="Mot-clé 5">
+        <input class="f-input" type="text" id="kw-lang-6" placeholder="Mot-clé 6">
+      </div>
+    </div>
+
+    <div class="f-field">
+      <label class="f-label" for="f-statements">Remerciements, financements, conflits d'intérêts <span style="font-style:italic;font-size:0.88em">(le cas échéant)</span></label>
+      <textarea class="f-input" id="f-statements" placeholder="Le cas échéant, indiquez ici toute déclaration utile."></textarea>
+    </div>
+  </section>
+
+  <!-- ③ Fichiers ───────────────────────────────────────────── -->
+  <section aria-labelledby="s-fichiers">
+    <hr class="f-hr">
+    <h2 id="s-fichiers"><strong>Fichiers<span class="verspunkt">·</span></strong></h2>
+    <p class="small">Merci de soumettre votre article en version PDF anonymisée et d'y joindre la version éditable originale (.odt, .docx ou similaire). Les deux fichiers sont obligatoires. Les fichiers sont enregistrés directement sur le Google Drive de la BOE.</p>
+
+    <div class="f-field">
+      <label class="f-label" for="f-pdf">PDF anonymisé <span class="f-req">*</span></label>
+      <span class="f-hint">Vérifiez que le fichier ne contient aucune information sur l'auteur·rice dans le texte ou les métadonnées.</span>
+      <input class="f-file" type="file" id="f-pdf" accept=".pdf" required>
+    </div>
+
+    <div class="f-field">
+      <label class="f-label" for="f-editable">Version éditable originale <span class="f-req">*</span></label>
+      <span class="f-hint">Formats acceptés : .odt, .docx, .doc, .tex et similaires.</span>
+      <input class="f-file" type="file" id="f-editable" accept=".odt,.docx,.doc,.tex,.rtf,.pages" required>
+    </div>
+  </section>
+
+  <!-- ④ Déclaration de droits d'auteur ───────────────────── -->
+  <section aria-labelledby="s-droits">
+    <hr class="f-hr">
+    <h2 id="s-droits"><strong>Déclaration de droits d'auteur <span class="f-req">*</span><span class="verspunkt">·</span></strong></h2>
+
+    <p class="small">Veuillez lire attentivement la déclaration suivante. En cochant la case ci-dessous, vous donnez votre consentement électronique. La date, l'heure et le contenu de votre soumission seront enregistrés et inclus dans votre e-mail de confirmation, qui constitue une trace datée de votre consentement.</p>
+
+    <div class="f-declaration">
+      En soumettant cet article, je certifie détenir les droits nécessaires sur l'ensemble des contenus transmis (texte, illustrations, etc.) et j'autorise la maison d'édition associative Bibliothèque Ouverte des Mondes Anciens à en assurer la publication dans la revue <em>Bibliothèque ouverte d'égyptologie</em>, y compris dans un volume annuel imprimé proposé à la vente sans contrepartie financière pour l'auteur, conformément au processus éditorial décrit. Je garantis également que ces éléments ne contreviennent pas aux droits d'auteur ni aux droits des tiers.
+    </div>
+
+    <label class="f-checkbox-wrap">
+      <input type="checkbox" id="f-legal" required>
+      <span>J'ai lu et j'accepte intégralement la déclaration ci-dessus. Je comprends qu'il s'agit de mon consentement électronique, daté au moment de la soumission.</span>
+    </label>
+  </section>
+
+  <!-- Soumettre ───────────────────────────────────────────── -->
+  <div style="margin-top:1.25em">
+    <button type="submit" class="f-btn" id="btn-submit">Soumettre l'article</button>
+    <div class="f-uploading" id="f-uploading">Envoi des fichiers et de la soumission en cours, veuillez patienter…</div>
+  </div>
+
+</form>
+
+<div class="f-msg success" id="msg-success">
+  <p>✓ Votre article a bien été soumis.</p>
+  <p style="margin-top:0.75em">Nous vous remercions d'avoir soumis votre article à la <em>Bibliothèque ouverte d'égyptologie</em>. Nous accusons réception de votre manuscrit. Le processus d'évaluation éditoriale débutera prochainement, et nous vous contacterons dès que possible. Un e-mail de confirmation incluant votre déclaration de droits d'auteur vous a été envoyé.</p>
+  <p style="margin-top:0.75em">Avec nos cordiales salutations,<br>Le Comité éditorial<br><em>Bibliothèque ouverte d'égyptologie</em></p>
+</div>
+
+<div class="f-msg error" id="msg-error">
+  Une erreur est survenue. Veuillez réessayer ou soumettre directement par e-mail à <a href="mailto:boegyptologie@gmail.com">boegyptologie@gmail.com</a>.
+</div>
+
+<div class="boma-logo-wrap">
+  <img src="/assets/boma-logo.png" alt="BOMA" class="boma-logo">
+</div>
+
+</article>
 </main>
 
 <footer>
@@ -118,21 +370,215 @@
     <a href="/fr/mentions-legales.html">Mentions légales</a>
   </div>
 </footer>
+
 <script>
-function updateMobileMenuSeparators() {
-  const links = Array.from(document.querySelectorAll('nav a'));
-  let previousTop = null;
-  links.forEach((link, index) => {
-    link.classList.remove('row-start');
-    const currentTop = link.offsetTop;
-    if (index === 0 || currentTop > previousTop) {
-      link.classList.add('row-start');
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxz7ec_buQY_cuShJ-BU4h5N0cFzveFuXh85xqd_SKwMERfyppo66y3jB5EJMreSGZe/exec';
+
+  // Compteurs de caractères
+  function updateCounter(textareaId, counterId, min, max) {
+    const ta  = document.getElementById(textareaId);
+    const ctr = document.getElementById(counterId);
+    if (!ta || !ctr) return;
+    ta.addEventListener('input', () => {
+      const n = ta.value.length;
+      const s = n <= 1 ? ' caractère' : ' caractères';
+      ctr.textContent = n + s;
+      ctr.className = 'f-counter';
+      if (n > 0 && n < min)          ctr.className = 'f-counter over';
+      else if (n >= min && n <= max)  ctr.className = 'f-counter ok';
+      else if (n > max)               ctr.className = 'f-counter over';
+    });
+  }
+
+  updateCounter('f-abstract-en',   'counter-en',   450, 1500);
+  updateCounter('f-abstract-fr',   'counter-fr',   450, 1500);
+  updateCounter('f-abstract-lang', 'counter-lang', 450, 1500);
+
+  // Sélecteur de langue : affichage conditionnel des champs en langue du manuscrit
+  document.getElementById('f-lang').addEventListener('change', function() {
+    const lang      = this.value;
+    const showExtra = lang && lang !== 'Anglais' && lang !== 'Français';
+    document.getElementById('lang-abstract-wrap').style.display = showExtra ? 'block' : 'none';
+    document.getElementById('lang-kw-wrap').style.display       = showExtra ? 'block' : 'none';
+    if (showExtra) {
+      document.querySelectorAll('.lang-name').forEach(el => el.textContent = lang.toLowerCase());
+      document.getElementById('f-abstract-lang').placeholder = `Résumé en ${lang.toLowerCase()}…`;
     }
-    previousTop = currentTop;
   });
-}
-window.addEventListener('load', updateMobileMenuSeparators);
-window.addEventListener('resize', updateMobileMenuSeparators);
+
+  function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload  = () => resolve(reader.result.split(',')[1]);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function getKeywords(prefix) {
+    return [1,2,3,4,5,6]
+      .map(i => document.getElementById(`kw-${prefix}-` + i)?.value.trim() ?? '')
+      .filter(Boolean)
+      .join(', ');
+  }
+
+  function buildBody(data) {
+    const date = new Date().toLocaleString('fr-FR', {
+      day: '2-digit', month: 'long', year: 'numeric',
+      hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
+    });
+    let b = '';
+    b += `── SOUMISSION ────────────────────────────────────────────\n`;
+    b += `Date              : ${date}\n`;
+    b += `Nom               : ${data.name}\n`;
+    b += `E-mail            : ${data.email}\n`;
+    if (data.affil)  b += `Affiliation       : ${data.affil}\n`;
+    if (data.orcid)  b += `ORCID             : ${data.orcid}\n`;
+    b += `\n── ARTICLE ───────────────────────────────────────────────\n`;
+    b += `Titre             : ${data.title}\n`;
+    b += `Langue            : ${data.lang}\n`;
+    b += `\nRésumé (EN) :\n${data.abstractEN}\n`;
+    if (data.abstractFR)   b += `\nRésumé (FR) :\n${data.abstractFR}\n`;
+    if (data.abstractLang) b += `\nRésumé (${data.lang}) :\n${data.abstractLang}\n`;
+    b += `\nMots-clés (EN)    : ${data.keywordsEN}\n`;
+    if (data.keywordsFR)   b += `Mots-clés (FR)    : ${data.keywordsFR}\n`;
+    if (data.keywordsLang) b += `Mots-clés (${data.lang}) : ${data.keywordsLang}\n`;
+    if (data.statements)   b += `\nDéclarations :\n${data.statements}\n`;
+    b += `\n── DÉCLARATION DE DROITS D'AUTEUR ────────────────────────\n`;
+    b += `Acceptée le       : ${date}\n`;
+    b += `\n« En soumettant cet article, je certifie détenir les droits nécessaires sur l'ensemble des contenus transmis (texte, illustrations, etc.) et j'autorise la maison d'édition associative Bibliothèque Ouverte des Mondes Anciens à en assurer la publication dans la revue Bibliothèque ouverte d'égyptologie, y compris dans un volume annuel imprimé proposé à la vente sans contrepartie financière pour l'auteur, conformément au processus éditorial décrit. Je garantis également que ces éléments ne contreviennent pas aux droits d'auteur ni aux droits des tiers. »\n`;
+    return b;
+  }
+
+  function buildConfirmation(data, date) {
+    return `Madame, Monsieur,\n\n` +
+      `Nous accusons réception de votre soumission :\n\n` +
+      `  Titre    : ${data.title}\n` +
+      `  Langue   : ${data.lang}\n` +
+      `  Date     : ${date}\n\n` +
+      `Pour vos archives, voici la déclaration de droits d'auteur que vous avez acceptée au moment de la soumission :\n\n` +
+      `« En soumettant cet article, je certifie détenir les droits nécessaires sur l'ensemble des contenus transmis (texte, illustrations, etc.) et j'autorise la maison d'édition associative Bibliothèque Ouverte des Mondes Anciens à en assurer la publication dans la revue Bibliothèque ouverte d'égyptologie, y compris dans un volume annuel imprimé proposé à la vente sans contrepartie financière pour l'auteur, conformément au processus éditorial décrit. Je garantis également que ces éléments ne contreviennent pas aux droits d'auteur ni aux droits des tiers. »\n\n` +
+      `Le processus d'évaluation éditoriale débutera prochainement, et nous vous contacterons dès que possible.\n\n` +
+      `Avec nos cordiales salutations,\n` +
+      `Le Comité éditorial\n` +
+      `Bibliothèque ouverte d'égyptologie\n` +
+      `boegyptologie@gmail.com`;
+  }
+
+  document.getElementById('submit-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    if (document.getElementById('hp').value) return;
+
+    const name         = document.getElementById('f-name').value.trim();
+    const email        = document.getElementById('f-email').value.trim();
+    const affil        = document.getElementById('f-affil').value.trim();
+    const orcid        = document.getElementById('f-orcid').value.trim();
+    const title        = document.getElementById('f-title').value.trim();
+    const lang         = document.getElementById('f-lang').value;
+    const abstractEN   = document.getElementById('f-abstract-en').value.trim();
+    const abstractFR   = document.getElementById('f-abstract-fr').value.trim();
+    const abstractLang = document.getElementById('f-abstract-lang').value.trim();
+    const keywordsENList = [1,2,3,4,5,6].map(i => document.getElementById(`kw-en-${i}`)?.value.trim() ?? '').filter(Boolean);
+    const keywordsEN   = keywordsENList.join(', ');
+    const keywordsFR   = getKeywords('fr');
+    const keywordsLang = getKeywords('lang');
+    const statements   = document.getElementById('f-statements').value.trim();
+    const legalOk      = document.getElementById('f-legal').checked;
+    const pdfFile      = document.getElementById('f-pdf').files[0];
+    const editFile     = document.getElementById('f-editable').files[0];
+
+    const manquants = [];
+    if (!name)        manquants.push('Nom et prénom');
+    if (!email)       manquants.push('Adresse e-mail');
+    if (!title)       manquants.push('Titre');
+    if (!lang)        manquants.push('Langue du manuscrit');
+    if (!abstractEN)  manquants.push('Résumé en anglais');
+    else if (abstractEN.length < 450 || abstractEN.length > 1500)
+      manquants.push(`Résumé en anglais (${abstractEN.length} caractères — doit être entre 450 et 1 500)`);
+    if (abstractFR && (abstractFR.length < 450 || abstractFR.length > 1500))
+      manquants.push(`Résumé en français (${abstractFR.length} caractères — doit être entre 450 et 1 500 si renseigné)`);
+    if (abstractLang && (abstractLang.length < 450 || abstractLang.length > 1500))
+      manquants.push(`Résumé en ${lang || 'langue du manuscrit'} (${abstractLang.length} caractères — doit être entre 450 et 1 500 si renseigné)`);
+    if (keywordsENList.length < 6) manquants.push(`Mots-clés en anglais (${keywordsENList.length}/6 renseignés — les 6 sont obligatoires)`);
+    if (!pdfFile)     manquants.push('PDF anonymisé');
+    if (!editFile)    manquants.push('Version éditable originale');
+    if (!legalOk)     manquants.push('Déclaration de droits (veuillez cocher la case)');
+
+    if (manquants.length > 0) {
+      alert('Veuillez compléter les champs obligatoires suivants :\n\n· ' + manquants.join('\n· '));
+      return;
+    }
+
+    const btn       = document.getElementById('btn-submit');
+    const uploading  = document.getElementById('f-uploading');
+    btn.disabled = true;
+    uploading.style.display = 'block';
+
+    const date = new Date().toLocaleString('fr-FR', {
+      day: '2-digit', month: 'long', year: 'numeric',
+      hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
+    });
+
+    const data = { name, email, affil, orcid, title, lang, abstractEN, abstractFR, abstractLang, keywordsEN, keywordsFR, keywordsLang, statements };
+
+    const files = [];
+    try {
+      files.push({ name: pdfFile.name,  type: pdfFile.type,  data: await fileToBase64(pdfFile)  });
+      files.push({ name: editFile.name, type: editFile.type, data: await fileToBase64(editFile) });
+    } catch(err) {
+      alert('Erreur lors de la lecture des fichiers. Veuillez réessayer.');
+      btn.disabled = false; uploading.style.display = 'none';
+      return;
+    }
+
+    const payload = {
+      type:          'submission',
+      author_name:   name,
+      author_email:  email,
+      article_title: title,
+      body:          buildBody(data),
+      confirmation:  buildConfirmation(data, date),
+      files
+    };
+
+    try {
+      await fetch(APPS_SCRIPT_URL, {
+        method:  'POST',
+        mode:    'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body:    JSON.stringify(payload)
+      });
+
+      document.getElementById('submit-form').style.display = 'none';
+      uploading.style.display = 'none';
+      const ok = document.getElementById('msg-success');
+      ok.style.display = 'block';
+      ok.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    } catch (err) {
+      console.error(err);
+      uploading.style.display = 'none';
+      document.getElementById('msg-error').style.display = 'block';
+      btn.disabled = false;
+    }
+  });
 </script>
+
+<script>
+  function updateMobileMenuSeparators() {
+    const links = Array.from(document.querySelectorAll('nav a'));
+    let previousTop = null;
+    links.forEach((link, index) => {
+      link.classList.remove('row-start');
+      const currentTop = link.offsetTop;
+      if (index === 0 || currentTop > previousTop) link.classList.add('row-start');
+      previousTop = currentTop;
+    });
+  }
+  window.addEventListener('load', updateMobileMenuSeparators);
+  window.addEventListener('resize', updateMobileMenuSeparators);
+</script>
+
 </body>
 </html>
