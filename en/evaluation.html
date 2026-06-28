@@ -7,19 +7,14 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="stylesheet" href="/assets/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
     /* ── Form-specific styles (complement /assets/style.css) ── */
 
-    /* Field wrapper */
     .f-field { margin: 0.7em 0; }
-
-    /* Labels */
     .f-label { display: block; margin-bottom: 0.2em; }
     .f-req   { color: var(--accent-red); }
     .f-hint  { display: block; font-size: 0.82em !important; color: #777; font-style: italic; }
 
-    /* Text / email / textarea */
     input[type="text"].f-input,
     input[type="email"].f-input,
     textarea.f-input {
@@ -127,7 +122,7 @@
     .f-yn:has(input:checked) { background: var(--accent-red); border-color: var(--accent-red); color: #fff !important; }
     .f-yn input { display: none; }
 
-    /* Checklist items — red left border like .submission-declaration */
+    /* Checklist */
     .f-check-list { margin: 0.5em 0 1em; }
 
     .f-check-item {
@@ -184,7 +179,11 @@
     .f-slot-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6em; }
 
     /* File input */
-    input[type="file"].f-file { width: 100%; font-size: 0.9em !important; color: #666; }
+    input[type="file"].f-file {
+      width: 100%;
+      font-size: 0.9em !important;
+      color: #666;
+    }
 
     input[type="file"].f-file::file-selector-button {
       background: #fff;
@@ -200,7 +199,7 @@
 
     input[type="file"].f-file::file-selector-button:hover { border-color: var(--accent-red); }
 
-    /* Submit button — matches BOE red */
+    /* Submit button */
     .f-btn {
       display: inline-block;
       background: var(--accent-red);
@@ -237,7 +236,15 @@
     .f-cond        { display: none; }
     .f-cond.active { display: block; }
 
-    /* Responsive */
+    /* Upload progress */
+    .f-uploading {
+      font-size: 0.85em !important;
+      color: #888;
+      font-style: italic;
+      margin-top: 0.3em;
+      display: none;
+    }
+
     @media (max-width: 580px) {
       .f-slot-row  { grid-template-columns: 1fr; }
       .f-sc-grid   { grid-template-columns: 1fr; }
@@ -274,8 +281,6 @@
 <p class="small">For use by members of the BOE editorial and scientific committee only. This form is confidential.</p>
 
 <form id="eval-form" novalidate>
-  <!-- Hidden input: EmailJS body (set dynamically before submission) -->
-  <input type="hidden" id="h-body" name="body" value="">
 
   <!-- ① General Information ───────────────────────────────── -->
   <section aria-labelledby="s-general">
@@ -353,7 +358,7 @@
 
     <div class="f-field">
       <label class="f-label" for="f-sci-comments">Comments <span style="font-style:italic;font-size:0.88em">(optional)</span></label>
-      <textarea class="f-input" id="f-sci-comments" name="sci_comments" placeholder="Remarks for the author and/or the editorial committee…"></textarea>
+      <textarea class="f-input" id="f-sci-comments" placeholder="Remarks for the author and/or the editorial committee…"></textarea>
     </div>
 
     <div class="f-field">
@@ -443,7 +448,7 @@
 
     <div class="f-field">
       <label class="f-label" for="f-ed-comments">Remarks <span style="font-style:italic;font-size:0.88em">(optional)</span></label>
-      <textarea class="f-input" id="f-ed-comments" name="ed_comments" placeholder="Remarks for the Editor-in-Chief…"></textarea>
+      <textarea class="f-input" id="f-ed-comments" placeholder="Remarks for the Editor-in-Chief…"></textarea>
     </div>
 
     <div class="f-field">
@@ -454,7 +459,7 @@
       </div>
     </div>
 
-    <!-- Suggested reviewers (conditional on "Yes") -->
+    <!-- Suggested reviewers -->
     <div class="f-cond" id="peer-section">
       <hr class="f-hr" style="margin:1em 0 0.75em">
       <p><strong>Suggested Reviewers</strong></p>
@@ -463,30 +468,31 @@
       <div class="f-rev-slot">
         <div class="f-slot-title">External reviewer 1</div>
         <div class="f-slot-row">
-          <div class="f-field" style="margin:0"><label class="f-label" style="font-size:0.85em !important" for="ext1n">Name</label><input class="f-input" type="text" id="ext1n" name="ext1_name" placeholder="First Last"></div>
-          <div class="f-field" style="margin:0"><label class="f-label" style="font-size:0.85em !important" for="ext1e">Email</label><input class="f-input" type="email" id="ext1e" name="ext1_email" placeholder="optional"></div>
+          <div class="f-field" style="margin:0"><label class="f-label" style="font-size:0.85em !important" for="ext1n">Name</label><input class="f-input" type="text" id="ext1n" placeholder="First Last"></div>
+          <div class="f-field" style="margin:0"><label class="f-label" style="font-size:0.85em !important" for="ext1e">Email</label><input class="f-input" type="email" id="ext1e" placeholder="optional"></div>
         </div>
       </div>
 
       <div class="f-rev-slot">
         <div class="f-slot-title">External reviewer 2</div>
         <div class="f-slot-row">
-          <div class="f-field" style="margin:0"><label class="f-label" style="font-size:0.85em !important" for="ext2n">Name</label><input class="f-input" type="text" id="ext2n" name="ext2_name" placeholder="First Last"></div>
-          <div class="f-field" style="margin:0"><label class="f-label" style="font-size:0.85em !important" for="ext2e">Email</label><input class="f-input" type="email" id="ext2e" name="ext2_email" placeholder="optional"></div>
+          <div class="f-field" style="margin:0"><label class="f-label" style="font-size:0.85em !important" for="ext2n">Name</label><input class="f-input" type="text" id="ext2n" placeholder="First Last"></div>
+          <div class="f-field" style="margin:0"><label class="f-label" style="font-size:0.85em !important" for="ext2e">Email</label><input class="f-input" type="email" id="ext2e" placeholder="optional"></div>
         </div>
       </div>
 
       <div class="f-rev-slot">
         <div class="f-slot-title">External reviewer 3</div>
         <div class="f-slot-row">
-          <div class="f-field" style="margin:0"><label class="f-label" style="font-size:0.85em !important" for="ext3n">Name</label><input class="f-input" type="text" id="ext3n" name="ext3_name" placeholder="First Last"></div>
-          <div class="f-field" style="margin:0"><label class="f-label" style="font-size:0.85em !important" for="ext3e">Email</label><input class="f-input" type="email" id="ext3e" name="ext3_email" placeholder="optional"></div>
+          <div class="f-field" style="margin:0"><label class="f-label" style="font-size:0.85em !important" for="ext3n">Name</label><input class="f-input" type="text" id="ext3n" placeholder="First Last"></div>
+          <div class="f-field" style="margin:0"><label class="f-label" style="font-size:0.85em !important" for="ext3e">Email</label><input class="f-input" type="email" id="ext3e" placeholder="optional"></div>
         </div>
       </div>
 
       <div class="f-field">
-        <span class="f-label">Suggested scientific committee members <span class="f-req">*</span></span>
-        <span class="f-hint">Select at least 2.</span>
+        <span class="f-label">Suggested scientific committee members <span class="f-req">*</span>
+          <span style="font-weight:normal;font-size:0.85em"> — select at least 2</span>
+        </span>
         <div class="f-sc-grid">
           <label class="f-sc-opt"><input type="checkbox" name="sc" value="Ninon Blond"><span>Ninon Blond<span class="f-sc-inst">École normale supérieure de Lyon</span></span></label>
           <label class="f-sc-opt"><input type="checkbox" name="sc" value="Carlos Carvalhar"><span>Carlos Carvalhar<span class="f-sc-inst">Universidade de São Paulo</span></span></label>
@@ -512,40 +518,40 @@
           <label class="f-sc-opt"><input type="checkbox" name="sc" value="Simon Thuault"><span>Simon Thuault<span class="f-sc-inst">PhD in Egyptology, independent researcher</span></span></label>
         </div>
       </div>
-    </div><!-- /peer-section -->
-
+    </div>
   </section>
 
-  <!-- ④ Annexes ─────────────────────────────────────────────── -->
+  <!-- ④ Annexes → Google Drive ──────────────────────────────── -->
   <section class="f-cond" id="form-annexes" aria-labelledby="s-ann">
     <hr class="f-hr">
     <h2 id="s-ann"><strong>Annexes<span class="verspunkt">·</span></strong></h2>
-    <p class="small">Optional file attachments (PDF, Word, plain text). Up to 3 files. Anonymization notes relating to item (a) should be attached here.</p>
+    <p class="small">Upload up to 3 files (PDF, Word, plain text, max 10 MB each). Files are saved directly to the BOE Google Drive. Anonymization notes relating to item (a) should be attached here.</p>
 
     <div class="f-field">
       <label class="f-label" for="att1">Annex 1</label>
-      <input class="f-file" type="file" id="att1" name="attachment_1" accept=".pdf,.doc,.docx,.txt,.odt,.rtf">
+      <input class="f-file" type="file" id="att1" accept=".pdf,.doc,.docx,.txt,.odt,.rtf">
     </div>
     <div class="f-field">
       <label class="f-label" for="att2">Annex 2</label>
-      <input class="f-file" type="file" id="att2" name="attachment_2" accept=".pdf,.doc,.docx,.txt,.odt,.rtf">
+      <input class="f-file" type="file" id="att2" accept=".pdf,.doc,.docx,.txt,.odt,.rtf">
     </div>
     <div class="f-field">
       <label class="f-label" for="att3">Annex 3</label>
-      <input class="f-file" type="file" id="att3" name="attachment_3" accept=".pdf,.doc,.docx,.txt,.odt,.rtf">
+      <input class="f-file" type="file" id="att3" accept=".pdf,.doc,.docx,.txt,.odt,.rtf">
     </div>
   </section>
 
-  <!-- Submit ────────────────────────────────────────────────── -->
+  <!-- Submit ──────────────────────────────────────────────── -->
   <div class="f-cond" id="form-submit">
     <button type="submit" class="f-btn" id="btn-submit">Submit evaluation</button>
+    <div class="f-uploading" id="f-uploading">Uploading files and sending evaluation, please wait…</div>
   </div>
 
   <div class="f-msg success" id="msg-success">
-    ✓ Your evaluation has been submitted. Thank you for your contribution to the <em>Bibliothèque Ouverte d'Égyptologie</em>.
+    ✓ Your evaluation has been submitted and your files have been saved to the BOE Google Drive. Thank you for your contribution to the <em>Bibliothèque Ouverte d'Égyptologie</em>.
   </div>
   <div class="f-msg error" id="msg-error">
-    An error occurred. Please try again or contact the editorial team directly.
+    An error occurred. Please try again or contact the editorial team directly at <a href="mailto:boegyptologie@gmail.com">boegyptologie@gmail.com</a>.
   </div>
 
 </form>
@@ -566,23 +572,23 @@
 </footer>
 
 <script>
-  // ── EmailJS configuration ─────────────────────────────────────────────────
-  // Replace the three values below with your EmailJS credentials.
-  // EmailJS template variables:
-  //   {{body}}             → full evaluation text (plain text)
-  //   {{article_title}}    → use in subject line
-  //   {{evaluator_email}}  → set as Reply-To
-  //   attachment_1/2/3     → configure as "File Attachment" in template settings
-  const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';
-  const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';
-  const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
-
-  emailjs.init(EMAILJS_PUBLIC_KEY);
+  // ── Replace this URL with your deployed Google Apps Script web app URL ────
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyQ0hC3OL_aQw9RKJ9GIBAc-Eo4Jd6FYhByl2r1jYTR5OWBYIPKhAOsXpgZTCFmnK_F/exec';
 
   // ── Helpers ───────────────────────────────────────────────────────────────
-  const val   = n  => document.querySelector(`[name="${n}"]:checked`)?.value ?? null;
-  const txt   = id => document.getElementById(id)?.value.trim() ?? '';
-  const stars = n  => { const v = val(n); return v ? `${v}/5` : 'n/a'; };
+  const val = n  => document.querySelector(`[name="${n}"]:checked`)?.value ?? null;
+  const txt = id => document.getElementById(id)?.value.trim() ?? '';
+  const stars = n => { const v = val(n); return v ? `${v}/5` : 'n/a'; };
+
+  // Read a File object as a base64 string
+  function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload  = () => resolve(reader.result.split(',')[1]); // strip data URL prefix
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
 
   // ── Role: show/hide sections ──────────────────────────────────────────────
   document.querySelectorAll('input[name="role"]').forEach(r => {
@@ -595,14 +601,14 @@
     });
   });
 
-  // ── Peer review: show/hide reviewer section ───────────────────────────────
+  // ── Peer review toggle ────────────────────────────────────────────────────
   document.querySelectorAll('input[name="peer_review"]').forEach(r => {
     r.addEventListener('change', () => {
       document.getElementById('peer-section').classList.toggle('active', r.value === 'Yes');
     });
   });
 
-  // ── Build email body ──────────────────────────────────────────────────────
+  // ── Build email body text ─────────────────────────────────────────────────
   function buildBody(role, email, title) {
     const date = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
     const roleLabel = { editorial: 'Editorial committee', scientific: 'Scientific committee', external: 'External reviewer' }[role];
@@ -646,32 +652,66 @@
   // ── Form submission ───────────────────────────────────────────────────────
   document.getElementById('eval-form').addEventListener('submit', async function(e) {
     e.preventDefault();
-    const role = val('role'), email = txt('f-email'), title = txt('f-title');
-    if (!role || !email || !title) { alert('Please fill in your email address, the article title, and your role.'); return; }
 
-    document.getElementById('h-body').value = buildBody(role, email, title);
+    const role  = val('role');
+    const email = txt('f-email');
+    const title = txt('f-title');
 
-    // Disable inputs in the inactive role section before sendForm
-    const inactive = role === 'editorial' ? '#form-scientific' : '#form-editorial';
-    const toDisable = document.querySelectorAll(`${inactive} input, ${inactive} textarea`);
-    toDisable.forEach(el => { el.disabled = true; });
+    if (!role || !email || !title) {
+      alert('Please fill in your email address, the article title, and your role.');
+      return;
+    }
 
     const btn = document.getElementById('btn-submit');
-    btn.disabled = true; btn.textContent = 'Sending…';
+    const uploading = document.getElementById('f-uploading');
+    btn.disabled = true;
+    uploading.style.display = 'block';
+
+    // Collect files (up to 3), encode as base64
+    const fileInputIds = ['att1', 'att2', 'att3'];
+    const files = [];
+    for (const id of fileInputIds) {
+      const input = document.getElementById(id);
+      if (input && input.files[0]) {
+        const file = input.files[0];
+        try {
+          const data = await fileToBase64(file);
+          files.push({ name: file.name, type: file.type || 'application/octet-stream', data });
+        } catch(err) {
+          console.warn('Could not read file:', file.name, err);
+        }
+      }
+    }
+
+    const payload = {
+      evaluator_email: email,
+      article_title:   title,
+      body:            buildBody(role, email, title),
+      files:           files
+    };
 
     try {
-      await emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, '#eval-form');
+      // Content-Type: text/plain avoids CORS preflight while still sending JSON
+      await fetch(APPS_SCRIPT_URL, {
+        method:  'POST',
+        mode:    'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body:    JSON.stringify(payload)
+      });
+
       document.getElementById('eval-form').style.display = 'none';
+      uploading.style.display = 'none';
       const ok = document.getElementById('msg-success');
       ok.style.display = 'block';
       ok.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
     } catch (err) {
       console.error(err);
-      toDisable.forEach(el => { el.disabled = false; });
+      uploading.style.display = 'none';
       const ko = document.getElementById('msg-error');
       ko.style.display = 'block';
       ko.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      btn.disabled = false; btn.textContent = 'Submit evaluation';
+      btn.disabled = false;
     }
   });
 </script>
