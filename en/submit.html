@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Submit an Article — Bibliothèque Ouverte d'Égyptologie (BOE)</title>
+  <title>Bibliothèque Ouverte d'Égyptologie (BOE) | Submit an Article – Open-Access Journal – BOMA</title>
   <meta name="description" content="Submit an article to BOE: anonymized PDF, English abstract, 6 keywords. No fees, CC BY 4.0.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://boegyptologie.github.io/en/soumettre-un-article-submit-a-paper.html">
@@ -201,6 +201,9 @@
 
 <form id="submit-form" novalidate>
 
+  <!-- Honeypot anti-spam — invisible pour les humains -->
+  <input type="text" id="hp" style="display:none" tabindex="-1" autocomplete="off">
+
   <!-- ① Author information ─────────────────────────────────── -->
   <section aria-labelledby="s-author">
     <h2 id="s-author"><br><strong>Author Information<span class="verspunkt">·</span></strong></h2>
@@ -234,21 +237,6 @@
     <div class="f-field">
       <label class="f-label" for="f-title">Title <span class="f-req">*</span></label>
       <input class="f-input" type="text" id="f-title" placeholder="Title of the article" required>
-    </div>
-
-    <div class="f-field">
-      <label class="f-label" for="f-lang">Language of the article <span class="f-req">*</span></label>
-      <select class="f-input" id="f-lang" required>
-        <option value="" disabled selected>Select a language</option>
-        <option>Arabic</option>
-        <option>English</option>
-        <option>French</option>
-        <option>German</option>
-        <option>Italian</option>
-        <option>Portuguese</option>
-        <option>Spanish</option>
-        <option>Other</option>
-      </select>
     </div>
 
     <div class="f-field">
@@ -421,7 +409,6 @@
     if (data.orcid)  b += `ORCID             : ${data.orcid}\n`;
     b += `\n── ARTICLE ───────────────────────────────────────────────\n`;
     b += `Title             : ${data.title}\n`;
-    b += `Language          : ${data.lang}\n`;
     b += `\nAbstract (EN):\n${data.abstractEN}\n`;
     if (data.abstractFR) b += `\nAbstract (FR):\n${data.abstractFR}\n`;
     b += `\nKeywords (EN)     : ${data.keywordsEN}\n`;
@@ -438,7 +425,6 @@
     return `Dear ${data.name},\n\n` +
       `We confirm that your submission has been received:\n\n` +
       `  Title    : ${data.title}\n` +
-      `  Language : ${data.lang}\n` +
       `  Date     : ${date}\n\n` +
       `For your records, the following copyright declaration was accepted at the time of submission:\n\n` +
       `"By submitting this article, I certify that I hold the necessary rights to all submitted content (text, images, etc.), and I authorise the associative publishing house Bibliothèque Ouverte des Mondes Anciens to publish this work in the journal Bibliothèque ouverte d'égyptologie, including in a printed annual volume made available for purchase without financial compensation to the author, in accordance with the editorial process described. I also guarantee that these materials do not infringe any copyright or third-party rights."\n\n` +
@@ -453,12 +439,14 @@
   document.getElementById('submit-form').addEventListener('submit', async function(e) {
     e.preventDefault();
 
+    // Honeypot check — reject silently if filled by a bot
+    if (document.getElementById('hp').value) return;
+
     const name       = document.getElementById('f-name').value.trim();
     const email      = document.getElementById('f-email').value.trim();
     const affil      = document.getElementById('f-affil').value.trim();
     const orcid      = document.getElementById('f-orcid').value.trim();
     const title      = document.getElementById('f-title').value.trim();
-    const lang       = document.getElementById('f-lang').value;
     const abstractEN = document.getElementById('f-abstract-en').value.trim();
     const abstractFR = document.getElementById('f-abstract-fr').value.trim();
     const keywordsEN = getKeywords('en');
@@ -468,20 +456,22 @@
     const pdfFile    = document.getElementById('f-pdf').files[0];
     const editFile   = document.getElementById('f-editable').files[0];
 
-    if (!name || !email || !title || !lang || !abstractEN || !keywordsEN) {
-      alert('Please fill in all required fields.');
+    const missing = [];
+    if (!name)       missing.push('Full name');
+    if (!email)      missing.push('Email address');
+    if (!title)      missing.push('Title');
+    if (!abstractEN) missing.push('Abstract in English');
+    else if (abstractEN.length < 450 || abstractEN.length > 1500)
+      missing.push(`Abstract in English (${abstractEN.length} characters — must be between 450 and 1,500)`);
+    if (!keywordsEN) missing.push('Keywords in English (at least 1 required)');
+    if (!pdfFile)    missing.push('Anonymized PDF');
+    if (!editFile)   missing.push('Original editable version');
+    if (!legalOk)    missing.push('Copyright declaration (please check the box)');
+
+    if (missing.length > 0) {
+      alert('Please complete the following required fields:\n\n· ' + missing.join('\n· '));
       return;
     }
-
-    const abstractLen = abstractEN.length;
-    if (abstractLen < 450 || abstractLen > 1500) {
-      alert(`The English abstract must be between 450 and 1,500 characters (currently ${abstractLen}).`);
-      return;
-    }
-
-    if (!pdfFile) { alert('Please attach the anonymized PDF.'); return; }
-    if (!editFile) { alert('Please attach the original editable version.'); return; }
-    if (!legalOk) { alert('Please read and accept the copyright declaration.'); return; }
 
     const btn      = document.getElementById('btn-submit');
     const uploading = document.getElementById('f-uploading');
@@ -493,7 +483,7 @@
       hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
     });
 
-    const data = { name, email, affil, orcid, title, lang, abstractEN, abstractFR, keywordsEN, keywordsFR, statements };
+    const data = { name, email, affil, orcid, title, abstractEN, abstractFR, keywordsEN, keywordsFR, statements };
 
     // Encode files
     const files = [];
