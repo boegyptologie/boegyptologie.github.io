@@ -244,7 +244,7 @@
     </div>
 
     <div class="f-field">
-      <label class="f-label" for="f-abstract-fr">Résumé en français <span style="font-style:italic;font-size:0.88em">(si possible)</span></label>
+      <label class="f-label" for="f-abstract-fr">Résumé en français <span id="fr-abs-opt" style="font-style:italic;font-size:0.88em">(si possible)</span><span id="fr-abs-req" class="f-req" style="display:none"> *</span></label>
       <span class="f-hint">Entre 450 et 1 500 caractères, espaces compris.</span>
       <textarea class="f-input" id="f-abstract-fr" style="min-height:120px" placeholder="Résumé en français…"></textarea>
       <div class="f-counter" id="counter-fr">0 caractère</div>
@@ -252,7 +252,7 @@
 
     <!-- Résumé en langue du manuscrit (affiché si langue ≠ Anglais et ≠ Français) -->
     <div class="f-field f-lang-section" id="lang-abstract-wrap" style="display:none">
-      <label class="f-label" for="f-abstract-lang">Résumé en <span class="lang-name">la langue du manuscrit</span> <span style="font-style:italic;font-size:0.88em">(facultatif)</span></label>
+      <label class="f-label" for="f-abstract-lang">Résumé en <span class="lang-name">la langue du manuscrit</span> <span class="f-req">*</span></label>
       <span class="f-hint">Entre 450 et 1 500 caractères, espaces compris.</span>
       <textarea class="f-input" id="f-abstract-lang" style="min-height:120px" placeholder="Résumé en langue du manuscrit…"></textarea>
       <div class="f-counter" id="counter-lang">0 caractère</div>
@@ -272,7 +272,7 @@
     </div>
 
     <div class="f-field">
-      <label class="f-label">Mots-clés en français <span style="font-style:italic;font-size:0.88em">(si possible)</span></label>
+      <label class="f-label">Mots-clés en français <span id="fr-kw-opt" style="font-style:italic;font-size:0.88em">(si possible)</span><span id="fr-kw-req" class="f-req" style="display:none"> *</span></label>
       <div class="f-kw-grid">
         <input class="f-input" type="text" id="kw-fr-1" placeholder="Mot-clé 1">
         <input class="f-input" type="text" id="kw-fr-2" placeholder="Mot-clé 2">
@@ -285,7 +285,7 @@
 
     <!-- Mots-clés en langue du manuscrit (affiché si langue ≠ Anglais et ≠ Français) -->
     <div class="f-field f-lang-section" id="lang-kw-wrap" style="display:none">
-      <label class="f-label">Mots-clés en <span class="lang-name">la langue du manuscrit</span> <span style="font-style:italic;font-size:0.88em">(facultatif)</span></label>
+      <label class="f-label">Mots-clés en <span class="lang-name">la langue du manuscrit</span> <span class="f-req">*</span></label>
       <div class="f-kw-grid">
         <input class="f-input" type="text" id="kw-lang-1" placeholder="Mot-clé 1">
         <input class="f-input" type="text" id="kw-lang-2" placeholder="Mot-clé 2">
@@ -398,12 +398,21 @@
   document.getElementById('f-lang').addEventListener('change', function() {
     const lang      = this.value;
     const showExtra = lang && lang !== 'Anglais' && lang !== 'Français';
+    const frReq     = lang === 'Français';
+
     document.getElementById('lang-abstract-wrap').style.display = showExtra ? 'block' : 'none';
     document.getElementById('lang-kw-wrap').style.display       = showExtra ? 'block' : 'none';
+
     if (showExtra) {
       document.querySelectorAll('.lang-name').forEach(el => el.textContent = lang.toLowerCase());
       document.getElementById('f-abstract-lang').placeholder = `Résumé en ${lang.toLowerCase()}…`;
     }
+
+    // Bascule obligatoire/facultatif pour les champs FR
+    document.getElementById('fr-abs-opt').style.display = frReq ? 'none'   : 'inline';
+    document.getElementById('fr-abs-req').style.display = frReq ? 'inline' : 'none';
+    document.getElementById('fr-kw-opt').style.display  = frReq ? 'none'   : 'inline';
+    document.getElementById('fr-kw-req').style.display  = frReq ? 'inline' : 'none';
   });
 
   function fileToBase64(file) {
@@ -496,11 +505,38 @@
     if (!abstractEN)  manquants.push('Résumé en anglais');
     else if (abstractEN.length < 450 || abstractEN.length > 1500)
       manquants.push(`Résumé en anglais (${abstractEN.length} caractères — doit être entre 450 et 1 500)`);
-    if (abstractFR && (abstractFR.length < 450 || abstractFR.length > 1500))
+
+    // Résumé FR : obligatoire si langue = Français, sinon contrôle longueur si renseigné
+    if (lang === 'Français') {
+      if (!abstractFR) manquants.push('Résumé en français (obligatoire pour les manuscrits en français)');
+      else if (abstractFR.length < 450 || abstractFR.length > 1500)
+        manquants.push(`Résumé en français (${abstractFR.length} caractères — doit être entre 450 et 1 500)`);
+    } else if (abstractFR && (abstractFR.length < 450 || abstractFR.length > 1500)) {
       manquants.push(`Résumé en français (${abstractFR.length} caractères — doit être entre 450 et 1 500 si renseigné)`);
-    if (abstractLang && (abstractLang.length < 450 || abstractLang.length > 1500))
-      manquants.push(`Résumé en ${lang || 'langue du manuscrit'} (${abstractLang.length} caractères — doit être entre 450 et 1 500 si renseigné)`);
+    }
+
+    // Résumé en langue du manuscrit : obligatoire si langue ≠ Anglais et ≠ Français
+    const showLangSection = lang && lang !== 'Anglais' && lang !== 'Français';
+    if (showLangSection) {
+      if (!abstractLang) manquants.push(`Résumé en ${lang} (obligatoire pour les manuscrits en ${lang})`);
+      else if (abstractLang.length < 450 || abstractLang.length > 1500)
+        manquants.push(`Résumé en ${lang} (${abstractLang.length} caractères — doit être entre 450 et 1 500)`);
+    } else if (abstractLang && (abstractLang.length < 450 || abstractLang.length > 1500)) {
+      manquants.push(`Résumé en langue du manuscrit (${abstractLang.length} caractères — doit être entre 450 et 1 500 si renseigné)`);
+    }
+
     if (keywordsENList.length < 6) manquants.push(`Mots-clés en anglais (${keywordsENList.length}/6 renseignés — les 6 sont obligatoires)`);
+
+    // Mots-clés FR : obligatoires si langue = Français
+    const kwFRList = [1,2,3,4,5,6].map(i => document.getElementById(`kw-fr-${i}`)?.value.trim() ?? '').filter(Boolean);
+    if (lang === 'Français' && kwFRList.length < 6)
+      manquants.push(`Mots-clés en français (${kwFRList.length}/6 renseignés — les 6 sont obligatoires pour les manuscrits en français)`);
+
+    // Mots-clés en langue du manuscrit : obligatoires si langue ≠ Anglais et ≠ Français
+    const kwLangList = [1,2,3,4,5,6].map(i => document.getElementById(`kw-lang-${i}`)?.value.trim() ?? '').filter(Boolean);
+    if (showLangSection && kwLangList.length < 6)
+      manquants.push(`Mots-clés en ${lang} (${kwLangList.length}/6 renseignés — les 6 sont obligatoires)`);
+
     if (!pdfFile)     manquants.push('PDF anonymisé');
     if (!editFile)    manquants.push('Version éditable originale');
     if (!legalOk)     manquants.push('Déclaration de droits (veuillez cocher la case)');
