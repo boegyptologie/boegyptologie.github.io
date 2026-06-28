@@ -262,7 +262,7 @@
     </div>
 
     <div class="f-field">
-      <label class="f-label" for="f-abstract-fr">Abstract in French <span style="font-style:italic;font-size:0.88em">(optional)</span></label>
+      <label class="f-label" for="f-abstract-fr">Abstract in French <span id="fr-abs-opt" style="font-style:italic;font-size:0.88em">(optional)</span><span id="fr-abs-req" class="f-req" style="display:none"> *</span></label>
       <span class="f-hint">Between 450 and 1,500 characters, including spaces.</span>
       <textarea class="f-input" id="f-abstract-fr" style="min-height:120px" placeholder="Résumé en français…"></textarea>
       <div class="f-counter" id="counter-fr">0 characters</div>
@@ -270,7 +270,7 @@
 
     <!-- Abstract in manuscript language (shown when lang ≠ EN and ≠ FR) -->
     <div class="f-field f-lang-section" id="lang-abstract-wrap" style="display:none">
-      <label class="f-label" for="f-abstract-lang">Abstract in <span class="lang-name">the manuscript language</span> <span style="font-style:italic;font-size:0.88em">(optional)</span></label>
+      <label class="f-label" for="f-abstract-lang">Abstract in <span class="lang-name">the manuscript language</span> <span class="f-req">*</span></label>
       <span class="f-hint">Between 450 and 1,500 characters, including spaces.</span>
       <textarea class="f-input" id="f-abstract-lang" style="min-height:120px" placeholder="Abstract in the manuscript language…"></textarea>
       <div class="f-counter" id="counter-lang">0 characters</div>
@@ -290,7 +290,7 @@
     </div>
 
     <div class="f-field">
-      <label class="f-label">Keywords in French <span style="font-style:italic;font-size:0.88em">(optional)</span></label>
+      <label class="f-label">Keywords in French <span id="fr-kw-opt" style="font-style:italic;font-size:0.88em">(optional)</span><span id="fr-kw-req" class="f-req" style="display:none"> *</span></label>
       <div class="f-kw-grid">
         <input class="f-input" type="text" id="kw-fr-1" placeholder="Mot-clé 1">
         <input class="f-input" type="text" id="kw-fr-2" placeholder="Mot-clé 2">
@@ -303,7 +303,7 @@
 
     <!-- Keywords in manuscript language (shown when lang ≠ EN and ≠ FR) -->
     <div class="f-field f-lang-section" id="lang-kw-wrap" style="display:none">
-      <label class="f-label">Keywords in <span class="lang-name">the manuscript language</span> <span style="font-style:italic;font-size:0.88em">(optional)</span></label>
+      <label class="f-label">Keywords in <span class="lang-name">the manuscript language</span> <span class="f-req">*</span></label>
       <div class="f-kw-grid">
         <input class="f-input" type="text" id="kw-lang-1" placeholder="Keyword 1">
         <input class="f-input" type="text" id="kw-lang-2" placeholder="Keyword 2">
@@ -414,18 +414,24 @@
 
   // ── Language selector: show/hide manuscript-language fields ───────────────
   document.getElementById('f-lang').addEventListener('change', function() {
-    const lang    = this.value;
+    const lang      = this.value;
     const showExtra = lang && lang !== 'English' && lang !== 'French';
+    const frReq     = lang === 'French';
+
+    // Show/hide lang-specific fields
     document.getElementById('lang-abstract-wrap').style.display = showExtra ? 'block' : 'none';
     document.getElementById('lang-kw-wrap').style.display       = showExtra ? 'block' : 'none';
+
     if (showExtra) {
       document.querySelectorAll('.lang-name').forEach(el => el.textContent = lang);
       document.getElementById('f-abstract-lang').placeholder = `Abstract in ${lang}…`;
-      for (let i = 1; i <= 6; i++) {
-        const el = document.getElementById(`kw-lang-${i}`);
-        if (el) el.placeholder = `Keyword ${i}`;
-      }
     }
+
+    // Toggle FR fields required/optional
+    document.getElementById('fr-abs-opt').style.display = frReq ? 'none'   : 'inline';
+    document.getElementById('fr-abs-req').style.display = frReq ? 'inline' : 'none';
+    document.getElementById('fr-kw-opt').style.display  = frReq ? 'none'   : 'inline';
+    document.getElementById('fr-kw-req').style.display  = frReq ? 'inline' : 'none';
   });
 
   // ── File to base64 ────────────────────────────────────────────────────────
@@ -524,11 +530,38 @@
     if (!abstractEN)  missing.push('Abstract in English');
     else if (abstractEN.length < 450 || abstractEN.length > 1500)
       missing.push(`Abstract in English (${abstractEN.length} characters — must be between 450 and 1,500)`);
-    if (abstractFR && (abstractFR.length < 450 || abstractFR.length > 1500))
+
+    // FR abstract: required if manuscript is French, otherwise length-checked if filled
+    if (lang === 'French') {
+      if (!abstractFR) missing.push('Abstract in French (required for French manuscripts)');
+      else if (abstractFR.length < 450 || abstractFR.length > 1500)
+        missing.push(`Abstract in French (${abstractFR.length} characters — must be between 450 and 1,500)`);
+    } else if (abstractFR && (abstractFR.length < 450 || abstractFR.length > 1500)) {
       missing.push(`Abstract in French (${abstractFR.length} characters — must be between 450 and 1,500 if provided)`);
-    if (abstractLang && (abstractLang.length < 450 || abstractLang.length > 1500))
-      missing.push(`Abstract in ${lang || 'the manuscript language'} (${abstractLang.length} characters — must be between 450 and 1,500 if provided)`);
+    }
+
+    // Lang-specific abstract: required if lang ≠ EN and ≠ FR
+    const showLangSection = lang && lang !== 'English' && lang !== 'French';
+    if (showLangSection) {
+      if (!abstractLang) missing.push(`Abstract in ${lang} (required for ${lang} manuscripts)`);
+      else if (abstractLang.length < 450 || abstractLang.length > 1500)
+        missing.push(`Abstract in ${lang} (${abstractLang.length} characters — must be between 450 and 1,500)`);
+    } else if (abstractLang && (abstractLang.length < 450 || abstractLang.length > 1500)) {
+      missing.push(`Abstract in the manuscript language (${abstractLang.length} characters — must be between 450 and 1,500 if provided)`);
+    }
+
     if (keywordsENList.length < 6) missing.push(`Keywords in English (${keywordsENList.length}/6 provided — all 6 are required)`);
+
+    // FR keywords: required if manuscript is French
+    const kwFRList = [1,2,3,4,5,6].map(i => document.getElementById(`kw-fr-${i}`)?.value.trim() ?? '').filter(Boolean);
+    if (lang === 'French' && kwFRList.length < 6)
+      missing.push(`Keywords in French (${kwFRList.length}/6 provided — all 6 are required for French manuscripts)`);
+
+    // Lang-specific keywords: required if lang ≠ EN and ≠ FR
+    const kwLangList = [1,2,3,4,5,6].map(i => document.getElementById(`kw-lang-${i}`)?.value.trim() ?? '').filter(Boolean);
+    if (showLangSection && kwLangList.length < 6)
+      missing.push(`Keywords in ${lang} (${kwLangList.length}/6 provided — all 6 are required)`);
+
     if (!pdfFile)     missing.push('Anonymized PDF');
     if (!editFile)    missing.push('Original editable version');
     if (!legalOk)     missing.push('Copyright declaration (please check the box)');
