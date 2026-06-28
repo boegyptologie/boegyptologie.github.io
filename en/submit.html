@@ -240,6 +240,21 @@
     </div>
 
     <div class="f-field">
+      <label class="f-label" for="f-lang">Language of the manuscript <span class="f-req">*</span></label>
+      <select class="f-input" id="f-lang" required>
+        <option value="" disabled selected>Select a language</option>
+        <option value="Arabic">Arabic</option>
+        <option value="English">English</option>
+        <option value="French">French</option>
+        <option value="German">German</option>
+        <option value="Italian">Italian</option>
+        <option value="Portuguese">Portuguese</option>
+        <option value="Spanish">Spanish</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+
+    <div class="f-field">
       <label class="f-label" for="f-abstract-en">Abstract in English <span class="f-req">*</span></label>
       <span class="f-hint">Between 450 and 1,500 characters, including spaces.</span>
       <textarea class="f-input" id="f-abstract-en" style="min-height:120px" required placeholder="English abstract…"></textarea>
@@ -251,6 +266,14 @@
       <span class="f-hint">Between 450 and 1,500 characters, including spaces.</span>
       <textarea class="f-input" id="f-abstract-fr" style="min-height:120px" placeholder="Résumé en français…"></textarea>
       <div class="f-counter" id="counter-fr">0 characters</div>
+    </div>
+
+    <!-- Abstract in manuscript language (shown when lang ≠ EN and ≠ FR) -->
+    <div class="f-field f-lang-section" id="lang-abstract-wrap" style="display:none">
+      <label class="f-label" for="f-abstract-lang">Abstract in <span class="lang-name">the manuscript language</span> <span style="font-style:italic;font-size:0.88em">(optional)</span></label>
+      <span class="f-hint">Between 450 and 1,500 characters, including spaces.</span>
+      <textarea class="f-input" id="f-abstract-lang" style="min-height:120px" placeholder="Abstract in the manuscript language…"></textarea>
+      <div class="f-counter" id="counter-lang">0 characters</div>
     </div>
 
     <div class="f-field">
@@ -275,6 +298,19 @@
         <input class="f-input" type="text" id="kw-fr-4" placeholder="Mot-clé 4">
         <input class="f-input" type="text" id="kw-fr-5" placeholder="Mot-clé 5">
         <input class="f-input" type="text" id="kw-fr-6" placeholder="Mot-clé 6">
+      </div>
+    </div>
+
+    <!-- Keywords in manuscript language (shown when lang ≠ EN and ≠ FR) -->
+    <div class="f-field f-lang-section" id="lang-kw-wrap" style="display:none">
+      <label class="f-label">Keywords in <span class="lang-name">the manuscript language</span> <span style="font-style:italic;font-size:0.88em">(optional)</span></label>
+      <div class="f-kw-grid">
+        <input class="f-input" type="text" id="kw-lang-1" placeholder="Keyword 1">
+        <input class="f-input" type="text" id="kw-lang-2" placeholder="Keyword 2">
+        <input class="f-input" type="text" id="kw-lang-3" placeholder="Keyword 3">
+        <input class="f-input" type="text" id="kw-lang-4" placeholder="Keyword 4">
+        <input class="f-input" type="text" id="kw-lang-5" placeholder="Keyword 5">
+        <input class="f-input" type="text" id="kw-lang-6" placeholder="Keyword 6">
       </div>
     </div>
 
@@ -357,7 +393,7 @@
   // ── Replace with your submission Apps Script URL ──────────────────────────
   const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxz7ec_buQY_cuShJ-BU4h5N0cFzveFuXh85xqd_SKwMERfyppo66y3jB5EJMreSGZe/exec';
 
-  // ── Character counters for abstracts ─────────────────────────────────────
+  // ── Character counters ────────────────────────────────────────────────────
   function updateCounter(textareaId, counterId, min, max) {
     const ta  = document.getElementById(textareaId);
     const ctr = document.getElementById(counterId);
@@ -372,8 +408,25 @@
     });
   }
 
-  updateCounter('f-abstract-en', 'counter-en', 450, 1500);
-  updateCounter('f-abstract-fr', 'counter-fr', 450, 1500);
+  updateCounter('f-abstract-en',   'counter-en',   450, 1500);
+  updateCounter('f-abstract-fr',   'counter-fr',   450, 1500);
+  updateCounter('f-abstract-lang', 'counter-lang', 450, 1500);
+
+  // ── Language selector: show/hide manuscript-language fields ───────────────
+  document.getElementById('f-lang').addEventListener('change', function() {
+    const lang    = this.value;
+    const showExtra = lang && lang !== 'English' && lang !== 'French';
+    document.getElementById('lang-abstract-wrap').style.display = showExtra ? 'block' : 'none';
+    document.getElementById('lang-kw-wrap').style.display       = showExtra ? 'block' : 'none';
+    if (showExtra) {
+      document.querySelectorAll('.lang-name').forEach(el => el.textContent = lang);
+      document.getElementById('f-abstract-lang').placeholder = `Abstract in ${lang}…`;
+      for (let i = 1; i <= 6; i++) {
+        const el = document.getElementById(`kw-lang-${i}`);
+        if (el) el.placeholder = `Keyword ${i}`;
+      }
+    }
+  });
 
   // ── File to base64 ────────────────────────────────────────────────────────
   function fileToBase64(file) {
@@ -409,11 +462,14 @@
     if (data.orcid)  b += `ORCID             : ${data.orcid}\n`;
     b += `\n── ARTICLE ───────────────────────────────────────────────\n`;
     b += `Title             : ${data.title}\n`;
+    b += `Language          : ${data.lang}\n`;
     b += `\nAbstract (EN):\n${data.abstractEN}\n`;
-    if (data.abstractFR) b += `\nAbstract (FR):\n${data.abstractFR}\n`;
+    if (data.abstractFR)   b += `\nAbstract (FR):\n${data.abstractFR}\n`;
+    if (data.abstractLang) b += `\nAbstract (${data.lang}):\n${data.abstractLang}\n`;
     b += `\nKeywords (EN)     : ${data.keywordsEN}\n`;
-    if (data.keywordsFR) b += `Keywords (FR)     : ${data.keywordsFR}\n`;
-    if (data.statements) b += `\nStatements:\n${data.statements}\n`;
+    if (data.keywordsFR)   b += `Keywords (FR)     : ${data.keywordsFR}\n`;
+    if (data.keywordsLang) b += `Keywords (${data.lang})  : ${data.keywordsLang}\n`;
+    if (data.statements)   b += `\nStatements:\n${data.statements}\n`;
     b += `\n── COPYRIGHT DECLARATION ─────────────────────────────────\n`;
     b += `Accepted on       : ${date}\n`;
     b += `\n"By submitting this article, I certify that I hold the necessary rights to all submitted content (text, images, etc.), and I authorise the associative publishing house Bibliothèque Ouverte des Mondes Anciens to publish this work in the journal Bibliothèque ouverte d'égyptologie, including in a printed annual volume made available for purchase without financial compensation to the author, in accordance with the editorial process described. I also guarantee that these materials do not infringe any copyright or third-party rights."\n`;
@@ -425,13 +481,14 @@
     return `Dear ${data.name},\n\n` +
       `We confirm that your submission has been received:\n\n` +
       `  Title    : ${data.title}\n` +
+      `  Language : ${data.lang}\n` +
       `  Date     : ${date}\n\n` +
       `For your records, the following copyright declaration was accepted at the time of submission:\n\n` +
       `"By submitting this article, I certify that I hold the necessary rights to all submitted content (text, images, etc.), and I authorise the associative publishing house Bibliothèque Ouverte des Mondes Anciens to publish this work in the journal Bibliothèque ouverte d'égyptologie, including in a printed annual volume made available for purchase without financial compensation to the author, in accordance with the editorial process described. I also guarantee that these materials do not infringe any copyright or third-party rights."\n\n` +
       `Thank you for submitting your paper to Bibliothèque ouverte d'égyptologie. We hereby acknowledge receipt of your manuscript. The editorial assessment process will soon begin, and we will contact you as soon as possible.\n\n` +
       `With best regards,\n` +
       `The Editorial Committee\n` +
-      `Bibliothèque Ouverte d'Égyptologie\n` +
+      `Bibliothèque ouverte d'égyptologie\n` +
       `boegyptologie@gmail.com`;
   }
 
@@ -439,43 +496,50 @@
   document.getElementById('submit-form').addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    // Honeypot check — reject silently if filled by a bot
     if (document.getElementById('hp').value) return;
 
-    const name       = document.getElementById('f-name').value.trim();
-    const email      = document.getElementById('f-email').value.trim();
-    const affil      = document.getElementById('f-affil').value.trim();
-    const orcid      = document.getElementById('f-orcid').value.trim();
-    const title      = document.getElementById('f-title').value.trim();
-    const abstractEN = document.getElementById('f-abstract-en').value.trim();
-    const abstractFR = document.getElementById('f-abstract-fr').value.trim();
+    const name        = document.getElementById('f-name').value.trim();
+    const email       = document.getElementById('f-email').value.trim();
+    const affil       = document.getElementById('f-affil').value.trim();
+    const orcid       = document.getElementById('f-orcid').value.trim();
+    const title       = document.getElementById('f-title').value.trim();
+    const lang        = document.getElementById('f-lang').value;
+    const abstractEN  = document.getElementById('f-abstract-en').value.trim();
+    const abstractFR  = document.getElementById('f-abstract-fr').value.trim();
+    const abstractLang = document.getElementById('f-abstract-lang').value.trim();
     const keywordsENList = [1,2,3,4,5,6].map(i => document.getElementById(`kw-en-${i}`)?.value.trim() ?? '').filter(Boolean);
-    const keywordsEN = keywordsENList.join(', ');
-    const keywordsFR = getKeywords('fr');
-    const statements = document.getElementById('f-statements').value.trim();
-    const legalOk    = document.getElementById('f-legal').checked;
-    const pdfFile    = document.getElementById('f-pdf').files[0];
-    const editFile   = document.getElementById('f-editable').files[0];
+    const keywordsEN  = keywordsENList.join(', ');
+    const keywordsFR  = getKeywords('fr');
+    const keywordsLang = getKeywords('lang');
+    const statements  = document.getElementById('f-statements').value.trim();
+    const legalOk     = document.getElementById('f-legal').checked;
+    const pdfFile     = document.getElementById('f-pdf').files[0];
+    const editFile    = document.getElementById('f-editable').files[0];
 
     const missing = [];
-    if (!name)       missing.push('Full name');
-    if (!email)      missing.push('Email address');
-    if (!title)      missing.push('Title');
-    if (!abstractEN) missing.push('Abstract in English');
+    if (!name)        missing.push('Full name');
+    if (!email)       missing.push('Email address');
+    if (!title)       missing.push('Title');
+    if (!lang)        missing.push('Language of the manuscript');
+    if (!abstractEN)  missing.push('Abstract in English');
     else if (abstractEN.length < 450 || abstractEN.length > 1500)
       missing.push(`Abstract in English (${abstractEN.length} characters — must be between 450 and 1,500)`);
+    if (abstractFR && (abstractFR.length < 450 || abstractFR.length > 1500))
+      missing.push(`Abstract in French (${abstractFR.length} characters — must be between 450 and 1,500 if provided)`);
+    if (abstractLang && (abstractLang.length < 450 || abstractLang.length > 1500))
+      missing.push(`Abstract in ${lang || 'the manuscript language'} (${abstractLang.length} characters — must be between 450 and 1,500 if provided)`);
     if (keywordsENList.length < 6) missing.push(`Keywords in English (${keywordsENList.length}/6 provided — all 6 are required)`);
-    if (!pdfFile)    missing.push('Anonymized PDF');
-    if (!editFile)   missing.push('Original editable version');
-    if (!legalOk)    missing.push('Copyright declaration (please check the box)');
+    if (!pdfFile)     missing.push('Anonymized PDF');
+    if (!editFile)    missing.push('Original editable version');
+    if (!legalOk)     missing.push('Copyright declaration (please check the box)');
 
     if (missing.length > 0) {
       alert('Please complete the following required fields:\n\n· ' + missing.join('\n· '));
       return;
     }
 
-    const btn      = document.getElementById('btn-submit');
-    const uploading = document.getElementById('f-uploading');
+    const btn       = document.getElementById('btn-submit');
+    const uploading  = document.getElementById('f-uploading');
     btn.disabled = true;
     uploading.style.display = 'block';
 
@@ -484,7 +548,7 @@
       hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
     });
 
-    const data = { name, email, affil, orcid, title, abstractEN, abstractFR, keywordsEN, keywordsFR, statements };
+    const data = { name, email, affil, orcid, title, lang, abstractEN, abstractFR, abstractLang, keywordsEN, keywordsFR, keywordsLang, statements };
 
     // Encode files
     const files = [];
