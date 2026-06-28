@@ -197,7 +197,7 @@
 <main>
 <article>
 
-<p>To submit an article to the journal <em>Bibliothèque ouverte d'égyptologie</em>, please complete the form below. For transliteration and transcription, please use Unicode fonts compatible with CC BY 4.0. A practical tool is the <a href="https://pnm.uni-mainz.de/tools/unicode/" target="_blank" rel="noopener noreferrer">Transliteration to Unicode Converter</a> (Johannes Gutenberg University Mainz). The estimated time between submission and publication is 4 months.</p>
+<p>To submit an article to the journal <em>Bibliothèque ouverte d'égyptologie</em>, please complete the form below. For transliteration and transcription, please ensure that all characters are encoded in Unicode. A practical tool is the <a href="https://pnm.uni-mainz.de/tools/unicode/" target="_blank" rel="noopener noreferrer">Transliteration to Unicode Converter</a> (Johannes Gutenberg University Mainz). The estimated time between submission and publication is 4 months.</p>
 
 <form id="submit-form" novalidate>
 
@@ -279,8 +279,15 @@
     </div>
 
     <div class="f-field">
-      <label class="f-label" for="f-kw-fr">Keywords in French <span style="font-style:italic;font-size:0.88em">(optional)</span></label>
-      <textarea class="f-input" id="f-kw-fr" style="min-height:56px" placeholder="Mot-clé 1, Mot-clé 2, Mot-clé 3…"></textarea>
+      <label class="f-label">Keywords in French <span style="font-style:italic;font-size:0.88em">(optional)</span></label>
+      <div class="f-kw-grid">
+        <input class="f-input" type="text" id="kw-fr-1" placeholder="Mot-clé 1">
+        <input class="f-input" type="text" id="kw-fr-2" placeholder="Mot-clé 2">
+        <input class="f-input" type="text" id="kw-fr-3" placeholder="Mot-clé 3">
+        <input class="f-input" type="text" id="kw-fr-4" placeholder="Mot-clé 4">
+        <input class="f-input" type="text" id="kw-fr-5" placeholder="Mot-clé 5">
+        <input class="f-input" type="text" id="kw-fr-6" placeholder="Mot-clé 6">
+      </div>
     </div>
 
     <div class="f-field">
@@ -331,17 +338,17 @@
     <div class="f-uploading" id="f-uploading">Uploading files and sending submission, please wait…</div>
   </div>
 
-  <div class="f-msg success" id="msg-success">
-    <p>✓ Your article has been successfully submitted.</p>
-    <p style="margin-top:0.75em">Thank you for submitting your paper to <em>Bibliothèque ouverte d'égyptologie</em>. We hereby acknowledge receipt of your manuscript. The editorial assessment process will soon begin, and we will contact you as soon as possible. A confirmation email including your copyright declaration has been sent to your address.</p>
-    <p style="margin-top:0.75em">With best regards,<br>The Editorial Committee<br><em>Bibliothèque ouverte d'égyptologie</em></p>
-  </div>
-
-  <div class="f-msg error" id="msg-error">
-    An error occurred. Please try again or submit directly by email to <a href="mailto:boegyptologie@gmail.com">boegyptologie@gmail.com</a>.
-  </div>
-
 </form>
+
+<div class="f-msg success" id="msg-success">
+  <p>✓ Your article has been successfully submitted.</p>
+  <p style="margin-top:0.75em">Thank you for submitting your paper to <em>Bibliothèque ouverte d'égyptologie</em>. We hereby acknowledge receipt of your manuscript. The editorial assessment process will soon begin, and we will contact you as soon as possible. A confirmation email including your copyright declaration has been sent to your address.</p>
+  <p style="margin-top:0.75em">With best regards,<br>The Editorial Committee<br><em>Bibliothèque ouverte d'égyptologie</em></p>
+</div>
+
+<div class="f-msg error" id="msg-error">
+  An error occurred. Please try again or submit directly by email to <a href="mailto:boegyptologie@gmail.com">boegyptologie@gmail.com</a>.
+</div>
 
 <div class="boma-logo-wrap">
   <img src="/assets/boma-logo.png" alt="BOMA" class="boma-logo">
@@ -391,9 +398,9 @@
   }
 
   // ── Collect keywords ──────────────────────────────────────────────────────
-  function getKeywords() {
+  function getKeywords(prefix) {
     return [1,2,3,4,5,6]
-      .map(i => document.getElementById('kw-en-' + i)?.value.trim() ?? '')
+      .map(i => document.getElementById(`kw-${prefix}-` + i)?.value.trim() ?? '')
       .filter(Boolean)
       .join(', ');
   }
@@ -454,8 +461,8 @@
     const lang       = document.getElementById('f-lang').value;
     const abstractEN = document.getElementById('f-abstract-en').value.trim();
     const abstractFR = document.getElementById('f-abstract-fr').value.trim();
-    const keywordsEN = getKeywords();
-    const keywordsFR = document.getElementById('f-kw-fr').value.trim();
+    const keywordsEN = getKeywords('en');
+    const keywordsFR = getKeywords('fr');
     const statements = document.getElementById('f-statements').value.trim();
     const legalOk    = document.getElementById('f-legal').checked;
     const pdfFile    = document.getElementById('f-pdf').files[0];
