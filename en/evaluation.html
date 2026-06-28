@@ -1,0 +1,695 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Article Evaluation Form — Bibliothèque Ouverte d'Égyptologie (BOE)</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    /* ── Form-specific styles (complement /assets/style.css) ── */
+
+    /* Field wrapper */
+    .f-field { margin: 0.7em 0; }
+
+    /* Labels */
+    .f-label { display: block; margin-bottom: 0.2em; }
+    .f-req   { color: var(--accent-red); }
+    .f-hint  { display: block; font-size: 0.82em !important; color: #777; font-style: italic; }
+
+    /* Text / email / textarea */
+    input[type="text"].f-input,
+    input[type="email"].f-input,
+    textarea.f-input {
+      display: block;
+      width: 100%;
+      padding: 0.32em 0.5em;
+      border: 1px solid #bbb;
+      background: #fff;
+      font-family: var(--font-body) !important;
+      font-size: 1em !important;
+      color: #222;
+      outline: none;
+      transition: border-color 0.15s;
+      border-radius: 0;
+    }
+
+    input[type="text"].f-input:focus,
+    input[type="email"].f-input:focus,
+    textarea.f-input:focus {
+      border-color: var(--accent-red);
+      box-shadow: 0 0 0 1px var(--accent-red);
+    }
+
+    textarea.f-input { resize: vertical; min-height: 88px; }
+
+    /* Role pills */
+    .f-pill-group { display: flex; flex-wrap: wrap; gap: 0.4em; margin: 0.35em 0; }
+
+    .f-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.1em 0.75em;
+      border: 1px solid #bbb;
+      border-radius: 100px;
+      cursor: pointer;
+      color: #888;
+      font-size: 0.9em !important;
+      user-select: none;
+      transition: background 0.14s, border-color 0.14s, color 0.14s;
+    }
+
+    .f-pill:has(input:checked) {
+      background: var(--accent-red);
+      border-color: var(--accent-red);
+      color: #fff !important;
+    }
+
+    .f-pill input { display: none; }
+
+    /* Stars */
+    .f-star-group { margin: 0.85em 0; }
+    .f-star-q     { display: block; margin-bottom: 0.15em; }
+    .f-star-sub   { display: block; font-size: 0.82em !important; color: #777; font-style: italic; margin-bottom: 0.2em; }
+
+    .f-stars { display: flex; flex-direction: row-reverse; justify-content: flex-end; }
+    .f-stars input { display: none; }
+
+    .f-stars label {
+      font-size: 1.85rem !important;
+      line-height: 1 !important;
+      color: #ddd;
+      cursor: pointer;
+      transition: color 0.12s;
+    }
+
+    .f-stars input:checked ~ label,
+    .f-stars label:hover,
+    .f-stars label:hover ~ label { color: var(--accent-red); }
+
+    /* Recommendation radios */
+    .f-rec-group { display: flex; flex-direction: column; gap: 0.3em; margin: 0.5em 0; }
+
+    .f-rec-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5em;
+      padding: 0.3em 0.6em;
+      border: 1px solid #ddd;
+      border-left: 2px solid transparent;
+      cursor: pointer;
+      font-size: 0.95em !important;
+      line-height: 1.45 !important;
+      transition: border-color 0.14s, background 0.14s;
+    }
+
+    .f-rec-option:has(input:checked) { border-left-color: var(--accent-red); background: #fff5f4; }
+    .f-rec-option input { margin-top: 3px; flex-shrink: 0; accent-color: var(--accent-red); }
+
+    /* Yes / No pills */
+    .f-yn-group { display: flex; gap: 0.4em; margin-top: 0.4em; }
+
+    .f-yn {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.1em 0.75em;
+      border: 1px solid #bbb;
+      border-radius: 100px;
+      cursor: pointer;
+      color: #888;
+      font-size: 0.85em !important;
+      user-select: none;
+      transition: background 0.14s, border-color 0.14s, color 0.14s;
+    }
+
+    .f-yn:has(input:checked) { background: var(--accent-red); border-color: var(--accent-red); color: #fff !important; }
+    .f-yn input { display: none; }
+
+    /* Checklist items — red left border like .submission-declaration */
+    .f-check-list { margin: 0.5em 0 1em; }
+
+    .f-check-item {
+      margin-bottom: 0.8em;
+      padding-left: 0.85em;
+      border-left: 1px solid var(--accent-red);
+    }
+
+    .f-check-text { font-size: 0.9em !important; line-height: 1.55 !important; margin-bottom: 0.3em; }
+
+    .f-check-note {
+      font-size: 0.82em !important;
+      line-height: 1.45 !important;
+      color: #666;
+      font-style: italic;
+      margin-bottom: 0.35em;
+    }
+
+    /* Scientific committee grid */
+    .f-sc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+      gap: 0.3em;
+      margin: 0.45em 0;
+    }
+
+    .f-sc-opt {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.4em;
+      padding: 0.3em 0.5em;
+      border: 1px solid #ddd;
+      cursor: pointer;
+      font-size: 0.82em !important;
+      line-height: 1.4 !important;
+      transition: border-color 0.13s, background 0.13s;
+    }
+
+    .f-sc-opt:has(input:checked) { border-color: var(--accent-red); background: #fff5f4; }
+    .f-sc-opt input { margin-top: 2px; flex-shrink: 0; accent-color: var(--accent-red); }
+    .f-sc-inst { display: block; font-size: 0.82em !important; color: #999; }
+
+    /* External reviewer slots */
+    .f-rev-slot { border-left: 1px dashed #ccc; padding-left: 0.85em; margin-bottom: 0.7em; }
+
+    .f-slot-title {
+      font-size: 0.78em !important;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #aaa;
+      margin-bottom: 0.45em;
+    }
+
+    .f-slot-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6em; }
+
+    /* File input */
+    input[type="file"].f-file { width: 100%; font-size: 0.9em !important; color: #666; }
+
+    input[type="file"].f-file::file-selector-button {
+      background: #fff;
+      border: 1px solid #bbb;
+      padding: 0.2em 0.7em;
+      font-family: var(--font-body) !important;
+      font-size: 0.88em !important;
+      color: #444;
+      cursor: pointer;
+      margin-right: 0.5em;
+      transition: border-color 0.15s;
+    }
+
+    input[type="file"].f-file::file-selector-button:hover { border-color: var(--accent-red); }
+
+    /* Submit button — matches BOE red */
+    .f-btn {
+      display: inline-block;
+      background: var(--accent-red);
+      color: #fff !important;
+      border: none;
+      padding: 0.42em 1.8em;
+      font-family: var(--font-body) !important;
+      font-size: 1em !important;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      margin-top: 1em;
+      transition: opacity 0.15s;
+    }
+
+    .f-btn:hover { opacity: 0.85; }
+    .f-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Messages */
+    .f-msg {
+      display: none;
+      padding: 0.6em 0.9em;
+      margin-top: 1.2em;
+      font-size: 0.9em !important;
+      line-height: 1.5 !important;
+    }
+
+    .f-msg.success { border-left: 3px solid #2a5c45; background: #eaf4ee; color: #2a5c45 !important; }
+    .f-msg.error   { border-left: 3px solid var(--accent-red); background: #fff5f4; color: #c03 !important; }
+
+    /* Divider */
+    .f-hr { border: none; border-top: 1px solid #eee; margin: 1.5em 0 1em; }
+
+    /* Conditional sections */
+    .f-cond        { display: none; }
+    .f-cond.active { display: block; }
+
+    /* Responsive */
+    @media (max-width: 580px) {
+      .f-slot-row  { grid-template-columns: 1fr; }
+      .f-sc-grid   { grid-template-columns: 1fr; }
+      .f-pill-group { gap: 0.3em; }
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="container">
+    <a class="brand" href="/en/about.html">
+      <img src="/assets/logo.png" alt="Logo BOE">
+      <span class="brand-text">
+        <span class="title">Bibliothèque ouverte d'égyptologie</span>
+        <span class="header-issn">ISSN&nbsp;3129-6424</span>
+      </span>
+    </a>
+    <span class="lang-switch"><a href="/fr/evaluation.html">FR</a></span>
+    <nav aria-label="Main navigation">
+      <a href="/en/about.html">About</a>
+      <a href="/en/numeros.html">Browse all issues</a>
+      <a href="/en/processus-editorial.html">Editorial process</a>
+      <a href="/en/soumettre-un-article-submit-a-paper.html">Submit an article</a>
+      <a href="/en/editorial-policy-statement.html">Editorial Policy Statement</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<article>
+
+<p><strong>Article Evaluation Form<span class="verspunkt">·</span></strong></p>
+<p class="small">For use by members of the BOE editorial and scientific committee only. This form is confidential.</p>
+
+<form id="eval-form" novalidate>
+  <!-- Hidden input: EmailJS body (set dynamically before submission) -->
+  <input type="hidden" id="h-body" name="body" value="">
+
+  <!-- ① General Information ───────────────────────────────── -->
+  <section aria-labelledby="s-general">
+    <h2 id="s-general"><br><strong>General Information<span class="verspunkt">·</span></strong></h2>
+
+    <div class="f-field">
+      <label class="f-label" for="f-email">Evaluator's email address <span class="f-req">*</span></label>
+      <input class="f-input" type="email" id="f-email" name="evaluator_email" placeholder="your@address.com" autocomplete="email" required>
+    </div>
+
+    <div class="f-field">
+      <label class="f-label" for="f-title">Title of the article under review <span class="f-req">*</span></label>
+      <input class="f-input" type="text" id="f-title" name="article_title" placeholder="Article title" required>
+    </div>
+
+    <div class="f-field">
+      <span class="f-label">Role <span class="f-req">*</span></span>
+      <div class="f-pill-group">
+        <label class="f-pill"><input type="radio" name="role" value="editorial"> Editorial committee</label>
+        <label class="f-pill"><input type="radio" name="role" value="scientific"> Scientific committee</label>
+        <label class="f-pill"><input type="radio" name="role" value="external"> External reviewer</label>
+      </div>
+    </div>
+  </section>
+
+  <!-- ② Scientific committee / External reviewer ──────────── -->
+  <section class="f-cond" id="form-scientific" aria-labelledby="s-sci">
+    <hr class="f-hr">
+    <h2 id="s-sci"><strong>Scientific Evaluation<span class="verspunkt">·</span></strong></h2>
+
+    <div class="f-star-group">
+      <span class="f-star-q">Clarity of arguments <span class="f-req">*</span></span>
+      <div class="f-stars">
+        <input type="radio" name="star_clarity" id="sc5" value="5"><label for="sc5">★</label>
+        <input type="radio" name="star_clarity" id="sc4" value="4"><label for="sc4">★</label>
+        <input type="radio" name="star_clarity" id="sc3" value="3"><label for="sc3">★</label>
+        <input type="radio" name="star_clarity" id="sc2" value="2"><label for="sc2">★</label>
+        <input type="radio" name="star_clarity" id="sc1" value="1"><label for="sc1">★</label>
+      </div>
+    </div>
+
+    <div class="f-star-group">
+      <span class="f-star-q">Solidity of arguments <span class="f-req">*</span></span>
+      <div class="f-stars">
+        <input type="radio" name="star_solidity" id="ss5" value="5"><label for="ss5">★</label>
+        <input type="radio" name="star_solidity" id="ss4" value="4"><label for="ss4">★</label>
+        <input type="radio" name="star_solidity" id="ss3" value="3"><label for="ss3">★</label>
+        <input type="radio" name="star_solidity" id="ss2" value="2"><label for="ss2">★</label>
+        <input type="radio" name="star_solidity" id="ss1" value="1"><label for="ss1">★</label>
+      </div>
+    </div>
+
+    <div class="f-star-group">
+      <span class="f-star-q">Relevance of speculative reasoning</span>
+      <span class="f-star-sub">If the article develops an argument that relies on speculation, how do you evaluate its relevance within the epistemological frameworks of the disciplines concerned? Leave blank if not applicable.</span>
+      <div class="f-stars">
+        <input type="radio" name="star_speculation" id="ssp5" value="5"><label for="ssp5">★</label>
+        <input type="radio" name="star_speculation" id="ssp4" value="4"><label for="ssp4">★</label>
+        <input type="radio" name="star_speculation" id="ssp3" value="3"><label for="ssp3">★</label>
+        <input type="radio" name="star_speculation" id="ssp2" value="2"><label for="ssp2">★</label>
+        <input type="radio" name="star_speculation" id="ssp1" value="1"><label for="ssp1">★</label>
+      </div>
+    </div>
+
+    <div class="f-star-group">
+      <span class="f-star-q">Quality, relevance, and exhaustiveness of cited references <span class="f-req">*</span></span>
+      <div class="f-stars">
+        <input type="radio" name="star_references" id="sr5" value="5"><label for="sr5">★</label>
+        <input type="radio" name="star_references" id="sr4" value="4"><label for="sr4">★</label>
+        <input type="radio" name="star_references" id="sr3" value="3"><label for="sr3">★</label>
+        <input type="radio" name="star_references" id="sr2" value="2"><label for="sr2">★</label>
+        <input type="radio" name="star_references" id="sr1" value="1"><label for="sr1">★</label>
+      </div>
+    </div>
+
+    <div class="f-field">
+      <label class="f-label" for="f-sci-comments">Comments <span style="font-style:italic;font-size:0.88em">(optional)</span></label>
+      <textarea class="f-input" id="f-sci-comments" name="sci_comments" placeholder="Remarks for the author and/or the editorial committee…"></textarea>
+    </div>
+
+    <div class="f-field">
+      <span class="f-label">Do you recommend the article for publication? <span class="f-req">*</span></span>
+      <div class="f-rec-group">
+        <label class="f-rec-option"><input type="radio" name="recommendation" value="accept"> Yes, as is.</label>
+        <label class="f-rec-option"><input type="radio" name="recommendation" value="minor"> Yes, with minor revisions.</label>
+        <label class="f-rec-option"><input type="radio" name="recommendation" value="major"> No, but the author is invited to resubmit the article with major revisions.</label>
+        <label class="f-rec-option"><input type="radio" name="recommendation" value="reject"> No, the article should be rejected.</label>
+      </div>
+    </div>
+  </section>
+
+  <!-- ③ Editorial committee ──────────────────────────────── -->
+  <section class="f-cond" id="form-editorial" aria-labelledby="s-ed">
+    <hr class="f-hr">
+    <h2 id="s-ed"><strong>Editorial Review<span class="verspunkt">·</span></strong></h2>
+
+    <div class="f-check-list">
+
+      <div class="f-check-item">
+        <div class="f-check-text"><strong>a.</strong> The article is properly anonymized.</div>
+        <div class="f-check-note">⚠ Inform the Editor-in-Chief of any acknowledgments and self-citations in a separate text file (see infra). The PDF's metadata may contain the author's name. In such cases, re-export the file from the original editable version (e.g., Word, LibreOffice, or similar), making sure that no author information is included in the file properties.</div>
+        <div class="f-yn-group">
+          <label class="f-yn"><input type="radio" name="check_a" value="Yes"> Yes</label>
+          <label class="f-yn"><input type="radio" name="check_a" value="No"> No</label>
+        </div>
+      </div>
+
+      <div class="f-check-item">
+        <div class="f-check-text"><strong>b.</strong> The text does not exceed 60,000 characters (including footnotes and spaces; the end bibliography, if any, is not counted).</div>
+        <div class="f-yn-group">
+          <label class="f-yn"><input type="radio" name="check_b" value="Yes"> Yes</label>
+          <label class="f-yn"><input type="radio" name="check_b" value="No"> No</label>
+        </div>
+      </div>
+
+      <div class="f-check-item">
+        <div class="f-check-text"><strong>c.</strong> Typography and bibliographic referencing are consistent (any style/convention is acceptable, as long as it is applied consistently).</div>
+        <div class="f-yn-group">
+          <label class="f-yn"><input type="radio" name="check_c" value="Yes"> Yes</label>
+          <label class="f-yn"><input type="radio" name="check_c" value="No"> No</label>
+        </div>
+      </div>
+
+      <div class="f-check-item">
+        <div class="f-check-text"><strong>d.</strong> The clarity of the text and the logical flow of ideas are satisfactory (as distinct from stylistic or aesthetic concerns: indicate only what is essential for comprehension on a first reading).</div>
+        <div class="f-yn-group">
+          <label class="f-yn"><input type="radio" name="check_d" value="Yes"> Yes</label>
+          <label class="f-yn"><input type="radio" name="check_d" value="No"> No</label>
+        </div>
+      </div>
+
+      <div class="f-check-item">
+        <div class="f-check-text"><strong>e.</strong> The argumentation is properly supported by cited references.</div>
+        <div class="f-yn-group">
+          <label class="f-yn"><input type="radio" name="check_e" value="Yes"> Yes</label>
+          <label class="f-yn"><input type="radio" name="check_e" value="No"> No</label>
+        </div>
+      </div>
+
+      <div class="f-check-item">
+        <div class="f-check-text"><strong>f.</strong> The article is free of broad generalities such as "at all times."</div>
+        <div class="f-yn-group">
+          <label class="f-yn"><input type="radio" name="check_f" value="Yes"> Yes</label>
+          <label class="f-yn"><input type="radio" name="check_f" value="No"> No</label>
+        </div>
+      </div>
+
+      <div class="f-check-item">
+        <div class="f-check-text"><strong>g.</strong> The quality of the abstract is satisfactory (between 450 and 1,500 characters, including spaces).</div>
+        <div class="f-yn-group">
+          <label class="f-yn"><input type="radio" name="check_g" value="Yes"> Yes</label>
+          <label class="f-yn"><input type="radio" name="check_g" value="No"> No</label>
+        </div>
+      </div>
+
+      <div class="f-check-item">
+        <div class="f-check-text"><strong>h.</strong> The article is not plagiarized, using a simple Google search with selected excerpts placed in quotation marks.</div>
+        <div class="f-yn-group">
+          <label class="f-yn"><input type="radio" name="check_h" value="Yes"> Yes</label>
+          <label class="f-yn"><input type="radio" name="check_h" value="No"> No</label>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="f-field">
+      <label class="f-label" for="f-ed-comments">Remarks <span style="font-style:italic;font-size:0.88em">(optional)</span></label>
+      <textarea class="f-input" id="f-ed-comments" name="ed_comments" placeholder="Remarks for the Editor-in-Chief…"></textarea>
+    </div>
+
+    <div class="f-field">
+      <span class="f-label">Do you recommend the article for peer review? <span class="f-req">*</span></span>
+      <div class="f-yn-group">
+        <label class="f-yn"><input type="radio" name="peer_review" value="Yes"> Yes</label>
+        <label class="f-yn"><input type="radio" name="peer_review" value="No"> No</label>
+      </div>
+    </div>
+
+    <!-- Suggested reviewers (conditional on "Yes") -->
+    <div class="f-cond" id="peer-section">
+      <hr class="f-hr" style="margin:1em 0 0.75em">
+      <p><strong>Suggested Reviewers</strong></p>
+      <p class="small">Indicate up to three potential external reviewers. Email addresses are optional.</p>
+
+      <div class="f-rev-slot">
+        <div class="f-slot-title">External reviewer 1</div>
+        <div class="f-slot-row">
+          <div class="f-field" style="margin:0"><label class="f-label" style="font-size:0.85em !important" for="ext1n">Name</label><input class="f-input" type="text" id="ext1n" name="ext1_name" placeholder="First Last"></div>
+          <div class="f-field" style="margin:0"><label class="f-label" style="font-size:0.85em !important" for="ext1e">Email</label><input class="f-input" type="email" id="ext1e" name="ext1_email" placeholder="optional"></div>
+        </div>
+      </div>
+
+      <div class="f-rev-slot">
+        <div class="f-slot-title">External reviewer 2</div>
+        <div class="f-slot-row">
+          <div class="f-field" style="margin:0"><label class="f-label" style="font-size:0.85em !important" for="ext2n">Name</label><input class="f-input" type="text" id="ext2n" name="ext2_name" placeholder="First Last"></div>
+          <div class="f-field" style="margin:0"><label class="f-label" style="font-size:0.85em !important" for="ext2e">Email</label><input class="f-input" type="email" id="ext2e" name="ext2_email" placeholder="optional"></div>
+        </div>
+      </div>
+
+      <div class="f-rev-slot">
+        <div class="f-slot-title">External reviewer 3</div>
+        <div class="f-slot-row">
+          <div class="f-field" style="margin:0"><label class="f-label" style="font-size:0.85em !important" for="ext3n">Name</label><input class="f-input" type="text" id="ext3n" name="ext3_name" placeholder="First Last"></div>
+          <div class="f-field" style="margin:0"><label class="f-label" style="font-size:0.85em !important" for="ext3e">Email</label><input class="f-input" type="email" id="ext3e" name="ext3_email" placeholder="optional"></div>
+        </div>
+      </div>
+
+      <div class="f-field">
+        <span class="f-label">Suggested scientific committee members <span class="f-req">*</span></span>
+        <span class="f-hint">Select at least 2.</span>
+        <div class="f-sc-grid">
+          <label class="f-sc-opt"><input type="checkbox" name="sc" value="Ninon Blond"><span>Ninon Blond<span class="f-sc-inst">École normale supérieure de Lyon</span></span></label>
+          <label class="f-sc-opt"><input type="checkbox" name="sc" value="Carlos Carvalhar"><span>Carlos Carvalhar<span class="f-sc-inst">Universidade de São Paulo</span></span></label>
+          <label class="f-sc-opt"><input type="checkbox" name="sc" value="Gaëlle Chantrain"><span>Gaëlle Chantrain<span class="f-sc-inst">Université catholique de Louvain</span></span></label>
+          <label class="f-sc-opt"><input type="checkbox" name="sc" value="Marion Claude"><span>Marion Claude<span class="f-sc-inst">Institut français d'archéologie orientale</span></span></label>
+          <label class="f-sc-opt"><input type="checkbox" name="sc" value="Fábio Frizzo"><span>Fábio Frizzo<span class="f-sc-inst">Universidade Federal do Triângulo Mineiro</span></span></label>
+          <label class="f-sc-opt"><input type="checkbox" name="sc" value="Hanane Gaber"><span>Hanane Gaber<span class="f-sc-inst">Université de Montpellier Paul-Valéry</span></span></label>
+          <label class="f-sc-opt"><input type="checkbox" name="sc" value="Carlos Gracia Zamacona"><span>Carlos Gracia Zamacona<span class="f-sc-inst">Universidad de Alcalá</span></span></label>
+          <label class="f-sc-opt"><input type="checkbox" name="sc" value="Rita Lucarelli"><span>Rita Lucarelli<span class="f-sc-inst">University of California, Berkeley</span></span></label>
+          <label class="f-sc-opt"><input type="checkbox" name="sc" value="Luiza Osorio G. Silva"><span>Luiza Osorio G. Silva<span class="f-sc-inst">University of California, Irvine</span></span></label>
+          <label class="f-sc-opt"><input type="checkbox" name="sc" value="Séverine Marchi"><span>Séverine Marchi<span class="f-sc-inst">MEAE/CNRS, Directrice de la SFDAS</span></span></label>
+          <label class="f-sc-opt"><input type="checkbox" name="sc" value="Ahmed M. Mekawy Ouda"><span>Ahmed M. Mekawy Ouda<span class="f-sc-inst">Université du Caire</span></span></label>
+          <label class="f-sc-opt"><input type="checkbox" name="sc" value="So Miyagawa"><span>So Miyagawa | <span class="jp-nowrap">宮川　創</span><span class="f-sc-inst">Université de Tsukuba | <span class="jp-nowrap">筑波大学</span></span></span></label>
+          <label class="f-sc-opt"><input type="checkbox" name="sc" value="Nicolas Morand"><span>Nicolas Morand<span class="f-sc-inst">Institut Royal des Sciences Naturelles de Belgique</span></span></label>
+          <label class="f-sc-opt"><input type="checkbox" name="sc" value="Clémence Pagnoux"><span>Clémence Pagnoux<span class="f-sc-inst">Muséum national d'Histoire naturelle, France</span></span></label>
+          <label class="f-sc-opt"><input type="checkbox" name="sc" value="Stéphane Pasquali"><span>Stéphane Pasquali<span class="f-sc-inst">Université de Montpellier Paul-Valéry</span></span></label>
+          <label class="f-sc-opt"><input type="checkbox" name="sc" value="Felix Relats Montserrat"><span>Felix Relats Montserrat<span class="f-sc-inst">Sorbonne Université</span></span></label>
+          <label class="f-sc-opt"><input type="checkbox" name="sc" value="Dina Serova"><span>Dina Serova<span class="f-sc-inst">Humboldt-Universität zu Berlin</span></span></label>
+          <label class="f-sc-opt"><input type="checkbox" name="sc" value="Sherouk Shehada"><span>Sherouk Shehada<span class="f-sc-inst">Helwan University</span></span></label>
+          <label class="f-sc-opt"><input type="checkbox" name="sc" value="Marwa Soliman"><span>Marwa Soliman<span class="f-sc-inst">Mansoura University</span></span></label>
+          <label class="f-sc-opt"><input type="checkbox" name="sc" value="Danijela Stefanović"><span>Danijela Stefanović<span class="f-sc-inst">University of Belgrade</span></span></label>
+          <label class="f-sc-opt"><input type="checkbox" name="sc" value="Filip Taterka"><span>Filip Taterka<span class="f-sc-inst">Polish Academy of Sciences</span></span></label>
+          <label class="f-sc-opt"><input type="checkbox" name="sc" value="Simon Thuault"><span>Simon Thuault<span class="f-sc-inst">PhD in Egyptology, independent researcher</span></span></label>
+        </div>
+      </div>
+    </div><!-- /peer-section -->
+
+  </section>
+
+  <!-- ④ Annexes ─────────────────────────────────────────────── -->
+  <section class="f-cond" id="form-annexes" aria-labelledby="s-ann">
+    <hr class="f-hr">
+    <h2 id="s-ann"><strong>Annexes<span class="verspunkt">·</span></strong></h2>
+    <p class="small">Optional file attachments (PDF, Word, plain text). Up to 3 files. Anonymization notes relating to item (a) should be attached here.</p>
+
+    <div class="f-field">
+      <label class="f-label" for="att1">Annex 1</label>
+      <input class="f-file" type="file" id="att1" name="attachment_1" accept=".pdf,.doc,.docx,.txt,.odt,.rtf">
+    </div>
+    <div class="f-field">
+      <label class="f-label" for="att2">Annex 2</label>
+      <input class="f-file" type="file" id="att2" name="attachment_2" accept=".pdf,.doc,.docx,.txt,.odt,.rtf">
+    </div>
+    <div class="f-field">
+      <label class="f-label" for="att3">Annex 3</label>
+      <input class="f-file" type="file" id="att3" name="attachment_3" accept=".pdf,.doc,.docx,.txt,.odt,.rtf">
+    </div>
+  </section>
+
+  <!-- Submit ────────────────────────────────────────────────── -->
+  <div class="f-cond" id="form-submit">
+    <button type="submit" class="f-btn" id="btn-submit">Submit evaluation</button>
+  </div>
+
+  <div class="f-msg success" id="msg-success">
+    ✓ Your evaluation has been submitted. Thank you for your contribution to the <em>Bibliothèque Ouverte d'Égyptologie</em>.
+  </div>
+  <div class="f-msg error" id="msg-error">
+    An error occurred. Please try again or contact the editorial team directly.
+  </div>
+
+</form>
+
+<div class="boma-logo-wrap">
+  <img src="/assets/boma-logo.png" alt="BOMA" class="boma-logo">
+</div>
+
+</article>
+</main>
+
+<footer>
+  <div class="container small">
+    © Bibliothèque Ouverte des Mondes Anciens, 2026 ·
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC&nbsp;BY&nbsp;4.0</a> ·
+    <a href="/en/legal-notice.html">Legal notice</a>
+  </div>
+</footer>
+
+<script>
+  // ── EmailJS configuration ─────────────────────────────────────────────────
+  // Replace the three values below with your EmailJS credentials.
+  // EmailJS template variables:
+  //   {{body}}             → full evaluation text (plain text)
+  //   {{article_title}}    → use in subject line
+  //   {{evaluator_email}}  → set as Reply-To
+  //   attachment_1/2/3     → configure as "File Attachment" in template settings
+  const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';
+  const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';
+  const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
+
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+
+  // ── Helpers ───────────────────────────────────────────────────────────────
+  const val   = n  => document.querySelector(`[name="${n}"]:checked`)?.value ?? null;
+  const txt   = id => document.getElementById(id)?.value.trim() ?? '';
+  const stars = n  => { const v = val(n); return v ? `${v}/5` : 'n/a'; };
+
+  // ── Role: show/hide sections ──────────────────────────────────────────────
+  document.querySelectorAll('input[name="role"]').forEach(r => {
+    r.addEventListener('change', () => {
+      const role = r.value;
+      document.getElementById('form-scientific').classList.toggle('active', role === 'scientific' || role === 'external');
+      document.getElementById('form-editorial').classList.toggle('active',  role === 'editorial');
+      document.getElementById('form-annexes').classList.add('active');
+      document.getElementById('form-submit').classList.add('active');
+    });
+  });
+
+  // ── Peer review: show/hide reviewer section ───────────────────────────────
+  document.querySelectorAll('input[name="peer_review"]').forEach(r => {
+    r.addEventListener('change', () => {
+      document.getElementById('peer-section').classList.toggle('active', r.value === 'Yes');
+    });
+  });
+
+  // ── Build email body ──────────────────────────────────────────────────────
+  function buildBody(role, email, title) {
+    const date = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
+    const roleLabel = { editorial: 'Editorial committee', scientific: 'Scientific committee', external: 'External reviewer' }[role];
+    let b = `Date              : ${date}\nEvaluator         : ${email}\nArticle           : ${title}\nRole              : ${roleLabel}\n\n`;
+
+    if (role === 'scientific' || role === 'external') {
+      const rec = { accept: 'Yes, as is', minor: 'Yes, with minor revisions', major: 'No — resubmission with major revisions', reject: 'No — rejection' };
+      b += `── SCIENTIFIC EVALUATION ───────────────────────────────\n`;
+      b += `Clarity of arguments            : ${stars('star_clarity')}\n`;
+      b += `Solidity of arguments           : ${stars('star_solidity')}\n`;
+      b += `Relevance of speculation        : ${stars('star_speculation')}\n`;
+      b += `Quality of cited references     : ${stars('star_references')}\n`;
+      b += `Recommendation                  : ${rec[val('recommendation')] ?? 'not answered'}\n`;
+      const c = txt('f-sci-comments');
+      if (c) b += `\nComments:\n${c}\n`;
+    }
+
+    if (role === 'editorial') {
+      const checks = [
+        ['a','Anonymization'],['b','Length (≤ 60,000 char.)'],
+        ['c','Typographic and bibliographic consistency'],['d','Clarity and logical flow'],
+        ['e','Argumentation supported by references'],['f','Absence of broad generalities'],
+        ['g','Abstract quality (450–1,500 char.)'],['h','Absence of plagiarism']
+      ];
+      b += `── EDITORIAL REVIEW ────────────────────────────────────\n`;
+      checks.forEach(([k, l]) => { b += `${k.toUpperCase()}. ${l.padEnd(44)} : ${val('check_' + k) ?? 'not answered'}\n`; });
+      const ec = txt('f-ed-comments');
+      if (ec) b += `\nRemarks:\n${ec}\n`;
+      const pr = val('peer_review');
+      b += `\nPeer review recommended : ${pr ?? 'not answered'}\n`;
+      if (pr === 'Yes') {
+        b += `\n── SUGGESTED REVIEWERS ─────────────────────────────────\n`;
+        [1,2,3].forEach(i => { const n=txt(`ext${i}n`),e=txt(`ext${i}e`); if(n) b+=`External ${i} : ${n}${e?' <'+e+'>':''}\n`; });
+        const sc = [...document.querySelectorAll('input[name="sc"]:checked')].map(cb => cb.value);
+        if (sc.length) { b += `\nSuggested scientific committee members:\n`; sc.forEach(m => { b += `  · ${m}\n`; }); }
+      }
+    }
+    return b;
+  }
+
+  // ── Form submission ───────────────────────────────────────────────────────
+  document.getElementById('eval-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const role = val('role'), email = txt('f-email'), title = txt('f-title');
+    if (!role || !email || !title) { alert('Please fill in your email address, the article title, and your role.'); return; }
+
+    document.getElementById('h-body').value = buildBody(role, email, title);
+
+    // Disable inputs in the inactive role section before sendForm
+    const inactive = role === 'editorial' ? '#form-scientific' : '#form-editorial';
+    const toDisable = document.querySelectorAll(`${inactive} input, ${inactive} textarea`);
+    toDisable.forEach(el => { el.disabled = true; });
+
+    const btn = document.getElementById('btn-submit');
+    btn.disabled = true; btn.textContent = 'Sending…';
+
+    try {
+      await emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, '#eval-form');
+      document.getElementById('eval-form').style.display = 'none';
+      const ok = document.getElementById('msg-success');
+      ok.style.display = 'block';
+      ok.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } catch (err) {
+      console.error(err);
+      toDisable.forEach(el => { el.disabled = false; });
+      const ko = document.getElementById('msg-error');
+      ko.style.display = 'block';
+      ko.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      btn.disabled = false; btn.textContent = 'Submit evaluation';
+    }
+  });
+</script>
+
+<script>
+  function updateMobileMenuSeparators() {
+    const links = Array.from(document.querySelectorAll('nav a'));
+    let previousTop = null;
+    links.forEach((link, index) => {
+      link.classList.remove('row-start');
+      const currentTop = link.offsetTop;
+      if (index === 0 || currentTop > previousTop) link.classList.add('row-start');
+      previousTop = currentTop;
+    });
+  }
+  window.addEventListener('load', updateMobileMenuSeparators);
+  window.addEventListener('resize', updateMobileMenuSeparators);
+</script>
+
+</body>
+</html>
