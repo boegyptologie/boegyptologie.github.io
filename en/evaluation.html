@@ -278,7 +278,7 @@
 <article>
 
 <p><strong>Article Evaluation Form<span class="verspunkt">·</span></strong></p>
-<p class="small">For use by members of the BOE editorial and scientific committee only. This form is confidential.</p>
+<p class="small">For use by members of the BOE editorial and scientific committee and external reviewers only. This form is confidential.</p>
 
 <form id="eval-form" novalidate>
 
@@ -357,8 +357,13 @@
     </div>
 
     <div class="f-field">
-      <label class="f-label" for="f-sci-comments">Comments <span style="font-style:italic;font-size:0.88em">(optional)</span></label>
-      <textarea class="f-input" id="f-sci-comments" placeholder="Remarks for the author and/or the editorial committee…"></textarea>
+      <label class="f-label" for="f-sci-comments-author">Comments for the author <span style="font-style:italic;font-size:0.88em">(optional)</span></label>
+      <textarea class="f-input" id="f-sci-comments-author" placeholder="These remarks will be transmitted to the author…"></textarea>
+    </div>
+
+    <div class="f-field">
+      <label class="f-label" for="f-sci-comments-editor">Confidential comments for the editorial committee <span style="font-style:italic;font-size:0.88em">(optional)</span></label>
+      <textarea class="f-input" id="f-sci-comments-editor" placeholder="These remarks will not be shared with the author…"></textarea>
     </div>
 
     <div class="f-field">
@@ -381,7 +386,7 @@
 
       <div class="f-check-item">
         <div class="f-check-text"><strong>a.</strong> The article is properly anonymized.</div>
-        <div class="f-check-note">⚠ Inform the Editor-in-Chief of any acknowledgments and self-citations in a separate text file (see infra). The PDF's metadata may contain the author's name. In such cases, re-export the file from the original editable version (e.g., Word, LibreOffice, or similar), making sure that no author information is included in the file properties.</div>
+        <div class="f-check-note">⚠ Inform the Editor-in-Chief of any acknowledgments and self-citations in the comments section below. The PDF's metadata may contain the author's name. In such cases, re-export the file from the original editable version (e.g., Word, LibreOffice, or similar), making sure that no author information is included in the file properties.</div>
         <div class="f-yn-group">
           <label class="f-yn"><input type="radio" name="check_a" value="Yes"> Yes</label>
           <label class="f-yn"><input type="radio" name="check_a" value="No"> No</label>
@@ -525,7 +530,7 @@
   <section class="f-cond" id="form-annexes" aria-labelledby="s-ann">
     <hr class="f-hr">
     <h2 id="s-ann"><strong>Annexes<span class="verspunkt">·</span></strong></h2>
-    <p class="small">Upload up to 3 files (PDF, Word, plain text, max 10 MB each). Files are saved directly to the BOE Google Drive. Anonymization notes relating to item (a) should be attached here.</p>
+    <p class="small">Upload up to 3 files (PDF, Word, plain text, max 10 MB each). Files are saved directly to the BOE Google Drive. If you upload an annotated PDF, please ensure that your annotations do not reveal your identity.</p>
 
     <div class="f-field">
       <label class="f-label" for="att1">Annex 1</label>
@@ -548,7 +553,9 @@
   </div>
 
   <div class="f-msg success" id="msg-success">
-    ✓ Your evaluation has been submitted and your files have been saved to the BOE Google Drive. Thank you for your contribution to the <em>Bibliothèque Ouverte d'Égyptologie</em>.
+    <p>✓ Your evaluation has been successfully submitted.</p>
+    <p style="margin-top:0.75em">Thank you very much for this very detailed review. We are extremely grateful for the work of reviewers, which helps ensure the quality of BOE's standards.</p>
+    <p style="margin-top:0.75em">With best regards,<br>The Editorial Committee<br><em>Bibliothèque Ouverte d'Égyptologie</em></p>
   </div>
   <div class="f-msg error" id="msg-error">
     An error occurred. Please try again or contact the editorial team directly at <a href="mailto:boegyptologie@gmail.com">boegyptologie@gmail.com</a>.
@@ -573,7 +580,7 @@
 
 <script>
   // ── Replace this URL with your deployed Google Apps Script web app URL ────
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyQ0hC3OL_aQw9RKJ9GIBAc-Eo4Jd6FYhByl2r1jYTR5OWBYIPKhAOsXpgZTCFmnK_F/exec';
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxppm9nFPfR91bLTuuj5gXoztYud_3Ldg13hXaeJbv6UuZLTvtcF9iMUBltkv1GYz4/exec';
 
   // ── Helpers ───────────────────────────────────────────────────────────────
   const val = n  => document.querySelector(`[name="${n}"]:checked`)?.value ?? null;
@@ -622,8 +629,10 @@
       b += `Relevance of speculation        : ${stars('star_speculation')}\n`;
       b += `Quality of cited references     : ${stars('star_references')}\n`;
       b += `Recommendation                  : ${rec[val('recommendation')] ?? 'not answered'}\n`;
-      const c = txt('f-sci-comments');
-      if (c) b += `\nComments:\n${c}\n`;
+      const ca = txt('f-sci-comments-author');
+      const ce = txt('f-sci-comments-editor');
+      if (ca) b += `\nComments for the author:\n${ca}\n`;
+      if (ce) b += `\nConfidential comments for the editorial committee:\n${ce}\n`;
     }
 
     if (role === 'editorial') {
