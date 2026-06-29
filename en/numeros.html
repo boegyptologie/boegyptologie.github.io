@@ -105,6 +105,80 @@
   </script>
   <style>
     .coptic { font-family: 'Noto Sans Coptic', sans-serif; }
+
+    /* Abstract collapsible */
+    .boe-entry-meta {
+      margin-top: 0.45em;
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.6em;
+    }
+
+    .boe-entry-doi {
+      font-size: 0.92em;
+    }
+
+    .boe-zenodo-btn {
+      display: inline-block;
+      padding: 0.18em 0.7em;
+      font-size: 0.85em;
+      font-weight: 600;
+      color: #fff;
+      background: #FF2E17;
+      border-radius: 3px;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+
+    .boe-zenodo-btn:hover,
+    .boe-zenodo-btn:focus {
+      background: #cc2010;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    details.boe-abstract {
+      margin-top: 0.6em;
+    }
+
+    details.boe-abstract summary {
+      cursor: pointer;
+      font-size: 0.88em;
+      font-weight: 600;
+      color: #FF2E17;
+      list-style: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35em;
+      user-select: none;
+      padding: 0.1em 0;
+    }
+
+    details.boe-abstract summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.boe-abstract summary::before {
+      content: '▸';
+      font-size: 0.8em;
+      transition: transform 0.18s;
+      display: inline-block;
+    }
+
+    details.boe-abstract[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details.boe-abstract .boe-entry-abstract {
+      margin-top: 0.5em;
+    }
+
+    section[aria-label] article + article {
+      margin-top: 2em;
+    }
   </style>
   <link rel="stylesheet" href="/assets/style.css">
 </head>
@@ -137,23 +211,33 @@
       <article aria-labelledby="boe-2026-1">
         <p class="boe-entry" id="boe-2026-1">
           <span style="color:#FF2E17; font-weight:600;">1.</span> Peter Pathappan, The Phonetic Value of Gardiner's Sign U 23 (𓍋) in Earlier Egyptian, 9 p.
-          DOI&nbsp;<a href="https://zenodo.org/records/19086657" target="_blank" rel="noopener noreferrer">10.5281/zenodo.19086657</a><br>
-          <span class="boe-entry-abstract">
-            <strong>Abstract:</strong> The article examines the reading of the sign 𓍋 in the Old and Middle Kingdom and concludes that the phonetic value must be mr and not mḥr. Four pieces of evidence are used to support this conclusion. The first three come from onomastics and show the interchangeability of 𓍋 with 𓅓𓂋, 𓈘, and 𓌸. The fourth piece of evidence is a prefixed form of the verb 𓍋𓅓𓂋𓅪 from the Pyramid Texts, which proves that the verb consists of two radicals, meaning that it must be mr and not mḥr.
-            <span class="boe-entry-abstract-gap"></span>
-            <strong>Résumé&nbsp;:</strong> Cet article examine la lecture du signe 𓍋 pendant l'Ancien et le Moyen Empire et conclut que sa valeur phonétique doit être mr et non mḥr. Quatre éléments de preuve sont utilisés pour étayer cette conclusion. Les trois premiers proviennent de l'onomastique et montrent l'interchangeabilité de 𓍋 avec 𓅓𓂋, 𓈘 et 𓌸. Le quatrième élément de preuve est une forme préfixée du verbe 𓍋𓅓𓂋𓅪 tirée des Textes des Pyramides, qui prouve que le verbe se compose de deux radicaux, ce qui signifie qu'il doit s'agir de mr et non de mḥr.
-          </span>
         </p>
+        <div class="boe-entry-meta">
+          <span class="boe-entry-doi">DOI&nbsp;<a href="https://zenodo.org/records/19086657" target="_blank" rel="noopener noreferrer">10.5281/zenodo.19086657</a></span>
+          <a class="boe-zenodo-btn" href="https://zenodo.org/records/19086657" target="_blank" rel="noopener noreferrer">Read on Zenodo ↗</a>
+        </div>
+        <details class="boe-abstract">
+          <summary>Abstract</summary>
+          <span class="boe-entry-abstract">
+            The article examines the reading of the sign 𓍋 in the Old and Middle Kingdom and concludes that the phonetic value must be mr and not mḥr. Four pieces of evidence are used to support this conclusion. The first three come from onomastics and show the interchangeability of 𓍋 with 𓅓𓂋, 𓈘, and 𓌸. The fourth piece of evidence is a prefixed form of the verb 𓍋𓅓𓂋𓅪 from the Pyramid Texts, which proves that the verb consists of two radicals, meaning that it must be mr and not mḥr.
+          </span>
+        </details>
       </article>
 
       <article aria-labelledby="boe-2026-2">
         <p class="boe-entry" id="boe-2026-2">
           <span style="color:#FF2E17; font-weight:600;">2.</span> David Mihalyfy, Explaining the Odd Foot Sign of Gardiner D58 in the Egyptian Negator Transliterated bn: A Case for Innovative Orthographic Reuse Based on the Phonetic Reduction of the Nominalizer bw (>&nbsp;<span class="coptic">-ⲞⲨ-</span>) and the Non-Etymological Writing bw nb for wn nb (>&nbsp;<span class="coptic">ⲞⲨⲞⲚ ⲚⲒⲘ</span>), 27&nbsp;p.
-          DOI&nbsp;<a href="https://zenodo.org/records/20841508" target="_blank" rel="noopener noreferrer">10.5281/zenodo.20841508</a><br>
-          <span class="boe-entry-abstract">
-            <strong>Abstract:</strong> In the mid-2nd millennium BCE, Egyptian scribes began writing a common negator as bn, with an odd foot sign of Gardiner D58 at its start. Building on past scholarship that recognizes the sign's semantic function and a larger, pre-existing orthographic link between negation and other body parts, this analysis identifies why disambiguation was needed in this specific case and why this specific sign was chosen as a disambiguator. On the one hand, the negator was at risk of confusion for other sentence-beginning entities potentially representable as a bare n. On the other hand, the not infrequent nominalizer bw that was also used to spell the word bw nb "everyone" began with a phonetically reduced b that had been retained in orthography, making it susceptible to reinterpretation as a semantic "beginning-of-unit" marker also applicable to negation. As two important steps in this argument, the nominalizer bw is shown to survive in the currently-misparsed section <span class="coptic">-ⲞⲨ-</span> of Coptic adverbial phrases (e.g. <span class="coptic">Ϩ︦ⲚⲞⲨⲘⲈ</span> "truly"), and bw nb "everyone" is identified as a non-etymological writing for wn nb "every being" (>&nbsp;Coptic <span class="coptic">ⲞⲨⲞⲚ ⲚⲒⲘ</span>).
-          </span>
         </p>
+        <div class="boe-entry-meta">
+          <span class="boe-entry-doi">DOI&nbsp;<a href="https://zenodo.org/records/20841508" target="_blank" rel="noopener noreferrer">10.5281/zenodo.20841508</a></span>
+          <a class="boe-zenodo-btn" href="https://zenodo.org/records/20841508" target="_blank" rel="noopener noreferrer">Read on Zenodo ↗</a>
+        </div>
+        <details class="boe-abstract">
+          <summary>Abstract</summary>
+          <span class="boe-entry-abstract">
+            In the mid-2nd millennium BCE, Egyptian scribes began writing a common negator as bn, with an odd foot sign of Gardiner D58 at its start. Building on past scholarship that recognizes the sign's semantic function and a larger, pre-existing orthographic link between negation and other body parts, this analysis identifies why disambiguation was needed in this specific case and why this specific sign was chosen as a disambiguator. On the one hand, the negator was at risk of confusion for other sentence-beginning entities potentially representable as a bare n. On the other hand, the not infrequent nominalizer bw that was also used to spell the word bw nb "everyone" began with a phonetically reduced b that had been retained in orthography, making it susceptible to reinterpretation as a semantic "beginning-of-unit" marker also applicable to negation. As two important steps in this argument, the nominalizer bw is shown to survive in the currently-misparsed section <span class="coptic">-ⲞⲨ-</span> of Coptic adverbial phrases (e.g. <span class="coptic">Ϩ︦ⲚⲞⲨⲘⲈ</span> "truly"), and bw nb "everyone" is identified as a non-etymological writing for wn nb "every being" (>&nbsp;Coptic <span class="coptic">ⲞⲨⲞⲚ ⲚⲒⲘ</span>).
+          </span>
+        </details>
       </article>
 
     </section>
