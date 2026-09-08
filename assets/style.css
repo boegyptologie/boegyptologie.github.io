@@ -223,6 +223,11 @@ section[aria-labelledby="publications-2026"] article + article {
 margin-top: 2em;
 }
 
+/* Léger espace entre l'année et le premier numéro */
+#publications-2026 {
+margin-bottom: 1.2em;
+}
+
 /* DOI discret */
 .boe-entry-doi {
 font-size: 0.78em !important;
