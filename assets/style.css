@@ -1,6 +1,7 @@
+```css
 /* =========================================
    BOE — style.css
-   ========================================= */
+========================================= */
 
 /* Chargement de la police */
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&display=swap');
@@ -15,12 +16,25 @@
 }
 
 /* 2) Reset / base */
-* { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
-img { max-width: 100%; height: auto; }
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
 
 /* 3) Typo globale */
-html, body, body * {
+html,
+body,
+body * {
   font-family: var(--font-body) !important;
   line-height: 1.6;
   letter-spacing: 0;
@@ -37,8 +51,14 @@ main {
   border-left: 1px solid var(--accent-red);
 }
 
-.container { max-width: var(--max); margin: 0 auto; }
-.small { font-size: .95rem; }
+.container {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+.small {
+  font-size: .95rem;
+}
 
 /* 5) En-tête & pied de page */
 header {
@@ -94,14 +114,20 @@ header .title {
 
 /* Masquer le long titre sur très petits écrans */
 @media (max-width: 520px) {
-  .brand .title { display: none; }
+  .brand .title {
+    display: none;
+  }
 }
 
 /* 7) Sélecteur de langue */
-.lang-switch { float: right; }
+.lang-switch {
+  float: right;
+}
 
 /* 8) Navigation */
-nav { font-size: inherit; }
+nav {
+  font-size: inherit;
+}
 
 nav a {
   margin-right: 10px;
@@ -109,7 +135,9 @@ nav a {
   white-space: nowrap;
 }
 
-nav a:hover { text-decoration: underline; }
+nav a:hover {
+  text-decoration: underline;
+}
 
 /* séparateurs verticaux rouges entre les liens du menu sur desktop */
 @media (min-width: 801px) {
@@ -197,7 +225,13 @@ main li {
   white-space: nowrap;
 }
 
-/* 14) Notices bibliographiques / numéros */
+/* =========================================
+   14) Notices bibliographiques / numéros
+========================================= */
+
+/* Retrait suspendu :
+   la première ligne reste à gauche,
+   les lignes suivantes sont légèrement rentrées */
 .boe-entry {
   text-align: left !important;
   text-justify: auto !important;
@@ -205,6 +239,102 @@ main li {
   text-indent: -1.5em;
 }
 
+/* DOI + bouton Zenodo */
+.boe-entry-meta {
+  margin-top: 0.35em;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5em;
+}
+
+/* DOI discret */
+.boe-entry-doi {
+  font-size: 0.78em !important;
+  line-height: 1.4 !important;
+  color: #666;
+}
+
+.boe-entry-doi * {
+  font-size: inherit !important;
+  line-height: inherit !important;
+}
+
+.boe-entry-doi a {
+  color: #666;
+  text-decoration: none;
+}
+
+.boe-entry-doi a:hover,
+.boe-entry-doi a:focus {
+  color: var(--accent-red);
+  text-decoration: underline;
+}
+
+/* Petit bouton Zenodo :
+   fond blanc et contour rouge */
+.boe-zenodo-btn {
+  display: inline-block;
+  padding: 0.08em 0.48em;
+  font-size: 0.75em !important;
+  font-weight: 600;
+  line-height: 1.35 !important;
+  color: var(--accent-red) !important;
+  background: #fff;
+  border: 1px solid var(--accent-red);
+  border-radius: 2px;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+
+.boe-zenodo-btn:hover,
+.boe-zenodo-btn:focus {
+  background: var(--accent-red);
+  color: #fff !important;
+  text-decoration: none;
+}
+
+/* Résumé repliable */
+details.boe-abstract {
+  margin-top: 0.45em;
+}
+
+details.boe-abstract summary {
+  cursor: pointer;
+  font-size: 0.82em !important;
+  font-weight: 600;
+  line-height: 1.4 !important;
+  color: var(--accent-red) !important;
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  user-select: none;
+  padding: 0.1em 0;
+}
+
+details.boe-abstract summary::-webkit-details-marker {
+  display: none;
+}
+
+details.boe-abstract summary::before {
+  content: "▸";
+  color: var(--accent-red);
+  font-size: 0.8em !important;
+  line-height: 1;
+  display: inline-block;
+  transition: transform 0.18s;
+}
+
+details.boe-abstract[open] summary::before {
+  transform: rotate(90deg);
+}
+
+/* Texte du résumé */
 .boe-entry-abstract {
   display: block;
   font-size: 0.82em !important;
@@ -212,7 +342,7 @@ main li {
   text-align: justify !important;
   text-justify: inter-word !important;
   text-indent: 0;
-  margin-top: 0.8em;
+  margin-top: 0.55em;
   margin-bottom: 0.95em;
   margin-left: 1.5em;
   padding-left: 0.8em;
@@ -229,6 +359,8 @@ main li {
   height: 0.85em;
 }
 
+/* Ancien style de lien de téléchargement,
+   conservé pour compatibilité */
 .boe-entry-download {
   display: block;
   margin-top: 0.25em;
@@ -241,6 +373,11 @@ main li {
 .boe-entry-download a {
   font-size: inherit !important;
   line-height: inherit !important;
+}
+
+/* Espace entre deux articles */
+section[aria-label] article + article {
+  margin-top: 2em;
 }
 
 /* 15) Note de bas de page */
@@ -319,13 +456,18 @@ main li {
   text-align: inherit !important;
 }
 
-/* ===== Fix mobile ===== */
+/* =========================================
+   Fix mobile
+========================================= */
 @media (max-width: 800px) {
+
   header {
     padding: 18px 16px 16px 16px;
   }
 
-  .brand .title { display: none; }
+  .brand .title {
+    display: none;
+  }
 
   nav {
     display: flex;
@@ -375,16 +517,39 @@ main li {
     border-bottom: none;
   }
 
-  /* retrait un peu plus discret pour les notices sur petit écran */
+  /* retrait suspendu un peu plus discret sur petit écran */
   .boe-entry {
     padding-left: 1.2em;
     text-indent: -1.2em;
   }
 
+  /* DOI + bouton Zenodo */
+  .boe-entry-meta {
+    margin-top: 0.3em;
+    gap: 0.45em;
+  }
+
+  .boe-entry-doi {
+    font-size: 0.75em !important;
+  }
+
+  .boe-zenodo-btn {
+    padding: 0.07em 0.42em;
+    font-size: 0.72em !important;
+  }
+
+  details.boe-abstract {
+    margin-top: 0.4em;
+  }
+
+  details.boe-abstract summary {
+    font-size: 0.8em !important;
+  }
+
   .boe-entry-abstract {
     margin-left: 1.2em;
     padding-left: 0.7em;
-    margin-top: 0.75em;
+    margin-top: 0.5em;
     margin-bottom: 0.9em;
   }
 
@@ -435,6 +600,10 @@ main li {
   }
 }
 
+/* =========================================
+   Titre + ISSN dans l'en-tête
+========================================= */
+
 .brand-text {
   display: flex;
   flex-direction: column;
@@ -456,11 +625,15 @@ main li {
     margin-left: 0.70em;
   }
 }
+
 /* Neutralisation des styles navigateur sur les titres sémantiques */
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-size: inherit;
   font-weight: inherit;
   margin: 0;
   padding: 0;
   line-height: inherit;
 }
+```
