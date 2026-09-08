@@ -211,10 +211,16 @@ text-indent: -1.5em;
 /* DOI + petit bouton Zenodo */
 .boe-entry-meta {
 margin-top: 0.35em;
+margin-left: 1.5em;
 display: flex;
 align-items: baseline;
 flex-wrap: wrap;
 gap: 0.55em;
+}
+
+/* Espace vertical entre deux numéros */
+section[aria-labelledby="publications-2026"] article + article {
+margin-top: 2em;
 }
 
 /* DOI discret */
@@ -473,6 +479,10 @@ text-indent: -1.2em;
 
 details.boe-abstract {
 margin-top: 0.2em;
+margin-left: 1.2em;
+}
+
+.boe-entry-meta {
 margin-left: 1.2em;
 }
 
