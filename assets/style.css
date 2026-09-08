@@ -259,9 +259,10 @@ color: #fff !important;
 text-decoration: none;
 }
 
-/* Résumé repliable */
+/* Résumé repliable, rapproché du DOI et mis en retrait */
 details.boe-abstract {
-margin-top: 0.6em;
+margin-top: 0.2em;
+margin-left: 1.5em;
 }
 
 details.boe-abstract summary {
@@ -293,7 +294,7 @@ details.boe-abstract[open] summary::before {
 transform: rotate(90deg);
 }
 
-/* Texte du résumé : style d'origine conservé */
+/* Texte du résumé : le retrait est porté par le bloc details */
 .boe-entry-abstract {
 display: block;
 font-size: 0.82em !important;
@@ -301,9 +302,9 @@ line-height: 1.45 !important;
 text-align: justify !important;
 text-justify: inter-word !important;
 text-indent: 0;
-margin-top: 0.8em;
+margin-top: 0.5em;
 margin-bottom: 0.95em;
-margin-left: 1.5em;
+margin-left: 0;
 padding-left: 0.8em;
 border-left: 1px solid var(--accent-red);
 }
@@ -470,10 +471,15 @@ padding-left: 1.2em;
 text-indent: -1.2em;
 }
 
-.boe-entry-abstract {
+details.boe-abstract {
+margin-top: 0.2em;
 margin-left: 1.2em;
+}
+
+.boe-entry-abstract {
+margin-left: 0;
 padding-left: 0.7em;
-margin-top: 0.75em;
+margin-top: 0.5em;
 margin-bottom: 0.9em;
 }
 
@@ -554,4 +560,3 @@ margin: 0;
 padding: 0;
 line-height: inherit;
 }
-```
