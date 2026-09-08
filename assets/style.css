@@ -1,6 +1,6 @@
 ```css
 /* =========================================
-   BOE — style.css
+BOE — style.css
 ========================================= */
 
 /* Chargement de la police */
@@ -16,624 +16,543 @@
 }
 
 /* 2) Reset / base */
-* {
-  box-sizing: border-box;
-}
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+img { max-width: 100%; height: auto; }
 
 /* 3) Typo globale */
-html,
-body,
-body * {
-  font-family: var(--font-body) !important;
-  line-height: 1.6;
-  letter-spacing: 0;
-  color: #222;
-  font-size: var(--size-body);
+html, body, body * {
+font-family: var(--font-body) !important;
+line-height: 1.6;
+letter-spacing: 0;
+color: #222;
+font-size: var(--size-body);
 }
 
 /* 4) Layout */
 main {
-  max-width: var(--max);
-  padding: 24px;
-  padding-left: 32px;
-  margin: 0 auto;
-  border-left: 1px solid var(--accent-red);
+max-width: var(--max);
+padding: 24px;
+padding-left: 32px;
+margin: 0 auto;
+border-left: 1px solid var(--accent-red);
 }
 
-.container {
-  max-width: var(--max);
-  margin: 0 auto;
-}
-
-.small {
-  font-size: .95rem;
-}
+.container { max-width: var(--max); margin: 0 auto; }
+.small { font-size: .95rem; }
 
 /* 5) En-tête & pied de page */
 header {
-  position: relative;
-  padding: 30px 16px 26px 16px;
-  border-bottom: none;
+position: relative;
+padding: 30px 16px 26px 16px;
+border-bottom: none;
 }
 
 header::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 2mm;
-  border-top: 1px solid var(--accent-red);
-  border-bottom: 1px solid var(--accent-red);
+content: "";
+position: absolute;
+left: 0;
+right: 0;
+bottom: 0;
+height: 2mm;
+border-top: 1px solid var(--accent-red);
+border-bottom: 1px solid var(--accent-red);
 }
 
 footer {
-  padding: 24px 16px;
-  border-top: 1px solid var(--accent-red);
-  color: #666;
-  font-size: .95rem;
+padding: 24px 16px;
+border-top: 1px solid var(--accent-red);
+color: #666;
+font-size: .95rem;
 }
 
 /* supprime toute ancienne double ligne éventuelle */
 footer::before,
 footer::after {
-  content: none !important;
-  display: none !important;
+content: none !important;
+display: none !important;
 }
 
 /* 6) Marque (logo + titre) */
 .brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-  color: inherit;
+display: inline-flex;
+align-items: center;
+gap: 10px;
+text-decoration: none;
+color: inherit;
 }
 
 .brand img {
-  height: 42px;
-  width: auto;
-  vertical-align: middle;
+height: 42px;
+width: auto;
+vertical-align: middle;
 }
 
 header .title {
-  font-weight: 700;
-  font-size: var(--size-title);
+font-weight: 700;
+font-size: var(--size-title);
 }
 
 /* Masquer le long titre sur très petits écrans */
 @media (max-width: 520px) {
-  .brand .title {
-    display: none;
-  }
+.brand .title { display: none; }
 }
 
 /* 7) Sélecteur de langue */
-.lang-switch {
-  float: right;
-}
+.lang-switch { float: right; }
 
 /* 8) Navigation */
-nav {
-  font-size: inherit;
-}
+nav { font-size: inherit; }
 
 nav a {
-  margin-right: 10px;
-  text-decoration: none;
-  white-space: nowrap;
+margin-right: 10px;
+text-decoration: none;
+white-space: nowrap;
 }
 
-nav a:hover {
-  text-decoration: underline;
-}
+nav a:hover { text-decoration: underline; }
 
 /* séparateurs verticaux rouges entre les liens du menu sur desktop */
 @media (min-width: 801px) {
-  nav a + a {
-    border-left: 1px solid var(--accent-red);
-    padding-left: 10px;
-    margin-left: 2px;
-  }
+nav a + a {
+border-left: 1px solid var(--accent-red);
+padding-left: 10px;
+margin-left: 2px;
+}
 }
 
 /* espace supplémentaire entre bloc logo+titre et menu sur desktop */
 @media (min-width: 801px) {
-  nav {
-    margin-top: 18px;
-  }
+nav {
+margin-top: 18px;
+}
 }
 
 /* 9) Contenu : justification, sans césure */
 main p,
 main li,
 main blockquote {
-  text-align: justify;
-  text-justify: inter-word;
-  hyphens: none;
-  -webkit-hyphens: none;
-  -ms-hyphens: none;
+text-align: justify;
+text-justify: inter-word;
+hyphens: none;
+-webkit-hyphens: none;
+-ms-hyphens: none;
 }
 
 main p {
-  margin-top: 1em;
-  margin-bottom: 1em;
+margin-top: 1em;
+margin-bottom: 1em;
 }
 
 main p,
 main li {
-  overflow-wrap: normal;
-  word-break: normal;
+overflow-wrap: normal;
+word-break: normal;
 }
 
 /* 10) Verspunkt manuel à insérer dans le HTML */
 .verspunkt {
-  color: var(--accent-red);
-  font-size: 3.6em;
-  line-height: 0;
-  display: inline-block;
-  position: relative;
-  top: -0.02em;
-  margin-left: 0.01em;
+color: var(--accent-red);
+font-size: 3.6em;
+line-height: 0;
+display: inline-block;
+position: relative;
+top: -0.02em;
+margin-left: 0.01em;
 }
 
 /* 11) Logos */
 .boma-logo-wrap {
-  text-align: center;
-  margin: 5rem auto 0.5rem auto;
+text-align: center;
+margin: 5rem auto 0.5rem auto;
 }
 
 .boma-logo {
-  display: block;
-  width: 240px;
-  max-width: 240px;
-  height: auto;
-  margin: 0 auto;
-  opacity: 0.3;
+display: block;
+width: 240px;
+max-width: 240px;
+height: auto;
+margin: 0 auto;
+opacity: 0.3;
 }
 
 .section-logo {
-  height: 2em;
-  width: auto;
-  max-width: none;
-  margin-left: 0.35em;
-  vertical-align: middle;
-  display: inline-block;
+height: 2em;
+width: auto;
+max-width: none;
+margin-left: 0.35em;
+vertical-align: middle;
+display: inline-block;
 }
 
 /* 12) Membres des comités */
 .committee-member {
-  text-align: left !important;
-  text-justify: auto !important;
-  padding-left: 1.1em;
-  text-indent: -1.1em;
+text-align: left !important;
+text-justify: auto !important;
+padding-left: 1.1em;
+text-indent: -1.1em;
 }
 
 /* 13) Segments japonais à ne pas couper */
 .jp-nowrap {
-  white-space: nowrap;
+white-space: nowrap;
 }
 
-/* =========================================
-   14) Notices bibliographiques / numéros
-========================================= */
+/* 14) Notices bibliographiques / numéros */
 
-/* Retrait suspendu :
-   la première ligne reste à gauche,
-   les lignes suivantes sont légèrement rentrées */
+/* Retrait suspendu : seule la première ligne reste à gauche */
 .boe-entry {
-  text-align: left !important;
-  text-justify: auto !important;
-  padding-left: 1.5em;
-  text-indent: -1.5em;
+text-align: left !important;
+text-justify: auto !important;
+padding-left: 1.5em;
+text-indent: -1.5em;
 }
 
-/* DOI + bouton Zenodo */
+/* DOI + petit bouton Zenodo */
 .boe-entry-meta {
-  margin-top: 0.35em;
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.5em;
+margin-top: 0.35em;
+display: flex;
+align-items: baseline;
+flex-wrap: wrap;
+gap: 0.55em;
 }
 
 /* DOI discret */
 .boe-entry-doi {
-  font-size: 0.78em !important;
-  line-height: 1.4 !important;
-  color: #666;
-}
-
-.boe-entry-doi * {
-  font-size: inherit !important;
-  line-height: inherit !important;
+font-size: 0.78em !important;
+line-height: 1.45 !important;
+color: #666;
 }
 
 .boe-entry-doi a {
-  color: #666;
-  text-decoration: none;
+font-size: inherit !important;
+line-height: inherit !important;
+color: #666;
+text-decoration: none;
 }
 
 .boe-entry-doi a:hover,
 .boe-entry-doi a:focus {
-  color: var(--accent-red);
-  text-decoration: underline;
+color: var(--accent-red);
+text-decoration: underline;
 }
 
-/* Petit bouton Zenodo :
-   fond blanc et contour rouge */
+/* Petit bouton Zenodo : fond blanc, contour rouge */
 .boe-zenodo-btn {
-  display: inline-block;
-  padding: 0.08em 0.48em;
-  font-size: 0.75em !important;
-  font-weight: 600;
-  line-height: 1.35 !important;
-  color: var(--accent-red) !important;
-  background: #fff;
-  border: 1px solid var(--accent-red);
-  border-radius: 2px;
-  text-decoration: none;
-  letter-spacing: 0.01em;
-  white-space: nowrap;
-  transition:
-    background 0.15s,
-    color 0.15s;
+display: inline-block;
+padding: 0.08em 0.48em;
+font-size: 0.75em !important;
+line-height: 1.35 !important;
+font-weight: 600;
+color: var(--accent-red) !important;
+background: #fff;
+border: 1px solid var(--accent-red);
+border-radius: 2px;
+text-decoration: none;
+white-space: nowrap;
 }
 
 .boe-zenodo-btn:hover,
 .boe-zenodo-btn:focus {
-  background: var(--accent-red);
-  color: #fff !important;
-  text-decoration: none;
+background: var(--accent-red);
+color: #fff !important;
+text-decoration: none;
 }
 
 /* Résumé repliable */
 details.boe-abstract {
-  margin-top: 0.45em;
+margin-top: 0.6em;
 }
 
 details.boe-abstract summary {
-  cursor: pointer;
-  font-size: 0.82em !important;
-  font-weight: 600;
-  line-height: 1.4 !important;
-  color: var(--accent-red) !important;
-  list-style: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35em;
-  user-select: none;
-  padding: 0.1em 0;
+cursor: pointer;
+font-size: 0.88em !important;
+font-weight: 600;
+color: var(--accent-red) !important;
+list-style: none;
+display: inline-flex;
+align-items: center;
+gap: 0.35em;
+user-select: none;
+padding: 0.1em 0;
 }
 
 details.boe-abstract summary::-webkit-details-marker {
-  display: none;
+display: none;
 }
 
 details.boe-abstract summary::before {
-  content: "▸";
-  color: var(--accent-red);
-  font-size: 0.8em !important;
-  line-height: 1;
-  display: inline-block;
-  transition: transform 0.18s;
+content: '▸';
+font-size: 0.8em !important;
+color: var(--accent-red);
+transition: transform 0.18s;
+display: inline-block;
 }
 
 details.boe-abstract[open] summary::before {
-  transform: rotate(90deg);
+transform: rotate(90deg);
 }
 
-/* Texte du résumé */
+/* Texte du résumé : style d'origine conservé */
 .boe-entry-abstract {
-  display: block;
-  font-size: 0.82em !important;
-  line-height: 1.45 !important;
-  text-align: justify !important;
-  text-justify: inter-word !important;
-  text-indent: 0;
-  margin-top: 0.55em;
-  margin-bottom: 0.95em;
-  margin-left: 1.5em;
-  padding-left: 0.8em;
-  border-left: 1px solid var(--accent-red);
+display: block;
+font-size: 0.82em !important;
+line-height: 1.45 !important;
+text-align: justify !important;
+text-justify: inter-word !important;
+text-indent: 0;
+margin-top: 0.8em;
+margin-bottom: 0.95em;
+margin-left: 1.5em;
+padding-left: 0.8em;
+border-left: 1px solid var(--accent-red);
 }
 
 .boe-entry-abstract * {
-  font-size: inherit !important;
-  line-height: inherit !important;
+font-size: inherit !important;
+line-height: inherit !important;
 }
 
 .boe-entry-abstract-gap {
-  display: block;
-  height: 0.85em;
+display: block;
+height: 0.85em;
 }
 
-/* Ancien style de lien de téléchargement,
-   conservé pour compatibilité */
 .boe-entry-download {
-  display: block;
-  margin-top: 0.25em;
-  margin-left: 2.3em;
-  text-indent: 0;
-  font-size: 0.82em !important;
-  line-height: 1.45 !important;
+display: block;
+margin-top: 0.25em;
+margin-left: 2.3em;
+text-indent: 0;
+font-size: 0.82em !important;
+line-height: 1.45 !important;
 }
 
 .boe-entry-download a {
-  font-size: inherit !important;
-  line-height: inherit !important;
-}
-
-/* Espace entre deux articles */
-section[aria-label] article + article {
-  margin-top: 2em;
+font-size: inherit !important;
+line-height: inherit !important;
 }
 
 /* 15) Note de bas de page */
 .footnote-note {
-  font-size: 0.82em !important;
-  line-height: 1.45 !important;
-  font-style: normal !important;
-  text-align: justify !important;
-  text-justify: inter-word !important;
-  border-top: 1px solid var(--accent-red);
-  padding-top: 0.55em;
-  margin-top: 1.2em;
+font-size: 0.82em !important;
+line-height: 1.45 !important;
+font-style: normal !important;
+text-align: justify !important;
+text-justify: inter-word !important;
+border-top: 1px solid var(--accent-red);
+padding-top: 0.55em;
+margin-top: 1.2em;
 }
 
 .footnote-note * {
-  font-size: inherit !important;
-  line-height: inherit !important;
+font-size: inherit !important;
+line-height: inherit !important;
 }
 
 .footnote-note a {
-  font-style: inherit !important;
+font-style: inherit !important;
 }
 
 .footnote-star {
-  color: var(--accent-red);
-  font-size: 1rem !important;
-  line-height: 1 !important;
+color: var(--accent-red);
+font-size: 1rem !important;
+line-height: 1 !important;
 }
 
 /* 16) Liste de soumission */
 .submission-list {
-  padding-left: 1.1em;
-  margin: 0.45em 0 1.2em 0;
+padding-left: 1.1em;
+margin: 0.45em 0 1.2em 0;
 }
 
 .submission-list li {
-  padding-left: 0.1em;
+padding-left: 0.1em;
 }
 
 .submission-list li + li {
-  margin-top: 0.7em;
+margin-top: 0.7em;
 }
 
 .submission-list li::marker {
-  color: var(--accent-red);
+color: var(--accent-red);
 }
 
 /* 17) Déclaration de soumission */
 .submission-declaration {
-  display: block;
-  margin: 0.9em 0 1.15em 1.5em;
-  padding-left: 0.8em;
-  border-left: 1px solid var(--accent-red);
-  font-size: 0.82em !important;
-  line-height: 1.45 !important;
-  text-align: justify !important;
-  text-justify: inter-word !important;
+display: block;
+margin: 0.9em 0 1.15em 1.5em;
+padding-left: 0.8em;
+border-left: 1px solid var(--accent-red);
+font-size: 0.82em !important;
+line-height: 1.45 !important;
+text-align: justify !important;
+text-justify: inter-word !important;
 }
 
 .submission-declaration,
 .submission-declaration * {
-  font-size: inherit !important;
-  line-height: inherit !important;
+font-size: inherit !important;
+line-height: inherit !important;
 }
 
 .submission-declaration {
-  font-style: normal !important;
+font-style: normal !important;
 }
 
 .submission-declaration em {
-  font-style: italic !important;
+font-style: italic !important;
 }
 
 .submission-declaration p {
-  margin: 0;
-  text-align: inherit !important;
+margin: 0;
+text-align: inherit !important;
 }
 
-/* =========================================
-   Fix mobile
-========================================= */
+/* ===== Fix mobile ===== */
 @media (max-width: 800px) {
-
-  header {
-    padding: 18px 16px 16px 16px;
-  }
-
-  .brand .title {
-    display: none;
-  }
-
-  nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px 10px;
-    font-size: .95rem;
-    margin-top: 14px;
-  }
-
-  nav a {
-    white-space: normal;
-    overflow-wrap: anywhere;
-    word-break: normal;
-    hyphens: auto;
-    margin-right: 0;
-  }
-
-  /* traits rouges sur mobile */
-  nav a + a {
-    border-left: 1px solid var(--accent-red);
-    padding-left: 8px;
-    margin-left: 2px;
-  }
-
-  /* le script ajoute cette classe au premier lien de chaque ligne */
-  nav a.row-start {
-    border-left: none;
-    padding-left: 0;
-    margin-left: 0;
-  }
-
-  main {
-    border-left: none;
-    padding-left: 24px;
-    background-image:
-      linear-gradient(var(--accent-red), var(--accent-red)),
-      linear-gradient(var(--accent-red), var(--accent-red));
-    background-repeat: no-repeat, no-repeat;
-    background-size: 1px 100%, 1px 100%;
-    background-position: 0 0, 6px 0;
-  }
-
-  /* sur mobile : une seule ligne sous le header */
-  header::after {
-    height: 0;
-    border-top: 1px solid var(--accent-red);
-    border-bottom: none;
-  }
-
-  /* retrait suspendu un peu plus discret sur petit écran */
-  .boe-entry {
-    padding-left: 1.2em;
-    text-indent: -1.2em;
-  }
-
-  /* DOI + bouton Zenodo */
-  .boe-entry-meta {
-    margin-top: 0.3em;
-    gap: 0.45em;
-  }
-
-  .boe-entry-doi {
-    font-size: 0.75em !important;
-  }
-
-  .boe-zenodo-btn {
-    padding: 0.07em 0.42em;
-    font-size: 0.72em !important;
-  }
-
-  details.boe-abstract {
-    margin-top: 0.4em;
-  }
-
-  details.boe-abstract summary {
-    font-size: 0.8em !important;
-  }
-
-  .boe-entry-abstract {
-    margin-left: 1.2em;
-    padding-left: 0.7em;
-    margin-top: 0.5em;
-    margin-bottom: 0.9em;
-  }
-
-  .boe-entry-abstract-gap {
-    height: 0.75em;
-  }
-
-  .boe-entry-download {
-    margin-left: 1.9em;
-    text-indent: 0;
-    font-size: 0.82em !important;
-    line-height: 1.45 !important;
-  }
-
-  .boe-entry-download a {
-    font-size: inherit !important;
-    line-height: inherit !important;
-  }
-
-  /* note : même rendu sur mobile */
-  .footnote-note {
-    font-size: 0.82em !important;
-    line-height: 1.45 !important;
-  }
-
-  .footnote-note * {
-    font-size: inherit !important;
-    line-height: inherit !important;
-  }
-
-  .footnote-star {
-    font-size: 1rem !important;
-    line-height: 1 !important;
-  }
-
-  /* ajustements mobile soumission */
-  .submission-list {
-    padding-left: 1em;
-  }
-
-  .submission-list li + li {
-    margin-top: 0.7em;
-  }
-
-  .submission-declaration {
-    margin-left: 1.2em;
-    padding-left: 0.7em;
-  }
+header {
+padding: 18px 16px 16px 16px;
 }
 
-/* =========================================
-   Titre + ISSN dans l'en-tête
-========================================= */
+.brand .title { display: none; }
+
+nav {
+display: flex;
+flex-wrap: wrap;
+gap: 6px 10px;
+font-size: .95rem;
+margin-top: 14px;
+}
+
+nav a {
+white-space: normal;
+overflow-wrap: anywhere;
+word-break: normal;
+hyphens: auto;
+margin-right: 0;
+}
+
+/* traits rouges sur mobile */
+nav a + a {
+border-left: 1px solid var(--accent-red);
+padding-left: 8px;
+margin-left: 2px;
+}
+
+/* le script ajoute cette classe au premier lien de chaque ligne */
+nav a.row-start {
+border-left: none;
+padding-left: 0;
+margin-left: 0;
+}
+
+main {
+border-left: none;
+padding-left: 24px;
+background-image:
+linear-gradient(var(--accent-red), var(--accent-red)),
+linear-gradient(var(--accent-red), var(--accent-red));
+background-repeat: no-repeat, no-repeat;
+background-size: 1px 100%, 1px 100%;
+background-position: 0 0, 6px 0;
+}
+
+/* sur mobile : une seule ligne sous le header */
+header::after {
+height: 0;
+border-top: 1px solid var(--accent-red);
+border-bottom: none;
+}
+
+/* retrait un peu plus discret pour les notices sur petit écran */
+.boe-entry {
+padding-left: 1.2em;
+text-indent: -1.2em;
+}
+
+.boe-entry-abstract {
+margin-left: 1.2em;
+padding-left: 0.7em;
+margin-top: 0.75em;
+margin-bottom: 0.9em;
+}
+
+.boe-entry-abstract-gap {
+height: 0.75em;
+}
+
+.boe-entry-download {
+margin-left: 1.9em;
+text-indent: 0;
+font-size: 0.82em !important;
+line-height: 1.45 !important;
+}
+
+.boe-entry-download a {
+font-size: inherit !important;
+line-height: inherit !important;
+}
+
+/* note : même rendu sur mobile */
+.footnote-note {
+font-size: 0.82em !important;
+line-height: 1.45 !important;
+}
+
+.footnote-note * {
+font-size: inherit !important;
+line-height: inherit !important;
+}
+
+.footnote-star {
+font-size: 1rem !important;
+line-height: 1 !important;
+}
+
+/* ajustements mobile soumission */
+.submission-list {
+padding-left: 1em;
+}
+
+.submission-list li + li {
+margin-top: 0.7em;
+}
+
+.submission-declaration {
+margin-left: 1.2em;
+padding-left: 0.7em;
+}
+}
 
 .brand-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.1;
-  position: relative;
-  top: 0.45em;
+display: flex;
+flex-direction: column;
+line-height: 1.1;
+position: relative;
+top: 0.45em;
 }
 
 .header-issn {
-  display: none;
+display: none;
 }
 
 @media (min-width: 801px) {
-  .header-issn {
-    display: block;
-    font-size: 0.62rem !important;
-    opacity: 0.4;
-    margin-top: -0.45em;
-    margin-left: 0.70em;
-  }
+.header-issn {
+display: block;
+font-size: 0.62rem !important;
+opacity: 0.4;
+margin-top: -0.45em;
+margin-left: 0.70em;
+}
 }
 
 /* Neutralisation des styles navigateur sur les titres sémantiques */
-h1,
-h2,
-h3 {
-  font-size: inherit;
-  font-weight: inherit;
-  margin: 0;
-  padding: 0;
-  line-height: inherit;
+h1, h2, h3 {
+font-size: inherit;
+font-weight: inherit;
+margin: 0;
+padding: 0;
+line-height: inherit;
 }
 ```
