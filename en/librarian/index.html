@@ -57,8 +57,8 @@
   </script>
   <!-- BOE institutional styles, followed by shared search-tool styles. -->
   <link rel="stylesheet" href="/assets/style.css?v=16">
-  <link rel="stylesheet" href="../../fr/bibliothecaire/styles.css?v=16">
-  <script type="module" src="../../fr/bibliothecaire/app.js?v=15"></script>
+  <link rel="stylesheet" href="../../fr/bibliothecaire/styles.css?v=17">
+  <script type="module" src="../../fr/bibliothecaire/app.js?v=17"></script>
   <meta property="og:locale:alternate" content="fr_FR">
   <meta name="twitter:image:alt" content="Bibliothèque Ouverte d’Égyptologie logo">
   <meta name="DC.description" content="Search BOE articles, notes and bibliographies with keywords or advanced multilingual search. Read original excerpts and check their PDF sources.">
@@ -115,6 +115,7 @@
         <button type="button" data-example="ⲙⲡⲉ">ⲙⲡⲉ</button>
         <button type="button" data-example="Coptic">Coptic</button>
         <button type="button" data-example="Arabic">Arabic</button>
+        <button type="button" data-example="Greek">Greek</button>
         <button type="button" data-example="Τυφῶνος">Τυφῶνος</button>
         <button type="button" data-example="Pyramid Texts">Pyramid Texts</button>
         <button type="button" data-example="Sign U23">Sign U23</button>
@@ -133,6 +134,11 @@
       <p class="privacy-note">The <a href="https://huggingface.co/Xenova/multilingual-e5-small" target="_blank" rel="noopener noreferrer">multilingual-e5-small</a> model runs in your browser. Your searches are not sent to any AI service.</p>
 
       <p id="query-corrections" class="tag-hint" aria-live="polite" hidden></p>
+      <section id="grammar-relations" class="topic-analysis" aria-label="Related grammatical categories" hidden>
+        <h3>Related categories</h3>
+        <p id="grammar-relation-note" class="privacy-note"></p>
+        <div id="grammar-related-chips" class="chips"></div>
+      </section>
       <section id="topic-analysis" class="topic-analysis" aria-label="Search term analysis" hidden>
         <h3>Identified concepts</h3>
         <div id="topic-chips" class="chips"></div>
