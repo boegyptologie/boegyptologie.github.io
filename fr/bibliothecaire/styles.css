@@ -211,6 +211,8 @@ h1, h2, h3, h4 { font-weight: 700; }
   font-size: .9rem;
 }
 .keywords .chip { border-color: #ddd; }
+#grammar-related-chips { margin-top: 8px; }
+#grammar-related-chips button { min-height: 44px; text-align: left; }
 
 .results-section {
   margin-top: 8px;
