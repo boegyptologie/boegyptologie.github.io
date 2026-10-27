@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Librarian | BOE Multilingual Research Tool</title>
+  <meta name="description" content="Search BOE articles, notes and bibliographies with keywords or advanced multilingual search. Read original excerpts and check their PDF sources.">
+  <meta name="keywords" content="The Librarian, BOE, BOMA, Egyptology, topic search, research tool, footnotes, excerpts, multilingual">
+  <meta name="author" content="Bibliothèque Ouverte des Mondes Anciens (BOMA)">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://boegyptologie.github.io/en/librarian/">
+  <link rel="alternate" hreflang="fr" href="https://boegyptologie.github.io/fr/bibliothecaire/">
+  <link rel="alternate" hreflang="en" href="https://boegyptologie.github.io/en/librarian/">
+  <link rel="alternate" hreflang="x-default" href="https://boegyptologie.github.io/fr/bibliothecaire/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="The Librarian | BOE Multilingual Research Tool">
+  <meta property="og:description" content="Search BOE articles, notes and bibliographies with keywords or advanced multilingual search. Read original excerpts and check their PDF sources.">
+  <meta property="og:url" content="https://boegyptologie.github.io/en/librarian/">
+  <meta property="og:image" content="https://boegyptologie.github.io/assets/logo.png">
+  <meta property="og:image:alt" content="Bibliothèque Ouverte d’Égyptologie logo">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="Bibliothèque Ouverte d'Égyptologie (BOE)">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="The Librarian | BOE Multilingual Research Tool">
+  <meta name="twitter:description" content="Search BOE articles, notes and bibliographies with keywords or advanced multilingual search. Read original excerpts and check their PDF sources.">
+  <meta name="twitter:image" content="https://boegyptologie.github.io/assets/logo.png">
+  <meta name="DC.title" content="The Librarian | BOE Multilingual Research Tool">
+  <meta name="DC.creator" content="Bibliothèque Ouverte des Mondes Anciens (BOMA)">
+  <meta name="DC.subject" content="topic search; research tool; Egyptology; scholarly publications">
+  <meta name="DC.publisher" content="Bibliothèque Ouverte des Mondes Anciens (BOMA)">
+  <meta name="DC.language" content="en">
+  <meta name="DC.rights" content="CC BY 4.0 https://creativecommons.org/licenses/by/4.0/">
+  <meta name="DC.type" content="InteractiveResource">
+  <meta name="DC.format" content="text/html">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "The Librarian",
+    "description": "A multilingual topic search tool for excerpts from BOE publications.",
+    "url": "https://boegyptologie.github.io/en/librarian/",
+    "applicationCategory": "EducationalApplication",
+    "inLanguage": "en",
+    "isAccessibleForFree": true,
+    "publisher": {
+      "@type": "Organization",
+      "name": "Bibliothèque Ouverte des Mondes Anciens (BOMA)"
+    },
+    "isPartOf": {
+      "@type": "Periodical",
+      "name": "Bibliothèque Ouverte d'Égyptologie",
+      "alternateName": "BOE",
+      "issn": "3129-6424"
+    }
+  }
+  </script>
+  <!-- BOE institutional styles, followed by shared search-tool styles. -->
+  <link rel="stylesheet" href="/assets/style.css?v=15">
+  <link rel="stylesheet" href="../../fr/bibliothecaire/styles.css?v=15">
+  <script type="module" src="../../fr/bibliothecaire/app.js?v=15"></script>
+  <meta property="og:locale:alternate" content="fr_FR">
+  <meta name="twitter:image:alt" content="Bibliothèque Ouverte d’Égyptologie logo">
+  <meta name="DC.description" content="Search BOE articles, notes and bibliographies with keywords or advanced multilingual search. Read original excerpts and check their PDF sources.">
+</head>
+<body class="bibliothecaire-page">
+<header>
+  <div class="container">
+    <a class="brand" href="/en/about.html">
+      <img src="../../fr/bibliothecaire/boe-logo.png" alt="BOE logo">
+      <span class="brand-text">
+        <span class="title">Bibliothèque ouverte d'égyptologie</span>
+        <span class="header-issn">ISSN&nbsp;3129-6424</span>
+      </span>
+    </a>
+    <span class="lang-switch"><a href="/fr/bibliothecaire/" hreflang="fr" lang="fr" title="Le bibliothécaire — interface française">FR</a></span>
+    <nav aria-label="Main navigation">
+      <a href="/en/about.html">About</a>
+      <a href="/en/numeros.html">Browse all issues</a>
+      <a href="/en/processus-editorial.html">Editorial process</a>
+      <a href="/en/soumettre-un-article-submit-a-paper.html">Submit an article</a>
+      <a href="/en/editorial-policy-statement.html">Editorial Policy Statement</a>
+      <a class="nav-library" href="/en/librarian/" aria-current="page">The Librarian</a>
+    </nav>
+  </div>
+  </header>
+
+  <main id="contenu">
+    <h1>The Librarian<span class="verspunkt" aria-hidden="true">·</span></h1>
+    <p class="tool-subtitle">BOE’s research tool</p>
+
+    <section class="search-section" aria-labelledby="search-heading">
+      <h2 id="search-heading">Search by topic</h2>
+      <form id="search-form">
+        <label for="theme-input">Topic or keywords</label>
+        <textarea id="theme-input" name="theme" rows="3" maxlength="1800" required dir="auto" enterkeyhint="search" placeholder="E.g. Coptic, Pyramid Texts, mꜣꜥ"></textarea>
+        <div class="form-bottom">
+          <fieldset id="search-mode" disabled aria-describedby="model-explanation">
+            <legend>Search mode</legend>
+            <div class="mode-options">
+              <label class="mode-option" for="mode-lexical"><input type="radio" name="search-mode" id="mode-lexical" value="lexical" checked><span><strong>Without model</strong><small>Keyword search</small></span></label>
+              <label class="mode-option" for="mode-semantic"><input type="radio" name="search-mode" id="mode-semantic" value="semantic"><span><strong>With model</strong><small>Advanced multilingual search</small></span></label>
+            </div>
+          </fieldset>
+          <button id="search-button" type="submit" disabled>Search</button>
+        </div>
+      </form>
+
+      <details class="examples-disclosure">
+        <summary>Example searches</summary>
+        <div class="examples">
+        <button type="button" data-example="Afroasiatic">Afroasiatic</button>
+        <button type="button" data-example="Plutarch">Plutarch</button>
+        <button type="button" data-example="mꜣꜥ">mꜣꜥ</button>
+        <button type="button" data-example="ⲙⲡⲉ">ⲙⲡⲉ</button>
+        <button type="button" data-example="Coptic">Coptic</button>
+        <button type="button" data-example="Arabic">Arabic</button>
+        <button type="button" data-example="Τυφῶνος">Τυφῶνος</button>
+        <button type="button" data-example="Pyramid Texts">Pyramid Texts</button>
+        <button type="button" data-example="Sign U23">Sign U23</button>
+        <button type="button" data-example="Negation">Negation</button>
+        </div>
+      </details>
+
+      <div class="method-row" aria-live="polite">
+        <div class="method-description">
+          <strong id="method-title">Keyword search</strong>
+          <p id="method-status" role="status">Loading the corpus…</p>
+        </div>
+        <button type="button" id="retry-corpus" hidden>Retry</button>
+      </div>
+      <p id="model-explanation" class="privacy-note">Advanced mode requires a model download of about 118 MB on first use. It then runs in your browser.</p>
+      <p class="privacy-note">The <a href="https://huggingface.co/Xenova/multilingual-e5-small" target="_blank" rel="noopener noreferrer">multilingual-e5-small</a> model runs in your browser. Your searches are not sent to any AI service.</p>
+
+      <p id="query-corrections" class="tag-hint" aria-live="polite" hidden></p>
+      <section id="topic-analysis" class="topic-analysis" aria-label="Search term analysis" hidden>
+        <h3>Identified concepts</h3>
+        <div id="topic-chips" class="chips"></div>
+        <h3>Attested or related keywords</h3>
+        <div id="keyword-chips" class="chips keywords"></div>
+      </section>
+    </section>
+
+    <section class="results-section" aria-labelledby="results-heading">
+      <div class="results-head">
+        <h2 id="results-heading">Relevant excerpts <span id="result-count" aria-label="Number of excerpts found">0</span></h2>
+        <p class="results-explanation">Results are excerpts from BOE publications, accompanied by references and links to the PDF pages.</p>
+      </div>
+      <div class="filters" role="group" aria-label="Filter excerpts">
+        <button type="button" class="filter selected" data-filter="all" aria-pressed="true">All excerpts</button>
+        <button type="button" class="filter" data-filter="note" aria-pressed="false">Notes</button>
+        <button type="button" class="filter" data-filter="body" aria-pressed="false">Article text</button>
+        <button type="button" class="filter" data-filter="bibliography" aria-pressed="false">Bibliographies</button>
+      </div>
+      <div id="result-list" class="result-list" aria-live="polite" aria-busy="false"></div>
+      <button type="button" id="more-results" hidden>Show more excerpts</button>
+    </section>
+
+    <p class="corpus-count"><strong id="corpus-total">Loading the corpus…</strong> <span id="corpus-subtitle"></span></p>
+  </main>
+
+  <footer>
+    <div class="container small">
+      © Bibliothèque Ouverte des Mondes Anciens, 2026 ·
+      <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC&nbsp;BY&nbsp;4.0</a> ·
+      <a href="/en/legal-notice.html">Legal notice</a>
+    </div>
+  </footer>
+  <script>
+  function updateMobileMenuSeparators() {
+    const links = Array.from(document.querySelectorAll('header nav a'));
+    let previousTop = null;
+    const tops = links.map(link => link.offsetTop);
+    links.forEach((link, index) => {
+      const currentTop = tops[index];
+      link.classList.toggle('row-start', index === 0 || currentTop > previousTop);
+      previousTop = currentTop;
+    });
+  }
+  window.addEventListener('load', updateMobileMenuSeparators);
+  window.addEventListener('resize', updateMobileMenuSeparators);
+  if (document.fonts) document.fonts.ready.then(updateMobileMenuSeparators);
+  </script>
+</body>
+</html>

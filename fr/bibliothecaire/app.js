@@ -1,5 +1,122 @@
 /* Recherche thématique BOMA : jamais de texte scientifique inventé par une IA. */
 const $ = id => document.getElementById(id);
+// Interface bilingue ; les termes du moteur et les citations restent dans leur langue source.
+const LANGUAGE=(document.documentElement?.lang||'fr').toLowerCase().startsWith('en')?'en':'fr';
+const ASSET_BASE=new URL('.',import.meta.url);
+const ENGLISH_UI={
+  "Recherche par mots-clés": "Keyword search",
+  "Retrouve les extraits à partir de vos mots-clés, de leurs variantes et d’équivalents dans d’autres langues.": "Finds excerpts using your keywords, their variants and equivalents in other languages.",
+  "Recherche multilingue avancée": "Advanced multilingual search",
+  "Ajoute des rapprochements de sens pour repérer d’autres formulations liées à votre recherche et affiner le classement des extraits.": "Adds semantic associations to identify other wording related to your search and refine the ranking of excerpts.",
+  "Les résultats par mots-clés sont déjà affichés. Le modèle complète la recherche et affine leur classement.": "Keyword results are already displayed. The model is expanding the search and refining their ranking.",
+  "Les résultats par mots-clés sont déjà affichés. Le modèle se charge pour compléter la recherche et affiner leur classement.": "Keyword results are already displayed. The model is loading to expand the search and refine their ranking.",
+  "Recherche avancée terminée : les rapprochements de sens ont été pris en compte.": "Advanced search complete: semantic associations have been taken into account.",
+  "Recherche interrompue": "Search interrupted",
+  "Le modèle est indisponible. Les résultats par mots-clés restent affichés.": "The model is unavailable. Keyword results remain displayed.",
+  "La recherche n’a pas abouti. Veuillez réessayer.": "The search could not be completed. Please try again.",
+  "Chargement du corpus…": "Loading the corpus…",
+  "Chargement des articles": "Loading articles",
+  "La recherche sera disponible dans un instant.": "Search will be available shortly.",
+  "Corpus indisponible": "Corpus unavailable",
+  "Articles indisponibles": "Articles unavailable",
+  "Le chargement des articles a échoué. Vérifiez votre connexion puis réessayez.": "The articles could not be loaded. Check your connection and try again.",
+  "Recherche en cours…": "Searching…",
+  "Rechercher": "Search",
+  "Aucun extrait dans cette catégorie.": "No excerpts in this category.",
+  "Aucun extrait correspondant.": "No matching excerpts.",
+  "Vérifier sur le PDF ↗": "Check the PDF ↗",
+  "PDF à renseigner": "PDF unavailable",
+  "Copier l’extrait et la référence": "Copy excerpt and reference",
+  "Référence copiée ✓": "Reference copied ✓",
+  "Copie indisponible": "Copying unavailable",
+  "Terme attesté dans le corpus": "Term attested in the corpus",
+  "Note à contrôler": "Note to verify",
+  "Bibliographie": "Bibliography",
+  "Texte de l’article": "Article text",
+  "Note {number}": "Note {number}",
+  "n.": "note",
+  "« {text} »": "“{text}”",
+  "{author}, « {title} », {journal}, p. {page}{note}{doi}.": "{author}, “{title}”, {journal}, p. {page}{note}{doi}.",
+  "Téléchargement du modèle : {progress} %. Les résultats par mots-clés sont déjà affichés.": "Downloading the model: {progress}%. Keyword results are already displayed.",
+  "Le modèle prépare les passages : {count}/{total}. Les résultats par mots-clés restent affichés.": "The model is preparing passages: {count}/{total}. Keyword results remain displayed.",
+  "Afficher {count} autres extraits": "Show {count} more excerpts",
+  "Indices présents dans cet extrait : {terms}{more}": "Evidence in this excerpt: {terms}{more}",
+  "Graphies et termes rapprochés : {terms}.": "Related spellings and terms: {terms}.",
+  "{count} articles": "{count} articles",
+  "{notes} notes · {passages} passages": "{notes} notes · {passages} passages",
+  "catégorie grammaticale": "grammatical category",
+  "langue / écriture": "language / script",
+  "corpus textuel": "textual corpus",
+  "translittération égyptologique": "Egyptological transliteration",
+  "équivalent lexical": "lexical equivalent",
+  "proximité sémantique": "semantic similarity",
+  "Vérité": "Truth",
+  "Négation et grammaire": "Negation and grammar",
+  "Graphies et pratiques d’écriture": "Spellings and writing practices",
+  "Phonétique et linguistique": "Phonetics and linguistics",
+  "Lexique et sémantique": "Lexicon and semantics",
+  "Documents et attestations": "Documents and attestations",
+  "Bibliographie et notes": "Bibliography and notes",
+  "Langues et évolutions": "Languages and language change",
+  "Langues afroasiatiques": "Afroasiatic languages",
+  "Signe du pied": "Foot sign",
+  "Textes des Pyramides": "Pyramid Texts",
+  "Textes des Sarcophages": "Coffin Texts",
+  "Livre des Morts": "Book of the Dead",
+  "Livre des Deux Chemins": "Book of Two Ways",
+  "Amdouat": "Amduat",
+  "Livre des Portes": "Book of Gates",
+  "Livre des Cavernes": "Book of Caverns",
+  "Livre de la Terre": "Book of the Earth",
+  "Litanies de Rê": "Litany of Re",
+  "Livre de la Nuit": "Book of Night",
+  "Livre du Jour": "Book of Day",
+  "Livre de la Vache du Ciel": "Book of the Heavenly Cow",
+  "Sinouhé": "Sinuhe",
+  "Paysan éloquent": "Eloquent Peasant",
+  "Papyrus Westcar": "Westcar Papyrus",
+  "Enseignement de Ptahhotep": "Teaching of Ptahhotep",
+  "Lamentations d’Ipou-Our": "Admonitions of Ipuwer",
+  "Voyage d’Ounamon": "Story of Wenamun",
+  "Nom / substantif (NOUN)": "Noun (NOUN)",
+  "Nom propre (PROPN)": "Proper noun (PROPN)",
+  "Adjectif (ADJ)": "Adjective (ADJ)",
+  "Verbe (VERB)": "Verb (VERB)",
+  "Auxiliaire (AUX)": "Auxiliary (AUX)",
+  "Adverbe (ADV)": "Adverb (ADV)",
+  "Préposition / adposition (ADP)": "Preposition / adposition (ADP)",
+  "Pronom (PRON)": "Pronoun (PRON)",
+  "Déterminant grammatical (DET)": "Determiner (DET)",
+  "Particule (PART)": "Particle (PART)",
+  "Conjonction (catégorie générale)": "Conjunction (general category)",
+  "Conjonction de coordination (CCONJ)": "Coordinating conjunction (CCONJ)",
+  "Conjonction de subordination (SCONJ)": "Subordinating conjunction (SCONJ)",
+  "Numéral (NUM)": "Numeral (NUM)",
+  "Interjection (INTJ)": "Interjection (INTJ)",
+  "Ponctuation (PUNCT)": "Punctuation (PUNCT)",
+  "Symbole comme catégorie (SYM)": "Symbol as a category (SYM)",
+  "Catégorie non déterminée (X)": "Unclassified category (X)",
+  "Pronom suffixe": "Suffix pronoun",
+  "Pronom dépendant": "Dependent pronoun",
+  "Pronom enclitique": "Enclitic pronoun",
+  "Pronom indépendant": "Independent pronoun",
+  "Pronom proclitique": "Proclitic pronoun",
+  "Participe": "Participle",
+  "Infinitif": "Infinitive",
+  "Statif / pseudoparticipe": "Stative / pseudoparticiple",
+  "Forme verbale relative": "Relative verb form",
+  "Adjectif nisbe": "Nisba adjective",
+  "Déterminatif / classificateur graphique": "Determinative / graphic classifier",
+  "Anthroponyme / nom de personne": "Anthroponym / personal name",
+  "Toponyme / nom de lieu": "Toponym / place name",
+  "Théonyme / nom de divinité": "Theonym / divine name",
+  "Nom royal / nom de souverain": "Royal name / ruler’s name",
+  "Épithète": "Epithet",
+  "Titre / titulature dans les textes anciens": "Title / titulary in ancient texts",
+  "Arabe": "Arabic",
+  "Copte": "Coptic"
+};
+function t(message,values={}){const template=LANGUAGE==='en'?(ENGLISH_UI[message]??message):message;return template.replace(/\{(\w+)\}/g,(match,key)=>Object.hasOwn(values,key)?String(values[key]):match);}
 const MODEL = 'Xenova/multilingual-e5-small';
 const state = { corpus:null, docs:new Map(), result:[], search:'', filter:'all', visibleCount:18, extractor:null, vectors:null, termIndex:null, tokenVectors:new Map(), lexicon:new Map(), egyptianIndex:new Map(), citedNames:new Set(), activeTerms:[], plan:null, running:false, mode:'lexical', useModel:false, requestId:0, modelPromise:null };
 let inferenceQueue=Promise.resolve();
@@ -28,6 +145,7 @@ const CURATED_EQUIVALENTS = new Map([
   ['copte',['coptic']], ['copta',['coptic']], ['copto',['coptic']],
   // Noms historiques dont les graphies diffèrent sensiblement selon les langues.
   // Ne rapprocher que les formes reconnues d'un nom littéralement attesté.
+  ['plutarch',['plutarque']],
   ['toutankhamon',['tutankhamun']], ['toutankhamoun',['tutankhamun']],
   ['tutankhamon',['tutankhamun']], ['tutankhamen',['tutankhamun']],
   ['tutanchamun',['tutankhamun']], ['tutanchamon',['tutankhamun']],
@@ -474,8 +592,8 @@ function buildPlan(query,semanticTerms=new Map()){
         section:part.section,entity:true,topic:true};
       groups.push(group);
       foundThemes.set(concept.label,{label:concept.label});
-      if(concept.kind==='grammar')corrections.push(`${source} → ${concept.label} (catégorie grammaticale)`);
-      else if(source!==fold(concept.label))corrections.push(`${source} → ${concept.label} (${concept.kind==='language'?'langue / écriture':'corpus textuel'})`);
+      if(concept.kind==='grammar')corrections.push(`${source} → ${t(concept.label)} (${t('catégorie grammaticale')})`);
+      else if(source!==fold(concept.label))corrections.push(`${source} → ${t(concept.label)} (${concept.kind==='language'?t('langue / écriture'):t('corpus textuel')})`);
       continue;
     }
     const fixed=typoCorrection(source)||source;
@@ -500,9 +618,9 @@ function buildPlan(query,semanticTerms=new Map()){
     const suggestions=[...new Set([...egyptAliases,...(curated.length||egyptKeys.length?curated:semantic)])];
     for(const match of egyptMatches){
       const representative=[...state.egyptianIndex.get(match.key).forms].find(form=>EGYPT_MARKED.test(form));
-      if(representative&&fold(representative)!==source)corrections.push(`${match.raw} → ${representative} (translittération égyptologique)`);
+      if(representative&&fold(representative)!==source)corrections.push(`${match.raw} → ${representative} (${t('translittération égyptologique')})`);
     }
-    for(const choice of suggestions)if(choice!==fixed)corrections.push(`${source} → ${choice} (${curated.includes(choice)?'équivalent lexical':'proximité sémantique'})`);
+    for(const choice of suggestions)if(choice!==fixed)corrections.push(`${source} → ${choice} (${curated.includes(choice)?t('équivalent lexical'):t('proximité sémantique')})`);
     const themes=[...new Set([...variants,...suggestions].flatMap(themesForWord))];
     for(const theme of themes)foundThemes.set(theme.label,theme);
     const coreTerms=[...new Set([...variants,...suggestions])];
@@ -515,9 +633,9 @@ function buildPlan(query,semanticTerms=new Map()){
   const terms=[...new Set(groups.flatMap(g=>g.terms))].slice(0,55);
   return {groups,terms,topics,corrections};
 }
-function excerptType(p){return p.kind==='note'?(p.number?`Note ${p.number}`:'Note à contrôler'):p.kind==='bibliography'?'Bibliographie':'Texte de l’article';}
+function excerptType(p){return p.kind==='note'?(p.number?t('Note {number}',{number:p.number}):t('Note à contrôler')):p.kind==='bibliography'?t('Bibliographie'):t('Texte de l’article');}
 function pdfURL(p){const d=state.docs.get(p.doc_id);return d.url?`${d.url}#page=${p.page}`:d.doi?`https://doi.org/${encodeURIComponent(d.doi)}`:null;}
-function reference(p){const d=state.docs.get(p.doc_id);return `${d.author}, « ${d.title} », ${d.journal}, p. ${p.page}${p.number?`, n. ${p.number}`:''}${d.doi?`, DOI ${d.doi}`:''}.`;}
+function reference(p){const d=state.docs.get(p.doc_id);return t('{author}, « {title} », {journal}, p. {page}{note}{doi}.',{author:d.author,title:d.title,journal:d.journal,page:p.page,note:p.number?`, ${t('n.')} ${p.number}`:'',doi:d.doi?`, DOI ${d.doi}`:''});}
 
 function lexicalScores(query,terms,plan=null){
   const keys=[...new Set(terms)];const collection=state.corpus.passages;const df=new Map(keys.map(w=>[w,collection.reduce((n,p)=>n+(fold(p.text).split(' ').includes(w)?1:0),0)]));
@@ -547,7 +665,7 @@ function cosine(a,b){if(a.length!==b.length)return 0;let dot=0,an=0,bn=0;for(let
 async function prepareTermIndex(){
   if(state.termIndex)return state.termIndex;
   try{
-    const r=await fetch('data/terms.json');if(!r.ok)throw Error(`HTTP ${r.status}`);
+    const r=await fetch(new URL('data/terms.json',ASSET_BASE));if(!r.ok)throw Error(`HTTP ${r.status}`);
     const json=await r.json();
     if(json.model!==MODEL||json.corpus_generated!==state.corpus.generated||!Array.isArray(json.rows))throw Error('Lexique vectoriel périmé');
     state.termIndex=json.rows.map(row=>({...row,vector:decodeVector(row.vector)}));
@@ -722,7 +840,7 @@ async function prepareModel(){
       env.allowRemoteModels=true;
       state.extractor=await pipeline('feature-extraction',MODEL,{dtype:'q8',progress_callback:event=>{
         if(state.useModel&&state.running&&event.status==='progress'&&typeof event.progress==='number'){
-          $('method-status').textContent=`Téléchargement de l’IA : ${Math.round(event.progress)} %. Les premiers résultats sont déjà disponibles.`;
+          $('method-status').textContent=t('Téléchargement du modèle : {progress} %. Les résultats par mots-clés sont déjà affichés.',{progress:Math.round(event.progress)});
         }
       }});
       return state.extractor;
@@ -747,7 +865,7 @@ async function prepareVectors(isCurrent=()=>true){
   if(state.vectors)return;
   const key=`boma-semantics-v2:${state.corpus.generated}`;
   try{const stored=localStorage.getItem(key);if(stored){state.vectors=corpusVectors(JSON.parse(stored));return;}}catch{}
-  try{const reply=await fetch('data/embeddings.json');if(reply.ok){const json=await reply.json();state.vectors=corpusVectors(json);return;}}catch{}
+  try{const reply=await fetch(new URL('data/embeddings.json',ASSET_BASE));if(reply.ok){const json=await reply.json();state.vectors=corpusVectors(json);return;}}catch{}
   if(!isCurrent())return;
   // En l'absence de vecteurs éditoriaux publiés, vectorisation ponctuelle et cache local.
   await prepareModel();const rows=[];const passages=state.corpus.passages;
@@ -757,7 +875,7 @@ async function prepareVectors(isCurrent=()=>true){
     if(!isCurrent())return;
     const dimension=tensor.dims.at(-1);
     for(let j=0;j<batch.length;j++){const data=tensor.data.slice(j*dimension,(j+1)*dimension);const bytes=Int8Array.from(data,x=>Math.max(-127,Math.min(127,Math.round(x*127))));let bin='';for(const byte of bytes)bin+=String.fromCharCode((byte+256)%256);rows.push({id:batch[j].id,vector:btoa(bin)});}
-    $('method-status').textContent=`L’IA prépare les passages : ${Math.min(passages.length,i+batch.length)}/${passages.length}. Les premiers résultats restent disponibles.`;
+    $('method-status').textContent=t('Le modèle prépare les passages : {count}/{total}. Les résultats par mots-clés restent affichés.',{count:Math.min(passages.length,i+batch.length),total:passages.length});
     await new Promise(resolve=>setTimeout(resolve,0));
   }
   const json={model:MODEL,corpus_generated:state.corpus.generated,rows};state.vectors=corpusVectors(json);
@@ -773,8 +891,8 @@ function render(){
   const selected=matching.slice(0,state.visibleCount);
   $('result-count').textContent=String(matching.length);
   const more=$('more-results');more.hidden=selected.length>=matching.length;
-  if(!more.hidden)more.textContent=`Afficher ${Math.min(18,matching.length-selected.length)} autres extraits`;
-  if(!selected.length){if(!state.search)return;const none=document.createElement('div');none.className='empty';none.textContent=state.result.length?'Aucun extrait dans cette catégorie.':'Aucun extrait correspondant.';wrap.append(none);return;}
+  if(!more.hidden)more.textContent=t('Afficher {count} autres extraits',{count:Math.min(18,matching.length-selected.length)});
+  if(!selected.length){if(!state.search)return;const none=document.createElement('div');none.className='empty';none.textContent=state.result.length?t('Aucun extrait dans cette catégorie.'):t('Aucun extrait correspondant.');wrap.append(none);return;}
   for(const item of selected){const d=state.docs.get(item.doc_id);const card=document.createElement('article');card.className='source-card';
     const head=document.createElement('div');head.className='source-top';const tag=document.createElement('span');tag.className=`source-kind ${item.kind}`;tag.textContent=excerptType(item);const page=document.createElement('span');page.className='source-page';page.textContent=`p. ${item.page} · ${d.author}`;head.append(tag,page);card.append(head);
     const title=document.createElement('h4');title.textContent=d.title;card.append(title);const meta=document.createElement('div');meta.className='source-meta';meta.textContent=`${d.journal}${d.doi?' · '+d.doi:''}`;card.append(meta);
@@ -782,16 +900,16 @@ function render(){
     const corpusEvidence=(state.plan?.groups||[]).flatMap(g=>g.concept?conceptMentions(item.text,g).map(hit=>hit.surface):[]);
     const keys=[...new Set([...words(state.search),...state.activeTerms,...egyptEvidence,...corpusEvidence.slice(0,10)])];
     const evidence=[...new Set([...corpusEvidence,...egyptEvidence,...(state.plan?.groups||[]).map(g=>g.terms.find(term=>includesTerm(item.text,term))).filter(Boolean)])];
-    if(evidence.length){const why=document.createElement('div');why.className='source-meta';why.textContent=`Indices présents dans cet extrait : ${evidence.slice(0,6).join(' · ')}${evidence.length>6?'…':''}`;card.append(why);}
-    const excerpt=document.createElement('blockquote');excerpt.dir='auto';highlight(excerpt,item.text,keys);card.append(excerpt);const bar=document.createElement('div');bar.className='source-links';const link=document.createElement('a');link.textContent='Vérifier sur le PDF ↗';const url=pdfURL(item);if(url){link.href=url;link.target='_blank';link.rel='noopener noreferrer';}else{link.textContent='PDF à renseigner';}
-    const copy=document.createElement('button');copy.type='button';copy.textContent='Copier l’extrait et la référence';copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(`${reference(item)}\n« ${item.text} »`);copy.textContent='Référence copiée ✓';setTimeout(()=>copy.textContent='Copier l’extrait et la référence',2000);}catch{copy.textContent='Copie indisponible';}});bar.append(link,copy);card.append(bar);wrap.append(card);
+    if(evidence.length){const why=document.createElement('div');why.className='source-meta';why.textContent=t('Indices présents dans cet extrait : {terms}{more}',{terms:evidence.slice(0,6).join(' · '),more:evidence.length>6?'…':''});card.append(why);}
+    const excerpt=document.createElement('blockquote');excerpt.dir='auto';highlight(excerpt,item.text,keys);card.append(excerpt);const bar=document.createElement('div');bar.className='source-links';const link=document.createElement('a');link.textContent=t('Vérifier sur le PDF ↗');const url=pdfURL(item);if(url){link.href=url;link.target='_blank';link.rel='noopener noreferrer';}else{link.textContent=t('PDF à renseigner');}
+    const copy=document.createElement('button');copy.type='button';copy.textContent=t('Copier l’extrait et la référence');copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(`${reference(item)}\n${t('« {text} »',{text:item.text})}`);copy.textContent=t('Référence copiée ✓');setTimeout(()=>copy.textContent=t('Copier l’extrait et la référence'),2000);}catch{copy.textContent=t('Copie indisponible');}});bar.append(link,copy);card.append(bar);wrap.append(card);
   }
 }
 
 function updateSearchControls(){
   const unavailable=!state.corpus;
   $('search-button').disabled=unavailable||state.running;
-  $('search-button').textContent=state.running?'Recherche en cours…':'Rechercher';
+  $('search-button').textContent=state.running?t('Recherche en cours…'):t('Rechercher');
   for(const button of document.querySelectorAll('[data-example]'))button.disabled=unavailable||state.running;
   $('search-mode').disabled=unavailable;
   $('mode-lexical').checked=!state.useModel;
@@ -803,9 +921,9 @@ function showSearchResults(query,plan,lex,semantic=null,preserveView=false){
   const map=new Map(state.corpus.passages.map(p=>[p.id,p]));state.result=scored.map(({id})=>map.get(id)).filter(Boolean);
   state.activeTerms=plan.terms;state.plan=plan;
   const extracted=sourceTerms(state.result,plan.terms);$('topic-analysis').hidden=!state.result.length;
-  drawChips('topic-chips',plan.topics.length?plan.topics.map(t=>t.label):['Terme attesté dans le corpus']);
+  drawChips('topic-chips',plan.topics.length?plan.topics.map(topic=>t(topic.label)):[t('Terme attesté dans le corpus')]);
   drawChips('keyword-chips',[...new Set([...plan.terms.filter(w=>!words(query).includes(w)).slice(0,15),...extracted])].slice(0,18));
-  const corrections=$('query-corrections');if(corrections){corrections.hidden=!plan.corrections.length;corrections.textContent=plan.corrections.length?`Graphies et termes rapprochés : ${plan.corrections.join(' ; ')}.`:'';}
+  const corrections=$('query-corrections');if(corrections){corrections.hidden=!plan.corrections.length;corrections.textContent=plan.corrections.length?t('Graphies et termes rapprochés : {terms}.',{terms:plan.corrections.join(' ; ')}):'';}
   if(!preserveView){state.filter='all';state.visibleCount=18;}
   for(const btn of document.querySelectorAll('[data-filter]')){
     const selected=btn.dataset.filter===state.filter;
@@ -823,11 +941,11 @@ async function runSearch(replace=false){
   try{
     const plan=buildPlan(query),lex=lexicalScores(query,plan.terms,plan);
     showSearchResults(query,plan,lex);lexicalShown=true;state.mode='lexical';
-    $('method-title').textContent='Recherche multilingue';
-    $('method-status').textContent='Disponible immédiatement. Choisissez la recherche avancée pour affiner les résultats.';
+    $('method-title').textContent=t('Recherche par mots-clés');
+    $('method-status').textContent=t('Retrouve les extraits à partir de vos mots-clés, de leurs variantes et d’équivalents dans d’autres langues.');
     if(!state.useModel)return;
-    $('method-title').textContent='Recherche multilingue avancée';
-    $('method-status').textContent=state.extractor?'Les premiers résultats sont disponibles. L’IA les affine…':'Les premiers résultats sont disponibles. Premier chargement de l’IA : environ 118 Mo.';
+    $('method-title').textContent=t('Recherche multilingue avancée');
+    $('method-status').textContent=state.extractor?t('Les résultats par mots-clés sont déjà affichés. Le modèle complète la recherche et affine leur classement.'):t('Les résultats par mots-clés sont déjà affichés. Le modèle se charge pour compléter la recherche et affiner leur classement.');
     // Laisser le navigateur afficher les résultats avant de charger le modèle.
     await new Promise(resolve=>setTimeout(resolve,0));
     if(!isCurrent())return;
@@ -843,13 +961,13 @@ async function runSearch(replace=false){
       semantic=semanticScores(vector);
     }
     showSearchResults(query,refinedPlan,refinedLex,semantic,true);state.mode='semantic';
-    $('method-title').textContent='Recherche multilingue avancée';
-    $('method-status').textContent='Affinement terminé. Les extraits restent vérifiables dans les PDF.';
+    $('method-title').textContent=t('Recherche multilingue avancée');
+    $('method-status').textContent=t('Recherche avancée terminée : les rapprochements de sens ont été pris en compte.');
   }catch(error){
     if(!isCurrent())return;
     state.mode='lexical';
-    $('method-title').textContent=lexicalShown?'Recherche multilingue':'Recherche interrompue';
-    $('method-status').textContent=lexicalShown?'L’IA est indisponible. Les résultats de la recherche rapide restent accessibles.':'La recherche n’a pas abouti. Veuillez réessayer.';
+    $('method-title').textContent=lexicalShown?t('Recherche par mots-clés'):t('Recherche interrompue');
+    $('method-status').textContent=lexicalShown?t('Le modèle est indisponible. Les résultats par mots-clés restent affichés.'):t('La recherche n’a pas abouti. Veuillez réessayer.');
   }finally{
     if(isCurrent()){state.running=false;updateSearchControls();}
   }
@@ -862,33 +980,33 @@ function selectSearchMode(event){
   // Le téléchargement peut continuer en cache ; ses retours ne modifient plus la recherche annulée.
   ++state.requestId;state.running=false;updateSearchControls();
   if($('theme-input').value.trim()){runSearch();return;}
-  $('method-title').textContent=state.useModel?'Recherche multilingue avancée':'Recherche multilingue';
-  $('method-status').textContent=state.useModel?'L’IA sera chargée à la prochaine recherche : environ 118 Mo au premier accès.':'Disponible immédiatement. Choisissez la recherche avancée pour affiner les résultats.';
+  $('method-title').textContent=state.useModel?t('Recherche multilingue avancée'):t('Recherche par mots-clés');
+  $('method-status').textContent=state.useModel?t('Ajoute des rapprochements de sens pour repérer d’autres formulations liées à votre recherche et affiner le classement des extraits.'):t('Retrouve les extraits à partir de vos mots-clés, de leurs variantes et d’équivalents dans d’autres langues.');
 }
 async function init(){
   state.corpus=null;state.docs.clear();updateSearchControls();
   const retry=$('retry-corpus');retry.hidden=true;retry.disabled=true;
-  $('corpus-total').textContent='Chargement du corpus…';
-  $('method-title').textContent='Chargement des articles';
-  $('method-status').textContent='La recherche sera disponible dans un instant.';
+  $('corpus-total').textContent=t('Chargement du corpus…');
+  $('method-title').textContent=t('Chargement des articles');
+  $('method-status').textContent=t('La recherche sera disponible dans un instant.');
   const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),20000);
   try{
-    const r=await fetch('data/corpus.json',{cache:'no-cache',signal:controller.signal});
+    const r=await fetch(new URL('data/corpus.json',ASSET_BASE),{cache:'no-cache',signal:controller.signal});
     if(!r.ok)throw Error(`HTTP ${r.status}`);
     const corpus=await r.json();
     if(!Array.isArray(corpus.documents)||!Array.isArray(corpus.passages))throw Error('Corpus invalide');
     state.corpus=corpus;
     for(const doc of corpus.documents)state.docs.set(doc.id,doc);
     initializeLexicon();
-    $('corpus-total').textContent=`${corpus.documents.length} articles`;
-    $('corpus-subtitle').textContent=`${corpus.passages.filter(p=>p.kind==='note'&&p.number).length} notes · ${corpus.passages.length} passages`;
-    $('method-title').textContent='Recherche multilingue';
-    $('method-status').textContent='Disponible immédiatement. Choisissez la recherche avancée pour affiner les résultats.';
+    $('corpus-total').textContent=t('{count} articles',{count:corpus.documents.length});
+    $('corpus-subtitle').textContent=t('{notes} notes · {passages} passages',{notes:corpus.passages.filter(p=>p.kind==='note'&&p.number).length,passages:corpus.passages.length});
+    $('method-title').textContent=t('Recherche par mots-clés');
+    $('method-status').textContent=t('Retrouve les extraits à partir de vos mots-clés, de leurs variantes et d’équivalents dans d’autres langues.');
   }catch(error){
     state.corpus=null;
-    $('corpus-total').textContent='Corpus indisponible';
-    $('method-title').textContent='Articles indisponibles';
-    $('method-status').textContent='Le chargement des articles a échoué. Vérifiez votre connexion puis réessayez.';
+    $('corpus-total').textContent=t('Corpus indisponible');
+    $('method-title').textContent=t('Articles indisponibles');
+    $('method-status').textContent=t('Le chargement des articles a échoué. Vérifiez votre connexion puis réessayez.');
     retry.hidden=false;retry.disabled=false;
   }finally{clearTimeout(timeout);updateSearchControls();}
 }
