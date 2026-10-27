@@ -344,13 +344,13 @@
 
     <div class="f-field">
       <label class="f-label" for="f-pdf">PDF anonymisé <span class="f-req">*</span></label>
-      <span class="f-hint">Vérifiez que le fichier ne contient aucune information sur l'auteur·rice dans le texte ou les métadonnées.</span>
+      <span class="f-hint">Vérifiez que le fichier ne contient aucune information sur l'auteur·rice dans le texte ou les métadonnées. Taille maximale : 10 Mo.</span>
       <input class="f-file" type="file" id="f-pdf" accept=".pdf" required>
     </div>
 
     <div class="f-field">
       <label class="f-label" for="f-editable">Version éditable originale <span class="f-req">*</span></label>
-      <span class="f-hint">Formats acceptés : .odt, .docx, .doc, .tex et similaires.</span>
+      <span class="f-hint">Formats acceptés : .odt, .docx, .doc, .tex, .rtf et .pages. Taille maximale : 10 Mo.</span>
       <input class="f-file" type="file" id="f-editable" accept=".odt,.docx,.doc,.tex,.rtf,.pages" required>
     </div>
   </section>
@@ -406,7 +406,7 @@
 </footer>
 
 <script>
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxz7ec_buQY_cuShJ-BU4h5N0cFzveFuXh85xqd_SKwMERfyppo66y3jB5EJMreSGZe/exec';
+  const APPS_SCRIPT_URL = 'LEGACY_ENDPOINT_DISABLED';
 
   // Compteurs de caractères
   function updateCounter(textareaId, counterId, min, max) {
@@ -508,7 +508,8 @@
       `boegyptologie@gmail.com`;
   }
 
-  document.getElementById('submit-form').addEventListener('submit', async function(e) {
+  // Legacy transport disabled. The new workflow handler is loaded below.
+  if (false) document.getElementById('submit-form').addEventListener('submit', async function(e) {
     e.preventDefault();
 
     if (document.getElementById('hp').value) return;
@@ -634,6 +635,9 @@
     }
   });
 </script>
+
+<!-- New BOE workflow transport. Its capture-phase handler replaces the legacy no-cors sender above. -->
+<script src="/assets/boe-submission-workflow.js"></script>
 
 <script>
   function updateMobileMenuSeparators() {
