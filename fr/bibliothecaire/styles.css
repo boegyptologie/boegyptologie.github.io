@@ -1,6 +1,5 @@
 /* Complément à la feuille institutionnelle BOE /assets/style.css.
-   Les règles de l'en-tête, du menu et du pied de page sont synchronisées
-   avec cette feuille pour garder une présentation utilisable hors connexion. */
+   L'en-tête, la navigation et le pied de page héritent de cette feuille commune. */
 @font-face {
   font-family: "EB Garamond Local";
   src: url("fonts/EBGaramond-VariableFont_wght.ttf") format("truetype");
@@ -45,29 +44,13 @@
   unicode-range: U+2C80-2CFF, U+03E2-03EF, U+FE20-FE2F;
 }
 
-:root {
-  --accent-red: #FF2E17;
-  --ink: #222;
-  --muted: #666;
-  --light-line: #d6d6d6;
-  --max: 900px;
-  --font-body: "EB Garamond Local", "EB Garamond", "BOE Unicode", "BOE Coptic", Garamond, Georgia, serif;
-  color: var(--ink);
-  background: #fff;
-  font-family: var(--font-body);
-  line-height: 1.6;
-  font-size: 16px;
-}
-
-*, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 body { margin: 0; }
 body, button, textarea { font-family: var(--font-body); }
 button, textarea { font-size: 1rem; line-height: 1.6; }
 button { cursor: pointer; }
-a { color: inherit; text-underline-offset: 3px; }
-a:hover, a:focus-visible { color: var(--accent-red); }
-button:focus-visible, textarea:focus-visible, input:focus-visible, a:focus-visible, summary:focus-visible {
+main a { color: inherit; text-underline-offset: 3px; }
+main a:hover, main a:focus-visible { color: var(--accent-red); }
+main button:focus-visible, main textarea:focus-visible, main input:focus-visible, main a:focus-visible, main summary:focus-visible {
   outline: 2px solid var(--accent-red);
   outline-offset: 3px;
 }
@@ -78,47 +61,10 @@ p, li, blockquote {
   hyphens: none;
 }
 
-/* En-tête BOE : mêmes balises, classes et ruptures que les autres pages. */
-header {
-  position: relative;
-  padding: 30px 16px 26px;
-}
-header::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 2mm;
-  border-top: 1px solid var(--accent-red);
-  border-bottom: 1px solid var(--accent-red);
-}
-.container {
-  max-width: var(--max);
-  margin: 0 auto;
-}
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-  min-width: 0;
-}
-.brand img { display: block; height: 42px; width: auto; }
-.brand-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.1;
-  position: relative;
-  top: .45em;
-}
-header .title { font-weight: 700; font-size: 1.15rem !important; }
-.header-issn { display: none; }
-.lang-switch { float: right; }
-nav a { margin-right: 10px; text-decoration: none; white-space: nowrap; }
-nav a:hover { text-decoration: underline; }
-
 main {
+  --ink: #222;
+  --muted: #666;
+  --font-body: "EB Garamond Local", "EB Garamond", "BOE Egyptian", "BOE Unicode", "BOE Coptic", Garamond, Georgia, serif;
   max-width: var(--max);
   margin: 0 auto;
   padding: 24px;
@@ -340,43 +286,7 @@ mark { background: #ffe7bc; color: #222; }
   padding-top: 11px;
 }
 .corpus-count span { margin-left: 10px; color: var(--muted) !important; }
-footer {
-  padding: 24px 16px;
-  border-top: 1px solid var(--accent-red);
-}
-footer .small { font-size: .95rem; }
-
-@media (min-width: 801px) {
-  nav { margin-top: 18px; }
-  nav a + a {
-    border-left: 1px solid var(--accent-red);
-    padding-left: 10px;
-    margin-left: 2px;
-  }
-  .header-issn {
-    display: block;
-    font-size: .62rem !important;
-    opacity: .4;
-    margin-top: -.45em;
-    margin-left: .7em;
-  }
-}
-
 @media (max-width: 800px) {
-  header { padding: 18px 16px 16px; }
-  header::after { height: 0; border-bottom: 0; }
-  .brand .title { display: none; }
-  nav { display: flex; flex-wrap: wrap; gap: 6px 10px; margin-top: 14px; }
-  nav a {
-    margin-right: 0;
-    white-space: nowrap;
-    border-left: 1px solid transparent;
-    padding: 4px 0 4px 8px;
-    margin-left: 2px;
-  }
-  nav { margin-left: -11px; }
-  nav a + a { border-left-color: var(--accent-red); }
-  nav a.row-start { border-left-color: transparent; }
   main {
     border-left: 0;
     padding: 24px 18px 35px 24px;
