@@ -961,9 +961,20 @@ function pdfURL(p){const d=state.docs.get(p.doc_id);return d.url?`${d.url}#page=
 function reference(p){const d=state.docs.get(p.doc_id);return t('{author}, « {title} », {journal}, p. {page}{note}{doi}.',{author:d.author,title:d.title,journal:d.journal,page:p.page,note:p.number?`, ${t('n.')} ${p.number}`:'',doi:d.doi?`, DOI ${d.doi}`:''});}
 
 function lexicalScores(query,terms,plan=null){
-  const keys=[...new Set(terms)];const collection=state.corpus.passages;const df=new Map(keys.map(w=>[w,collection.reduce((n,p)=>n+(fold(p.text).split(' ').includes(w)?1:0),0)]));
+  const keys=[...new Set(terms)];const collection=state.corpus.passages;const phrases=keys.filter(term=>term.includes(' '));
+  const df=new Map(keys.map(w=>[w,collection.reduce((n,p)=>n+((w.includes(' ')?includesTerm(p.text,w):fold(p.text).split(' ').includes(w))?1:0),0)]));
   const scores=new Map();const focusNotes=/notes?|citations?|bibliograph|bibliograf|références?|sources?|cité|cite|cf\.|المراجع/i.test(query);
   for(const p of collection){const t=words(p.text.replace(/\b([A-Za-z])\s+(\d{2,3})\b/g,'$1$2')),frequency=new Map();for(const token of t)if(keys.includes(token))frequency.set(token,(frequency.get(token)||0)+1);
+    // Une famille peut ne contenir que des locutions. Compter leur suite
+    // entière, sans créer de candidature à partir d'un mot isolé de la locution.
+    if(phrases.length){
+      const text=` ${fold(p.text).replace(/\b([a-z])\s+(\d{2,3})\b/g,'$1$2')} `;
+      for(const phrase of phrases){
+        const needle=` ${fold(phrase)} `;let count=0,at=-1;
+        while((at=text.indexOf(needle,at+1))>=0)count++;
+        if(count)frequency.set(phrase,count);
+      }
+    }
     let score=0;for(const term of keys){const n=frequency.get(term)||0;if(n)score+=(1+Math.log(n))*Math.log(1+(collection.length+1)/(df.get(term)+1));}
     if(plan){
       for(const key of new Set(plan.groups.flatMap(g=>g.egyptKeys||[]))){const found=state.egyptianIndex.get(key);if(found?.byId.has(p.id))score+=Math.log(1+(collection.length+1)/(found.byId.size+1));}
