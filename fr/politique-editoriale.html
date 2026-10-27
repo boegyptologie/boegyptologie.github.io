@@ -88,6 +88,35 @@
   </script>
 
   <link rel="stylesheet" href="/assets/style.css?v=16">
+  <style>
+    .policy-reference {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.15em 0.35em;
+      box-sizing: border-box;
+      max-width: 100%;
+      margin-top: 1.5rem;
+      margin-bottom: 0;
+      padding: 0.2rem 0.5rem;
+      border: 1px solid var(--accent-red, #FF2E17);
+      border-radius: 2px;
+      background: #fff;
+      color: var(--accent-red, #FF2E17) !important;
+      font-size: 0.88rem !important;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+    .policy-reference * {
+      min-width: 0;
+      max-width: 100%;
+      font-size: inherit !important;
+      line-height: inherit;
+      color: inherit;
+      overflow-wrap: anywhere;
+    }
+    .policy-reference a { color: var(--accent-red, #FF2E17) !important; }
+  </style>
 </head>
 
 <body>
@@ -119,12 +148,11 @@
 
 <main>
   <article>
-    <p style="margin-top:1.5rem; margin-bottom:0; color:#d00000; font-weight:600;">
-  Version de référence : septembre 2026 ·
+    <p class="policy-reference">
+  <span>Version de référence : septembre 2026 ·</span>
   <a href="https://doi.org/10.5281/zenodo.22277253"
      target="_blank"
-     rel="noopener noreferrer"
-     style="color:#d00000; font-weight:600;">
+     rel="noopener noreferrer">
     DOI&nbsp;10.5281/zenodo.22277253
   </a>
 </p>
