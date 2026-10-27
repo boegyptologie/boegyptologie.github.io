@@ -211,6 +211,9 @@ h1, h2, h3, h4 { font-weight: 700; }
   font-size: .9rem;
 }
 .keywords .chip { border-color: #ddd; }
+.keywords button.chip { min-height: 44px; text-align: left; }
+.keywords button.chip:hover, .keywords button.chip[aria-pressed="true"] { border-color: var(--accent-red); color: var(--accent-red); }
+.keywords button.chip[aria-pressed="true"] { background: #fff7f5; }
 #grammar-related-chips { margin-top: 8px; }
 #grammar-related-chips button { min-height: 44px; text-align: left; }
 

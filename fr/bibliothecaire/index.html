@@ -59,8 +59,8 @@
   </script>
   <!-- La feuille BOE originale vient en premier ; les styles spécifiques à la recherche la complètent. -->
   <link rel="stylesheet" href="/assets/style.css?v=16">
-  <link rel="stylesheet" href="styles.css?v=17">
-  <script type="module" src="app.js?v=17"></script>
+  <link rel="stylesheet" href="styles.css?v=18">
+  <script type="module" src="app.js?v=18"></script>
 </head>
 <body class="bibliothecaire-page">
 <header>
@@ -115,6 +115,7 @@
         <button type="button" data-example="copte">Copte</button>
         <button type="button" data-example="arabe">Arabe</button>
         <button type="button" data-example="grec">Grec</button>
+        <button type="button" data-example="IIe siècle">IIe siècle</button>
         <button type="button" data-example="Τυφῶνος">Τυφῶνος</button>
         <button type="button" data-example="Textes des Pyramides">Textes des Pyramides</button>
         <button type="button" data-example="Signe U23">Signe U23</button>
@@ -142,7 +143,8 @@
         <h3>Notions identifiées</h3>
         <div id="topic-chips" class="chips"></div>
         <h3>Mots-clés attestés ou associés</h3>
-        <div id="keyword-chips" class="chips keywords"></div>
+        <p id="keyword-refinement-note" class="privacy-note">Cliquez sur un mot-clé pour ne garder que les extraits qui le contiennent. Cliquez à nouveau pour retirer ce filtre.</p>
+        <div id="keyword-chips" class="chips keywords" role="group" aria-label="Affiner la recherche par mots-clés" aria-describedby="keyword-refinement-note"></div>
       </section>
     </section>
 
