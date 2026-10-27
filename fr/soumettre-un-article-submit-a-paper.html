@@ -102,6 +102,11 @@
       color: #333;
     }
 
+    .f-declaration em {
+      font-size: inherit !important;
+      line-height: inherit !important;
+    }
+
     .f-checkbox-wrap {
       display: flex;
       align-items: flex-start;
@@ -340,7 +345,7 @@
   <section aria-labelledby="s-fichiers">
     <hr class="f-hr">
     <h2 id="s-fichiers"><strong>Fichiers<span class="verspunkt">·</span></strong></h2>
-    <p class="small">Merci de soumettre votre article en version PDF anonymisée et d'y joindre la version éditable originale (.odt, .docx ou similaire). Les deux fichiers sont obligatoires. Les fichiers sont enregistrés directement sur le Google Drive de la BOE.</p>
+    <p class="small">Merci de soumettre votre article en version PDF anonymisée et d'y joindre la version éditable originale (.odt, .docx ou similaire). Les deux fichiers sont obligatoires.</p>
 
     <div class="f-field">
       <label class="f-label" for="f-pdf">PDF anonymisé <span class="f-req">*</span></label>
@@ -356,7 +361,7 @@
 
     <div class="f-field">
       <label class="f-label" for="f-supplementary">Fichiers supplémentaires <span style="font-style:italic;font-size:0.88em">(facultatif)</span></label>
-      <span class="f-hint">Images, jeux de données, tableurs ou archives : jusqu’à 30 fichiers et 200 Mo au total, en plus du PDF et de l’original éditable. Ils sont conservés dans le dossier privé de la soumission et partagés par des liens Drive, sans pièces jointes aux courriels.</span>
+      <span class="f-hint">Images, jeux de données, etc. : jusqu’à 30 fichiers et 200 Mo au total, en plus du PDF et de l’original éditable.</span>
       <input class="f-file" type="file" id="f-supplementary" multiple accept=".jpg,.jpeg,.png,.tif,.tiff,.gif,.webp,.bmp,.svg,.pdf,.csv,.tsv,.xlsx,.xls,.ods,.json,.xml,.sql,.sqlite,.sqlite3,.db,.mdb,.accdb,.zip,.7z,.tar,.gz,.rar,.txt,.odt,.doc,.docx,.rtf,.npy,.npz,.h5,.hdf5,.geojson,.gpkg,.shp,.shx,.dbf,.prj,.kml,.kmz,.fits,.fit" aria-describedby="f-supplementary-summary">
       <span class="f-hint" id="f-supplementary-summary" aria-live="polite">0/30 fichier sélectionné — 0/200 Mo au total.</span>
     </div>
