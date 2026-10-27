@@ -362,13 +362,13 @@
 
     <div class="f-field">
       <label class="f-label" for="f-pdf">Anonymized PDF <span class="f-req">*</span></label>
-      <span class="f-hint">Make sure the file contains no author information in the text or metadata.</span>
+      <span class="f-hint">Make sure the file contains no author information in the text or metadata. Maximum size: 10 MB.</span>
       <input class="f-file" type="file" id="f-pdf" accept=".pdf" required>
     </div>
 
     <div class="f-field">
       <label class="f-label" for="f-editable">Original editable version <span class="f-req">*</span></label>
-      <span class="f-hint">Accepted formats: .odt, .docx, .doc, .tex, and similar.</span>
+      <span class="f-hint">Accepted formats: .odt, .docx, .doc, .tex, .rtf and .pages. Maximum size: 10 MB.</span>
       <input class="f-file" type="file" id="f-editable" accept=".odt,.docx,.doc,.tex,.rtf,.pages" required>
     </div>
   </section>
@@ -425,7 +425,7 @@
 
 <script>
   // ── Replace with your submission Apps Script URL ──────────────────────────
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxz7ec_buQY_cuShJ-BU4h5N0cFzveFuXh85xqd_SKwMERfyppo66y3jB5EJMreSGZe/exec';
+  const APPS_SCRIPT_URL = 'LEGACY_ENDPOINT_DISABLED';
 
   // ── Character counters ────────────────────────────────────────────────────
   function updateCounter(textareaId, counterId, min, max) {
@@ -533,7 +533,8 @@
   }
 
   // ── Form submission ───────────────────────────────────────────────────────
-  document.getElementById('submit-form').addEventListener('submit', async function(e) {
+  // Legacy transport disabled. The new workflow handler is loaded below.
+  if (false) document.getElementById('submit-form').addEventListener('submit', async function(e) {
     e.preventDefault();
 
     if (document.getElementById('hp').value) return;
@@ -660,6 +661,9 @@
     }
   });
 </script>
+
+<!-- New BOE workflow transport. Its capture-phase handler replaces the legacy no-cors sender above. -->
+<script src="/assets/boe-submission-workflow.js"></script>
 
 <script>
   function updateMobileMenuSeparators() {
