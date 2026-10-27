@@ -103,6 +103,11 @@
       color: #333;
     }
 
+    .f-declaration em {
+      font-size: inherit !important;
+      line-height: inherit !important;
+    }
+
     .f-checkbox-wrap {
       display: flex;
       align-items: flex-start;
@@ -358,7 +363,7 @@
   <section aria-labelledby="s-files">
     <hr class="f-hr">
     <h2 id="s-files"><strong>Files<span class="verspunkt">·</span></strong></h2>
-    <p class="small">Please submit your article as an anonymized PDF and include the original editable version (.odt, .docx, or similar). Both files are required. Files are saved directly to the BOE Google Drive.</p>
+    <p class="small">Please submit your article as an anonymized PDF and include the original editable version (.odt, .docx, or similar). Both files are required.</p>
 
     <div class="f-field">
       <label class="f-label" for="f-pdf">Anonymized PDF <span class="f-req">*</span></label>
@@ -374,7 +379,7 @@
 
     <div class="f-field">
       <label class="f-label" for="f-supplementary">Supplementary files <span style="font-style:italic;font-size:0.88em">(optional)</span></label>
-      <span class="f-hint">Images, datasets, spreadsheets or archives: up to 30 files and 200 MB combined, in addition to the PDF and editable original. Files are stored in the private submission folder and are shared through Drive links rather than email attachments.</span>
+      <span class="f-hint">Images, datasets, etc.: up to 30 files and 200 MB combined, in addition to the PDF and editable original.</span>
       <input class="f-file" type="file" id="f-supplementary" multiple accept=".jpg,.jpeg,.png,.tif,.tiff,.gif,.webp,.bmp,.svg,.pdf,.csv,.tsv,.xlsx,.xls,.ods,.json,.xml,.sql,.sqlite,.sqlite3,.db,.mdb,.accdb,.zip,.7z,.tar,.gz,.rar,.txt,.odt,.doc,.docx,.rtf,.npy,.npz,.h5,.hdf5,.geojson,.gpkg,.shp,.shx,.dbf,.prj,.kml,.kmz,.fits,.fit" aria-describedby="f-supplementary-summary">
       <span class="f-hint" id="f-supplementary-summary" aria-live="polite">0/30 files selected — 0/200 MB total.</span>
     </div>
