@@ -219,6 +219,65 @@ const CURATED_EQUIVALENTS = new Map([
   ['جمع',['plural']], ['مفرد',['singular']],
   ['مسند',['predicate']], ['فاعل',['subject']],
 ]);
+// Familles éditoriales dérivées des cinq articles (registre :
+// work/controlled-paraphrases/alias-register.json). Chaque famille remplace
+// une composante précise, jamais l'ensemble du besoin par un thème voisin.
+// Les catégories grammaticales restent gérées par CONTROLLED_CONCEPTS.
+const CORPUS_LEXICAL_FAMILIES=[
+  ['roubi','rubi','rooby'],['hamzaoui','hamzawi'],['saqqara','saqqarah','sakkarah'],
+  ['ouvrier','ouvriers','travailleur','travailleurs','worker','workers','workman','workmen','عامل','عمال'],
+  ['contremaître','contremaîtres','foreman','foremen','reïs','réïs','rais','رئيس الحفائر'],
+  ['fouille','fouilles','excavation','excavations','حفريات'],
+  ['fouilleur','fouilleurs','excavator','excavators'],
+  ['tombeau','tombeaux','tombe','tombes','tomb','tombs'],
+  ['découverte','découvertes','discovery','discoveries'],
+  ['mémoire','memory'],['souvenir','souvenirs','recollection','recollections'],
+  ['égyptien','égyptienne','égyptiens','égyptiennes','egyptian'],
+  ['Égypte','Egypt'],['Ancien Empire','Old Kingdom'],['Moyen Empire','Middle Kingdom'],
+  ['signe','signes','sign','signs'],['phonétique','phonétiques','phonetic'],
+  ['valeur','valeurs','value','values'],['lecture','lectures','reading','readings'],
+  ['hiéroglyphe','hiéroglyphes','hieroglyph','hieroglyphs'],
+  ['onomastique','onomastics'],['radical','radicaux','radicals'],
+  ['bilitère','bilitères','deux radicaux','two radicals'],
+  ['préfixé','préfixée','préfixés','préfixées','prefixed'],
+  ['graphie','graphies','spelling','spellings'],['écriture','écritures','writing','writings'],
+  ['nominalisateur','nominalisateurs','nominaliseur','nominaliseurs','nominalizer','nominalizers'],
+  ['locution adverbiale','locutions adverbiales','expression adverbiale','expressions adverbiales','adverbial phrase','adverbial phrases'],
+  ['article indéfini','articles indéfinis','indefinite article','indefinite articles'],
+  ['réduction phonétique','érosion phonétique','phonetic reduction'],
+  ['réemploi orthographique','réutilisation orthographique','orthographic reuse'],
+  ['morphème','morphèmes','morpheme','morphemes'],
+  ['étymologie','etymology'],['grammaticalisation','grammaticalization'],
+  ['animal','animaux','animals','faune','fauna','حيوانات'],
+  ['plante','plantes','plant','plants','végétal','végétaux','flore','flora','نباتات'],
+  ['minéral','minéraux','mineral','minerals'],
+  ['nuisible','nuisibles','nocif','nocifs','nocive','nocives','harmful','damaging','dommageable','dommageables'],
+  ['dangereux','dangereuse','dangereuses','dangerous'],
+  ['venimeux','venimeuse','venimeuses','venomous'],
+  ['vénéneux','vénéneuse','vénéneuses','poisonous'],
+  ['toxique','toxiques','toxic'],
+  ['typhon','typhonien','typhonienne','typhoniens','typhoniennes'],
+  ['seth','séthien','séthienne','séthiens','séthiennes'],
+  ['âne','ânes','baudet','baudets','donkey','donkeys'],
+  ['hippopotame','hippopotames','hippopotamus','hippopotamuses'],
+  ['crocodile','crocodiles'],['passion','passions'],['vice','vices'],
+  ['égyptomanie','egyptomania'],['mode','mode vestimentaire','fashion'],
+  ['vêtement','vêtements','habillement','vestimentaire','clothing','clothes','garment','garments'],
+  ['robe','robes','dress','dresses','gown','gowns'],
+  ['tissu','tissus','fabric','fabrics'],
+  ['bijou','bijoux','bijouterie','jewellery','jewelry'],
+  ['broderie','broderies','embroidery','embroideries'],
+  ['motif','motifs','pattern','patterns'],
+  ['scarabée','scarabées','scarab','scarabs'],['sphinx','sphinxes'],
+  ['ceinture','ceintures','belt','belts'],['coiffure','coiffures','hairstyle','hairstyles'],
+  ['accessoire','accessoires','accessory','accessories'],
+  ['influence','influences'],['inspiration','inspirations'],
+];
+// fold est une déclaration de fonction, donc disponible avant son emplacement.
+for(const family of CORPUS_LEXICAL_FAMILIES){
+  const variants=[...new Set(family.map(fold))];
+  for(const alias of variants)CURATED_EQUIVALENTS.set(alias,[...new Set([...(CURATED_EQUIVALENTS.get(alias)||[]),...variants.filter(term=>term!==alias)])]);
+}
 const CURATED_PHRASES=[...CURATED_EQUIVALENTS.keys()]
   .filter(key=>key.includes(' ')).sort((a,b)=>b.split(' ').length-a.split(' ').length);
 
@@ -799,22 +858,57 @@ function normalizedQueryParts(query){
   }
   return out;
 }
+// Seuls des cadres de demande sont retirés. Tout objet, nom, date, forme
+// grammaticale ou verbe qui porte une information reste une contrainte.
+function corpusQuestion(query){
+  let text=String(query||'').trim();
+  const frames=[
+    [/^(?:je (?:cherche|recherche)|trouve(?:z)?|montre(?:z)?(?:[ -]moi)?|recherche(?:r)?|find|show(?: me)?|i am looking for)\s+(?:(?:des?|les?|some|the)\s+)?(?:(?:passages?|extraits?|articles?|texts?)\s+)?(?:sur|concernant|à propos de|au sujet de|about|on)\s+/iu,''],
+    [/^(?:quels?|quelles?)\s+(?:sont|étaient|furent)\s+(?:les?|des?)\s+/iu,''],
+    [/^(?:quelle est|quel est)\s+(?:(?:la|le)\s+|l['’])?/iu,''],
+    [/^(?:what|which)\s+(?:(?:is|are|was|were)\s+)?(?:the\s+)?/iu,''],
+    [/^(?:comment (?:se lit|lire|prononcer)|how to read)\s+/iu,'lecture '],
+    [/^(?:quel rôle (?:joue|jouait)|what role (?:does|did))\s+/iu,''],
+  ];
+  for(const [pattern,replacement] of frames)text=text.replace(pattern,replacement);
+  text=text.replace(/\s+(?:dans (?:ces|les) articles|dans le corpus|in (?:these|the) articles|in the corpus)\s*[?!.]*$/iu,'');
+  // Un code Gardiner forme une unité précise, y compris « U 23 ».
+  return text.replace(/\b([A-IK-Z])\s+(\d{1,3})\b/gu,'$1$2');
+}
+const QUERY_RELATION_WORDS=new Set(['sans','without','ohne','sin','sem','pas','jamais','not','never','neither','nicht','non','no']);
+function queryRelations(query,groups){
+  const relations=[];
+  for(const match of String(query).matchAll(/\b(?:sans|without|ohne|sin|sem|pas|jamais|not|never|neither|nicht|non|no|avec|with)\b/giu)){
+    // Une expression terminologique comme « non-finite » n'est pas une
+    // négation de la relation entre deux objets de la recherche.
+    if(query[match.index-1]==='-'||query[match.index+match[0].length]==='-')continue;
+    if(groups.some(group=>group.concept&&match.index>=group.start&&match.index<group.end))continue;
+    const before=groups.filter(group=>group.end<=match.index).at(-1);
+    const after=groups.find(group=>group.start>=match.index+match[0].length);
+    if(!before||!after){relations.push({unsupported:true});continue;}
+    const key=fold(match[0]);
+    relations.push({left:groups.indexOf(before),right:groups.indexOf(after),negative:QUERY_RELATION_WORDS.has(key),absence:['sans','without','ohne','sin','sem'].includes(key)});
+  }
+  return relations;
+}
 function buildPlan(query,semanticTerms=new Map()){
+  query=corpusQuestion(query);
   const egyptian=egyptianQueryMatches(query);
   const egyptByStart=new Map(egyptian.map(m=>[m.start,m]));
   const meaningful=[];
   for(const part of normalizedQueryParts(query)){
     if(part.concept){meaningful.push(part);continue;}
+    if(QUERY_RELATION_WORDS.has(fold(part.source)))continue;
     const special=egyptByStart.get(part.start);
     for(const source of (part.phrase?[part.source]:special?[special.source]:words(part.source)))meaningful.push({source,start:part.start});
   }
-  const tokens=[...new Map(meaningful.map(part=>[`${part.concept||''}:${part.source}:${part.section||''}`,part])).values()].slice(0,18);
+  const tokens=[...new Map(meaningful.map(part=>[`${part.concept||''}:${part.source}:${part.section||''}`,part])).values()];
   const groups=[],corrections=[],foundThemes=new Map();
   for(const part of tokens){
     const source=part.source;
     if(part.concept){
       const concept=CONTROLLED_CONCEPTS.get(part.concept);
-      const group={source:concept.label,terms:[],coreTerms:[],egyptKeys:[],concept:part.concept,
+      const group={source:concept.label,start:part.start,end:part.start+source.length,terms:[],coreTerms:[],egyptKeys:[],concept:part.concept,
         section:part.section,entity:true,topic:true};
       groups.push(group);
       foundThemes.set(concept.label,{label:concept.label});
@@ -823,7 +917,9 @@ function buildPlan(query,semanticTerms=new Map()){
       else if(source!==fold(concept.label))corrections.push(`${source} → ${t(concept.label)} (${concept.kind==='language'?t('langue / écriture'):t('corpus textuel')})`);
       continue;
     }
-    const fixed=typoCorrection(source)||source;
+    // Une entrée éditoriale est déjà comprise ; une correction approximative
+    // ne doit pas transformer « workers » ou un objet ajouté en autre chose.
+    const fixed=(CURATED_EQUIVALENTS.has(source)?null:typoCorrection(source))||source;
     if(fixed!==source)corrections.push(`${source} → ${fixed}`);
     const variants=[...new Set([...arabicVariants(source),fixed])];
     const egyptMatches=egyptian.filter(m=>m.source===source);
@@ -853,21 +949,32 @@ function buildPlan(query,semanticTerms=new Map()){
     const coreTerms=[...new Set([...variants,...suggestions])];
     const terms=new Set(coreTerms);
     for(const theme of themes)for(const keyword of theme.keywords)for(const word of words(keyword))terms.add(word);
-    groups.push({source,terms:[...terms],coreTerms,egyptKeys,
+    groups.push({source,start:part.start,end:part.start+source.length,terms:[...terms],coreTerms,egyptKeys,
       entity:state.citedNames.has(fixed)||CURATED_PHRASES.includes(source),topic:themes.length>0});
   }
   const topics=[...foundThemes.values()];
   const terms=[...new Set(groups.flatMap(g=>g.terms))].slice(0,55);
-  return {groups,terms,topics,corrections};
+  return {groups,terms,topics,corrections,relations:queryRelations(query,groups)};
 }
 function excerptType(p){return p.kind==='note'?(p.number?t('Note {number}',{number:p.number}):t('Note à contrôler')):p.kind==='bibliography'?t('Bibliographie'):t('Texte de l’article');}
 function pdfURL(p){const d=state.docs.get(p.doc_id);return d.url?`${d.url}#page=${p.page}`:d.doi?`https://doi.org/${encodeURIComponent(d.doi)}`:null;}
 function reference(p){const d=state.docs.get(p.doc_id);return t('{author}, « {title} », {journal}, p. {page}{note}{doi}.',{author:d.author,title:d.title,journal:d.journal,page:p.page,note:p.number?`, ${t('n.')} ${p.number}`:'',doi:d.doi?`, DOI ${d.doi}`:''});}
 
 function lexicalScores(query,terms,plan=null){
-  const keys=[...new Set(terms)];const collection=state.corpus.passages;const df=new Map(keys.map(w=>[w,collection.reduce((n,p)=>n+(fold(p.text).split(' ').includes(w)?1:0),0)]));
+  const keys=[...new Set(terms)];const collection=state.corpus.passages;const phrases=keys.filter(term=>term.includes(' '));
+  const df=new Map(keys.map(w=>[w,collection.reduce((n,p)=>n+((w.includes(' ')?includesTerm(p.text,w):fold(p.text).split(' ').includes(w))?1:0),0)]));
   const scores=new Map();const focusNotes=/notes?|citations?|bibliograph|bibliograf|références?|sources?|cité|cite|cf\.|المراجع/i.test(query);
   for(const p of collection){const t=words(p.text.replace(/\b([A-Za-z])\s+(\d{2,3})\b/g,'$1$2')),frequency=new Map();for(const token of t)if(keys.includes(token))frequency.set(token,(frequency.get(token)||0)+1);
+    // Une famille peut ne contenir que des locutions. Compter leur suite
+    // entière, sans créer de candidature à partir d'un mot isolé de la locution.
+    if(phrases.length){
+      const text=` ${fold(p.text).replace(/\b([a-z])\s+(\d{2,3})\b/g,'$1$2')} `;
+      for(const phrase of phrases){
+        const needle=` ${fold(phrase)} `;let count=0,at=-1;
+        while((at=text.indexOf(needle,at+1))>=0)count++;
+        if(count)frequency.set(phrase,count);
+      }
+    }
     let score=0;for(const term of keys){const n=frequency.get(term)||0;if(n)score+=(1+Math.log(n))*Math.log(1+(collection.length+1)/(df.get(term)+1));}
     if(plan){
       for(const key of new Set(plan.groups.flatMap(g=>g.egyptKeys||[]))){const found=state.egyptianIndex.get(key);if(found?.byId.has(p.id))score+=Math.log(1+(collection.length+1)/(found.byId.size+1));}
@@ -955,11 +1062,42 @@ function closestPosition(text,terms){
   for(const term of terms){const pos=folded.indexOf(fold(term));if(pos>=0)best=Math.min(best,pos);}
   return best;
 }
+function groupEvidence(p,group){
+  if(group.concept)return conceptMentions(p.text,group).map(hit=>({pos:hit.pos,end:hit.pos+fold(hit.surface).length,term:`ref:${group.concept}`}));
+  if(group.egyptKeys?.length)return group.egyptKeys.flatMap(key=>(state.egyptianIndex.get(key)?.byId.get(p.id)||[]).map(hit=>({pos:hit.pos,end:hit.pos+fold(hit.raw).length,term:`egy:${key}`})));
+  const text=fold(p.text).replace(/\b([a-z])\s+(\d{2,3})\b/g,'$1$2'),found=[];
+  for(const term of new Set(group.coreTerms||group.terms)){
+    const needle=fold(term);if(!needle)continue;
+    let at=-1;
+    while((at=text.indexOf(needle,at+1))>=0){
+      if((at===0||text[at-1]===' ')&&(at+needle.length===text.length||text[at+needle.length]===' '))found.push({pos:at,end:at+needle.length,term:needle});
+    }
+  }
+  return found;
+}
+function relationEvidence(p,groups,relations=[]){
+  if(!relations.length)return true;
+  const text=fold(p.text).replace(/\b([a-z])\s+(\d{2,3})\b/g,'$1$2');
+  const breaks=[...p.text.matchAll(/[.!?;]\s+/gu)].map(match=>fold(p.text.slice(0,match.index)).replace(/\b([a-z])\s+(\d{2,3})\b/g,'$1$2').length);
+  return relations.every(relation=>{
+    if(relation.unsupported)return false;
+    const left=groupEvidence(p,groups[relation.left]),right=groupEvidence(p,groups[relation.right]);
+    return left.some(a=>right.some(b=>{
+      if(a.end>b.pos||b.pos-a.pos>220||breaks.some(at=>at>=a.end&&at<b.pos))return false;
+      const link=text.slice(a.end,b.pos);
+      const negative=/\b(?:sans|without|ohne|sin|sem|pas|jamais|not(?! only)|never|neither|nicht|non|no)\b/u.test(link);
+      if(relation.absence)return /\b(?:sans|without|ohne|sin|sem)\b/u.test(link);
+      const preceding=text.slice(Math.max(0,a.pos-35),a.pos);
+      return relation.negative?negative:!negative&&!/\b(?:sans|without|pas|not|no)\s+(?:\w+\s+){0,2}$/u.test(preceding)&&/\b(?:avec|with)\b/u.test(link);
+    }));
+  });
+}
 function expressionEvidence(p,groups,explicitAnd=false,bibliography=false){
-  if(groups.length<2)return true;
+  if(!groups.length)return false;
+  if(groups.length===1)return groupEvidence(p,groups[0]).length>0;
   // Une expression ne peut pas être justifiée par l'occurrence d'un seul mot.
   // Les mots considérés comme équivalents sont propres à chaque composante.
-  const needed=explicitAnd?groups.length:Math.max(2,Math.ceil(groups.length*.65));
+  const needed=groups.length;
   // Les composantes discriminantes sont obligatoires : dans « langue grecque
   // ancienne », « langue » + « ancienne » sans « grecque » serait trompeur.
   const discriminants=groups.map((g,i)=>({i,count:g.concept?1:[...new Set(g.coreTerms||g.terms)].reduce((sum,term)=>sum+(state.lexicon.get(term)?.count||0),0)}))
@@ -994,6 +1132,11 @@ function expressionEvidence(p,groups,explicitAnd=false,bibliography=false){
   }
   for(const [i,group] of groups.entries())if(group.concept){
     for(const hit of conceptMentions(p.text,group))occurrences.push({pos:hit.pos,term:`ref:${group.concept}`,groups:new Set([i])});
+  }
+  // Une locution attestée est un indice complet (« adverbial phrases »,
+  // « Old Kingdom »), pas un sac de mots pouvant être dispersés dans la page.
+  for(const [i,group] of groups.entries())if(!group.concept&&!group.egyptKeys?.length){
+    for(const hit of groupEvidence(p,group))if(hit.term.includes(' '))occurrences.push({...hit,groups:new Set([i])});
   }
   occurrences.sort((a,b)=>a.pos-b.pos);
   // Même dans une très longue note ou une bibliographie, les notions doivent
@@ -1031,11 +1174,11 @@ function hybrid(lexical,semantic,question,plan=null){
   }
   const explicitAnd=/\b(et|and|avec|with|und|y)\b/iu.test(question)||
     /(?:^|[\s،؛])(?:و|مع)(?=$|[\s،؛])/u.test(question);
-  if(groups.length>=2){
+  if(groups.length>=2||plan?.relations?.length){
     const entries=new Map(state.corpus.passages.map(p=>[p.id,p]));
     lexical=lexical.filter(([id])=>{
       const p=entries.get(id);
-      return expressionEvidence(p,groups,explicitAnd,p.kind==='bibliography');
+      return expressionEvidence(p,groups,explicitAnd,p.kind==='bibliography')&&relationEvidence(p,groups,plan?.relations);
     });
     if(!lexical.length)return [];
   }
