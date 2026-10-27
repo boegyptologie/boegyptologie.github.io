@@ -437,6 +437,10 @@ text-align: inherit !important;
 
 /* ===== Fix mobile ===== */
 @media (max-width: 800px) {
+.committee-member {
+overflow-wrap: anywhere;
+}
+
 header {
 padding: 18px 16px 16px 16px;
 }
