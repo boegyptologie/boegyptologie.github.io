@@ -4,6 +4,10 @@ const $ = id => document.getElementById(id);
 const LANGUAGE=(document.documentElement?.lang||'fr').toLowerCase().startsWith('en')?'en':'fr';
 const ASSET_BASE=new URL('.',import.meta.url);
 const ENGLISH_UI={
+  "Cliquez sur un mot-clé pour ne garder que les extraits qui le contiennent. Cliquez à nouveau pour retirer ce filtre.": "Click a keyword to keep only excerpts that contain it. Click it again to remove this filter.",
+  "Filtres actifs : {terms}.": "Active filters: {terms}.",
+  "Affiner avec « {term} »": "Narrow results with “{term}”",
+  "Retirer le filtre « {term} »": "Remove the “{term}” filter",
   "Recherche par mots-clés": "Keyword search",
   "Retrouve les extraits à partir de vos mots-clés, de leurs variantes et d’équivalents dans d’autres langues.": "Finds excerpts using your keywords, their variants and equivalents in other languages.",
   "Recherche multilingue avancée": "Advanced multilingual search",
@@ -140,7 +144,7 @@ const ENGLISH_UI={
 };
 function t(message,values={}){const template=LANGUAGE==='en'?(ENGLISH_UI[message]??message):message;return template.replace(/\{(\w+)\}/g,(match,key)=>Object.hasOwn(values,key)?String(values[key]):match);}
 const MODEL = 'Xenova/multilingual-e5-small';
-const state = { corpus:null, docs:new Map(), result:[], search:'', filter:'all', visibleCount:18, extractor:null, vectors:null, termIndex:null, tokenVectors:new Map(), lexicon:new Map(), egyptianIndex:new Map(), citedNames:new Set(), activeTerms:[], plan:null, running:false, mode:'lexical', useModel:false, requestId:0, modelPromise:null };
+const state = { corpus:null, docs:new Map(), result:[], baseResult:[], keywordRefinements:[], search:'', filter:'all', visibleCount:18, extractor:null, vectors:null, termIndex:null, tokenVectors:new Map(), lexicon:new Map(), egyptianIndex:new Map(), citedNames:new Set(), activeTerms:[], plan:null, running:false, mode:'lexical', useModel:false, requestId:0, modelPromise:null };
 let inferenceQueue=Promise.resolve();
 const STOP = new Set('a à au aux avec car ce ces cet cette comme dans de des du elle elles en est et être il ils je la le les leur leurs mais me mon ne non nos notre nous on ont ou où par pas plus pour qu que quel quelle quels quelles qui quoi sa se ses son sont sous sur ta te tes ton tous tout un une vos votre vous y about after all also an and are as at be been between by can for from had has have in into is it its more not of on or other our over that the their there these this those to was were what when where which who why with would your der die das den dem ein eine einer eins nicht und über von im mit zur des aux sous sont في من عن على الى إلى مع كما الذي التي هذا هذه ذلك هناك بين عند هو هي هم ثم او أو'.split(' '));
 const THEMES = [
@@ -231,6 +235,77 @@ function fold(value){return String(value||'').toLowerCase().normalize('NFKC').no
   .replace(/[^\p{L}\p{N}]+/gu,' ').trim();}
 function words(value){return fold(value).split(/\s+/).filter(w=>
   (w.length>1||/^[\p{Script=Coptic}\p{Script=Greek}]$/u.test(w))&&!STOP.has(w));}
+
+// Les siècles sont des expressions datées, jamais des nombres isolés :
+// XIXe siècle, 19th century et nineteenth-century désignent la même période.
+// L'ère n'est pas déduite d'un numéro : une mention sans ère reste non précisée.
+const CENTURY_ORDINALS=new Map([
+  ['first',1],['second',2],['third',3],['fourth',4],['fifth',5],['sixth',6],['seventh',7],['eighth',8],['ninth',9],['tenth',10],
+  ['eleventh',11],['twelfth',12],['thirteenth',13],['fourteenth',14],['fifteenth',15],['sixteenth',16],['seventeenth',17],['eighteenth',18],['nineteenth',19],
+  ['twentieth',20],['thirtieth',30],['fortieth',40],['fiftieth',50],['sixtieth',60],['seventieth',70],['eightieth',80],['ninetieth',90],['hundredth',100],
+  ['premier',1],['premiere',1],['second',2],['deuxieme',2],['troisieme',3],['quatrieme',4],['cinquieme',5],['sixieme',6],['septieme',7],['huitieme',8],['neuvieme',9],['dixieme',10],
+  ['onzieme',11],['douzieme',12],['treizieme',13],['quatorzieme',14],['quinzieme',15],['seizieme',16],['dix septieme',17],['dix huitieme',18],['dix neuvieme',19],['vingtieme',20],['vingt et unieme',21],['trentieme',30],
+]);
+for(const [tens,value] of [['twenty',20],['thirty',30],['forty',40],['fifty',50],['sixty',60],['seventy',70],['eighty',80],['ninety',90]]){
+  for(const [unit,number] of [...CENTURY_ORDINALS].filter(([word,n])=>n<10&&/^(first|second|third|fourth|fifth|sixth|seventh|eighth|ninth)$/u.test(word)))CENTURY_ORDINALS.set(`${tens} ${unit}`,value+number);
+}
+const CENTURY_NUMBER_SOURCE=`(?:${[...CENTURY_ORDINALS.keys()].sort((a,b)=>b.length-a.length).map(word=>word.replaceAll(' ','[\\s-]+')).join('|')}|[0-9]{1,3}(?:er|re|eme|e|st|nd|rd|th)?|[ivxlcdm]+(?:er|re|eme|e|st|nd|rd|th)?)`;
+const CENTURY_JOIN_SOURCE='(?:\\s*(?:[-–—/]|et|and|a|au|to|through)\\s*(?:(?:the|early|late)\\s+)*)';
+const CENTURY_EXPRESSION_PATTERN=new RegExp(`(?<![\\p{L}\\p{N}])${CENTURY_NUMBER_SOURCE}(?:${CENTURY_JOIN_SOURCE}${CENTURY_NUMBER_SOURCE}){0,3}\\s*[-]?\\s*(?:siecles?|centur(?:y|ies))(?![\\p{L}])`,'gu');
+const CENTURY_NUMBER_PATTERN=new RegExp(`(?<![\\p{L}\\p{N}])${CENTURY_NUMBER_SOURCE}(?![\\p{L}\\p{N}])`,'gu');
+function normalizedCenturyText(value){return String(value||'').normalize('NFKC').normalize('NFD').replace(/\p{M}/gu,'').toLowerCase()
+  .replace(/[٠-٩۰-۹]/gu,char=>String(char.charCodeAt(0)-(char<='٩'?0x660:0x6f0))).replace(/[’‘]/gu,"'");}
+function centuryOriginalOffset(value,offset){let at=0,index=0;for(const char of String(value)){if(at>=offset)return index;at+=normalizedCenturyText(char).length;index+=char.length;}return index;}
+function romanCentury(number){let rest=number,out='';for(const [value,sign] of [[100,'C'],[90,'XC'],[50,'L'],[40,'XL'],[10,'X'],[9,'IX'],[5,'V'],[4,'IV'],[1,'I']])while(rest>=value){out+=sign;rest-=value;}return out;}
+function centuryNumber(value){
+  const token=normalizedCenturyText(value).replace(/[-\s]+/gu,' ').trim();
+  if(CENTURY_ORDINALS.has(token))return CENTURY_ORDINALS.get(token);
+  const numeral=token.replace(/(?:er|re|eme|e|st|nd|rd|th)$/u,'');
+  if(/^\d{1,3}$/u.test(numeral)){const number=Number(numeral);return number>0&&number<=100?number:null;}
+  if(!/^[ivxlcdm]+$/u.test(numeral))return null;
+  const values={i:1,v:5,x:10,l:50,c:100,d:500,m:1000};let number=0;
+  for(let i=0;i<numeral.length;i++)number+=values[numeral[i]]<(values[numeral[i+1]]||0)?-values[numeral[i]]:values[numeral[i]];
+  return number>0&&number<=100&&romanCentury(number).toLowerCase()===numeral?number:null;
+}
+const CENTURY_CE_ABBREVIATION_SOURCE='(?:A\\s*D|C\\s*E|[Aa]\\.\\s*[Dd]\\.?|[Cc]\\.\\s*[Ee]\\.?)';
+function centuryEra(value){
+  const text=normalizedCenturyText(value);
+  const bc=text.match(/^\s*(?:\(\s*)?(?:av(?:ant)?\.?\s*(?:j\.?\s*[-–]?\s*c\.?|n(?:otre)?\.?\s*e(?:re)?\.?)|avant\s+notre\s+ere|before\s+(?:christ|(?:the\s+)?common\s+era)|b\.?\s*c\.?(?:\s*e\.?)?)(?![\p{L}])/u);
+  if(bc)return {era:'bce',length:bc[0].length};
+  const ce=text.match(/^\s*(?:\(\s*)?(?:ap(?:r(?:es)?)?\.?\s*(?:j\.?\s*[-–]?\s*c\.?|n(?:otre)?\.?\s*e(?:re)?\.?)|de\s+notre\s+ere|common\s+era)(?![\p{L}])/u);
+  if(ce)return {era:'ce',length:ce[0].length};
+  // « ce siècle » contient le démonstratif français, pas l'abréviation CE.
+  // Les abréviations nues gardent leur casse ; les formes ponctuées sont explicites.
+  const abbreviation=String(value||'').normalize('NFKC').match(new RegExp(`^\\s*(?:\\(\\s*)?${CENTURY_CE_ABBREVIATION_SOURCE}(?![\\p{L}])`,'u'));
+  return abbreviation?{era:'ce',length:normalizedCenturyText(abbreviation[0]).length}:{era:null,length:0};
+}
+function centuryExpressions(value){
+  const original=String(value||''),text=normalizedCenturyText(original),found=[];
+  for(const match of text.matchAll(CENTURY_EXPRESSION_PATTERN)){
+    const ending=match[0].match(/(?:siecles?|centur(?:y|ies))$/u)[0];
+    const numbers=[...new Set([...match[0].slice(0,-ending.length).matchAll(CENTURY_NUMBER_PATTERN)].map(part=>centuryNumber(part[0])).filter(Boolean))];
+    if(!numbers.length)continue;
+    const matchEnd=match.index+match[0].length;
+    const suffix=centuryEra(original.slice(centuryOriginalOffset(original,matchEnd)));
+    let originalStart=centuryOriginalOffset(original,match.index),era=suffix.era;
+    const prefix=original.slice(Math.max(0,originalStart-20),originalStart).match(new RegExp(`(?:^|\\s)${CENTURY_CE_ABBREVIATION_SOURCE}\\s*$`,'u'));
+    if(prefix&&!era){originalStart-=prefix[0].length;while(/\s/u.test(original[originalStart]))originalStart++;era='ce';}
+    const originalEnd=centuryOriginalOffset(original,matchEnd+suffix.length);
+    found.push({numbers,era,start:originalStart,end:originalEnd,source:original.slice(originalStart,originalEnd)});
+  }
+  return found;
+}
+function centuryLabel(numbers,era){
+  const labels=numbers.map(number=>LANGUAGE==='en'?`${number}${number%100>=11&&number%100<=13?'th':({1:'st',2:'nd',3:'rd'}[number%10]||'th')}`:`${romanCentury(number)}${number===1?'er':'e'}`);
+  return `${labels.join(' / ')} ${LANGUAGE==='en'?(numbers.length>1?'centuries':'century'):(numbers.length>1?'siècles':'siècle')}${era?(LANGUAGE==='en'?(era==='bce'?' BCE':' CE'):(era==='bce'?' av. J.-C.':' apr. J.-C.')):''}`;
+}
+function centuryConcept(expression){
+  const numbers=[...expression.numbers].sort((a,b)=>a-b),id=`century:${numbers.join(',')}:${expression.era||'any'}`;
+  if(!CONTROLLED_CONCEPTS.has(id))CONTROLLED_CONCEPTS.set(id,{id,kind:'century',label:centuryLabel(numbers,expression.era),numbers,era:expression.era,queries:[],evidence:[]});
+  return id;
+}
+function centuryMentions(text,concept){return centuryExpressions(text).filter(hit=>hit.numbers.some(number=>concept.numbers.includes(number))&&(!concept.era||hit.era===concept.era))
+  .map(hit=>({pos:fold(String(text).slice(0,hit.start)).length,surface:hit.source,section:null,kind:'century'}));}
 
 // Les titres des grands corpus anciens ne sont pas des listes de mots-clés :
 // « Textes des Pyramides » est une unité documentaire, pas la conjonction
@@ -394,6 +469,7 @@ const CONCEPT_ALIASES=[...CONTROLLED_CONCEPTS.values()].flatMap(concept=>concept
 const CORPUS_CODES=EGYPTIAN_CORPORA.flatMap(item=>(item.codes||[]).map(code=>({code,concept:item.id})));
 function directConceptMentions(text,group){
   const concept=CONTROLLED_CONCEPTS.get(group.concept);if(!concept)return [];
+  if(concept.kind==='century')return centuryMentions(text,concept);
   const normalized=fold(text),results=[],seen=new Set();
   for(const variant of concept.evidence){
     // Les codes POS sont sensibles à la casse. « AUX » (auxiliaire) ne peut
@@ -676,8 +752,15 @@ function controlledQueryMatch(parts,start){
 }
 function normalizedQueryParts(query){
   const parts=[...String(query||'').matchAll(EGYPT_UNIT)];
+  const centuries=new Map(centuryExpressions(query).map(expression=>[expression.start,expression]));
   const out=[];
   for(let i=0;i<parts.length;){
+    const century=centuries.get(parts[i].index);
+    if(century){
+      out.push({source:century.source,start:century.start,phrase:true,concept:centuryConcept(century)});
+      do{i++;}while(i<parts.length&&parts[i].index<century.end);
+      continue;
+    }
     // Respecter la casse des valeurs UD : Part ≠ PART (particule) ≠ « part ».
     const feature=String(query).slice(parts[i].index).match(/^VerbForm\s*=\s*(Fin|Part|Inf|Conv|Vnoun)(?![\p{L}\p{N}])/u);
     const formConcept=GRAMMAR_QUERY_CODES.get(feature?feature[1]:parts[i][0]);
@@ -735,7 +818,8 @@ function buildPlan(query,semanticTerms=new Map()){
         section:part.section,entity:true,topic:true};
       groups.push(group);
       foundThemes.set(concept.label,{label:concept.label});
-      if(concept.kind==='grammar')corrections.push(`${source} → ${t(concept.label)} (${t(concept.aggregate?'groupe de recherche bibliographique':concept.searchGroup?'forme ou fonction grammaticale':'catégorie grammaticale')})`);
+      if(concept.kind==='century'){if(fold(source)!==fold(concept.label))corrections.push(`${source} → ${concept.label}`);}
+      else if(concept.kind==='grammar')corrections.push(`${source} → ${t(concept.label)} (${t(concept.aggregate?'groupe de recherche bibliographique':concept.searchGroup?'forme ou fonction grammaticale':'catégorie grammaticale')})`);
       else if(source!==fold(concept.label))corrections.push(`${source} → ${t(concept.label)} (${concept.kind==='language'?t('langue / écriture'):t('corpus textuel')})`);
       continue;
     }
@@ -1026,6 +1110,50 @@ async function prepareVectors(isCurrent=()=>true){
 }
 
 function drawChips(container,list){const node=$(container);node.replaceChildren();for(const value of list){const badge=document.createElement('span');badge.className='chip';badge.textContent=value;node.append(badge);}}
+function keywordRefinementHelp(){
+  return t('Cliquez sur un mot-clé pour ne garder que les extraits qui le contiennent. Cliquez à nouveau pour retirer ce filtre.');
+}
+function drawKeywordChips(){
+  const wrap=$('keyword-chips'),note=$('keyword-refinement-note');
+  const focused=document.activeElement?.dataset?.keyword;
+  const selected=new Set(state.keywordRefinements.map(fold));
+  const plan=state.plan||{terms:[]};
+  const extracted=sourceTerms(state.result,plan.terms);
+  const values=[...new Map([...state.keywordRefinements,...plan.terms.filter(word=>!words(state.search).includes(word)).slice(0,15),...extracted]
+    .map(value=>[fold(value),value])).values()].slice(0,18);
+  wrap.replaceChildren();
+  for(const value of values){
+    const button=document.createElement('button'),active=selected.has(fold(value));
+    button.type='button';button.className='chip';button.textContent=value;button.dataset.keyword=value;
+    button.setAttribute('aria-pressed',String(active));
+    button.setAttribute('aria-label',t(active?'Retirer le filtre « {term} »':'Affiner avec « {term} »',{term:value}));
+    button.addEventListener('click',()=>toggleKeywordRefinement(value));
+    wrap.append(button);
+    if(focused===value)button.focus?.();
+  }
+  if(focused&&!values.includes(focused))$('theme-input').focus?.();
+  if(note){
+    note.setAttribute('aria-live','polite');note.setAttribute('aria-atomic','true');
+    note.textContent=(state.keywordRefinements.length?t('Filtres actifs : {terms}.',{terms:state.keywordRefinements.join(' · ')})+' ':'')+keywordRefinementHelp();
+  }
+}
+function applyKeywordRefinements(){
+  state.result=state.baseResult.filter(passage=>state.keywordRefinements.every(term=>includesTerm(passage.text,term)));
+  state.activeTerms=[...new Set([...(state.plan?.terms||[]),...state.keywordRefinements])];
+  $('topic-analysis').hidden=!state.baseResult.length&&!state.keywordRefinements.length;
+  drawKeywordChips();
+}
+function toggleKeywordRefinement(value){
+  if(!state.corpus||!state.search)return;
+  const key=fold(value);if(!key)return;
+  const found=state.keywordRefinements.findIndex(term=>fold(term)===key);
+  if(found>=0)state.keywordRefinements.splice(found,1);
+  else state.keywordRefinements.push(value);
+  // These are additional literal constraints on the displayed search. A pending
+  // model task continues; its new base results receive the same current filters.
+  state.visibleCount=18;
+  applyKeywordRefinements();render();
+}
 function sourceTerms(foundResults, queryTerms){const frequency=new Map(),avoid=new Set(queryTerms);for(const p of foundResults.slice(0,10)){for(const word of words(p.text)){if(word.length<4||avoid.has(word))continue;frequency.set(word,(frequency.get(word)||0)+1);}}return [...frequency].sort((a,b)=>b[1]-a[1]).slice(0,8).map(([word])=>word);}
 function highlight(node,text,terms){const keys=[...new Set(terms)].filter(x=>x.length>2).sort((a,b)=>b.length-a.length).slice(0,14);if(!keys.length){node.textContent=text;return;}const pattern=new RegExp(`(${keys.map(x=>x.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|')})`,'giu');let at=0;for(const m of text.matchAll(pattern)){node.append(document.createTextNode(text.slice(at,m.index)));const mark=document.createElement('mark');mark.textContent=m[0];node.append(mark);at=m.index+m[0].length;}node.append(document.createTextNode(text.slice(at)));}
 function render(){
@@ -1042,7 +1170,7 @@ function render(){
     const egyptEvidence=(state.plan?.groups||[]).flatMap(g=>(g.egyptKeys||[]).flatMap(key=>state.egyptianIndex.get(key)?.byId.get(item.id)?.map(hit=>hit.raw)||[]));
     const corpusEvidence=(state.plan?.groups||[]).flatMap(g=>g.concept?conceptMentions(item.text,g).map(hit=>hit.surface):[]);
     const keys=[...new Set([...words(state.search),...state.activeTerms,...egyptEvidence,...corpusEvidence.slice(0,10)])];
-    const evidence=[...new Set([...corpusEvidence,...egyptEvidence,...(state.plan?.groups||[]).map(g=>g.terms.find(term=>includesTerm(item.text,term))).filter(Boolean)])];
+    const evidence=[...new Set([...state.keywordRefinements,...corpusEvidence,...egyptEvidence,...(state.plan?.groups||[]).map(g=>g.terms.find(term=>includesTerm(item.text,term))).filter(Boolean)])];
     if(evidence.length){const why=document.createElement('div');why.className='source-meta';why.textContent=t('Indices présents dans cet extrait : {terms}{more}',{terms:evidence.slice(0,6).join(' · '),more:evidence.length>6?'…':''});card.append(why);}
     const excerpt=document.createElement('blockquote');excerpt.dir='auto';highlight(excerpt,item.text,keys);card.append(excerpt);const bar=document.createElement('div');bar.className='source-links';const link=document.createElement('a');link.textContent=t('Vérifier sur le PDF ↗');const url=pdfURL(item);if(url){link.href=url;link.target='_blank';link.rel='noopener noreferrer';}else{link.textContent=t('PDF à renseigner');}
     const copy=document.createElement('button');copy.type='button';copy.textContent=t('Copier l’extrait et la référence');copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(`${reference(item)}\n${t('« {text} »',{text:item.text})}`);copy.textContent=t('Référence copiée ✓');setTimeout(()=>copy.textContent=t('Copier l’extrait et la référence'),2000);}catch{copy.textContent=t('Copie indisponible');}});bar.append(link,copy);card.append(bar);wrap.append(card);
@@ -1107,18 +1235,18 @@ function updateGrammarRelations(plan){
     button.textContent=t(labels[link.relation],{label:t(CONTROLLED_CONCEPTS.get(link.id).label)});
     button.dataset.query=query;button.dataset.relation=link.relation;button.dataset.concept=link.id;
     if(link.note)button.title=t(link.note);
-    button.addEventListener('click',()=>{$('theme-input').value=query;runSearch(true);});
+    button.addEventListener('click',()=>{state.keywordRefinements=[];$('theme-input').value=query;runSearch(true);});
     wrap.append(button);
   }
 }
 function showSearchResults(query,plan,lex,semantic=null,preserveView=false){
   const scored=hybrid(lex,semantic,query,plan);
-  const map=new Map(state.corpus.passages.map(p=>[p.id,p]));state.result=scored.map(({id})=>map.get(id)).filter(Boolean);
+  const map=new Map(state.corpus.passages.map(p=>[p.id,p]));state.baseResult=scored.map(({id})=>map.get(id)).filter(Boolean);
   state.activeTerms=plan.terms;state.plan=plan;
   updateGrammarRelations(plan);
-  const extracted=sourceTerms(state.result,plan.terms);$('topic-analysis').hidden=!state.result.length;
+  applyKeywordRefinements();
   drawChips('topic-chips',plan.topics.length?plan.topics.map(topic=>t(topic.label)):[t('Terme attesté dans le corpus')]);
-  drawChips('keyword-chips',[...new Set([...plan.terms.filter(w=>!words(query).includes(w)).slice(0,15),...extracted])].slice(0,18));
+
   const corrections=$('query-corrections');if(corrections){corrections.hidden=!plan.corrections.length;corrections.textContent=plan.corrections.length?t('Graphies et termes rapprochés : {terms}.',{terms:plan.corrections.join(' ; ')}):'';}
   if(!preserveView){state.filter='all';state.visibleCount=18;}
   for(const btn of document.querySelectorAll('[data-filter]')){
@@ -1132,6 +1260,7 @@ async function runSearch(replace=false){
   if((state.running&&!replace)||!state.corpus)return;
   const query=$('theme-input').value.trim();if(!query)return;
   const requestId=++state.requestId,isCurrent=()=>requestId===state.requestId;
+  if(query!==state.search)state.keywordRefinements=[];
   state.running=true;state.search=query;updateSearchControls();
   let lexicalShown=false;
   try{
