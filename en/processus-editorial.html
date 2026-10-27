@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bibliothèque Ouverte d'Égyptologie (BOE) | Editorial Process – Open-Access Journal – BOMA</title>
-  <meta name="description" content="Editorial process of BOE: double-blind peer review by two independent experts, estimated four months from submission to publication. No fees, published on Zenodo with DOI, CC BY 4.0.">
+  <title>Editorial Process | BOE Egyptology Journal</title>
+  <meta name="description" content="How BOE reviews and publishes articles: anonymised submission, double-blind review by two experts, revisions and publication on Zenodo.">
   <meta name="keywords" content="editorial process, double-blind peer review, Egyptology, open access journal, submission, Zenodo, DOI, CC BY 4.0, BOE, BOMA, ISSN 3129-6424">
   <meta name="author" content="Bibliothèque Ouverte des Mondes Anciens (BOMA)">
   <meta name="robots" content="index, follow">
@@ -13,21 +13,21 @@
   <link rel="alternate" hreflang="fr" href="https://boegyptologie.github.io/fr/processus-editorial.html">
   <link rel="alternate" hreflang="x-default" href="https://boegyptologie.github.io/fr/processus-editorial.html">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Editorial Process – Bibliothèque Ouverte d'Égyptologie (BOE)">
-  <meta property="og:description" content="Double-blind peer review by two independent experts, four months estimated. No fees, Zenodo, DOI, CC BY 4.0.">
+  <meta property="og:title" content="Editorial Process | BOE Egyptology Journal">
+  <meta property="og:description" content="How BOE reviews and publishes articles: anonymised submission, double-blind review by two experts, revisions and publication on Zenodo.">
   <meta property="og:url" content="https://boegyptologie.github.io/en/processus-editorial.html">
   <meta property="og:image" content="https://boegyptologie.github.io/assets/logo.png">
-  <meta property="og:image:alt" content="Logo of Bibliothèque Ouverte d'Égyptologie">
+  <meta property="og:image:alt" content="Bibliothèque Ouverte d’Égyptologie logo">
   <meta property="og:locale" content="en_US">
   <meta property="og:site_name" content="Bibliothèque Ouverte d'Égyptologie (BOE)">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Editorial Process – BOE">
-  <meta name="twitter:description" content="Double-blind peer review, two experts, four months, Zenodo with DOI. No fees, CC BY 4.0.">
+  <meta name="twitter:title" content="Editorial Process | BOE Egyptology Journal">
+  <meta name="twitter:description" content="How BOE reviews and publishes articles: anonymised submission, double-blind review by two experts, revisions and publication on Zenodo.">
   <meta name="twitter:image" content="https://boegyptologie.github.io/assets/logo.png">
-  <meta name="DC.title" content="Bibliothèque Ouverte d'Égyptologie – Editorial Process">
+  <meta name="DC.title" content="Editorial Process | BOE Egyptology Journal">
   <meta name="DC.creator" content="Bibliothèque Ouverte des Mondes Anciens (BOMA)">
   <meta name="DC.subject" content="editorial process; double-blind peer review; Egyptology; open access; Zenodo; DOI">
-  <meta name="DC.description" content="Description of the double-blind peer review process at BOE: submission, review by two independent experts, revision and publication on Zenodo.">
+  <meta name="DC.description" content="How BOE reviews and publishes articles: anonymised submission, double-blind review by two experts, revisions and publication on Zenodo.">
   <meta name="DC.publisher" content="Bibliothèque Ouverte des Mondes Anciens (BOMA)">
   <meta name="DC.language" content="en">
   <meta name="DC.rights" content="CC BY 4.0 https://creativecommons.org/licenses/by/4.0/">
@@ -38,9 +38,9 @@
   {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "Editorial Process – Bibliothèque Ouverte d'Égyptologie",
+    "name": "Editorial Process | BOE Egyptology Journal",
     "url": "https://boegyptologie.github.io/en/processus-editorial.html",
-    "description": "Description of the double-blind peer review process at BOE: anonymised submission, review by two independent experts, revision, DOI assignment and publication on Zenodo.",
+    "description": "How BOE reviews and publishes articles: anonymised submission, double-blind review by two experts, revisions and publication on Zenodo.",
     "isPartOf": {
       "@type": "Periodical",
       "name": "Bibliothèque Ouverte d'Égyptologie",
@@ -48,14 +48,29 @@
       "issn": "3129-6424"
     },
     "about": [
-      { "@type": "Thing", "name": "Double-blind peer review" },
-      { "@type": "Thing", "name": "Peer review" },
-      { "@type": "Thing", "name": "Scholarly publishing" },
-      { "@type": "Thing", "name": "Open access" }
-    ]
+      {
+        "@type": "Thing",
+        "name": "Double-blind peer review"
+      },
+      {
+        "@type": "Thing",
+        "name": "Peer review"
+      },
+      {
+        "@type": "Thing",
+        "name": "Scholarly publishing"
+      },
+      {
+        "@type": "Thing",
+        "name": "Open access"
+      }
+    ],
+    "inLanguage": "en"
   }
   </script>
-  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/assets/style.css?v=15">
+  <meta property="og:locale:alternate" content="fr_FR">
+  <meta name="twitter:image:alt" content="Bibliothèque Ouverte d’Égyptologie logo">
 </head>
 <body>
 <header>
@@ -74,6 +89,7 @@
       <a href="/en/processus-editorial.html" aria-current="page">Editorial process</a>
       <a href="/en/soumettre-un-article-submit-a-paper.html">Submit an article</a>
       <a href="/en/editorial-policy-statement.html">Editorial Policy Statement</a>
+      <a class="nav-library" href="/en/librarian/">The Librarian</a>
     </nav>
   </div>
 </header>
@@ -124,6 +140,7 @@ function updateMobileMenuSeparators() {
 }
 window.addEventListener('load', updateMobileMenuSeparators);
 window.addEventListener('resize', updateMobileMenuSeparators);
+if (document.fonts) document.fonts.ready.then(updateMobileMenuSeparators);
 </script>
 </body>
 </html>
