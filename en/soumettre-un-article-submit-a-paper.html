@@ -362,14 +362,21 @@
 
     <div class="f-field">
       <label class="f-label" for="f-pdf">Anonymized PDF <span class="f-req">*</span></label>
-      <span class="f-hint">Make sure the file contains no author information in the text or metadata. Maximum size: 10 MB.</span>
+      <span class="f-hint">Make sure the file contains no author information in the text or metadata. Maximum size: 15 MB.</span>
       <input class="f-file" type="file" id="f-pdf" accept=".pdf" required>
     </div>
 
     <div class="f-field">
       <label class="f-label" for="f-editable">Original editable version <span class="f-req">*</span></label>
-      <span class="f-hint">Accepted formats: .odt, .docx, .doc, .tex, .rtf and .pages. Maximum size: 10 MB.</span>
+      <span class="f-hint">Accepted formats: .odt, .docx, .doc, .tex, .rtf and .pages. Maximum size: 30 MB.</span>
       <input class="f-file" type="file" id="f-editable" accept=".odt,.docx,.doc,.tex,.rtf,.pages" required>
+    </div>
+
+    <div class="f-field">
+      <label class="f-label" for="f-supplementary">Supplementary files <span style="font-style:italic;font-size:0.88em">(optional)</span></label>
+      <span class="f-hint">Images, datasets, spreadsheets or archives: up to 30 files and 200 MB combined, in addition to the PDF and editable original. Files are stored in the private submission folder and are shared through Drive links rather than email attachments.</span>
+      <input class="f-file" type="file" id="f-supplementary" multiple accept=".jpg,.jpeg,.png,.tif,.tiff,.gif,.webp,.bmp,.svg,.pdf,.csv,.tsv,.xlsx,.xls,.ods,.json,.xml,.sql,.sqlite,.sqlite3,.db,.mdb,.accdb,.zip,.7z,.tar,.gz,.rar,.txt,.odt,.doc,.docx,.rtf,.npy,.npz,.h5,.hdf5,.geojson,.gpkg,.shp,.shx,.dbf,.prj,.kml,.kmz,.fits,.fit" aria-describedby="f-supplementary-summary">
+      <span class="f-hint" id="f-supplementary-summary" aria-live="polite">0/30 files selected — 0/200 MB total.</span>
     </div>
   </section>
 
@@ -393,7 +400,7 @@
   <!-- Submit ──────────────────────────────────────────────── -->
   <div style="margin-top:1.25em">
     <button type="submit" class="f-btn" id="btn-submit">Submit article</button>
-    <div class="f-uploading" id="f-uploading">Uploading files and sending submission, please wait…</div>
+    <div class="f-uploading" id="f-uploading"><progress id="boe-upload-progress" max="100" value="0" style="width:100%" aria-label="Upload progress"></progress><span id="boe-upload-status" role="status">Preparing the private upload…</span></div>
   </div>
 
 </form>
@@ -663,7 +670,7 @@
 </script>
 
 <!-- New BOE workflow transport. Its capture-phase handler replaces the legacy no-cors sender above. -->
-<script src="/assets/boe-submission-workflow.js"></script>
+<script src="/assets/boe-submission-workflow.js?v=20261027-large-uploads-1"></script>
 
 <script>
   function updateMobileMenuSeparators() {
