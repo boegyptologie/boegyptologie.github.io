@@ -57,8 +57,8 @@
   </script>
   <!-- BOE institutional styles, followed by shared search-tool styles. -->
   <link rel="stylesheet" href="/assets/style.css?v=16">
-  <link rel="stylesheet" href="../../fr/bibliothecaire/styles.css?v=17">
-  <script type="module" src="../../fr/bibliothecaire/app.js?v=17"></script>
+  <link rel="stylesheet" href="../../fr/bibliothecaire/styles.css?v=18">
+  <script type="module" src="../../fr/bibliothecaire/app.js?v=18"></script>
   <meta property="og:locale:alternate" content="fr_FR">
   <meta name="twitter:image:alt" content="Bibliothèque Ouverte d’Égyptologie logo">
   <meta name="DC.description" content="Search BOE articles, notes and bibliographies with keywords or advanced multilingual search. Read original excerpts and check their PDF sources.">
@@ -116,6 +116,7 @@
         <button type="button" data-example="Coptic">Coptic</button>
         <button type="button" data-example="Arabic">Arabic</button>
         <button type="button" data-example="Greek">Greek</button>
+        <button type="button" data-example="2nd century">2nd century</button>
         <button type="button" data-example="Τυφῶνος">Τυφῶνος</button>
         <button type="button" data-example="Pyramid Texts">Pyramid Texts</button>
         <button type="button" data-example="Sign U23">Sign U23</button>
@@ -143,7 +144,8 @@
         <h3>Identified concepts</h3>
         <div id="topic-chips" class="chips"></div>
         <h3>Attested or related keywords</h3>
-        <div id="keyword-chips" class="chips keywords"></div>
+        <p id="keyword-refinement-note" class="privacy-note">Click a keyword to keep only excerpts containing it. Click again to remove the filter.</p>
+        <div id="keyword-chips" class="chips keywords" role="group" aria-label="Refine the search by keywords" aria-describedby="keyword-refinement-note"></div>
       </section>
     </section>
 
