@@ -1,7 +1,8 @@
 /* Recherche thématique BOMA : jamais de texte scientifique inventé par une IA. */
 const $ = id => document.getElementById(id);
 const MODEL = 'Xenova/multilingual-e5-small';
-const state = { corpus:null, docs:new Map(), result:[], search:'', filter:'all', visibleCount:18, extractor:null, vectors:null, termIndex:null, tokenVectors:new Map(), lexicon:new Map(), egyptianIndex:new Map(), citedNames:new Set(), activeTerms:[], plan:null, running:false, mode:'lexical' };
+const state = { corpus:null, docs:new Map(), result:[], search:'', filter:'all', visibleCount:18, extractor:null, vectors:null, termIndex:null, tokenVectors:new Map(), lexicon:new Map(), egyptianIndex:new Map(), citedNames:new Set(), activeTerms:[], plan:null, running:false, mode:'lexical', useModel:false, requestId:0, modelPromise:null };
+let inferenceQueue=Promise.resolve();
 const STOP = new Set('a à au aux avec car ce ces cet cette comme dans de des du elle elles en est et être il ils je la le les leur leurs mais me mon ne non nos notre nous on ont ou où par pas plus pour qu que quel quelle quels quelles qui quoi sa se ses son sont sous sur ta te tes ton tous tout un une vos votre vous y about after all also an and are as at be been between by can for from had has have in into is it its more not of on or other our over that the their there these this those to was were what when where which who why with would your der die das den dem ein eine einer eins nicht und über von im mit zur des aux sous sont في من عن على الى إلى مع كما الذي التي هذا هذه ذلك هناك بين عند هو هي هم ثم او أو'.split(' '));
 const THEMES = [
   {label:'Vérité', triggers:['truth','true','truthfulness','vérité','vérités','verite','verdade','verdad','verità','Wahrheit','الحقيقة','حقيقة','الصدق'], keywords:['truth','true','truly','vérité']},
@@ -553,9 +554,9 @@ async function prepareTermIndex(){
   }catch{state.termIndex=[];}
   return state.termIndex;
 }
-async function semanticTermCandidates(query){
+async function semanticTermCandidates(query,isCurrent=()=>true){
   const index=await prepareTermIndex(),out=new Map();
-  if(!index.length)return out;
+  if(!index.length||!isCurrent())return out;
   // Conserver les accents ET la casse d'origine pour le modèle :
   // « vérité » / « verite » et « Wahrheit » / « wahrheit » ne donnent
   // pas exactement les mêmes vecteurs. Seule la clé lexicale est repliée.
@@ -568,15 +569,18 @@ async function semanticTermCandidates(query){
   }
   const tokens=[...unique].slice(0,18).map(([key,raw])=>({key,raw}));
   if(!tokens.length)return out;
-  const extractor=await prepareModel();
+  await prepareModel();
+  if(!isCurrent())return out;
   // Encoder les termes séparément : le padding variable des lots modifie
   // légèrement les scores du modèle ONNX quantifié. À la frontière des
   // seuils, cela faisait disparaître « verdade → truth » dès qu'un
   // second mot figurait dans la recherche.
   for(const token of tokens){
+    if(!isCurrent())return out;
     let vector=state.tokenVectors.get(token.raw);
     if(!vector){
-      const tensor=await extractor('query: '+token.raw,{pooling:'mean',normalize:true});
+      const tensor=await inferWithModel('query: '+token.raw,isCurrent);
+      if(!isCurrent())return out;
       vector=Float32Array.from(tensor.data);
       if(state.tokenVectors.size>=128)state.tokenVectors.delete(state.tokenVectors.keys().next().value);
       state.tokenVectors.set(token.raw,vector);
@@ -710,32 +714,50 @@ function hybrid(lexical,semantic,question,plan=null){
 
 async function prepareModel(){
   if(state.extractor)return state.extractor;
-  $('method-title').textContent='Chargement du modèle multilingue';
-  $('method-status').textContent='Premier accès : téléchargement du modèle (~118 Mo), puis mise en cache.';
-  const {pipeline,env}=await import('./vendor/transformers.bundled.js');
-  // La compilation résout les imports ONNX ; le modèle reste téléchargé
-  // directement depuis Hugging Face, sans exécution distante de la requête.
-  env.allowLocalModels=false;
-  env.allowRemoteModels=true;
-  state.extractor=await pipeline('feature-extraction',MODEL,{dtype:'q8',progress_callback:event=>{
-    if(event.status==='progress' && typeof event.progress==='number') $('method-status').textContent=`Téléchargement du modèle : ${Math.round(event.progress)} %`;
-  }});
-  $('method-title').textContent='Modèle multilingue chargé';
-  return state.extractor;
+  if(!state.modelPromise){
+    state.modelPromise=(async()=>{
+      const {pipeline,env}=await import('./vendor/transformers.bundled.js');
+      // Un seul chargement partagé, même après une bascule de mode.
+      env.allowLocalModels=false;
+      env.allowRemoteModels=true;
+      state.extractor=await pipeline('feature-extraction',MODEL,{dtype:'q8',progress_callback:event=>{
+        if(state.useModel&&state.running&&event.status==='progress'&&typeof event.progress==='number'){
+          $('method-status').textContent=`Téléchargement de l’IA : ${Math.round(event.progress)} %. Les premiers résultats sont déjà disponibles.`;
+        }
+      }});
+      return state.extractor;
+    })().catch(error=>{state.modelPromise=null;throw error;});
+  }
+  return state.modelPromise;
 }
-async function computeVector(text){const extractor=await prepareModel();const tensor=await extractor(text,{pooling:'mean',normalize:true});return Float32Array.from(tensor.data);}
+function inferWithModel(text,isCurrent=()=>true){
+  // Les requêtes annulées ne lancent pas d'inférence ; une seule utilise le modèle à la fois.
+  const job=inferenceQueue.then(async()=>{
+    if(!isCurrent())return null;
+    const extractor=await prepareModel();
+    if(!isCurrent())return null;
+    return extractor(text,{pooling:'mean',normalize:true});
+  });
+  inferenceQueue=job.catch(()=>{});
+  return job;
+}
+async function computeVector(text,isCurrent=()=>true){const tensor=await inferWithModel(text,isCurrent);return isCurrent()?Float32Array.from(tensor.data):null;}
 function textForEmbedding(part){return `passage: ${part.text.slice(0,1850)}`;}
-async function prepareVectors(){
+async function prepareVectors(isCurrent=()=>true){
   if(state.vectors)return;
   const key=`boma-semantics-v2:${state.corpus.generated}`;
   try{const stored=localStorage.getItem(key);if(stored){state.vectors=corpusVectors(JSON.parse(stored));return;}}catch{}
   try{const reply=await fetch('data/embeddings.json');if(reply.ok){const json=await reply.json();state.vectors=corpusVectors(json);return;}}catch{}
+  if(!isCurrent())return;
   // En l'absence de vecteurs éditoriaux publiés, vectorisation ponctuelle et cache local.
-  const model=await prepareModel();const rows=[];const passages=state.corpus.passages;
+  await prepareModel();const rows=[];const passages=state.corpus.passages;
   for(let i=0;i<passages.length;i+=8){
-    const batch=passages.slice(i,i+8);const tensor=await model(batch.map(textForEmbedding),{pooling:'mean',normalize:true});const dimension=tensor.dims.at(-1);
+    if(!isCurrent())return;
+    const batch=passages.slice(i,i+8);const tensor=await inferWithModel(batch.map(textForEmbedding),isCurrent);
+    if(!isCurrent())return;
+    const dimension=tensor.dims.at(-1);
     for(let j=0;j<batch.length;j++){const data=tensor.data.slice(j*dimension,(j+1)*dimension);const bytes=Int8Array.from(data,x=>Math.max(-127,Math.min(127,Math.round(x*127))));let bin='';for(const byte of bytes)bin+=String.fromCharCode((byte+256)%256);rows.push({id:batch[j].id,vector:btoa(bin)});}
-    $('method-status').textContent=`Préparation locale de l'index : ${Math.min(passages.length,i+batch.length)}/${passages.length} passages`;
+    $('method-status').textContent=`L’IA prépare les passages : ${Math.min(passages.length,i+batch.length)}/${passages.length}. Les premiers résultats restent disponibles.`;
     await new Promise(resolve=>setTimeout(resolve,0));
   }
   const json={model:MODEL,corpus_generated:state.corpus.generated,rows};state.vectors=corpusVectors(json);
@@ -766,39 +788,115 @@ function render(){
   }
 }
 
-async function runSearch(forceFast=false){
-  if(state.running||!state.corpus)return;const query=$('theme-input').value.trim();if(!query)return;
-  state.running=true;$('search-button').disabled=true;state.search=query;
-  let plan=buildPlan(query),lex=lexicalScores(query,plan.terms,plan),semantic=null,errorMessage='';
-  if(!forceFast){
-    try{
-      await prepareVectors();
-      const candidates=await semanticTermCandidates(query);
-      plan=buildPlan(query,candidates);
-      lex=lexicalScores(query,plan.terms,plan);
-      if(lex.length){const vector=await computeVector('query: '+query);semantic=semanticScores(vector);}
-      state.mode='semantic';$('method-title').textContent='Recherche multilingue';
-      $('method-status').textContent='';
-    }catch(error){errorMessage=error.message;state.mode='lexical';$('method-title').textContent='Recherche lexicale';$('method-status').textContent=`Modèle indisponible : ${errorMessage}.`;}
-  }else{state.mode='lexical';$('method-title').textContent='Recherche lexicale';$('method-status').textContent='';}
+function updateSearchControls(){
+  const unavailable=!state.corpus;
+  $('search-button').disabled=unavailable||state.running;
+  $('search-button').textContent=state.running?'Recherche en cours…':'Rechercher';
+  for(const button of document.querySelectorAll('[data-example]'))button.disabled=unavailable||state.running;
+  $('search-mode').disabled=unavailable;
+  $('mode-lexical').checked=!state.useModel;
+  $('mode-semantic').checked=state.useModel;
+  $('result-list').setAttribute('aria-busy',String(state.running));
+}
+function showSearchResults(query,plan,lex,semantic=null,preserveView=false){
   const scored=hybrid(lex,semantic,query,plan);
   const map=new Map(state.corpus.passages.map(p=>[p.id,p]));state.result=scored.map(({id})=>map.get(id)).filter(Boolean);
   state.activeTerms=plan.terms;state.plan=plan;
-  if(!state.result.length&&!errorMessage){state.mode='no-evidence';$('method-title').textContent='Aucun résultat';$('method-status').textContent='';}
   const extracted=sourceTerms(state.result,plan.terms);$('topic-analysis').hidden=!state.result.length;
   drawChips('topic-chips',plan.topics.length?plan.topics.map(t=>t.label):['Terme attesté dans le corpus']);
   drawChips('keyword-chips',[...new Set([...plan.terms.filter(w=>!words(query).includes(w)).slice(0,15),...extracted])].slice(0,18));
   const corrections=$('query-corrections');if(corrections){corrections.hidden=!plan.corrections.length;corrections.textContent=plan.corrections.length?`Graphies et termes rapprochés : ${plan.corrections.join(' ; ')}.`:'';}
-  state.filter='all';state.visibleCount=18;
-  for(const btn of document.querySelectorAll('[data-filter]'))btn.classList.toggle('selected',btn.dataset.filter==='all');render();
-  state.running=false;$('search-button').disabled=false;
+  if(!preserveView){state.filter='all';state.visibleCount=18;}
+  for(const btn of document.querySelectorAll('[data-filter]')){
+    const selected=btn.dataset.filter===state.filter;
+    btn.classList.toggle('selected',selected);btn.setAttribute('aria-pressed',String(selected));
+  }
+  render();
+  $('result-list').setAttribute('aria-busy','false');
+}
+async function runSearch(replace=false){
+  if((state.running&&!replace)||!state.corpus)return;
+  const query=$('theme-input').value.trim();if(!query)return;
+  const requestId=++state.requestId,isCurrent=()=>requestId===state.requestId;
+  state.running=true;state.search=query;updateSearchControls();
+  let lexicalShown=false;
+  try{
+    const plan=buildPlan(query),lex=lexicalScores(query,plan.terms,plan);
+    showSearchResults(query,plan,lex);lexicalShown=true;state.mode='lexical';
+    $('method-title').textContent='Recherche multilingue';
+    $('method-status').textContent='Disponible immédiatement. Choisissez la recherche avancée pour affiner les résultats.';
+    if(!state.useModel)return;
+    $('method-title').textContent='Recherche multilingue avancée';
+    $('method-status').textContent=state.extractor?'Les premiers résultats sont disponibles. L’IA les affine…':'Les premiers résultats sont disponibles. Premier chargement de l’IA : environ 118 Mo.';
+    // Laisser le navigateur afficher les résultats avant de charger le modèle.
+    await new Promise(resolve=>setTimeout(resolve,0));
+    if(!isCurrent())return;
+    await prepareVectors(isCurrent);
+    if(!isCurrent())return;
+    const candidates=await semanticTermCandidates(query,isCurrent);
+    if(!isCurrent())return;
+    const refinedPlan=buildPlan(query,candidates),refinedLex=lexicalScores(query,refinedPlan.terms,refinedPlan);
+    let semantic=null;
+    if(refinedLex.length){
+      const vector=await computeVector('query: '+query,isCurrent);
+      if(!isCurrent())return;
+      semantic=semanticScores(vector);
+    }
+    showSearchResults(query,refinedPlan,refinedLex,semantic,true);state.mode='semantic';
+    $('method-title').textContent='Recherche multilingue avancée';
+    $('method-status').textContent='Affinement terminé. Les extraits restent vérifiables dans les PDF.';
+  }catch(error){
+    if(!isCurrent())return;
+    state.mode='lexical';
+    $('method-title').textContent=lexicalShown?'Recherche multilingue':'Recherche interrompue';
+    $('method-status').textContent=lexicalShown?'L’IA est indisponible. Les résultats de la recherche rapide restent accessibles.':'La recherche n’a pas abouti. Veuillez réessayer.';
+  }finally{
+    if(isCurrent()){state.running=false;updateSearchControls();}
+  }
+}
+function selectSearchMode(event){
+  if(!state.corpus)return;
+  const useModel=event.target.value==='semantic';
+  if(useModel===state.useModel)return;
+  state.useModel=useModel;
+  // Le téléchargement peut continuer en cache ; ses retours ne modifient plus la recherche annulée.
+  ++state.requestId;state.running=false;updateSearchControls();
+  if($('theme-input').value.trim()){runSearch();return;}
+  $('method-title').textContent=state.useModel?'Recherche multilingue avancée':'Recherche multilingue';
+  $('method-status').textContent=state.useModel?'L’IA sera chargée à la prochaine recherche : environ 118 Mo au premier accès.':'Disponible immédiatement. Choisissez la recherche avancée pour affiner les résultats.';
+}
+async function init(){
+  state.corpus=null;state.docs.clear();updateSearchControls();
+  const retry=$('retry-corpus');retry.hidden=true;retry.disabled=true;
+  $('corpus-total').textContent='Chargement du corpus…';
+  $('method-title').textContent='Chargement des articles';
+  $('method-status').textContent='La recherche sera disponible dans un instant.';
+  const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),20000);
+  try{
+    const r=await fetch('data/corpus.json',{cache:'no-cache',signal:controller.signal});
+    if(!r.ok)throw Error(`HTTP ${r.status}`);
+    const corpus=await r.json();
+    if(!Array.isArray(corpus.documents)||!Array.isArray(corpus.passages))throw Error('Corpus invalide');
+    state.corpus=corpus;
+    for(const doc of corpus.documents)state.docs.set(doc.id,doc);
+    initializeLexicon();
+    $('corpus-total').textContent=`${corpus.documents.length} articles`;
+    $('corpus-subtitle').textContent=`${corpus.passages.filter(p=>p.kind==='note'&&p.number).length} notes · ${corpus.passages.length} passages`;
+    $('method-title').textContent='Recherche multilingue';
+    $('method-status').textContent='Disponible immédiatement. Choisissez la recherche avancée pour affiner les résultats.';
+  }catch(error){
+    state.corpus=null;
+    $('corpus-total').textContent='Corpus indisponible';
+    $('method-title').textContent='Articles indisponibles';
+    $('method-status').textContent='Le chargement des articles a échoué. Vérifiez votre connexion puis réessayez.';
+    retry.hidden=false;retry.disabled=false;
+  }finally{clearTimeout(timeout);updateSearchControls();}
 }
 
-async function init(){try{const r=await fetch('data/corpus.json',{cache:'no-cache'});if(!r.ok)throw Error(`HTTP ${r.status}`);state.corpus=await r.json();for(const doc of state.corpus.documents)state.docs.set(doc.id,doc);initializeLexicon();$('corpus-total').textContent=`${state.corpus.documents.length} articles`;$('corpus-subtitle').textContent=`${state.corpus.passages.filter(p=>p.kind==='note'&&p.number).length} notes · ${state.corpus.passages.length} passages`;}catch(err){$('corpus-total').textContent='Corpus indisponible';$('method-status').textContent=`Ouvrez ce site avec LANCER_RECHERCHE.bat (${err.message}).`;}}
-
-$('search-form').addEventListener('submit',event=>{event.preventDefault();runSearch(false);});
-$('fast-mode').addEventListener('click',()=>runSearch(true));
-for(const button of document.querySelectorAll('[data-example]'))button.addEventListener('click',()=>{$('theme-input').value=button.dataset.example;runSearch(false);});
-for(const button of document.querySelectorAll('[data-filter]'))button.addEventListener('click',()=>{state.filter=button.dataset.filter;state.visibleCount=18;for(const b of document.querySelectorAll('[data-filter]'))b.classList.toggle('selected',b===button);render();});
+$('search-form').addEventListener('submit',event=>{event.preventDefault();runSearch();});
+for(const radio of document.querySelectorAll('input[name="search-mode"]'))radio.addEventListener('change',selectSearchMode);
+$('retry-corpus').addEventListener('click',init);
+for(const button of document.querySelectorAll('[data-example]'))button.addEventListener('click',()=>{if(state.running||!state.corpus)return;$('theme-input').value=button.dataset.example;runSearch();});
+for(const button of document.querySelectorAll('[data-filter]'))button.addEventListener('click',()=>{state.filter=button.dataset.filter;state.visibleCount=18;for(const b of document.querySelectorAll('[data-filter]')){const selected=b===button;b.classList.toggle('selected',selected);b.setAttribute('aria-pressed',String(selected));}render();});
 $('more-results').addEventListener('click',()=>{state.visibleCount+=18;render();});
 init();

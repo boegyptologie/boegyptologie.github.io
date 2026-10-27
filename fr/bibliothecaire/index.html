@@ -54,8 +54,8 @@
   </script>
   <!-- La feuille BOE originale vient en premier ; les styles spécifiques à la recherche la complètent. -->
   <link rel="stylesheet" href="https://boegyptologie.github.io/assets/style.css">
-  <link rel="stylesheet" href="styles.css?v=12">
-  <script type="module" src="app.js?v=12"></script>
+  <link rel="stylesheet" href="styles.css?v=13">
+  <script type="module" src="app.js?v=13"></script>
 </head>
 <body class="bibliothecaire-page">
 <header>
@@ -80,20 +80,28 @@
 
   <main id="contenu">
     <h1>Le bibliothécaire<span class="verspunkt" aria-hidden="true">·</span></h1>
-    <p class="tool-subtitle">L'outil de recherches de la BOE</p>
+    <p class="tool-subtitle">L’outil de recherche de la BOE</p>
 
     <section class="search-section" aria-labelledby="search-heading">
       <h2 id="search-heading">Recherche par thème</h2>
       <form id="search-form">
         <label for="theme-input">Thème ou mots-clés</label>
-        <textarea id="theme-input" name="theme" rows="3" maxlength="1800" required dir="auto" placeholder="Ex. : Plutarque, Textes des Pyramides, mꜣꜥ"></textarea>
+        <textarea id="theme-input" name="theme" rows="3" maxlength="1800" required dir="auto" enterkeyhint="search" placeholder="Ex. : Plutarque, Textes des Pyramides, mꜣꜥ"></textarea>
         <div class="form-bottom">
-          <button id="search-button" type="submit">Rechercher</button>
+          <fieldset id="search-mode" disabled aria-describedby="model-explanation">
+            <legend>Mode de recherche</legend>
+            <div class="mode-options">
+              <label class="mode-option" for="mode-lexical"><input type="radio" name="search-mode" id="mode-lexical" value="lexical" checked><span>Sans modèle</span></label>
+              <label class="mode-option" for="mode-semantic"><input type="radio" name="search-mode" id="mode-semantic" value="semantic"><span>Avec modèle</span></label>
+            </div>
+          </fieldset>
+          <button id="search-button" type="submit" disabled>Rechercher</button>
         </div>
       </form>
 
-      <div class="examples" aria-label="Exemples de recherches">
-        <span class="examples-label">Exemples :</span>
+      <details class="examples-disclosure">
+        <summary>Exemples de recherches</summary>
+        <div class="examples">
         <button type="button" data-example="afroasiatique">Afroasiatique</button>
         <button type="button" data-example="Plutarque">Plutarque</button>
         <button type="button" data-example="mꜣꜥ">mꜣꜥ</button>
@@ -104,16 +112,18 @@
         <button type="button" data-example="Textes des Pyramides">Textes des Pyramides</button>
         <button type="button" data-example="Signe U23">Signe U23</button>
         <button type="button" data-example="négation">Négation</button>
-      </div>
+        </div>
+      </details>
 
       <div class="method-row" aria-live="polite">
         <div class="method-description">
           <strong id="method-title">Recherche multilingue</strong>
-          <p id="method-status">Premier chargement : environ 118 Mo.</p>
+          <p id="method-status" role="status">Chargement du corpus…</p>
         </div>
-        <button type="button" id="fast-mode">Sans modèle</button>
+        <button type="button" id="retry-corpus" hidden>Réessayer</button>
       </div>
-      <p class="privacy-note">Modèle local <a href="https://huggingface.co/Xenova/multilingual-e5-small" target="_blank" rel="noopener noreferrer">multilingual-e5-small</a>, exécuté dans votre navigateur. Vos recherches ne sont envoyées à aucun service d’IA.</p>
+      <p id="model-explanation" class="privacy-note">Avec modèle : recherche multilingue avancée, avec rapprochement de termes et classement affiné des extraits. Environ 118 Mo à télécharger au premier accès.</p>
+      <p class="privacy-note">Le modèle <a href="https://huggingface.co/Xenova/multilingual-e5-small" target="_blank" rel="noopener noreferrer">multilingual-e5-small</a> s’exécute dans votre navigateur. Vos recherches ne sont envoyées à aucun service d’IA.</p>
 
       <p id="query-corrections" class="tag-hint" aria-live="polite" hidden></p>
       <section id="topic-analysis" class="topic-analysis" aria-label="Analyse des termes de recherche" hidden>
@@ -129,12 +139,12 @@
         <h2 id="results-heading">Extraits pertinents <span id="result-count" aria-label="Nombre d'extraits trouvés">0</span></h2>
       </div>
       <div class="filters" role="group" aria-label="Filtrer les extraits">
-        <button type="button" class="filter selected" data-filter="all">Tous les extraits</button>
-        <button type="button" class="filter" data-filter="note">Notes</button>
-        <button type="button" class="filter" data-filter="body">Corps des articles</button>
-        <button type="button" class="filter" data-filter="bibliography">Bibliographies</button>
+        <button type="button" class="filter selected" data-filter="all" aria-pressed="true">Tous les extraits</button>
+        <button type="button" class="filter" data-filter="note" aria-pressed="false">Notes</button>
+        <button type="button" class="filter" data-filter="body" aria-pressed="false">Corps des articles</button>
+        <button type="button" class="filter" data-filter="bibliography" aria-pressed="false">Bibliographies</button>
       </div>
-      <div id="result-list" class="result-list" aria-live="polite"></div>
+      <div id="result-list" class="result-list" aria-live="polite" aria-busy="false"></div>
       <button type="button" id="more-results" hidden>Afficher davantage d’extraits</button>
     </section>
 
@@ -152,15 +162,16 @@
   function updateMobileMenuSeparators() {
     const links = Array.from(document.querySelectorAll('header nav a'));
     let previousTop = null;
+    const tops = links.map(link => link.offsetTop);
     links.forEach((link, index) => {
-      link.classList.remove('row-start');
-      const currentTop = link.offsetTop;
-      if (index === 0 || currentTop > previousTop) link.classList.add('row-start');
+      const currentTop = tops[index];
+      link.classList.toggle('row-start', index === 0 || currentTop > previousTop);
       previousTop = currentTop;
     });
   }
   window.addEventListener('load', updateMobileMenuSeparators);
   window.addEventListener('resize', updateMobileMenuSeparators);
+  if (document.fonts) document.fonts.ready.then(updateMobileMenuSeparators);
   </script>
 </body>
 </html>
