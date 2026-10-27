@@ -114,6 +114,28 @@ const ENGLISH_UI={
   "Épithète": "Epithet",
   "Titre / titulature dans les textes anciens": "Title / titulary in ancient texts",
   "Arabe": "Arabic",
+  "Grec": "Greek",
+  "Verbe et formes verbales (groupe de recherche)": "Verbs and verbal forms (search group)",
+  "Nom et dénominations (groupe de recherche)": "Nouns and names (search group)",
+  "Noms propres (groupe de recherche)": "Proper names (search group)",
+  "Noms de personnes (groupe de recherche)": "Personal names (search group)",
+  "Pronoms (groupe de recherche)": "Pronouns (search group)",
+  "Forme finie (Fin)": "Finite form (Fin)",
+  "Formes non finies (groupe de recherche)": "Non-finite forms (search group)",
+  "Converbe": "Converb",
+  "Nom verbal (terminologie des articles)": "Verbal noun (terminology used in articles)",
+  "Nom verbal distinct de l’infinitif (Vnoun)": "Verbal noun other than the infinitive (Vnoun)",
+  "Emploi nominal d’une forme verbale": "Nominal use of a verbal form",
+  "Impératif": "Imperative",
+  "groupe de recherche bibliographique": "bibliographic search group",
+  "forme ou fonction grammaticale": "grammatical form or function",
+  "Plus général : {label}": "Broader: {label}",
+  "Plus précis : {label}": "Narrower: {label}",
+  "Associé selon le contexte : {label}": "Related depending on context: {label}",
+  "Les groupes de recherche incluent les mentions de leurs catégories plus précises. Une recherche précise exige sa propre attestation. Les liens associés proposent une autre recherche, sans équivalence grammaticale automatique.": "Search groups include mentions of their narrower categories. A specific search requires its own evidence. Related links suggest another search without assuming grammatical equivalence.",
+  "Partie du discours et forme verbale restent distinctes.": "Part of speech and verbal form remain distinct.",
+  "Le profil Egyptian-PC traite le statif et certaines formes relatives comme finis ; cette correspondance dépend de l’analyse.": "The Egyptian-PC profile treats the stative and certain relative forms as finite; this correspondence depends on the analysis.",
+  "Un emploi nominal ne transforme pas automatiquement une forme en NOUN ou en Vnoun.": "Nominal use does not automatically turn a form into NOUN or Vnoun.",
   "Copte": "Coptic"
 };
 function t(message,values={}){const template=LANGUAGE==='en'?(ENGLISH_UI[message]??message):message;return template.replace(/\{(\w+)\}/g,(match,key)=>Object.hasOwn(values,key)?String(values[key]):match);}
@@ -152,8 +174,8 @@ const CURATED_EQUIVALENTS = new Map([
   ['tutancamon',['tutankhamun']],
   ['توتانخامون',['tutankhamun']], ['توتنخامون',['tutankhamun']],
   ['توت عنخ امون',['tutankhamun']], ['توت عنخ امين',['tutankhamun']],
-  // Pour les recherches d'expressions (« grec ancien »), les deux notions
-  // doivent être attestées à proximité, indépendamment de la langue du PDF.
+  // Équivalences lexicales générales ; les noms de langues et leurs expressions
+  // sont reconnus comme concepts contrôlés dans LANGUAGE_CONCEPTS.
   ['grec',['greek','grecque','grecs','grecques','grece']],
   ['grecque',['greek','grec','grecs','grecques','grece']],
   ['grecs',['greek','grec','grecque','grecques','grece']],
@@ -266,9 +288,9 @@ const EGYPTIAN_POS=[
   {id:'enclitic-pronoun',label:'Pronom enclitique',queries:['pronom enclitique','enclitic pronoun','enklitisches Pronomen'],evidence:['pronom enclitique','enclitic pronoun','enklitisches Pronomen']},
   {id:'independent-pronoun',label:'Pronom indépendant',queries:['pronom indépendant','independent pronoun','selbständiges Pronomen'],evidence:['pronom indépendant','independent pronoun','selbständiges Pronomen']},
   {id:'proclitic-pronoun',label:'Pronom proclitique',queries:['pronom proclitique','proclitic pronoun','proklitisches Pronomen'],evidence:['pronom proclitique','proclitic pronoun','proklitisches Pronomen']},
-  {id:'participle',label:'Participe',queries:['participe','participle','Partizip','participio','particípio'],evidence:['participe','participle','Partizip','participio','particípio']},
-  {id:'infinitive',label:'Infinitif',queries:['infinitif','infinitive','Infinitiv','infinitivo'],evidence:['infinitif','infinitive','Infinitiv','infinitivo']},
-  {id:'stative',label:'Statif / pseudoparticipe',queries:['statif','stative','pseudoparticipe','pseudo-participe','pseudoparticiple','Pseudopartizip'],evidence:['statif','stative','pseudoparticipe','pseudo-participe','pseudoparticiple','Pseudopartizip']},
+  {id:'participle',label:'Participe',queries:['participe','participes','participle','participles','Partizip','Partizipien','participio','participios','particípio','particípios'],evidence:['participe','participes','participle','participles','Partizip','Partizipien','participio','participios','particípio','particípios'],featureValue:'Part'},
+  {id:'infinitive',label:'Infinitif',queries:['infinitif','infinitifs','infinitive','infinitives','Infinitiv','Infinitive','infinitivo','infinitivos'],evidence:['infinitif','infinitifs','infinitive','infinitives','Infinitiv','Infinitive','infinitivo','infinitivos'],featureValue:'Inf'},
+  {id:'stative',label:'Statif / pseudoparticipe',queries:['statif','statifs','stative','statives','pseudoparticipe','pseudoparticipes','pseudo-participe','pseudo-participes','pseudoparticiple','pseudoparticiples','pseudo-participle','pseudo-participles','Pseudopartizip','Pseudopartizips','Pseudopartizipien'],evidence:['statif','statifs','stative','statives','pseudoparticipe','pseudoparticipes','pseudo-participe','pseudo-participes','pseudoparticiple','pseudoparticiples','pseudo-participle','pseudo-participles','Pseudopartizip','Pseudopartizips','Pseudopartizipien']},
   {id:'relative-verb',label:'Forme verbale relative',queries:['forme verbale relative','forme relative du verbe','relative verb form','relative forms','Relativform'],evidence:['forme verbale relative','forme relative du verbe','relative verb form','relative forms','Relativform']},
   {id:'nisba',label:'Adjectif nisbe',queries:['adjectif nisbe','adjectif nisbé','nisbe adjective','nisba adjective','Nisbe-Adjektiv'],evidence:['adjectif nisbe','adjectif nisbé','nisbe adjective','nisba adjective','Nisbe-Adjektiv']},
   {id:'classifier',label:'Déterminatif / classificateur graphique',queries:['déterminatif','déterminatifs','classificateur graphique','classificateurs graphiques','classificateur égyptien','determinative','determinatives','Egyptian classifier','Egyptian classifiers','classifier sign','classifier signs','Deutzeichen'],evidence:['déterminatif','déterminatifs','classificateur graphique','classificateurs graphiques','classificateur égyptien','determinative','determinatives','Egyptian classifier','Egyptian classifiers','classifier sign','classifier signs','Deutzeichen']},
@@ -294,20 +316,83 @@ const LANGUAGE_CONCEPTS=[
     queries:['copte','coptes','langue copte','écriture copte','Coptic','Coptic language','Coptic script','Koptisch','koptische Sprache','copto','copta','lengua copta','língua copta','lingua copta','قبطي','قبطية','القبطية','اللغة القبطية','الكتابة القبطية'],
     evidence:['copte','coptes','coptic','koptisch','koptische','copto','copta','قبطي','قبطية','القبطية'],
     script:'coptic'},
+  {id:'greek',label:'Grec',kind:'language',
+    queries:['grec','grecque','grecs','grecques','grec ancien','grec classique','langue grecque','langue grecque ancienne','en grec','écriture grecque','Greek','Greek language','Greek script','Ancient Greek','Ancient Greek language','Classical Greek','in Greek','Griechisch','Altgriechisch','griego','griega','griego antiguo','grego','grega','grego antigo','greco','greca','greco antico','ελληνικά','αρχαία ελληνικά','يوناني','يونانية','اليونانية','اللغة اليونانية','اليونانية القديمة','إغريقي','إغريقية','الإغريقية'],
+    evidence:['grec','grecque','grecs','grecques','greek','griechisch','altgriechisch','griego','griega','grego','grega','greco','greca','ελληνικά','يوناني','يونانية','اليونانية','إغريقي','إغريقية','الإغريقية'],
+    script:'greek'},
 ];
 const LANGUAGE_SCRIPT_PATTERNS={
   arabic:/[\p{Script=Arabic}][\p{Script=Arabic}\p{M}]*/gu,
   coptic:/[\p{Script=Coptic}][\p{Script=Coptic}\p{M}]*/gu,
+  greek:/(?<![\p{L}\p{M}])[\p{Script=Greek}][\p{Script=Greek}\p{M}]*(?![\p{L}\p{M}])/gu,
 };
+// Groupes d'exploration bibliographique, distincts des annotations UPOS.
+// Non-finite est ici un groupe, jamais une valeur UD ajoutée.
+// https://universaldependencies.org/u/feat/VerbForm.html
+// https://universaldependencies.org/egy/feat/SubForm.html
+// https://wikis.hu-berlin.de/interlinear_glossing/Ancient_Egyptian:Glossing_of_common_Earlier_Egyptian_forms
+const GRAMMAR_SEARCH_CONCEPTS=[
+  {id:'verbal-family',label:'Verbe et formes verbales (groupe de recherche)',aggregate:true,
+    queries:['verbe','verbes','verb','verbs','forme verbale','formes verbales','verbal form','verbal forms'],
+    evidence:['verbe','verbes','verb','verbs','forme verbale','formes verbales','verbal form','verbal forms']},
+  {id:'nominal-family',label:'Nom et dénominations (groupe de recherche)',aggregate:true,
+    queries:['nom','noms','noun','nouns','groupe nominal traditionnel','nouns and names'],
+    evidence:['nom','noms','noun','nouns','substantif','substantifs']},
+  {id:'proper-name-family',label:'Noms propres (groupe de recherche)',aggregate:true,
+    queries:['noms propres groupe','proper names group'],evidence:[]},
+  {id:'personal-name-family',label:'Noms de personnes (groupe de recherche)',aggregate:true,
+    queries:['noms de personnes groupe','personal names group'],evidence:[]},
+  {id:'pronoun-family',label:'Pronoms (groupe de recherche)',aggregate:true,
+    queries:['pronom','pronoms','pronoun','pronouns'],evidence:['pronom','pronoms','pronoun','pronouns']},
+  {id:'finite',label:'Forme finie (Fin)',
+    queries:['finite','finite form','finite forms','finite verb','finite verbs','finite verb form','finite verb forms','forme finie','formes finies','forme verbale finie','formes verbales finies'],
+    evidence:['finite','finite form','finite forms','finite verb','finite verbs','forme finie','formes finies','forme verbale finie','formes verbales finies'],featureValue:'Fin'},
+  {id:'nonfinite',label:'Formes non finies (groupe de recherche)',aggregate:true,
+    queries:['nonfinite','non-finite','non finite','nonfinite form','nonfinite forms','non-finite form','non-finite forms','non-finite verbs','forme non finie','formes non finies','forme verbale non finie','formes verbales non finies'],
+    evidence:['nonfinite','non-finite','non finite','forme non finie','formes non finies','forme verbale non finie','formes verbales non finies']},
+  {id:'converb',label:'Converbe',queries:['converbe','converbes','converb','converbs'],evidence:['converbe','converbes','converb','converbs'],featureValue:'Conv'},
+  {id:'verbal-noun',label:'Nom verbal (terminologie des articles)',queries:['nom verbal','noms verbaux','verbal noun','verbal nouns'],evidence:['nom verbal','noms verbaux','verbal noun','verbal nouns']},
+  {id:'vnoun',label:'Nom verbal distinct de l’infinitif (Vnoun)',queries:['nom verbal UD','verbal noun UD','nom verbal autre que l infinitif','verbal noun other than the infinitive'],evidence:['verbal noun other than an infinitive','verbal noun other than the infinitive','nom verbal autre que l infinitif'],featureValue:'Vnoun',literalCodes:['Vnoun']},
+  {id:'nominal-use',label:'Emploi nominal d’une forme verbale',queries:['emploi nominal','usage nominal','nominal use','nominal function','used nominally'],evidence:['emploi nominal','usage nominal','nominal use','nominal function','used nominally','substantival use']},
+  {id:'imperative',label:'Impératif',queries:['impératif','impératifs','imperative','imperatives'],evidence:['impératif','impératifs','imperative','imperatives']},
+];
+const GRAMMAR_HIERARCHY=[
+  ['grammar:verbal-family','pos:verb'],['grammar:verbal-family','grammar:finite'],['grammar:verbal-family','grammar:nonfinite'],
+  ['grammar:verbal-family','pos:stative'],['grammar:verbal-family','pos:relative-verb'],['grammar:verbal-family','grammar:imperative'],['grammar:verbal-family','grammar:verbal-noun'],
+  ['grammar:nonfinite','pos:participle'],['grammar:nonfinite','pos:infinitive'],['grammar:nonfinite','grammar:converb'],['grammar:nonfinite','grammar:vnoun'],
+  ['grammar:nominal-family','pos:noun'],['grammar:nominal-family','grammar:proper-name-family'],
+  ['grammar:proper-name-family','pos:proper-noun'],['grammar:proper-name-family','grammar:personal-name-family'],['grammar:proper-name-family','pos:divine-name'],['grammar:proper-name-family','pos:place-name'],
+  ['grammar:personal-name-family','pos:personal-name'],['grammar:personal-name-family','pos:royal-name'],
+  ['grammar:pronoun-family','pos:pronoun'],['grammar:pronoun-family','pos:suffix-pronoun'],['grammar:pronoun-family','pos:dependent-pronoun'],['grammar:pronoun-family','pos:enclitic-pronoun'],['grammar:pronoun-family','pos:independent-pronoun'],['grammar:pronoun-family','pos:proclitic-pronoun'],
+  ['pos:conjunction','pos:coordinating-conj'],['pos:conjunction','pos:subordinating-conj'],
+];
+// Ces rapprochements proposent une autre recherche ; ils n'élargissent aucune preuve.
+const GRAMMAR_ASSOCIATIONS=[
+  ['grammar:verbal-family','grammar:nominal-family','Un emploi nominal ne transforme pas automatiquement une forme en NOUN ou en Vnoun.'],
+  ['pos:participle','pos:verb','Partie du discours et forme verbale restent distinctes.'],
+  ['pos:participle','pos:adjective','Partie du discours et forme verbale restent distinctes.'],
+  ['pos:infinitive','grammar:nominal-use','Un emploi nominal ne transforme pas automatiquement une forme en NOUN ou en Vnoun.'],
+  ['grammar:verbal-noun','grammar:nominal-use','Un emploi nominal ne transforme pas automatiquement une forme en NOUN ou en Vnoun.'],
+  ['grammar:verbal-noun','grammar:vnoun','Un emploi nominal ne transforme pas automatiquement une forme en NOUN ou en Vnoun.'],
+  ['grammar:verbal-noun','pos:infinitive','Un emploi nominal ne transforme pas automatiquement une forme en NOUN ou en Vnoun.'],
+  ['grammar:vnoun','grammar:nominal-family','Un emploi nominal ne transforme pas automatiquement une forme en NOUN ou en Vnoun.'],
+  ['grammar:nominal-use','grammar:nominal-family','Un emploi nominal ne transforme pas automatiquement une forme en NOUN ou en Vnoun.'],
+  ['pos:stative','grammar:finite','Le profil Egyptian-PC traite le statif et certaines formes relatives comme finis ; cette correspondance dépend de l’analyse.'],
+  ['pos:relative-verb','grammar:finite','Le profil Egyptian-PC traite le statif et certaines formes relatives comme finis ; cette correspondance dépend de l’analyse.'],
+  ['grammar:imperative','grammar:finite','Partie du discours et forme verbale restent distinctes.'],
+  ['pos:auxiliary','pos:verb','Partie du discours et forme verbale restent distinctes.'],
+];
+const GRAMMAR_QUERY_CODES=new Map([['Fin','grammar:finite'],['Part','pos:participle'],['Inf','pos:infinitive'],['Conv','grammar:converb'],['Vnoun','grammar:vnoun']]);
 const CONTROLLED_CONCEPTS=new Map([
   ...EGYPTIAN_CORPORA.map(item=>[item.id,{...item,kind:'corpus',queries:item.aliases,evidence:item.aliases}]),
   ...EGYPTIAN_POS.map(item=>['pos:'+item.id,{...item,id:'pos:'+item.id,kind:'grammar'}]),
   ...LANGUAGE_CONCEPTS.map(item=>['lang:'+item.id,{...item,id:'lang:'+item.id}]),
+  ...GRAMMAR_SEARCH_CONCEPTS.map(item=>['grammar:'+item.id,{...item,id:'grammar:'+item.id,kind:'grammar',searchGroup:true}]),
 ]);
-const CONCEPT_ALIASES=[...CONTROLLED_CONCEPTS.values()].flatMap(concept=>concept.queries.map(alias=>({alias:fold(alias),literal:alias,strictCase:concept.kind==='grammar'&&/^[A-Z]{2,6}$/u.test(alias),concept:concept.id})))
-  .sort((a,b)=>b.alias.split(' ').length-a.alias.split(' ').length||b.alias.length-a.alias.length);
+const CONCEPT_ALIASES=[...CONTROLLED_CONCEPTS.values()].flatMap(concept=>concept.queries.map(alias=>({alias:fold(alias),literal:alias,strictCase:concept.kind==='grammar'&&/^[A-Z]{2,6}$/u.test(alias),concept:concept.id,searchGroup:!!concept.searchGroup})))
+  .sort((a,b)=>b.alias.split(' ').length-a.alias.split(' ').length||b.alias.length-a.alias.length||Number(b.strictCase)-Number(a.strictCase)||Number(b.searchGroup)-Number(a.searchGroup));
 const CORPUS_CODES=EGYPTIAN_CORPORA.flatMap(item=>(item.codes||[]).map(code=>({code,concept:item.id})));
-function conceptMentions(text,group){
+function directConceptMentions(text,group){
   const concept=CONTROLLED_CONCEPTS.get(group.concept);if(!concept)return [];
   const normalized=fold(text),results=[],seen=new Set();
   for(const variant of concept.evidence){
@@ -319,13 +404,25 @@ function conceptMentions(text,group){
     let at=0;
     while((at=haystack.indexOf(needle,at))>=0){
       const pos=at;
+      const before=normalized.slice(0,pos).trimEnd();
+      const after=normalized.slice(pos+alias.length).trimStart();
+      const hasNounDeterminer=/(?:^| )(?:le|les|un|des|ce|ces|du|notre|votre|son|leur)$/u.test(before);
+      const participationVerb=concept.id==='pos:participle'&&/^participes?$/u.test(alias)&&!hasNounDeterminer&&(
+        /(?:^| )(?:je|tu|il|elle|on|nous|vous|ils|elles)(?: [\p{L}]+){0,3}$/u.test(before)||
+        /^(?:(?:[\p{L}]+ment|ainsi|aussi|donc) )*(?:a|au|aux|de|du|des)\b/u.test(after));
+      const blocked=concept.id==='grammar:finite'&&/(?:^| )non$/u.test(before)||
+        concept.id==='pos:participle'&&/(?:^| )pseudo$/u.test(before)||
+        participationVerb||
+        concept.id==='pos:noun'&&alias==='substantive'&&/^(?:use|uses|function|functions)\b/u.test(after)||
+        concept.id==='pos:noun'&&/^nouns?$/u.test(alias)&&/(?:^| )(?:proper|verbal)$/u.test(before);
+      if(blocked){at+=needle.length-1;continue;}
       if(!seen.has(pos)){results.push({pos,surface:variant,section:null,kind:concept.kind==='language'?'mention':'title'});seen.add(pos);}
       at+=needle.length-1;
     }
   }
   if(concept.kind==='language'){
-    // Ne pas prendre des chiffres arabes pour des mots. Les graphies
-    // coptes utilisent Script=Coptic ; un grec polytonique ne suffit pas.
+    // Ne pas prendre des chiffres arabes ou une lettre grecque isolée pour
+    // des mots. Script=Greek couvre le polytonique, sans absorber le copte.
     // L'original est conservé pour que l'utilisateur puisse le vérifier.
     for(const match of String(text).matchAll(LANGUAGE_SCRIPT_PATTERNS[concept.script])){
       if([...match[0]].filter(char=>/\p{L}/u.test(char)).length<2)continue;
@@ -338,6 +435,20 @@ function conceptMentions(text,group){
     for(const match of String(text).matchAll(pattern)){
       const pos=fold(text.slice(0,match.index)).length;
       if(!seen.has(pos)){results.push({pos,surface:code,section:null,kind:'tag'});seen.add(pos);}
+    }
+  }
+  if(concept.kind==='grammar'&&concept.featureValue){
+    const pattern=new RegExp(`(?<![\\p{L}\\p{N}])VerbForm\\s*=\\s*${concept.featureValue}(?![\\p{L}\\p{N}])`,'gu');
+    for(const match of String(text).matchAll(pattern)){
+      const pos=fold(text.slice(0,match.index)).length;
+      if(!seen.has(pos)){results.push({pos,surface:match[0],section:null,kind:'feature'});seen.add(pos);}
+    }
+  }
+  for(const code of concept.literalCodes||[]){
+    const pattern=new RegExp(`(?<![\\p{L}\\p{N}])${code}(?![\\p{L}\\p{N}])`,'gu');
+    for(const match of String(text).matchAll(pattern)){
+      const pos=fold(text.slice(0,match.index)).length;
+      if(!seen.has(pos)){results.push({pos,surface:match[0],section:null,kind:'feature'});seen.add(pos);}
     }
   }
   if(concept.kind==='corpus')for(const code of concept.codes||[]){
@@ -354,6 +465,22 @@ function conceptMentions(text,group){
         .test(normalized.slice(hit.pos+fold(hit.surface).length,hit.pos+fold(hit.surface).length+55))));
   }
   return results;
+}
+function grammarDescendants(id){
+  const found=new Set(),queue=[id];
+  while(queue.length){const parent=queue.shift();for(const [from,to] of GRAMMAR_HIERARCHY)if(from===parent&&!found.has(to)){found.add(to);queue.push(to);}}
+  return [...found];
+}
+function conceptMentions(text,group){
+  const concept=CONTROLLED_CONCEPTS.get(group.concept);if(!concept)return [];
+  const aggregate=concept.aggregate||concept.id==='pos:conjunction';
+  if(!aggregate)return directConceptMentions(text,group);
+  const found=new Map();
+  for(const id of [concept.id,...grammarDescendants(concept.id)])for(const hit of directConceptMentions(text,{...group,concept:id})){
+    const key=`${hit.pos}:${fold(hit.surface)}`;
+    if(!found.has(key))found.set(key,{...hit,evidenceConcept:id});
+  }
+  return [...found.values()].sort((a,b)=>a.pos-b.pos);
 }
 function arabicVariants(token){
   const options=new Set([token]);
@@ -532,22 +659,38 @@ function charSimilarity(a,b){
   return 2*shared/(left.size+right.size);
 }
 function themesForWord(token){return THEMES.filter(t=>t.triggers.some(x=>words(x).includes(token)));}
+function controlledQueryMatch(parts,start){
+  for(const alias of CONCEPT_ALIASES){
+    if(alias.strictCase&&parts[start][0]!==alias.literal)continue;
+    const expected=alias.alias.split(' ');let offset=0,length=0,matched=true;
+    while(offset<expected.length){
+      const part=parts[start+length];if(!part){matched=false;break;}
+      const actual=fold(part[0]).split(' ');
+      if(actual.length>expected.length-offset){matched=false;break;}
+      if(!actual.every((word,index)=>word===expected[offset+index]||(/^[\u0621-\u064a]/u.test(word)&&arabicVariants(word).includes(expected[offset+index])))){matched=false;break;}
+      offset+=actual.length;length++;
+    }
+    if(matched)return {...alias,length};
+  }
+  return null;
+}
 function normalizedQueryParts(query){
   const parts=[...String(query||'').matchAll(EGYPT_UNIT)];
   const out=[];
   for(let i=0;i<parts.length;){
+    // Respecter la casse des valeurs UD : Part ≠ PART (particule) ≠ « part ».
+    const feature=String(query).slice(parts[i].index).match(/^VerbForm\s*=\s*(Fin|Part|Inf|Conv|Vnoun)(?![\p{L}\p{N}])/u);
+    const formConcept=GRAMMAR_QUERY_CODES.get(feature?feature[1]:parts[i][0]);
+    if(formConcept){
+      const start=parts[i].index,end=start+(feature?feature[0].length:parts[i][0].length);
+      out.push({source:feature?feature[0]:parts[i][0],start,phrase:true,concept:formConcept});
+      do{i++;}while(i<parts.length&&parts[i].index<end);
+      continue;
+    }
     const corpusCode=CORPUS_CODES.find(code=>code.code===parts[i][0]);
-    const matchedConcept=corpusCode?{alias:fold(corpusCode.code),concept:corpusCode.concept}:
-      CONCEPT_ALIASES.find(({alias,literal,strictCase})=>{
-        if(strictCase&&parts[i][0]!==literal)return false;
-        const expected=alias.split(' ');
-        return i+expected.length<=parts.length&&expected.every((term,j)=>{
-          const actual=fold(parts[i+j][0]);
-          return actual===term||(/^[\u0621-\u064a]/u.test(actual)&&arabicVariants(actual).includes(term));
-        });
-      });
+    const matchedConcept=corpusCode?{alias:fold(corpusCode.code),concept:corpusCode.concept,length:1}:controlledQueryMatch(parts,i);
     if(matchedConcept){
-      const length=corpusCode?1:matchedConcept.alias.split(' ').length;
+      const length=matchedConcept.length;
       let after=i+length,section=null;
       const concept=CONTROLLED_CONCEPTS.get(matchedConcept.concept);
       if(concept.kind==='corpus'){
@@ -592,7 +735,7 @@ function buildPlan(query,semanticTerms=new Map()){
         section:part.section,entity:true,topic:true};
       groups.push(group);
       foundThemes.set(concept.label,{label:concept.label});
-      if(concept.kind==='grammar')corrections.push(`${source} → ${t(concept.label)} (${t('catégorie grammaticale')})`);
+      if(concept.kind==='grammar')corrections.push(`${source} → ${t(concept.label)} (${t(concept.aggregate?'groupe de recherche bibliographique':concept.searchGroup?'forme ou fonction grammaticale':'catégorie grammaticale')})`);
       else if(source!==fold(concept.label))corrections.push(`${source} → ${t(concept.label)} (${concept.kind==='language'?t('langue / écriture'):t('corpus textuel')})`);
       continue;
     }
@@ -916,10 +1059,63 @@ function updateSearchControls(){
   $('mode-semantic').checked=state.useModel;
   $('result-list').setAttribute('aria-busy',String(state.running));
 }
+function grammarRelations(plan){
+  const selected=new Set((plan?.groups||[]).map(group=>group.concept).filter(id=>CONTROLLED_CONCEPTS.get(id)?.kind==='grammar'));
+  const links=new Map();
+  const add=(id,relation,note='')=>{if(!selected.has(id)&&!links.has(id)&&CONTROLLED_CONCEPTS.has(id))links.set(id,{id,relation,note});};
+  for(const [parent,child] of GRAMMAR_HIERARCHY){
+    if(selected.has(parent))add(child,'narrower');
+    if(selected.has(child))add(parent,'broader');
+  }
+  // Raccourcis vers ces descendants du groupe verbal, sans changer les preuves.
+  for(const form of ['pos:participle','pos:infinitive','grammar:converb','grammar:vnoun']){
+    if(selected.has('grammar:verbal-family'))add(form,'narrower');
+    if(selected.has(form))add('grammar:verbal-family','broader');
+  }
+  for(const [left,right,note] of GRAMMAR_ASSOCIATIONS){
+    if(selected.has(left))add(right,'related',note);
+    if(selected.has(right))add(left,'related',note);
+  }
+  return [...links.values()];
+}
+function grammarQuery(id){
+  const upos={'pos:noun':'NOUN','pos:proper-noun':'PROPN','pos:verb':'VERB','pos:pronoun':'PRON','pos:adjective':'ADJ','pos:auxiliary':'AUX'};
+  if(upos[id])return upos[id];
+  const queries={
+    'grammar:verbal-family':['verbe','verb'],'grammar:nominal-family':['nom','noun'],
+    'grammar:proper-name-family':['noms propres groupe','proper names group'],'grammar:personal-name-family':['noms de personnes groupe','personal names group'],
+    'grammar:pronoun-family':['pronom','pronoun'],'grammar:finite':['Fin','Fin'],'grammar:nonfinite':['formes non finies','non-finite'],
+    'grammar:converb':['converbe','converb'],'grammar:verbal-noun':['nom verbal','verbal noun'],'grammar:vnoun':['VerbForm=Vnoun','VerbForm=Vnoun'],
+    'grammar:nominal-use':['emploi nominal','nominal use'],'grammar:imperative':['impératif','imperative'],
+    'pos:participle':['participe','participle'],'pos:infinitive':['infinitif','infinitive'],'pos:stative':['statif','stative'],
+    'pos:relative-verb':['forme verbale relative','relative verb form'],
+    'pos:personal-name':['nom de personne','personal name'],'pos:royal-name':['nom royal','royal name'],
+    'pos:divine-name':['nom de divinité','divine name'],'pos:place-name':['nom de lieu','place name'],
+  };
+  if(queries[id])return queries[id][LANGUAGE==='en'?1:0];
+  const concept=CONTROLLED_CONCEPTS.get(id);
+  return concept?t(concept.label).replace(/\s*\([^)]*\)/gu,''):'';
+}
+function updateGrammarRelations(plan){
+  const section=$('grammar-relations'),wrap=$('grammar-related-chips'),note=$('grammar-relation-note');
+  if(!section||!wrap||!note)return;
+  const links=grammarRelations(plan);wrap.replaceChildren();section.hidden=!links.length;
+  note.textContent=t('Les groupes de recherche incluent les mentions de leurs catégories plus précises. Une recherche précise exige sa propre attestation. Les liens associés proposent une autre recherche, sans équivalence grammaticale automatique.');
+  const labels={broader:'Plus général : {label}',narrower:'Plus précis : {label}',related:'Associé selon le contexte : {label}'};
+  for(const link of links){
+    const query=grammarQuery(link.id),button=document.createElement('button');button.type='button';button.className='chip';
+    button.textContent=t(labels[link.relation],{label:t(CONTROLLED_CONCEPTS.get(link.id).label)});
+    button.dataset.query=query;button.dataset.relation=link.relation;button.dataset.concept=link.id;
+    if(link.note)button.title=t(link.note);
+    button.addEventListener('click',()=>{$('theme-input').value=query;runSearch(true);});
+    wrap.append(button);
+  }
+}
 function showSearchResults(query,plan,lex,semantic=null,preserveView=false){
   const scored=hybrid(lex,semantic,query,plan);
   const map=new Map(state.corpus.passages.map(p=>[p.id,p]));state.result=scored.map(({id})=>map.get(id)).filter(Boolean);
   state.activeTerms=plan.terms;state.plan=plan;
+  updateGrammarRelations(plan);
   const extracted=sourceTerms(state.result,plan.terms);$('topic-analysis').hidden=!state.result.length;
   drawChips('topic-chips',plan.topics.length?plan.topics.map(topic=>t(topic.label)):[t('Terme attesté dans le corpus')]);
   drawChips('keyword-chips',[...new Set([...plan.terms.filter(w=>!words(query).includes(w)).slice(0,15),...extracted])].slice(0,18));

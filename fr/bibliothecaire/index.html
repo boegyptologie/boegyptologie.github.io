@@ -59,8 +59,8 @@
   </script>
   <!-- La feuille BOE originale vient en premier ; les styles spécifiques à la recherche la complètent. -->
   <link rel="stylesheet" href="/assets/style.css?v=16">
-  <link rel="stylesheet" href="styles.css?v=16">
-  <script type="module" src="app.js?v=15"></script>
+  <link rel="stylesheet" href="styles.css?v=17">
+  <script type="module" src="app.js?v=17"></script>
 </head>
 <body class="bibliothecaire-page">
 <header>
@@ -114,6 +114,7 @@
         <button type="button" data-example="ⲙⲡⲉ">ⲙⲡⲉ</button>
         <button type="button" data-example="copte">Copte</button>
         <button type="button" data-example="arabe">Arabe</button>
+        <button type="button" data-example="grec">Grec</button>
         <button type="button" data-example="Τυφῶνος">Τυφῶνος</button>
         <button type="button" data-example="Textes des Pyramides">Textes des Pyramides</button>
         <button type="button" data-example="Signe U23">Signe U23</button>
@@ -132,6 +133,11 @@
       <p class="privacy-note">Le modèle <a href="https://huggingface.co/Xenova/multilingual-e5-small" target="_blank" rel="noopener noreferrer">multilingual-e5-small</a> s’exécute dans votre navigateur. Vos recherches ne sont envoyées à aucun service d’IA.</p>
 
       <p id="query-corrections" class="tag-hint" aria-live="polite" hidden></p>
+      <section id="grammar-relations" class="topic-analysis" aria-label="Catégories grammaticales liées" hidden>
+        <h3>Catégories liées</h3>
+        <p id="grammar-relation-note" class="privacy-note"></p>
+        <div id="grammar-related-chips" class="chips"></div>
+      </section>
       <section id="topic-analysis" class="topic-analysis" aria-label="Analyse des termes de recherche" hidden>
         <h3>Notions identifiées</h3>
         <div id="topic-chips" class="chips"></div>
