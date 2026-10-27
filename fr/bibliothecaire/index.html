@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Le bibliothécaire | Bibliothèque Ouverte d'Égyptologie (BOE) – BOMA</title>
+  <meta name="description" content="Le bibliothécaire : recherche thématique multilingue dans tous les articles, les notes de bas de page et les bibliographies publiés par la BOE. Extraits sourcés et pages vérifiables.">
+  <meta name="keywords" content="Le bibliothécaire, BOE, BOMA, égyptologie, recherche thématique, recherche documentaire, notes de bas de page, extraits, multilingue">
+  <meta name="author" content="Bibliothèque Ouverte des Mondes Anciens (BOMA)">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://boegyptologie.github.io/fr/bibliothecaire/">
+  <link rel="alternate" hreflang="fr" href="https://boegyptologie.github.io/fr/bibliothecaire/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Le bibliothécaire – Bibliothèque Ouverte d'Égyptologie">
+  <meta property="og:description" content="Recherche thématique multilingue parmi les extraits des articles BOE, avec leurs références et pages de PDF.">
+  <meta property="og:url" content="https://boegyptologie.github.io/fr/bibliothecaire/">
+  <meta property="og:image" content="https://boegyptologie.github.io/assets/logo.png">
+  <meta property="og:image:alt" content="Logo de la Bibliothèque Ouverte d'Égyptologie">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="Bibliothèque Ouverte d'Égyptologie (BOE)">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Le bibliothécaire – BOE">
+  <meta name="twitter:description" content="Recherche thématique avec extraits littéraux et références vérifiables.">
+  <meta name="twitter:image" content="https://boegyptologie.github.io/assets/logo.png">
+  <meta name="DC.title" content="Le bibliothécaire – Bibliothèque Ouverte d'Égyptologie">
+  <meta name="DC.creator" content="Bibliothèque Ouverte des Mondes Anciens (BOMA)">
+  <meta name="DC.subject" content="recherche thématique; recherche documentaire; égyptologie; publications scientifiques">
+  <meta name="DC.publisher" content="Bibliothèque Ouverte des Mondes Anciens (BOMA)">
+  <meta name="DC.language" content="fr">
+  <meta name="DC.rights" content="CC BY 4.0 https://creativecommons.org/licenses/by/4.0/">
+  <meta name="DC.type" content="InteractiveResource">
+  <meta name="DC.format" content="text/html">
+  <link rel="icon" type="image/png" href="https://boegyptologie.github.io/favicon.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Le bibliothécaire",
+    "description": "Outil de recherche thématique multilingue dans les extraits des publications de la BOE.",
+    "url": "https://boegyptologie.github.io/fr/bibliothecaire/",
+    "applicationCategory": "EducationalApplication",
+    "isAccessibleForFree": true,
+    "publisher": {
+      "@type": "Organization",
+      "name": "Bibliothèque Ouverte des Mondes Anciens (BOMA)"
+    },
+    "isPartOf": {
+      "@type": "Periodical",
+      "name": "Bibliothèque Ouverte d'Égyptologie",
+      "alternateName": "BOE",
+      "issn": "3129-6424"
+    }
+  }
+  </script>
+  <!-- La feuille BOE originale vient en premier ; les styles spécifiques à la recherche la complètent. -->
+  <link rel="stylesheet" href="https://boegyptologie.github.io/assets/style.css">
+  <link rel="stylesheet" href="styles.css?v=12">
+  <script type="module" src="app.js?v=12"></script>
+</head>
+<body class="bibliothecaire-page">
+<header>
+  <div class="container">
+    <a class="brand" href="https://boegyptologie.github.io/fr/about.html">
+      <img src="boe-logo.png" alt="Logo BOE">
+      <span class="brand-text">
+        <span class="title">Bibliothèque ouverte d'égyptologie</span>
+        <span class="header-issn">ISSN&nbsp;3129-6424</span>
+      </span>
+    </a>
+    <span class="lang-switch"><a href="https://boegyptologie.github.io/en/about.html" title="Site BOE en anglais">EN</a></span>
+    <nav aria-label="Navigation principale">
+      <a href="https://boegyptologie.github.io/fr/about.html">À propos</a>
+      <a href="https://boegyptologie.github.io/fr/numeros.html">Tous les numéros</a>
+      <a href="https://boegyptologie.github.io/fr/processus-editorial.html">Processus éditorial</a>
+      <a href="https://boegyptologie.github.io/fr/soumettre-un-article-submit-a-paper.html">Soumettre un article</a>
+      <a href="https://boegyptologie.github.io/fr/politique-editoriale.html">Politique éditoriale</a>
+    </nav>
+  </div>
+  </header>
+
+  <main id="contenu">
+    <h1>Le bibliothécaire<span class="verspunkt" aria-hidden="true">·</span></h1>
+    <p class="tool-subtitle">L'outil de recherches de la BOE</p>
+
+    <section class="search-section" aria-labelledby="search-heading">
+      <h2 id="search-heading">Recherche par thème</h2>
+      <form id="search-form">
+        <label for="theme-input">Thème ou mots-clés</label>
+        <textarea id="theme-input" name="theme" rows="3" maxlength="1800" required dir="auto" placeholder="Ex. : Plutarque, Textes des Pyramides, mꜣꜥ"></textarea>
+        <div class="form-bottom">
+          <button id="search-button" type="submit">Rechercher</button>
+        </div>
+      </form>
+
+      <div class="examples" aria-label="Exemples de recherches">
+        <span class="examples-label">Exemples :</span>
+        <button type="button" data-example="afroasiatique">Afroasiatique</button>
+        <button type="button" data-example="Plutarque">Plutarque</button>
+        <button type="button" data-example="mꜣꜥ">mꜣꜥ</button>
+        <button type="button" data-example="ⲙⲡⲉ">ⲙⲡⲉ</button>
+        <button type="button" data-example="copte">Copte</button>
+        <button type="button" data-example="arabe">Arabe</button>
+        <button type="button" data-example="Τυφῶνος">Τυφῶνος</button>
+        <button type="button" data-example="Textes des Pyramides">Textes des Pyramides</button>
+        <button type="button" data-example="Signe U23">Signe U23</button>
+        <button type="button" data-example="négation">Négation</button>
+      </div>
+
+      <div class="method-row" aria-live="polite">
+        <div class="method-description">
+          <strong id="method-title">Recherche multilingue</strong>
+          <p id="method-status">Premier chargement : environ 118 Mo.</p>
+        </div>
+        <button type="button" id="fast-mode">Sans modèle</button>
+      </div>
+      <p class="privacy-note">Modèle local <a href="https://huggingface.co/Xenova/multilingual-e5-small" target="_blank" rel="noopener noreferrer">multilingual-e5-small</a>, exécuté dans votre navigateur. Vos recherches ne sont envoyées à aucun service d’IA.</p>
+
+      <p id="query-corrections" class="tag-hint" aria-live="polite" hidden></p>
+      <section id="topic-analysis" class="topic-analysis" aria-label="Analyse des termes de recherche" hidden>
+        <h3>Notions identifiées</h3>
+        <div id="topic-chips" class="chips"></div>
+        <h3>Mots-clés attestés ou associés</h3>
+        <div id="keyword-chips" class="chips keywords"></div>
+      </section>
+    </section>
+
+    <section class="results-section" aria-labelledby="results-heading">
+      <div class="results-head">
+        <h2 id="results-heading">Extraits pertinents <span id="result-count" aria-label="Nombre d'extraits trouvés">0</span></h2>
+      </div>
+      <div class="filters" role="group" aria-label="Filtrer les extraits">
+        <button type="button" class="filter selected" data-filter="all">Tous les extraits</button>
+        <button type="button" class="filter" data-filter="note">Notes</button>
+        <button type="button" class="filter" data-filter="body">Corps des articles</button>
+        <button type="button" class="filter" data-filter="bibliography">Bibliographies</button>
+      </div>
+      <div id="result-list" class="result-list" aria-live="polite"></div>
+      <button type="button" id="more-results" hidden>Afficher davantage d’extraits</button>
+    </section>
+
+    <p class="corpus-count"><strong id="corpus-total">Chargement du corpus…</strong> <span id="corpus-subtitle"></span></p>
+  </main>
+
+  <footer>
+    <div class="container small">
+      © Bibliothèque Ouverte des Mondes Anciens, 2026 ·
+      <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC&nbsp;BY&nbsp;4.0</a> ·
+      <a href="https://boegyptologie.github.io/fr/mentions-legales.html">Mentions légales</a>
+    </div>
+  </footer>
+  <script>
+  function updateMobileMenuSeparators() {
+    const links = Array.from(document.querySelectorAll('header nav a'));
+    let previousTop = null;
+    links.forEach((link, index) => {
+      link.classList.remove('row-start');
+      const currentTop = link.offsetTop;
+      if (index === 0 || currentTop > previousTop) link.classList.add('row-start');
+      previousTop = currentTop;
+    });
+  }
+  window.addEventListener('load', updateMobileMenuSeparators);
+  window.addEventListener('resize', updateMobileMenuSeparators);
+  </script>
+</body>
+</html>

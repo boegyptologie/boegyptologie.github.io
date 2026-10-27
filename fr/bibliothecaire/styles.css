@@ -1,0 +1,359 @@
+/* Complément à la feuille institutionnelle BOE /assets/style.css.
+   Les règles de l'en-tête, du menu et du pied de page sont synchronisées
+   avec cette feuille pour garder une présentation utilisable hors connexion. */
+@font-face {
+  font-family: "EB Garamond Local";
+  src: url("fonts/EBGaramond-VariableFont_wght.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "EB Garamond Local";
+  src: url("fonts/EBGaramond-Italic-VariableFont_wght.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 400 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BOE Egyptian";
+  src: url("fonts/NotoSansEgyptianHieroglyphs-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  unicode-range: U+13000-1342F;
+}
+
+/* Polices fournies avec le dossier de fabrication BOE de Mihályfy :
+   les glyphes absents d'EB Garamond ne dépendent plus des polices du lecteur. */
+@font-face {
+  font-family: "BOE Unicode";
+  src: url("fonts/NotoSans-VariableFont_wdth,wght.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BOE Coptic";
+  src: url("fonts/NotoSansCoptic-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  unicode-range: U+2C80-2CFF, U+03E2-03EF, U+FE20-FE2F;
+}
+
+:root {
+  --accent-red: #FF2E17;
+  --ink: #222;
+  --muted: #666;
+  --light-line: #d6d6d6;
+  --max: 900px;
+  --font-body: "EB Garamond", "EB Garamond Local", "BOE Unicode", "BOE Coptic", Garamond, Georgia, serif;
+  color: var(--ink);
+  background: #fff;
+  font-family: var(--font-body);
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; }
+body, button, textarea { font-family: var(--font-body); }
+button, textarea { font-size: 1rem; line-height: 1.6; }
+button { cursor: pointer; }
+a { color: inherit; text-underline-offset: 3px; }
+a:hover, a:focus-visible { color: var(--accent-red); }
+button:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--accent-red);
+  outline-offset: 3px;
+}
+button:disabled { opacity: .55; cursor: progress; }
+p, li, blockquote {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: none;
+}
+
+/* En-tête BOE : mêmes balises, classes et ruptures que les autres pages. */
+header {
+  position: relative;
+  padding: 30px 16px 26px;
+}
+header::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2mm;
+  border-top: 1px solid var(--accent-red);
+  border-bottom: 1px solid var(--accent-red);
+}
+.container {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  min-width: 0;
+}
+.brand img { display: block; height: 42px; width: auto; }
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+  position: relative;
+  top: .45em;
+}
+header .title { font-weight: 700; font-size: 1.15rem !important; }
+.header-issn { display: none; }
+.lang-switch { float: right; }
+nav a { margin-right: 10px; text-decoration: none; white-space: nowrap; }
+nav a:hover { text-decoration: underline; }
+
+main {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 24px;
+  padding-left: 32px;
+  border-left: 1px solid var(--accent-red);
+}
+h1, h2, h3, h4 { font-weight: 700; }
+.bibliothecaire-page h1 { font-size: 1.75rem !important; font-weight: 700; line-height: 1.3; margin: 0 0 15px; }
+.bibliothecaire-page h2 { font-size: 1.15rem !important; font-weight: 700; margin: 0 0 12px; }
+.bibliothecaire-page h3 { font-size: 1.05rem !important; font-weight: 700; margin: 14px 0 6px; }
+.bibliothecaire-page h4 { font-size: 1.12rem !important; font-weight: 700; line-height: 1.35; margin: 8px 0 4px; }
+.verspunkt {
+  color: var(--accent-red) !important;
+  /* 3,6 em sur les titres de 1 rem de la BOE ; ici le h1 fait 1,75 rem. */
+  font-size: 2.057em !important;
+  display: inline-block;
+  position: relative;
+  line-height: 0;
+  top: -.02em;
+  margin-left: .01em;
+}
+.tool-subtitle {
+  margin: -6px 0 19px !important;
+  color: var(--ink) !important;
+  font-size: 1rem !important;
+}
+
+/* Une recherche, puis une liste d'extraits : aucun panneau ni carte décorative. */
+.search-section { padding: 17px 0 22px; }
+#search-form label { display: block; font-weight: 600; margin: 0 0 8px; }
+#theme-input {
+  display: block;
+  width: 100%;
+  min-height: 95px;
+  padding: 10px 12px;
+  resize: vertical;
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid #aaa;
+  border-radius: 0;
+}
+#theme-input::placeholder { color: #777; }
+.form-bottom {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 10px;
+}
+#search-button {
+  padding: 7px 23px;
+  border: 1px solid var(--accent-red);
+  border-radius: 0;
+  background: var(--accent-red);
+  color: white !important;
+  font-weight: 700;
+}
+#search-button:hover:not(:disabled) { background: #d6220e; }
+.examples {
+  margin-top: 17px;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  column-gap: 15px;
+  row-gap: 3px;
+}
+.examples-label { font-weight: 600; }
+.examples button {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+}
+.examples button:hover { color: var(--accent-red); text-decoration: underline; }
+.method-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+  padding: 12px 0;
+}
+.method-description { flex: 1; }
+.method-description strong { font-weight: 600; }
+.method-description p { color: var(--muted) !important; margin: 0; font-size: .92rem !important; }
+.privacy-note {
+  margin: 8px 0 0 !important;
+  color: var(--muted) !important;
+  font-size: .91rem !important;
+  text-align: left !important;
+}
+.privacy-note a { color: inherit !important; text-underline-offset: 2px; }
+#fast-mode {
+  flex-shrink: 0;
+  padding: 5px 8px;
+  background: #fff;
+  border: 1px solid var(--accent-red);
+  border-radius: 0;
+  color: var(--ink);
+}
+#fast-mode:hover { color: var(--accent-red); }
+.tag-hint { color: var(--muted) !important; font-size: .92rem !important; margin: 10px 0 0; }
+.topic-analysis { padding: 8px 0 0; }
+.topic-analysis[hidden], [hidden] { display: none !important; }
+.bibliothecaire-page .topic-analysis h3 { margin: 14px 0 5px; font-size: 1rem !important; }
+.chips { display: flex; flex-wrap: wrap; gap: 7px; }
+.chip {
+  display: inline-block;
+  background: #fff;
+  border: 1px solid #bcbcbc;
+  color: var(--ink);
+  padding: 2px 8px;
+  font-size: .9rem;
+}
+.keywords .chip { border-color: #ddd; }
+
+.results-section {
+  margin-top: 8px;
+  padding-top: 20px;
+  border-top: 1px solid var(--accent-red);
+}
+.results-head h2 { margin-bottom: 8px; }
+#result-count { font-weight: 400; color: var(--muted); margin-left: 6px; }
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px 17px;
+}
+.filter {
+  background: transparent;
+  color: var(--ink);
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  padding: 4px 0 8px;
+}
+.filter.selected { border-bottom-color: var(--accent-red); font-weight: 700; }
+.filter:hover { color: var(--accent-red); }
+.result-list { padding-top: 5px; }
+#more-results {
+  display: block;
+  margin: 14px 0;
+  padding: 4px 0;
+  border: 0;
+  border-bottom: 1px solid var(--accent-red);
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink);
+}
+#more-results[hidden] { display: none; }
+#more-results:hover { color: var(--accent-red); }
+.empty { margin: 22px 0 12px; color: var(--muted); }
+.source-card { padding: 19px 0 22px; }
+.source-card + .source-card { margin-top: 12px; }
+.source-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 5px 15px; }
+.source-kind { font-weight: 700; }
+.source-kind.note::before { content: "§ "; color: var(--accent-red); }
+.source-page { color: var(--muted); }
+.source-meta { color: var(--muted) !important; font-size: .94rem !important; margin: 3px 0 6px; }
+.source-card blockquote {
+  margin: 10px 0 13px;
+  padding-left: 12px;
+  border-left: 1px solid var(--accent-red);
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  font-family: "BOE Egyptian", var(--font-body) !important;
+  font-weight: 400;
+}
+mark { background: #ffe7bc; color: #222; }
+.source-links { display: flex; flex-wrap: wrap; gap: 12px 24px; }
+.source-links a, .source-links button {
+  display: inline;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid var(--accent-red);
+  border-radius: 0;
+  background: none;
+  text-decoration: none;
+  color: var(--ink);
+}
+.source-links a:hover, .source-links button:hover { color: var(--accent-red); }
+.corpus-count {
+  margin: 25px 0 0;
+  padding-top: 11px;
+}
+.corpus-count span { margin-left: 10px; color: var(--muted) !important; }
+footer {
+  padding: 24px 16px;
+  border-top: 1px solid var(--accent-red);
+}
+footer .small { font-size: .95rem; }
+
+@media (min-width: 801px) {
+  nav { margin-top: 18px; }
+  nav a + a {
+    border-left: 1px solid var(--accent-red);
+    padding-left: 10px;
+    margin-left: 2px;
+  }
+  .header-issn {
+    display: block;
+    font-size: .62rem !important;
+    opacity: .4;
+    margin-top: -.45em;
+    margin-left: .7em;
+  }
+}
+
+@media (max-width: 800px) {
+  header { padding: 18px 16px 16px; }
+  header::after { height: 0; border-bottom: 0; }
+  .brand .title { display: none; }
+  nav { display: flex; flex-wrap: wrap; gap: 6px 10px; margin-top: 14px; }
+  nav a {
+    margin-right: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  nav a + a { border-left: 1px solid var(--accent-red); padding-left: 8px; margin-left: 2px; }
+  nav a.row-start { border-left: none; padding-left: 0; margin-left: 0; }
+  main {
+    border-left: 0;
+    padding: 24px 18px 35px 24px;
+    background-image: linear-gradient(var(--accent-red), var(--accent-red)), linear-gradient(var(--accent-red), var(--accent-red));
+    background-size: 1px 100%, 1px 100%;
+    background-position: 0 0, 6px 0;
+    background-repeat: no-repeat;
+  }
+  .method-row { align-items: flex-start; flex-direction: column; }
+}
+@media (max-width: 420px) {
+  .form-bottom { align-items: stretch; flex-direction: column; }
+  #search-button { width: 100%; }
+  .source-top { flex-direction: column; }
+}
