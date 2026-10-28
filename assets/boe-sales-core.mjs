@@ -141,6 +141,7 @@ export function configuredApiBase(value) {
 export function validatedQuote(value, now = Date.now(), expectedMode = "test") {
   if (!configuredSalesMode(expectedMode) || !value || typeof value !== "object" || value.mode !== expectedMode || value.currency !== "EUR" || value.bookAmount !== BOOK_AMOUNT) throw new Error("invalid_quote");
   if (typeof value.quoteId !== "string" || !value.quoteId || value.quoteId.length > 256) throw new Error("invalid_quote");
+  if (typeof value.checkoutToken !== "string" || !/^[a-f0-9]{64}$/.test(value.checkoutToken)) throw new Error("checkout_authorization_required");
   const expiry = Date.parse(value.expiresAt);
   if (!Number.isFinite(expiry) || expiry <= now) throw new Error("quote_expired");
   if (!Array.isArray(value.shippingOptions) || !value.shippingOptions.length || value.shippingOptions.length > 50) throw new Error("shipping_unavailable");
@@ -150,7 +151,7 @@ export function validatedQuote(value, now = Date.now(), expectedMode = "test") {
     ids.add(option.id);
     return { id: option.id, label: option.label, amount: option.amount, currency: "EUR" };
   });
-  return { quoteId: value.quoteId, expiresAt: expiry, shippingOptions };
+  return { quoteId: value.quoteId, checkoutToken: value.checkoutToken, expiresAt: expiry, shippingOptions };
 }
 
 export function checkoutUrl(value, expectedMode = "test") {

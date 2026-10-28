@@ -1,4 +1,4 @@
-import { BOOK_AMOUNT, configuredApiBase, configuredSalesMode, validatedOrderServiceHealth, validatedSalesHealth, validatedLegalConfiguration, validatedQuote, checkoutUrl, validatedShippingReference, cloudprinterRegionValue, cloudprinterCustomerIdentificationValue, validatedOrderCapability, orderCapabilityFromFragment, validatedOrderStatus, withdrawalDeclaration, withdrawalTextReceipt, validatedWithdrawal } from "./boe-sales-core.mjs?v=5";
+import { BOOK_AMOUNT, configuredApiBase, configuredSalesMode, validatedOrderServiceHealth, validatedSalesHealth, validatedLegalConfiguration, validatedQuote, checkoutUrl, validatedShippingReference, cloudprinterRegionValue, cloudprinterCustomerIdentificationValue, validatedOrderCapability, orderCapabilityFromFragment, validatedOrderStatus, withdrawalDeclaration, withdrawalTextReceipt, validatedWithdrawal } from "./boe-sales-core.mjs?v=7";
 
 const locale = document.documentElement.lang === "en" ? "en" : "fr";
 const messages = {
@@ -7,6 +7,7 @@ const messages = {
     calculating: "Calcul des frais de livraison…", chooseShipping: "Choisissez un mode de livraison pour continuer.", redirecting: "Ouverture du paiement fictif Stripe…",
     unavailable: "Aucune livraison disponible pour cette destination. Vérifiez l’adresse ou contactez BOMA.",
     expired: "Ce devis a expiré. Veuillez recalculer la livraison.",
+    quoteAuthorization: "Ce devis ne peut plus être utilisé pour le paiement. Veuillez recalculer la livraison.",
     invalid: "Le devis n’a pas pu être confirmé. Veuillez réessayer.",
     network: "Connexion interrompue. Veuillez réessayer.",
     address: "Vérifiez les coordonnées, le code postal et la région de livraison.",
@@ -41,6 +42,7 @@ const messages = {
     calculating: "Calculating delivery costs…", chooseShipping: "Choose a delivery option to continue.", redirecting: "Opening secure Stripe test checkout…",
     unavailable: "Delivery is unavailable for this destination. Check the address or contact BOMA.",
     expired: "This quote has expired. Please calculate delivery again.",
+    quoteAuthorization: "This quote can no longer be used for checkout. Please calculate delivery again.",
     invalid: "The quote could not be confirmed. Please try again.",
     network: "Connection interrupted. Please try again.",
     address: "Check the contact details, postal code and state or region.",
@@ -528,6 +530,7 @@ function invalidateQuote(showMessage = false) {
 function errorMessage(error, stage) {
   const code = error?.message;
   if (code === "quote_expired" || code === "QUOTE_EXPIRED") return messages.expired;
+  if (code === "checkout_authorization_required") return messages.quoteAuthorization;
   if (code === "shipping_reference_unavailable") return messages.referenceUnavailable;
   if (code === "sales_mode_mismatch") return messages.modeMismatch;
   if (code === "unsupported_country") return messages.unsupportedCountry;
@@ -656,7 +659,7 @@ payButton.addEventListener("click", async () => {
   const controller = new AbortController();
   currentController = controller;
   try {
-    const body = { quoteId: quote.quoteId, shippingOptionId: selectedOption.id, locale };
+    const body = { quoteId: quote.quoteId, checkoutToken: quote.checkoutToken, shippingOptionId: selectedOption.id, locale };
     if (expectedMode === "live") { body.termsAccepted = true; body.legalVersion = legalConfiguration.version; }
     const result = await post("/api/checkout", body, controller);
     if (requestRevision !== revision) return;
@@ -664,7 +667,11 @@ payButton.addEventListener("click", async () => {
     rememberOrderCapability(result);
     window.location.assign(url);
   } catch (error) {
-    if (requestRevision === revision) showStatus(errorMessage(error, "checkout"), true);
+    if (requestRevision === revision) {
+      const message = errorMessage(error, "checkout");
+      if (error?.message === "checkout_authorization_required") invalidateQuote();
+      showStatus(message, true);
+    }
   } finally {
     if (currentController === controller) { currentController = null; busy = false; updateButtons(); }
   }
