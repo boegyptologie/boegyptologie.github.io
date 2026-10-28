@@ -2,15 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'none'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src https://boe-sales-test.editionsboma.workers.dev https://boe-sales-staging.editionsboma.workers.dev https://boe-sales.editionsboma.workers.dev; form-action 'none'; frame-src 'none'">
+  <meta name="referrer" content="no-referrer">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Printed edition 2026 | Bibliothèque Ouverte d’Égyptologie</title>
   <meta name="description" content="The printed edition of the Bibliothèque Ouverte d’Égyptologie: €35 plus delivery. Delivery costs are calculated for your destination.">
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="stylesheet" href="/assets/style.css?v=16">
-  <link rel="stylesheet" href="/assets/boe-sales.css?v=2">
-  <script src="/assets/boe-sales-config.js" defer></script>
-  <script type="module" src="/assets/boe-sales.mjs?v=2"></script>
+  <link rel="stylesheet" href="/assets/boe-sales.css?v=5">
+  <script src="/assets/boe-sales-config.js?v=5" defer></script>
+  <script type="module" src="/assets/boe-sales.mjs?v=5"></script>
 </head>
 <body class="sales-page">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -40,21 +42,75 @@
       <h1 id="printed-edition-title"><strong>Read the BOE in print<span class="verspunkt">·</span></strong></h1>
       <p>Discover the 2026 volume of the <em>Bibliothèque Ouverte d’Égyptologie</em> in hardcover.</p>
       <p><strong>€35 plus delivery.</strong> A5 format, 174 pages, hardcover with a gloss finish. One copy per order. Delivery costs are calculated for the destination.</p>
-      <p class="submission-declaration" role="note"><strong>Test mode.</strong> Simulated payment, with no print order. Please use fictitious contact details.</p>
+      <p class="submission-declaration" id="sales-mode-notice" role="note"><strong id="sales-mode-label">Test mode.</strong> <span id="sales-mode-description">Simulated payment and complete test order, with no real production or shipping. Please use fictitious contact details only.</span></p>
+      <section id="order-status-section" aria-labelledby="order-status-title" hidden>
+        <h2 id="order-status-title"><strong>Your order status<span class="verspunkt">·</span></strong></h2>
+        <p id="order-status-message" role="status" aria-live="polite"></p>
+        <p class="hint">This order status is private. Keep the link supplied with your invoice.</p>
+        <p id="order-tracking-reference" hidden></p>
+        <p class="order-status-links"><a id="order-invoice-link" target="_blank" rel="noopener noreferrer" hidden>View invoice</a> <a id="order-tracking-link" target="_blank" rel="noopener noreferrer" hidden>Track delivery</a></p>
+        <button id="order-status-refresh" type="button" hidden>Refresh order status</button>
+        <section id="withdrawal-section" aria-labelledby="withdrawal-title" hidden>
+          <h3 id="withdrawal-title">Returns and withdrawal</h3>
+          <p>You can send your declaration to BOMA. Your request is recorded for review; it does not guarantee that production already under way will stop, and it does not trigger an automatic refund.</p>
+          <p class="hint">Order: <span id="withdrawal-order-reference"></span></p>
+          <button id="withdrawal-open" type="button">Withdraw from the contract here</button>
+          <form id="withdrawal-form" hidden>
+            <fieldset>
+              <legend>Your declaration</legend>
+              <div class="fields">
+                <label for="withdrawal-first-name">First name
+                  <input id="withdrawal-first-name" name="firstName" autocomplete="given-name" maxlength="75" required>
+                </label>
+                <label for="withdrawal-last-name">Last name
+                  <input id="withdrawal-last-name" name="lastName" autocomplete="family-name" maxlength="75" required>
+                </label>
+                <label class="full" for="withdrawal-email">Email address to use for the acknowledgement and reply
+                  <input id="withdrawal-email" name="email" type="email" autocomplete="email" maxlength="254" required>
+                </label>
+              </div>
+            </fieldset>
+            <p class="hint">An acknowledgement will be available to download after confirmation, independently of any email notification.</p>
+            <button type="submit">Review my declaration</button>
+            <button id="withdrawal-close" type="button">Close</button>
+          </form>
+          <div id="withdrawal-confirmation" hidden>
+            <p>I hereby notify you of my decision to withdraw from the contract relating to this order.</p>
+            <p id="withdrawal-review"></p>
+            <button id="withdrawal-confirm" type="button">Confirm withdrawal</button>
+            <button id="withdrawal-edit" type="button">Edit</button>
+          </div>
+          <p id="withdrawal-status" class="status" role="status" aria-live="polite"></p>
+          <button id="withdrawal-receipt" type="button" hidden>Download acknowledgement (.txt)</button>
+          <p id="withdrawal-notification" class="hint" hidden></p>
+        </section>
+      </section>
       <form id="destination-form">
         <fieldset>
           <legend>Delivery details</legend>
           <p class="hint">Optional fields are marked.</p>
           <div class="fields">
-            <label class="full" for="name">Full name
-              <input id="name" name="name" autocomplete="shipping name" maxlength="120" required>
+            <label for="firstName">First name
+              <input id="firstName" name="firstName" autocomplete="shipping given-name" maxlength="75" required>
+            </label>
+            <label for="lastName">Last name
+              <input id="lastName" name="lastName" autocomplete="shipping family-name" maxlength="75" required>
             </label>
             <label class="full" for="email">Email address
               <input id="email" name="email" type="email" autocomplete="email" maxlength="254" required>
             </label>
-            <label class="full" for="phone">Phone (optional)
-              <input id="phone" name="phone" type="tel" autocomplete="shipping tel" maxlength="40">
+            <label class="full" for="phone">Phone
+              <input id="phone" name="phone" type="tel" autocomplete="shipping tel" maxlength="40" required>
             </label>
+            <label class="full" for="country">Country or territory
+              <select id="country" name="country" autocomplete="shipping country" required disabled></select>
+            </label>
+            <div class="full" id="customer-identification-field" hidden>
+              <label for="customer-identification">Recipient’s CPF
+                <input id="customer-identification" name="cloudprinterCustomerIdentification" type="text" inputmode="numeric" autocomplete="off" maxlength="14" placeholder="000.000.000-00" pattern="[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}|[0-9]{11}" aria-describedby="customer-identification-note" disabled>
+              </label>
+              <p id="customer-identification-note" class="hint">Cloudprinter requires this number for delivery in Brazil. Format: 000.000.000-00.</p>
+            </div>
             <label class="full" for="line1">Address
               <input id="line1" name="line1" autocomplete="shipping address-line1" maxlength="150" required>
             </label>
@@ -67,17 +123,21 @@
             <label for="city">City
               <input id="city" name="city" autocomplete="shipping address-level2" maxlength="100" required>
             </label>
-            <label class="full" for="state">State, province or region (if applicable)
+            <label class="full" for="state"><span id="state-label">State, province or region (optional)</span>
               <input id="state" name="state" autocomplete="shipping address-level1" maxlength="100">
             </label>
-            <label class="full" for="country">Country or territory
-              <select id="country" name="country" autocomplete="shipping country" required></select>
-            </label>
+            <div class="full" id="cloudprinter-region-field" hidden>
+              <label for="cloudprinter-region">Delivery zone
+                <select id="cloudprinter-region" name="cloudprinterRegion" aria-describedby="cloudprinter-region-note" disabled></select>
+              </label>
+              <p id="cloudprinter-region-note" class="hint"></p>
+            </div>
           </div>
         </fieldset>
         <button id="quote-button" type="submit" disabled>Calculate delivery costs</button>
       </form>
-      <p id="sales-status" class="status" role="status" aria-live="polite">Test checkout is not available yet.</p>
+      <p id="sales-status" class="status" role="status" aria-live="polite">Checkout is not available yet.</p>
+      <button id="reference-retry" type="button" hidden>Reload destinations</button>
       <fieldset id="shipping-section" hidden>
         <legend>Delivery option</legend>
         <div id="shipping-choices"></div>
@@ -88,6 +148,9 @@
         <div><dt>Delivery</dt><dd id="shipping-amount">To be calculated</dd></div>
         <div class="total"><dt>Total</dt><dd id="total-amount">—</dd></div>
       </dl>
+      <div id="terms-field" class="terms-acceptance" hidden>
+        <label for="terms-accepted"><input id="terms-accepted" type="checkbox"><span>I have read and accept the <a id="terms-link" target="_blank" rel="noopener noreferrer">terms of sale</a>.</span></label>
+      </div>
       <button id="pay-button" class="primary" type="button" disabled>Continue to Stripe test checkout</button>
       <p class="privacy">Contact details are used for delivery and invoicing. Stripe handles payments; Cloudprinter handles printing and shipping.</p>
       <noscript><p>Enable JavaScript to calculate delivery costs and open test checkout.</p></noscript>
