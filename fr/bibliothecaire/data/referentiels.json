@@ -1,0 +1,5091 @@
+{
+  "schema": 1,
+  "version": 21,
+  "engine_sha256": "b85c95199bc4359598136785b5171699b7f68fa79cf9cfe0401db9bc265f16cc",
+  "vocabulary": {
+    "periods": [
+      {
+        "id": "pharaonic",
+        "label_fr": "Époque pharaonique",
+        "label_en": "Pharaonic period",
+        "aliases": [
+          "Époque pharaonique",
+          "Pharaonic period",
+          "période pharaonique",
+          "Égypte pharaonique",
+          "Pharaonic Egypt",
+          "العصر الفرعوني",
+          "الفترة الفرعونية"
+        ],
+        "evidence": [
+          "Époque pharaonique",
+          "Pharaonic period",
+          "période pharaonique",
+          "Égypte pharaonique",
+          "Pharaonic Egypt",
+          "العصر الفرعوني",
+          "الفترة الفرعونية"
+        ],
+        "parents": [],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://sis.gov.eg/ar/مصر/التاريخ/تاريخ-مصر/الحقبة-الفرعونية/"
+        ]
+      },
+      {
+        "id": "predynastic",
+        "label_fr": "Prédynastique",
+        "label_en": "Predynastic period",
+        "aliases": [
+          "Prédynastique",
+          "Predynastic period",
+          "époque prédynastique",
+          "période prédynastique",
+          "Égypte prédynastique",
+          "Predynastic Egypt",
+          "Predynastic",
+          "Predynastique",
+          "عصر ما قبل الأسرات",
+          "عصر ما قبل الاسرات",
+          "ما قبل الأسرات",
+          "عصر ماقبل الأسرات"
+        ],
+        "evidence": [
+          "Prédynastique",
+          "Predynastic period",
+          "époque prédynastique",
+          "période prédynastique",
+          "Égypte prédynastique",
+          "Predynastic Egypt",
+          "Predynastic",
+          "Predynastique",
+          "عصر ما قبل الأسرات",
+          "عصر ما قبل الاسرات",
+          "ما قبل الأسرات",
+          "عصر ماقبل الأسرات"
+        ],
+        "parents": [],
+        "related": [
+          "proto-dynastic"
+        ],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/archaeological-sites/",
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html"
+        ]
+      },
+      {
+        "id": "badarian",
+        "label_fr": "Badarien",
+        "label_en": "Badarian period",
+        "aliases": [
+          "Badarien",
+          "Badarian period",
+          "culture badarienne",
+          "période badarienne",
+          "période de Badari",
+          "Badarian culture",
+          "Badarian",
+          "حضارة البداري",
+          "حضارة البدارى",
+          "الثقافة البدارية"
+        ],
+        "evidence": [
+          "Badarien",
+          "Badarian period",
+          "culture badarienne",
+          "période badarienne",
+          "période de Badari",
+          "Badarian culture",
+          "Badarian",
+          "حضارة البداري",
+          "حضارة البدارى",
+          "الثقافة البدارية"
+        ],
+        "parents": [
+          "predynastic"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html"
+        ]
+      },
+      {
+        "id": "naqada",
+        "label_fr": "Période de Nagada",
+        "label_en": "Naqada period",
+        "aliases": [
+          "Période de Nagada",
+          "Naqada period",
+          "période de Naqada",
+          "culture de Nagada",
+          "culture de Naqada",
+          "Naqadan period",
+          "Naqada culture",
+          "عصر نقادة",
+          "حضارة نقادة"
+        ],
+        "evidence": [
+          "Période de Nagada",
+          "Naqada period",
+          "période de Naqada",
+          "culture de Nagada",
+          "culture de Naqada",
+          "Naqadan period",
+          "Naqada culture",
+          "عصر نقادة",
+          "حضارة نقادة"
+        ],
+        "parents": [],
+        "related": [
+          "predynastic"
+        ],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/naqadan/chronology.html"
+        ]
+      },
+      {
+        "id": "naqada-1",
+        "label_fr": "Nagada I",
+        "label_en": "Naqada I",
+        "aliases": [
+          "Nagada I",
+          "Naqada I",
+          "Nagada 1",
+          "Naqada 1",
+          "نقادة الأولى",
+          "نقادة 1",
+          "نقادة ١",
+          "Amratien",
+          "Amratian",
+          "amratienne"
+        ],
+        "evidence": [
+          "Nagada I",
+          "Naqada I",
+          "Nagada 1",
+          "Naqada 1",
+          "نقادة الأولى",
+          "نقادة 1",
+          "نقادة ١",
+          "Amratien",
+          "Amratian",
+          "amratienne"
+        ],
+        "parents": [
+          "naqada",
+          "predynastic"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/naqadan/chronology.html",
+          "https://www.globalegyptianmuseum.org/glossary.aspx?id=256"
+        ],
+        "notes": "Le nom de lieu Nagada/Naqada isolé ne constitue pas une attestation de cette phase."
+      },
+      {
+        "id": "naqada-2",
+        "label_fr": "Nagada II",
+        "label_en": "Naqada II",
+        "aliases": [
+          "Nagada II",
+          "Naqada II",
+          "Nagada 2",
+          "Naqada 2",
+          "نقادة الثانية",
+          "نقادة 2",
+          "نقادة ٢",
+          "Gerzéen",
+          "Gerzean",
+          "gerzéenne"
+        ],
+        "evidence": [
+          "Nagada II",
+          "Naqada II",
+          "Nagada 2",
+          "Naqada 2",
+          "نقادة الثانية",
+          "نقادة 2",
+          "نقادة ٢",
+          "Gerzéen",
+          "Gerzean",
+          "gerzéenne"
+        ],
+        "parents": [
+          "naqada",
+          "predynastic"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/naqadan/chronology.html",
+          "https://www.globalegyptianmuseum.org/glossary.aspx?id=256"
+        ],
+        "notes": "Le nom de lieu Nagada/Naqada isolé ne constitue pas une attestation de cette phase."
+      },
+      {
+        "id": "naqada-3",
+        "label_fr": "Nagada III",
+        "label_en": "Naqada III",
+        "aliases": [
+          "Nagada III",
+          "Naqada III",
+          "Nagada 3",
+          "Naqada 3",
+          "نقادة الثالثة",
+          "نقادة 3",
+          "نقادة ٣"
+        ],
+        "evidence": [
+          "Nagada III",
+          "Naqada III",
+          "Nagada 3",
+          "Naqada 3",
+          "نقادة الثالثة",
+          "نقادة 3",
+          "نقادة ٣"
+        ],
+        "parents": [
+          "naqada"
+        ],
+        "related": [
+          "proto-dynastic",
+          "predynastic",
+          "early-dynastic"
+        ],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/naqadan/chronology.html"
+        ],
+        "notes": "Le nom de lieu Nagada/Naqada isolé ne constitue pas une attestation de cette phase."
+      },
+      {
+        "id": "proto-dynastic",
+        "label_fr": "Protodynastique",
+        "label_en": "Protodynastic period",
+        "aliases": [
+          "Protodynastique",
+          "Protodynastic period",
+          "époque protodynastique",
+          "période protodynastique",
+          "Protodynastic",
+          "Proto-dynastic period",
+          "الفترة البروتوديناستية",
+          "عصر قبيل الأسرات"
+        ],
+        "evidence": [
+          "Protodynastique",
+          "Protodynastic period",
+          "époque protodynastique",
+          "période protodynastique",
+          "Protodynastic",
+          "Proto-dynastic period",
+          "الفترة البروتوديناستية",
+          "عصر قبيل الأسرات"
+        ],
+        "parents": [],
+        "related": [
+          "predynastic",
+          "naqada-3",
+          "early-dynastic"
+        ],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html"
+        ],
+        "notes": "Protodynastique a des emplois terminologiques variables ; pas de parent automatique avant/après les premières dynasties."
+      },
+      {
+        "id": "early-dynastic",
+        "label_fr": "Époque thinite",
+        "label_en": "Early Dynastic Period",
+        "aliases": [
+          "Époque thinite",
+          "Early Dynastic Period",
+          "période thinite",
+          "époque archaïque égyptienne",
+          "période archaïque égyptienne",
+          "Égypte archaïque",
+          "Archaic Egypt",
+          "Early Dynastic Egypt",
+          "Archaic Period of Egypt",
+          "العصر العتيق",
+          "عصر بداية الأسرات",
+          "عصر الأسرات المبكرة"
+        ],
+        "evidence": [
+          "Époque thinite",
+          "Early Dynastic Period",
+          "période thinite",
+          "époque archaïque égyptienne",
+          "période archaïque égyptienne",
+          "Égypte archaïque",
+          "Archaic Egypt",
+          "Early Dynastic Egypt",
+          "Archaic Period of Egypt",
+          "العصر العتيق",
+          "عصر بداية الأسرات",
+          "عصر الأسرات المبكرة"
+        ],
+        "parents": [
+          "pharaonic"
+        ],
+        "related": [
+          "proto-dynastic"
+        ],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/historical-periods/early-dynastic-period",
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html"
+        ]
+      },
+      {
+        "id": "old-kingdom",
+        "label_fr": "Ancien Empire",
+        "label_en": "Old Kingdom",
+        "aliases": [
+          "Ancien Empire",
+          "Old Kingdom",
+          "Ancien-Empire",
+          "Ancien Empire égyptien",
+          "Ancien Empire (Égypte)",
+          "Altes Reich",
+          "Alten Reich",
+          "Alten Reiches",
+          "الدولة القديمة",
+          "عصر الدولة القديمة",
+          "المملكة القديمة"
+        ],
+        "evidence": [
+          "Ancien Empire",
+          "Old Kingdom",
+          "Ancien-Empire",
+          "Ancien Empire égyptien",
+          "Ancien Empire (Égypte)",
+          "Altes Reich",
+          "Alten Reich",
+          "Alten Reiches",
+          "الدولة القديمة",
+          "عصر الدولة القديمة",
+          "المملكة القديمة",
+          "Old and Middle Kingdom",
+          "Old and Middle Kingdoms",
+          "Ancien et Moyen Empire",
+          "Ancien et du Moyen Empire",
+          "Anciens et Moyens Empires",
+          "Ancien et le Moyen Empire",
+          "Ancien et Moyen Empires"
+        ],
+        "parents": [
+          "pharaonic"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/oldkingdomkings.html",
+          "https://egymonuments.gov.eg/ar/historical-periods/old-kingdom",
+          "https://catalogue.bnf.fr/ark:/12148/cb119636443"
+        ],
+        "alignment": [
+          {
+            "scheme": "BnF RAMEAU",
+            "uri": "https://catalogue.bnf.fr/ark:/12148/cb119636443",
+            "label": "Égypte -- ca. 2686-ca. 2181 av. J.-C. (Ancien Empire)",
+            "match": "exact",
+            "observed_alt_labels": [
+              "Ancien Empire (Égypte)"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "first-intermediate",
+        "label_fr": "Première Période intermédiaire",
+        "label_en": "First Intermediate Period",
+        "aliases": [
+          "Première Période intermédiaire",
+          "First Intermediate Period",
+          "première période intermédiaire égyptienne",
+          "1re période intermédiaire",
+          "1ère période intermédiaire",
+          "1st Intermediate Period",
+          "Ire période intermédiaire",
+          "عصر الانتقال الأول",
+          "عصر الإنتقال الأول",
+          "الفترة الانتقالية الأولى",
+          "عصر الاضمحلال الأول"
+        ],
+        "evidence": [
+          "Première Période intermédiaire",
+          "First Intermediate Period",
+          "première période intermédiaire égyptienne",
+          "1re période intermédiaire",
+          "1ère période intermédiaire",
+          "1st Intermediate Period",
+          "Ire période intermédiaire",
+          "عصر الانتقال الأول",
+          "عصر الإنتقال الأول",
+          "الفترة الانتقالية الأولى",
+          "عصر الاضمحلال الأول"
+        ],
+        "parents": [
+          "pharaonic"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/1stintermediateperkings.html",
+          "https://nmec.gov.eg/ar/historical-timeline/"
+        ]
+      },
+      {
+        "id": "middle-kingdom",
+        "label_fr": "Moyen Empire",
+        "label_en": "Middle Kingdom",
+        "aliases": [
+          "Moyen Empire",
+          "Middle Kingdom",
+          "Moyen-Empire",
+          "Moyen Empire égyptien",
+          "Moyen Empire (Égypte)",
+          "Mittleres Reich",
+          "Mittleren Reich",
+          "Mittleren Reiches",
+          "الدولة الوسطى",
+          "عصر الدولة الوسطى",
+          "المملكة الوسطى"
+        ],
+        "evidence": [
+          "Moyen Empire",
+          "Middle Kingdom",
+          "Moyen-Empire",
+          "Moyen Empire égyptien",
+          "Moyen Empire (Égypte)",
+          "Mittleres Reich",
+          "Mittleren Reich",
+          "Mittleren Reiches",
+          "الدولة الوسطى",
+          "عصر الدولة الوسطى",
+          "المملكة الوسطى",
+          "Old and Middle Kingdom",
+          "Old and Middle Kingdoms",
+          "Ancien et Moyen Empire",
+          "Ancien et du Moyen Empire",
+          "Anciens et Moyens Empires",
+          "Ancien et le Moyen Empire",
+          "Ancien et Moyen Empires"
+        ],
+        "parents": [
+          "pharaonic"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/mk/index.html",
+          "https://egymonuments.gov.eg/ar/historical-periods/middle-kingdom",
+          "https://pactols.frantiq.fr/opentheso/?idc=3136&idt=TH_1"
+        ],
+        "alignment": [
+          {
+            "scheme": "PACTOLS",
+            "uri": "https://ark.frantiq.fr/ark:/26678/pcrtQfmmy4haAf",
+            "label": "Moyen Empire égyptien",
+            "match": "exact",
+            "observed_alt_labels": [
+              "Moyen Empire",
+              "Moyen-Empire"
+            ],
+            "observed_related": [
+              "XIe dynastie égyptienne"
+            ],
+            "observed_narrower": [
+              "XIIe dynastie égyptienne"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "second-intermediate",
+        "label_fr": "Deuxième Période intermédiaire",
+        "label_en": "Second Intermediate Period",
+        "aliases": [
+          "Deuxième Période intermédiaire",
+          "Second Intermediate Period",
+          "seconde période intermédiaire",
+          "deuxième période intermédiaire égyptienne",
+          "2e période intermédiaire",
+          "2nd Intermediate Period",
+          "IIe période intermédiaire",
+          "عصر الانتقال الثاني",
+          "عصر الإنتقال الثاني",
+          "الفترة الانتقالية الثانية",
+          "عصر الاضمحلال الثاني"
+        ],
+        "evidence": [
+          "Deuxième Période intermédiaire",
+          "Second Intermediate Period",
+          "seconde période intermédiaire",
+          "deuxième période intermédiaire égyptienne",
+          "2e période intermédiaire",
+          "2nd Intermediate Period",
+          "IIe période intermédiaire",
+          "عصر الانتقال الثاني",
+          "عصر الإنتقال الثاني",
+          "الفترة الانتقالية الثانية",
+          "عصر الاضمحلال الثاني"
+        ],
+        "parents": [
+          "pharaonic"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://nmec.gov.eg/ar/historical-timeline/"
+        ]
+      },
+      {
+        "id": "new-kingdom",
+        "label_fr": "Nouvel Empire",
+        "label_en": "New Kingdom",
+        "aliases": [
+          "Nouvel Empire",
+          "New Kingdom",
+          "Nouvel-Empire",
+          "Nouvel Empire égyptien",
+          "Nouvel Empire (Égypte)",
+          "Neues Reich",
+          "Neuen Reich",
+          "Neuen Reiches",
+          "الدولة الحديثة",
+          "عصر الدولة الحديثة",
+          "المملكة الحديثة",
+          "عصر الإمبراطورية المصرية"
+        ],
+        "evidence": [
+          "Nouvel Empire",
+          "New Kingdom",
+          "Nouvel-Empire",
+          "Nouvel Empire égyptien",
+          "Nouvel Empire (Égypte)",
+          "Neues Reich",
+          "Neuen Reich",
+          "Neuen Reiches",
+          "الدولة الحديثة",
+          "عصر الدولة الحديثة",
+          "المملكة الحديثة",
+          "عصر الإمبراطورية المصرية"
+        ],
+        "parents": [
+          "pharaonic"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/nk/index.html",
+          "https://nmec.gov.eg/ar/historical-timeline/",
+          "https://catalogue.bnf.fr/ark:/12148/cb11986449d"
+        ],
+        "alignment": [
+          {
+            "scheme": "BnF RAMEAU",
+            "uri": "https://catalogue.bnf.fr/ark:/12148/cb11986449d",
+            "label": "Égypte -- ca. 1550-ca. 1069 av. J.-C. (Nouvel Empire)",
+            "match": "exact",
+            "observed_alt_labels": [
+              "Nouvel Empire (Égypte)"
+            ],
+            "observed_narrower": [
+              "XVIIIe dynastie",
+              "XIXe dynastie",
+              "XXe dynastie"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ramesside",
+        "label_fr": "Époque ramesside",
+        "label_en": "Ramesside period",
+        "aliases": [
+          "Époque ramesside",
+          "Ramesside period",
+          "période ramesside",
+          "Ramesside",
+          "ramessides",
+          "Ramessid period",
+          "العصر الرعامسي",
+          "عصر الرعامسة",
+          "الفترة الرعامسية"
+        ],
+        "evidence": [
+          "Époque ramesside",
+          "Ramesside period",
+          "période ramesside",
+          "Ramesside",
+          "ramessides",
+          "Ramessid period",
+          "العصر الرعامسي",
+          "عصر الرعامسة",
+          "الفترة الرعامسية"
+        ],
+        "parents": [
+          "new-kingdom"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/burialcustoms/latenk.html",
+          "https://www.getty.edu/vow/AATFullDisplay?find=nanny&logic=OR&note=&subjectid=300134147"
+        ],
+        "notes": "Groupe chronologique XIXe–XXe dynasties, pas équivalent à XIXe seule. Les deux notices BnF emploient la même forme rejetée époque ramesside.",
+        "alignment": [
+          {
+            "scheme": "BnF RAMEAU",
+            "uri": "https://catalogue.bnf.fr/ark:/12148/cb11986451z",
+            "label": "Égypte -- ca. 1295-ca. 1186 av. J.-C. (XIXe dynastie)",
+            "match": "related"
+          },
+          {
+            "scheme": "BnF RAMEAU",
+            "uri": "https://catalogue.bnf.fr/ark:/12148/cb16721562s",
+            "label": "Égypte -- ca. 1186-ca. 1069 av. J.-C. (XXe dynastie)",
+            "match": "related"
+          },
+          {
+            "scheme": "Getty AAT",
+            "uri": "http://vocab.getty.edu/aat/300134147",
+            "label": "Ramesside period",
+            "match": "exact"
+          }
+        ]
+      },
+      {
+        "id": "third-intermediate",
+        "label_fr": "Troisième Période intermédiaire",
+        "label_en": "Third Intermediate Period",
+        "aliases": [
+          "Troisième Période intermédiaire",
+          "Third Intermediate Period",
+          "3e période intermédiaire",
+          "IIIe période intermédiaire",
+          "3rd Intermediate Period",
+          "عصر الانتقال الثالث",
+          "عصر الإنتقال الثالث",
+          "الفترة الانتقالية الثالثة",
+          "عصر الاضمحلال الثالث"
+        ],
+        "evidence": [
+          "Troisième Période intermédiaire",
+          "Third Intermediate Period",
+          "3e période intermédiaire",
+          "IIIe période intermédiaire",
+          "3rd Intermediate Period",
+          "عصر الانتقال الثالث",
+          "عصر الإنتقال الثالث",
+          "الفترة الانتقالية الثالثة",
+          "عصر الاضمحلال الثالث"
+        ],
+        "parents": [
+          "pharaonic"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/3rdintermediateperkings.html",
+          "https://nmec.gov.eg/ar/historical-timeline/"
+        ]
+      },
+      {
+        "id": "late-period",
+        "label_fr": "Basse Époque",
+        "label_en": "Late Period",
+        "aliases": [
+          "Basse Époque",
+          "Late Period",
+          "Basse époque égyptienne",
+          "époque tardive égyptienne",
+          "période tardive égyptienne",
+          "Late Period Egypt",
+          "Spätzeit",
+          "العصر المتأخر",
+          "العصر المصري المتأخر",
+          "الدولة المتأخرة",
+          "الفترة المتأخرة في مصر"
+        ],
+        "evidence": [
+          "Basse Époque",
+          "Late Period",
+          "Basse époque égyptienne",
+          "époque tardive égyptienne",
+          "période tardive égyptienne",
+          "Late Period Egypt",
+          "Spätzeit",
+          "العصر المتأخر",
+          "العصر المصري المتأخر",
+          "الدولة المتأخرة",
+          "الفترة المتأخرة في مصر"
+        ],
+        "parents": [
+          "pharaonic"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.globalegyptianmuseum.org/glossary.aspx?id=217",
+          "https://oi.uchicago.edu/sites/default/files/uploads/shared/docs/oimp23.pdf",
+          "https://nmec.gov.eg/ar/historical-timeline/"
+        ],
+        "notes": "Groupe bibliographique conventionnel XXVIe–XXXIe ; la XXVe est seulement associée, car certaines chronologies commencent la Basse Époque plus tôt."
+      },
+      {
+        "id": "saite",
+        "label_fr": "Époque saïte",
+        "label_en": "Saite period",
+        "aliases": [
+          "Époque saïte",
+          "Saite period",
+          "période saïte",
+          "Saite Dynasty",
+          "dynastie saïte",
+          "العصر الصاوي",
+          "العصر الصاوى",
+          "الفترة الصاوية",
+          "عصر النهضة الصاوية"
+        ],
+        "evidence": [
+          "Époque saïte",
+          "Saite period",
+          "période saïte",
+          "Saite Dynasty",
+          "dynastie saïte",
+          "العصر الصاوي",
+          "العصر الصاوى",
+          "الفترة الصاوية",
+          "عصر النهضة الصاوية"
+        ],
+        "parents": [
+          "late-period"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.metmuseum.org/pt/essays/egypt-in-the-late-period-ca-712-332-b-c",
+          "https://pactols.frantiq.fr/opentheso/?idc=3033&idt=TH_1"
+        ],
+        "equivalent_dynasties": [
+          26
+        ],
+        "alignment": [
+          {
+            "scheme": "PACTOLS",
+            "uri": "https://pactols.frantiq.fr/?idc=3033&idt=TH_1",
+            "label": "XXVIe dynastie égyptienne",
+            "match": "exact",
+            "uri_type": "concept-page",
+            "observed_alt_labels": [
+              "26e dynastie",
+              "période saïte"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "persian",
+        "label_fr": "Périodes perses en Égypte",
+        "label_en": "Persian periods in Egypt",
+        "aliases": [
+          "Périodes perses en Égypte",
+          "Persian periods in Egypt",
+          "période perse",
+          "périodes perses",
+          "domination perse en Égypte",
+          "domination achéménide en Égypte",
+          "Achaemenid Egypt",
+          "Persian Period",
+          "Persian domination of Egypt",
+          "العصر الفارسي في مصر",
+          "الحكم الفارسي في مصر",
+          "الاحتلال الفارسي لمصر"
+        ],
+        "evidence": [
+          "Périodes perses en Égypte",
+          "Persian periods in Egypt",
+          "période perse",
+          "périodes perses",
+          "domination perse en Égypte",
+          "domination achéménide en Égypte",
+          "Achaemenid Egypt",
+          "Persian Period",
+          "Persian domination of Egypt",
+          "العصر الفارسي في مصر",
+          "الحكم الفارسي في مصر",
+          "الاحتلال الفارسي لمصر"
+        ],
+        "parents": [
+          "late-period"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/dynasty27.html",
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/secondpersianperiodkings.html"
+        ]
+      },
+      {
+        "id": "first-persian",
+        "label_fr": "Première domination perse",
+        "label_en": "First Persian Period",
+        "aliases": [
+          "Première domination perse",
+          "First Persian Period",
+          "première période perse",
+          "première domination achéménide",
+          "First Persian domination",
+          "First Achaemenid Period in Egypt",
+          "الاحتلال الفارسي الأول",
+          "الحكم الفارسي الأول",
+          "العصر الفارسي الأول"
+        ],
+        "evidence": [
+          "Première domination perse",
+          "First Persian Period",
+          "première période perse",
+          "première domination achéménide",
+          "First Persian domination",
+          "First Achaemenid Period in Egypt",
+          "الاحتلال الفارسي الأول",
+          "الحكم الفارسي الأول",
+          "العصر الفارسي الأول"
+        ],
+        "parents": [
+          "persian"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/dynasty27.html"
+        ],
+        "equivalent_dynasties": [
+          27
+        ]
+      },
+      {
+        "id": "second-persian",
+        "label_fr": "Seconde domination perse",
+        "label_en": "Second Persian Period",
+        "aliases": [
+          "Seconde domination perse",
+          "Second Persian Period",
+          "deuxième domination perse",
+          "seconde période perse",
+          "deuxième période perse",
+          "Second Persian domination",
+          "Second Achaemenid Period in Egypt",
+          "الاحتلال الفارسي الثاني",
+          "الحكم الفارسي الثاني",
+          "العصر الفارسي الثاني"
+        ],
+        "evidence": [
+          "Seconde domination perse",
+          "Second Persian Period",
+          "deuxième domination perse",
+          "seconde période perse",
+          "deuxième période perse",
+          "Second Persian domination",
+          "Second Achaemenid Period in Egypt",
+          "الاحتلال الفارسي الثاني",
+          "الحكم الفارسي الثاني",
+          "العصر الفارسي الثاني"
+        ],
+        "parents": [
+          "persian"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/secondpersianperiodkings.html",
+          "https://oi.uchicago.edu/sites/default/files/uploads/shared/docs/oimp23.pdf"
+        ],
+        "equivalent_dynasties": [
+          31
+        ]
+      },
+      {
+        "id": "greco-roman",
+        "label_fr": "Époque gréco-romaine",
+        "label_en": "Greco-Roman period",
+        "aliases": [
+          "Époque gréco-romaine",
+          "Greco-Roman period",
+          "période gréco-romaine",
+          "Égypte gréco-romaine",
+          "Antiquité gréco-romaine",
+          "Graeco-Roman period",
+          "Greco-Roman Egypt",
+          "Graeco-Roman Egypt",
+          "العصر اليوناني الروماني",
+          "العصر اليونانى الرومانى",
+          "الفترة اليونانية الرومانية"
+        ],
+        "evidence": [
+          "Époque gréco-romaine",
+          "Greco-Roman period",
+          "période gréco-romaine",
+          "Égypte gréco-romaine",
+          "Antiquité gréco-romaine",
+          "Graeco-Roman period",
+          "Greco-Roman Egypt",
+          "Graeco-Roman Egypt",
+          "العصر اليوناني الروماني",
+          "العصر اليونانى الرومانى",
+          "الفترة اليونانية الرومانية"
+        ],
+        "parents": [],
+        "related": [
+          "byzantine"
+        ],
+        "sources": [
+          "https://www.uee.ucla.edu/chronology",
+          "https://egymonuments.gov.eg/ar/historical-periods/ptolemaic-period"
+        ]
+      },
+      {
+        "id": "macedonian",
+        "label_fr": "Époque macédonienne",
+        "label_en": "Macedonian period",
+        "aliases": [
+          "Époque macédonienne",
+          "Macedonian period",
+          "période macédonienne",
+          "domination macédonienne en Égypte",
+          "Macedonian Egypt",
+          "Macedonian Dynasty",
+          "الأسرة المقدونية",
+          "العصر المقدوني",
+          "الحكم المقدوني في مصر"
+        ],
+        "evidence": [
+          "Époque macédonienne",
+          "Macedonian period",
+          "période macédonienne",
+          "domination macédonienne en Égypte",
+          "Macedonian Egypt",
+          "Macedonian Dynasty",
+          "الأسرة المقدونية",
+          "العصر المقدوني",
+          "الحكم المقدوني في مصر"
+        ],
+        "parents": [
+          "greco-roman"
+        ],
+        "related": [
+          "ptolemaic"
+        ],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/macedonianperiodkings.html"
+        ]
+      },
+      {
+        "id": "ptolemaic",
+        "label_fr": "Époque ptolémaïque",
+        "label_en": "Ptolemaic period",
+        "aliases": [
+          "Époque ptolémaïque",
+          "Ptolemaic period",
+          "période ptolémaïque",
+          "époque lagide",
+          "période lagide",
+          "Égypte ptolémaïque",
+          "royaume lagide",
+          "Ptolemaic Egypt",
+          "Ptolemaic Kingdom",
+          "العصر البطلمي",
+          "العصر البطلمى",
+          "دولة البطالمة",
+          "الأسرة البطلمية",
+          "حكم البطالمة"
+        ],
+        "evidence": [
+          "Époque ptolémaïque",
+          "Ptolemaic period",
+          "période ptolémaïque",
+          "époque lagide",
+          "période lagide",
+          "Égypte ptolémaïque",
+          "royaume lagide",
+          "Ptolemaic Egypt",
+          "Ptolemaic Kingdom",
+          "العصر البطلمي",
+          "العصر البطلمى",
+          "دولة البطالمة",
+          "الأسرة البطلمية",
+          "حكم البطالمة",
+          "ptolémaïque",
+          "ptolémaïques",
+          "ptolemaic",
+          "époque ptolémaïque et romaine",
+          "Ptolemaic and Roman periods",
+          "Ptolemaic and Roman period"
+        ],
+        "parents": [
+          "greco-roman"
+        ],
+        "related": [
+          "macedonian"
+        ],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/historical-periods/ptolemaic-period",
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html"
+        ]
+      },
+      {
+        "id": "roman",
+        "label_fr": "Époque romaine",
+        "label_en": "Roman period",
+        "aliases": [
+          "Époque romaine",
+          "Roman period",
+          "période romaine",
+          "Égypte romaine",
+          "Roman Egypt",
+          "Roman-period Egypt",
+          "العصر الروماني",
+          "العصر الرومانى",
+          "مصر الرومانية"
+        ],
+        "evidence": [
+          "Époque romaine",
+          "Roman period",
+          "période romaine",
+          "Égypte romaine",
+          "Roman Egypt",
+          "Roman-period Egypt",
+          "العصر الروماني",
+          "العصر الرومانى",
+          "مصر الرومانية",
+          "époque ptolémaïque et romaine",
+          "Ptolemaic and Roman periods",
+          "Ptolemaic and Roman period"
+        ],
+        "parents": [
+          "greco-roman"
+        ],
+        "related": [
+          "byzantine",
+          "coptic-period"
+        ],
+        "sources": [
+          "https://nmec.gov.eg/ar/historical-timeline/",
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/roman2.html"
+        ]
+      },
+      {
+        "id": "byzantine",
+        "label_fr": "Époque byzantine",
+        "label_en": "Byzantine period",
+        "aliases": [
+          "Époque byzantine",
+          "Byzantine period",
+          "période byzantine",
+          "Égypte byzantine",
+          "Byzantine Egypt",
+          "العصر البيزنطي",
+          "العصر البيزنطى",
+          "الفترة البيزنطية",
+          "مصر البيزنطية"
+        ],
+        "evidence": [
+          "Époque byzantine",
+          "Byzantine period",
+          "période byzantine",
+          "Égypte byzantine",
+          "Byzantine Egypt",
+          "العصر البيزنطي",
+          "العصر البيزنطى",
+          "الفترة البيزنطية",
+          "مصر البيزنطية"
+        ],
+        "parents": [],
+        "related": [
+          "roman",
+          "coptic-period",
+          "greco-roman"
+        ],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/historical-periods/byzantine-era"
+        ],
+        "notes": "Pas byzantin/byzantine seul : un auteur byzantin médiéval n’atteste pas la période byzantine égyptienne."
+      },
+      {
+        "id": "coptic-period",
+        "label_fr": "Époque copte",
+        "label_en": "Coptic period",
+        "aliases": [
+          "Époque copte",
+          "Coptic period",
+          "période copte",
+          "العصر القبطي",
+          "العصر القبطى",
+          "الفترة القبطية"
+        ],
+        "evidence": [
+          "Époque copte",
+          "Coptic period",
+          "période copte",
+          "العصر القبطي",
+          "العصر القبطى",
+          "الفترة القبطية"
+        ],
+        "parents": [],
+        "related": [
+          "byzantine",
+          "roman"
+        ],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/historical-periods/byzantine-era",
+          "https://nmec.gov.eg/ar/historical-timeline/"
+        ],
+        "notes": "Pas copte/Coptic seuls : langue et période sont deux concepts distincts ; période copte et byzantine sont associées mais pas fusionnées."
+      }
+    ],
+    "dynasties": [
+      {
+        "number": 1,
+        "label_fr": "Ire dynastie",
+        "label_en": "1st Dynasty",
+        "arabic_ordinal": "الأولى",
+        "arabic_ordinal_variants": [
+          "الأولى"
+        ],
+        "arabic_aliases": [
+          "الأسرة 1",
+          "الأسرة الأولى",
+          "الأسرة ١",
+          "الاسرة الأولى"
+        ],
+        "english_ordinal": "first",
+        "french_ordinal": "première",
+        "parents": [
+          "early-dynastic"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar"
+        ]
+      },
+      {
+        "number": 2,
+        "label_fr": "IIe dynastie",
+        "label_en": "2nd Dynasty",
+        "arabic_ordinal": "الثانية",
+        "arabic_ordinal_variants": [
+          "الثانية"
+        ],
+        "arabic_aliases": [
+          "الأسرة 2",
+          "الأسرة الثانية",
+          "الأسرة ٢",
+          "الاسرة الثانية"
+        ],
+        "english_ordinal": "second",
+        "french_ordinal": "deuxième",
+        "parents": [
+          "early-dynastic"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar"
+        ]
+      },
+      {
+        "number": 3,
+        "label_fr": "IIIe dynastie",
+        "label_en": "3rd Dynasty",
+        "arabic_ordinal": "الثالثة",
+        "arabic_ordinal_variants": [
+          "الثالثة"
+        ],
+        "arabic_aliases": [
+          "الأسرة 3",
+          "الأسرة الثالثة",
+          "الأسرة ٣",
+          "الاسرة الثالثة"
+        ],
+        "english_ordinal": "third",
+        "french_ordinal": "troisième",
+        "parents": [
+          "old-kingdom"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar"
+        ]
+      },
+      {
+        "number": 4,
+        "label_fr": "IVe dynastie",
+        "label_en": "4th Dynasty",
+        "arabic_ordinal": "الرابعة",
+        "arabic_ordinal_variants": [
+          "الرابعة"
+        ],
+        "arabic_aliases": [
+          "الأسرة 4",
+          "الأسرة الرابعة",
+          "الأسرة ٤",
+          "الاسرة الرابعة"
+        ],
+        "english_ordinal": "fourth",
+        "french_ordinal": "quatrième",
+        "parents": [
+          "old-kingdom"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar"
+        ]
+      },
+      {
+        "number": 5,
+        "label_fr": "Ve dynastie",
+        "label_en": "5th Dynasty",
+        "arabic_ordinal": "الخامسة",
+        "arabic_ordinal_variants": [
+          "الخامسة"
+        ],
+        "arabic_aliases": [
+          "الأسرة 5",
+          "الأسرة الخامسة",
+          "الأسرة ٥",
+          "الاسرة الخامسة"
+        ],
+        "english_ordinal": "fifth",
+        "french_ordinal": "cinquième",
+        "parents": [
+          "old-kingdom"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar"
+        ],
+        "alignment": [
+          {
+            "scheme": "PACTOLS",
+            "uri": "https://ark.frantiq.fr/ark:/26678/pcrtBjT0Oramgy",
+            "label": "Ve dynastie égyptienne",
+            "match": "exact"
+          },
+          {
+            "scheme": "BnF RAMEAU",
+            "uri": "https://catalogue.bnf.fr/ark:/12148/cb17038120k",
+            "label": "Égypte -- ca. 2494-ca. 2345 av. J.-C. (Ve dynastie)",
+            "match": "exact"
+          }
+        ]
+      },
+      {
+        "number": 6,
+        "label_fr": "VIe dynastie",
+        "label_en": "6th Dynasty",
+        "arabic_ordinal": "السادسة",
+        "arabic_ordinal_variants": [
+          "السادسة"
+        ],
+        "arabic_aliases": [
+          "الأسرة 6",
+          "الأسرة السادسة",
+          "الأسرة ٦",
+          "الاسرة السادسة"
+        ],
+        "english_ordinal": "sixth",
+        "french_ordinal": "sixième",
+        "parents": [
+          "old-kingdom"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar"
+        ]
+      },
+      {
+        "number": 7,
+        "label_fr": "VIIe dynastie",
+        "label_en": "7th Dynasty",
+        "arabic_ordinal": "السابعة",
+        "arabic_ordinal_variants": [
+          "السابعة"
+        ],
+        "arabic_aliases": [
+          "الأسرة 7",
+          "الأسرة السابعة",
+          "الأسرة ٧",
+          "الاسرة السابعة"
+        ],
+        "english_ordinal": "seventh",
+        "french_ordinal": "septième",
+        "parents": [
+          "pharaonic"
+        ],
+        "related": [
+          "old-kingdom",
+          "first-intermediate"
+        ],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar",
+          "https://resources.metmuseum.org/resources/metpublications/pdf/Egyptian_Art_The_Metropolitan_Museum_of_Art_Bulletin_v_41_no_3_Winter_1983_1984.pdf",
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/1stintermediateperkings.html"
+        ],
+        "notes": "Numérotation traditionnelle de Manéthon, dont l’historicité est discutée ; le moteur ne doit pas créer une chronologie ou des rois à partir de cette entrée."
+      },
+      {
+        "number": 8,
+        "label_fr": "VIIIe dynastie",
+        "label_en": "8th Dynasty",
+        "arabic_ordinal": "الثامنة",
+        "arabic_ordinal_variants": [
+          "الثامنة"
+        ],
+        "arabic_aliases": [
+          "الأسرة 8",
+          "الأسرة الثامنة",
+          "الأسرة ٨",
+          "الاسرة الثامنة"
+        ],
+        "english_ordinal": "eighth",
+        "french_ordinal": "huitième",
+        "parents": [
+          "pharaonic"
+        ],
+        "related": [
+          "old-kingdom",
+          "first-intermediate"
+        ],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar",
+          "https://resources.metmuseum.org/resources/metpublications/pdf/Egyptian_Art_The_Metropolitan_Museum_of_Art_Bulletin_v_41_no_3_Winter_1983_1984.pdf",
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/1stintermediateperkings.html"
+        ],
+        "notes": "Frontière de périodisation variable : liens associés seulement, sans expansion automatique vers une période."
+      },
+      {
+        "number": 9,
+        "label_fr": "IXe dynastie",
+        "label_en": "9th Dynasty",
+        "arabic_ordinal": "التاسعة",
+        "arabic_ordinal_variants": [
+          "التاسعة"
+        ],
+        "arabic_aliases": [
+          "الأسرة 9",
+          "الأسرة التاسعة",
+          "الأسرة ٩",
+          "الاسرة التاسعة"
+        ],
+        "english_ordinal": "ninth",
+        "french_ordinal": "neuvième",
+        "parents": [
+          "first-intermediate"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar"
+        ]
+      },
+      {
+        "number": 10,
+        "label_fr": "Xe dynastie",
+        "label_en": "10th Dynasty",
+        "arabic_ordinal": "العاشرة",
+        "arabic_ordinal_variants": [
+          "العاشرة"
+        ],
+        "arabic_aliases": [
+          "الأسرة 10",
+          "الأسرة العاشرة",
+          "الأسرة ١٠",
+          "الاسرة العاشرة"
+        ],
+        "english_ordinal": "tenth",
+        "french_ordinal": "dixième",
+        "parents": [
+          "first-intermediate"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar"
+        ]
+      },
+      {
+        "number": 11,
+        "label_fr": "XIe dynastie",
+        "label_en": "11th Dynasty",
+        "arabic_ordinal": "الحادية عشرة",
+        "arabic_ordinal_variants": [
+          "الحادية عشر",
+          "الحادية عشرة"
+        ],
+        "arabic_aliases": [
+          "الأسرة 11",
+          "الأسرة الحادية عشر",
+          "الأسرة الحادية عشرة",
+          "الأسرة ١١",
+          "الاسرة الحادية عشر",
+          "الاسرة الحادية عشرة"
+        ],
+        "english_ordinal": "eleventh",
+        "french_ordinal": "onzième",
+        "parents": [
+          "pharaonic"
+        ],
+        "related": [
+          "first-intermediate",
+          "middle-kingdom"
+        ],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar"
+        ],
+        "notes": "Frontière de périodisation variable : liens associés seulement, sans expansion automatique vers une période."
+      },
+      {
+        "number": 12,
+        "label_fr": "XIIe dynastie",
+        "label_en": "12th Dynasty",
+        "arabic_ordinal": "الثانية عشرة",
+        "arabic_ordinal_variants": [
+          "الثانية عشر",
+          "الثانية عشرة"
+        ],
+        "arabic_aliases": [
+          "الأسرة 12",
+          "الأسرة الثانية عشر",
+          "الأسرة الثانية عشرة",
+          "الأسرة ١٢",
+          "الاسرة الثانية عشر",
+          "الاسرة الثانية عشرة"
+        ],
+        "english_ordinal": "twelfth",
+        "french_ordinal": "douzième",
+        "parents": [
+          "middle-kingdom"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar"
+        ]
+      },
+      {
+        "number": 13,
+        "label_fr": "XIIIe dynastie",
+        "label_en": "13th Dynasty",
+        "arabic_ordinal": "الثالثة عشرة",
+        "arabic_ordinal_variants": [
+          "الثالثة عشر",
+          "الثالثة عشرة"
+        ],
+        "arabic_aliases": [
+          "الأسرة 13",
+          "الأسرة الثالثة عشر",
+          "الأسرة الثالثة عشرة",
+          "الأسرة ١٣",
+          "الاسرة الثالثة عشر",
+          "الاسرة الثالثة عشرة"
+        ],
+        "english_ordinal": "thirteenth",
+        "french_ordinal": "treizième",
+        "parents": [
+          "pharaonic"
+        ],
+        "related": [
+          "middle-kingdom",
+          "second-intermediate"
+        ],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar"
+        ],
+        "notes": "Frontière de périodisation variable : liens associés seulement, sans expansion automatique vers une période."
+      },
+      {
+        "number": 14,
+        "label_fr": "XIVe dynastie",
+        "label_en": "14th Dynasty",
+        "arabic_ordinal": "الرابعة عشرة",
+        "arabic_ordinal_variants": [
+          "الرابعة عشر",
+          "الرابعة عشرة"
+        ],
+        "arabic_aliases": [
+          "الأسرة 14",
+          "الأسرة الرابعة عشر",
+          "الأسرة الرابعة عشرة",
+          "الأسرة ١٤",
+          "الاسرة الرابعة عشر",
+          "الاسرة الرابعة عشرة"
+        ],
+        "english_ordinal": "fourteenth",
+        "french_ordinal": "quatorzième",
+        "parents": [
+          "pharaonic"
+        ],
+        "related": [
+          "middle-kingdom",
+          "second-intermediate"
+        ],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar"
+        ],
+        "notes": "Frontière de périodisation variable : liens associés seulement, sans expansion automatique vers une période."
+      },
+      {
+        "number": 15,
+        "label_fr": "XVe dynastie",
+        "label_en": "15th Dynasty",
+        "arabic_ordinal": "الخامسة عشرة",
+        "arabic_ordinal_variants": [
+          "الخامسة عشر",
+          "الخامسة عشرة"
+        ],
+        "arabic_aliases": [
+          "الأسرة 15",
+          "الأسرة الخامسة عشر",
+          "الأسرة الخامسة عشرة",
+          "الأسرة ١٥",
+          "الاسرة الخامسة عشر",
+          "الاسرة الخامسة عشرة"
+        ],
+        "english_ordinal": "fifteenth",
+        "french_ordinal": "quinzième",
+        "parents": [
+          "second-intermediate"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar"
+        ]
+      },
+      {
+        "number": 16,
+        "label_fr": "XVIe dynastie",
+        "label_en": "16th Dynasty",
+        "arabic_ordinal": "السادسة عشرة",
+        "arabic_ordinal_variants": [
+          "السادسة عشر",
+          "السادسة عشرة"
+        ],
+        "arabic_aliases": [
+          "الأسرة 16",
+          "الأسرة السادسة عشر",
+          "الأسرة السادسة عشرة",
+          "الأسرة ١٦",
+          "الاسرة السادسة عشر",
+          "الاسرة السادسة عشرة"
+        ],
+        "english_ordinal": "sixteenth",
+        "french_ordinal": "seizième",
+        "parents": [
+          "second-intermediate"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar"
+        ]
+      },
+      {
+        "number": 17,
+        "label_fr": "XVIIe dynastie",
+        "label_en": "17th Dynasty",
+        "arabic_ordinal": "السابعة عشرة",
+        "arabic_ordinal_variants": [
+          "السابعة عشر",
+          "السابعة عشرة"
+        ],
+        "arabic_aliases": [
+          "الأسرة 17",
+          "الأسرة السابعة عشر",
+          "الأسرة السابعة عشرة",
+          "الأسرة ١٧",
+          "الاسرة السابعة عشر",
+          "الاسرة السابعة عشرة"
+        ],
+        "english_ordinal": "seventeenth",
+        "french_ordinal": "dix-septième",
+        "parents": [
+          "second-intermediate"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar"
+        ]
+      },
+      {
+        "number": 18,
+        "label_fr": "XVIIIe dynastie",
+        "label_en": "18th Dynasty",
+        "arabic_ordinal": "الثامنة عشرة",
+        "arabic_ordinal_variants": [
+          "الثامنة عشر",
+          "الثامنة عشرة"
+        ],
+        "arabic_aliases": [
+          "الأسرة 18",
+          "الأسرة الثامنة عشر",
+          "الأسرة الثامنة عشرة",
+          "الأسرة ١٨",
+          "الاسرة الثامنة عشر",
+          "الاسرة الثامنة عشرة"
+        ],
+        "english_ordinal": "eighteenth",
+        "french_ordinal": "dix-huitième",
+        "parents": [
+          "new-kingdom"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar"
+        ],
+        "alignment": [
+          {
+            "scheme": "PACTOLS",
+            "uri": "https://ark.frantiq.fr/ark:/26678/pcrt8SDBbOnShS",
+            "label": "XVIIIe dynastie égyptienne",
+            "match": "exact"
+          }
+        ]
+      },
+      {
+        "number": 19,
+        "label_fr": "XIXe dynastie",
+        "label_en": "19th Dynasty",
+        "arabic_ordinal": "التاسعة عشرة",
+        "arabic_ordinal_variants": [
+          "التاسعة عشر",
+          "التاسعة عشرة"
+        ],
+        "arabic_aliases": [
+          "الأسرة 19",
+          "الأسرة التاسعة عشر",
+          "الأسرة التاسعة عشرة",
+          "الأسرة ١٩",
+          "الاسرة التاسعة عشر",
+          "الاسرة التاسعة عشرة"
+        ],
+        "english_ordinal": "nineteenth",
+        "french_ordinal": "dix-neuvième",
+        "parents": [
+          "ramesside"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar",
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/burialcustoms/latenk.html"
+        ],
+        "alignment": [
+          {
+            "scheme": "BnF RAMEAU",
+            "uri": "https://catalogue.bnf.fr/ark:/12148/cb11986451z",
+            "label": "Égypte -- ca. 1295-ca. 1186 av. J.-C. (XIXe dynastie)",
+            "match": "exact"
+          }
+        ]
+      },
+      {
+        "number": 20,
+        "label_fr": "XXe dynastie",
+        "label_en": "20th Dynasty",
+        "arabic_ordinal": "العشرون",
+        "arabic_ordinal_variants": [
+          "العشرون",
+          "العشرين"
+        ],
+        "arabic_aliases": [
+          "الأسرة 20",
+          "الأسرة العشرون",
+          "الأسرة العشرين",
+          "الأسرة ٢٠",
+          "الاسرة العشرون",
+          "الاسرة العشرين"
+        ],
+        "english_ordinal": "twentieth",
+        "french_ordinal": "vingtième",
+        "parents": [
+          "ramesside"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar",
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/burialcustoms/latenk.html"
+        ],
+        "alignment": [
+          {
+            "scheme": "BnF RAMEAU",
+            "uri": "https://catalogue.bnf.fr/ark:/12148/cb16721562s",
+            "label": "Égypte -- ca. 1186-ca. 1069 av. J.-C. (XXe dynastie)",
+            "match": "exact"
+          }
+        ]
+      },
+      {
+        "number": 21,
+        "label_fr": "XXIe dynastie",
+        "label_en": "21st Dynasty",
+        "arabic_ordinal": "الحادية والعشرون",
+        "arabic_ordinal_variants": [
+          "الحادية والعشرون",
+          "الحادية والعشرين"
+        ],
+        "arabic_aliases": [
+          "الأسرة 21",
+          "الأسرة الحادية والعشرون",
+          "الأسرة الحادية والعشرين",
+          "الأسرة ٢١",
+          "الاسرة الحادية والعشرون",
+          "الاسرة الحادية والعشرين"
+        ],
+        "english_ordinal": "twenty-first",
+        "french_ordinal": "vingt et unième",
+        "parents": [
+          "third-intermediate"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar"
+        ]
+      },
+      {
+        "number": 22,
+        "label_fr": "XXIIe dynastie",
+        "label_en": "22nd Dynasty",
+        "arabic_ordinal": "الثانية والعشرون",
+        "arabic_ordinal_variants": [
+          "الثانية والعشرون",
+          "الثانية والعشرين"
+        ],
+        "arabic_aliases": [
+          "الأسرة 22",
+          "الأسرة الثانية والعشرون",
+          "الأسرة الثانية والعشرين",
+          "الأسرة ٢٢",
+          "الاسرة الثانية والعشرون",
+          "الاسرة الثانية والعشرين"
+        ],
+        "english_ordinal": "twenty-second",
+        "french_ordinal": "vingt-deuxième",
+        "parents": [
+          "third-intermediate"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar"
+        ]
+      },
+      {
+        "number": 23,
+        "label_fr": "XXIIIe dynastie",
+        "label_en": "23rd Dynasty",
+        "arabic_ordinal": "الثالثة والعشرون",
+        "arabic_ordinal_variants": [
+          "الثالثة والعشرون",
+          "الثالثة والعشرين"
+        ],
+        "arabic_aliases": [
+          "الأسرة 23",
+          "الأسرة الثالثة والعشرون",
+          "الأسرة الثالثة والعشرين",
+          "الأسرة ٢٣",
+          "الاسرة الثالثة والعشرون",
+          "الاسرة الثالثة والعشرين"
+        ],
+        "english_ordinal": "twenty-third",
+        "french_ordinal": "vingt-troisième",
+        "parents": [
+          "third-intermediate"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar"
+        ]
+      },
+      {
+        "number": 24,
+        "label_fr": "XXIVe dynastie",
+        "label_en": "24th Dynasty",
+        "arabic_ordinal": "الرابعة والعشرون",
+        "arabic_ordinal_variants": [
+          "الرابعة والعشرون",
+          "الرابعة والعشرين"
+        ],
+        "arabic_aliases": [
+          "الأسرة 24",
+          "الأسرة الرابعة والعشرون",
+          "الأسرة الرابعة والعشرين",
+          "الأسرة ٢٤",
+          "الاسرة الرابعة والعشرون",
+          "الاسرة الرابعة والعشرين"
+        ],
+        "english_ordinal": "twenty-fourth",
+        "french_ordinal": "vingt-quatrième",
+        "parents": [
+          "third-intermediate"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar"
+        ]
+      },
+      {
+        "number": 25,
+        "label_fr": "XXVe dynastie",
+        "label_en": "25th Dynasty",
+        "arabic_ordinal": "الخامسة والعشرون",
+        "arabic_ordinal_variants": [
+          "الخامسة والعشرون",
+          "الخامسة والعشرين"
+        ],
+        "arabic_aliases": [
+          "الأسرة 25",
+          "الأسرة الخامسة والعشرون",
+          "الأسرة الخامسة والعشرين",
+          "الأسرة ٢٥",
+          "الاسرة الخامسة والعشرون",
+          "الاسرة الخامسة والعشرين"
+        ],
+        "english_ordinal": "twenty-fifth",
+        "french_ordinal": "vingt-cinquième",
+        "parents": [
+          "third-intermediate"
+        ],
+        "related": [
+          "late-period"
+        ],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar"
+        ]
+      },
+      {
+        "number": 26,
+        "label_fr": "XXVIe dynastie",
+        "label_en": "26th Dynasty",
+        "arabic_ordinal": "السادسة والعشرون",
+        "arabic_ordinal_variants": [
+          "السادسة والعشرون",
+          "السادسة والعشرين"
+        ],
+        "arabic_aliases": [
+          "الأسرة 26",
+          "الأسرة السادسة والعشرون",
+          "الأسرة السادسة والعشرين",
+          "الأسرة ٢٦",
+          "الاسرة السادسة والعشرون",
+          "الاسرة السادسة والعشرين"
+        ],
+        "english_ordinal": "twenty-sixth",
+        "french_ordinal": "vingt-sixième",
+        "parents": [
+          "saite"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar",
+          "https://www.metmuseum.org/pt/essays/egypt-in-the-late-period-ca-712-332-b-c"
+        ]
+      },
+      {
+        "number": 27,
+        "label_fr": "XXVIIe dynastie",
+        "label_en": "27th Dynasty",
+        "arabic_ordinal": "السابعة والعشرون",
+        "arabic_ordinal_variants": [
+          "السابعة والعشرون",
+          "السابعة والعشرين"
+        ],
+        "arabic_aliases": [
+          "الأسرة 27",
+          "الأسرة السابعة والعشرون",
+          "الأسرة السابعة والعشرين",
+          "الأسرة ٢٧",
+          "الاسرة السابعة والعشرون",
+          "الاسرة السابعة والعشرين"
+        ],
+        "english_ordinal": "twenty-seventh",
+        "french_ordinal": "vingt-septième",
+        "parents": [
+          "first-persian"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar",
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/dynasty27.html"
+        ]
+      },
+      {
+        "number": 28,
+        "label_fr": "XXVIIIe dynastie",
+        "label_en": "28th Dynasty",
+        "arabic_ordinal": "الثامنة والعشرون",
+        "arabic_ordinal_variants": [
+          "الثامنة والعشرون",
+          "الثامنة والعشرين"
+        ],
+        "arabic_aliases": [
+          "الأسرة 28",
+          "الأسرة الثامنة والعشرون",
+          "الأسرة الثامنة والعشرين",
+          "الأسرة ٢٨",
+          "الاسرة الثامنة والعشرون",
+          "الاسرة الثامنة والعشرين"
+        ],
+        "english_ordinal": "twenty-eighth",
+        "french_ordinal": "vingt-huitième",
+        "parents": [
+          "late-period"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar"
+        ]
+      },
+      {
+        "number": 29,
+        "label_fr": "XXIXe dynastie",
+        "label_en": "29th Dynasty",
+        "arabic_ordinal": "التاسعة والعشرون",
+        "arabic_ordinal_variants": [
+          "التاسعة والعشرون",
+          "التاسعة والعشرين"
+        ],
+        "arabic_aliases": [
+          "الأسرة 29",
+          "الأسرة التاسعة والعشرون",
+          "الأسرة التاسعة والعشرين",
+          "الأسرة ٢٩",
+          "الاسرة التاسعة والعشرون",
+          "الاسرة التاسعة والعشرين"
+        ],
+        "english_ordinal": "twenty-ninth",
+        "french_ordinal": "vingt-neuvième",
+        "parents": [
+          "late-period"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar"
+        ]
+      },
+      {
+        "number": 30,
+        "label_fr": "XXXe dynastie",
+        "label_en": "30th Dynasty",
+        "arabic_ordinal": "الثلاثون",
+        "arabic_ordinal_variants": [
+          "الثلاثون",
+          "الثلاثين"
+        ],
+        "arabic_aliases": [
+          "الأسرة 30",
+          "الأسرة الثلاثون",
+          "الأسرة الثلاثين",
+          "الأسرة ٣٠",
+          "الاسرة الثلاثون",
+          "الاسرة الثلاثين"
+        ],
+        "english_ordinal": "thirtieth",
+        "french_ordinal": "trentième",
+        "parents": [
+          "late-period"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar"
+        ],
+        "alignment": [
+          {
+            "scheme": "PACTOLS",
+            "uri": "https://ark.frantiq.fr/ark:/26678/pcrtvf8wWlbh1a",
+            "label": "XXXe dynastie égyptienne",
+            "match": "exact"
+          }
+        ]
+      },
+      {
+        "number": 31,
+        "label_fr": "XXXIe dynastie",
+        "label_en": "31st Dynasty",
+        "arabic_ordinal": "الحادية والثلاثون",
+        "arabic_ordinal_variants": [
+          "الحادية والثلاثون",
+          "الحادية والثلاثين"
+        ],
+        "arabic_aliases": [
+          "الأسرة 31",
+          "الأسرة الحادية والثلاثون",
+          "الأسرة الحادية والثلاثين",
+          "الأسرة ٣١",
+          "الاسرة الحادية والثلاثون",
+          "الاسرة الحادية والثلاثين"
+        ],
+        "english_ordinal": "thirty-first",
+        "french_ordinal": "trente et unième",
+        "parents": [
+          "second-persian"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/index.html",
+          "https://inscriptionslibrary.bibalex.org/Presentation/FilterPage.aspx?INS_ID=13&lang=ar",
+          "https://oi.uchicago.edu/sites/default/files/uploads/shared/docs/oimp23.pdf"
+        ]
+      }
+    ],
+    "places": [
+      {
+        "id": "upper-egypt",
+        "label_fr": "Haute Égypte",
+        "label_en": "Upper Egypt",
+        "aliases": [
+          "Haute Égypte",
+          "Haute-Égypte",
+          "Upper Egypt",
+          "Oberägypten",
+          "مصر العليا",
+          "صعيد مصر",
+          "الصعيد"
+        ],
+        "evidence": [
+          "Haute Égypte",
+          "Haute-Égypte",
+          "Upper Egypt",
+          "Oberägypten",
+          "مصر العليا",
+          "صعيد مصر"
+        ],
+        "parents": [],
+        "related": [],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/collections/narmer-palette-1/",
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/religion/deitiesplaces.html"
+        ],
+        "alignments": [],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-3-p5-petit-corps-3",
+            "page": 5,
+            "kind": "body",
+            "forms": [
+              "Haute Égypte",
+              "Haute-Égypte"
+            ]
+          },
+          {
+            "id": "boe-2026-3-note-6",
+            "page": 7,
+            "kind": "note",
+            "forms": [
+              "Haute Égypte",
+              "Haute-Égypte"
+            ]
+          },
+          {
+            "id": "boe-2026-4-p23-body-1",
+            "page": 23,
+            "kind": "body",
+            "forms": [
+              "Haute Égypte",
+              "Haute-Égypte"
+            ]
+          },
+          {
+            "id": "boe-2026-5-p6-body-1",
+            "page": 6,
+            "kind": "body",
+            "forms": [
+              "Haute Égypte",
+              "Haute-Égypte"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 4
+      },
+      {
+        "id": "lower-egypt",
+        "label_fr": "Basse Égypte",
+        "label_en": "Lower Egypt",
+        "aliases": [
+          "Basse Égypte",
+          "Basse-Égypte",
+          "Lower Egypt",
+          "Unterägypten",
+          "مصر السفلى",
+          "الوجه البحري"
+        ],
+        "evidence": [
+          "Basse Égypte",
+          "Basse-Égypte",
+          "Lower Egypt",
+          "Unterägypten",
+          "مصر السفلى",
+          "الوجه البحري"
+        ],
+        "parents": [],
+        "related": [],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/collections/narmer-palette-1/",
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/religion/deitiesplaces.html"
+        ],
+        "alignments": [],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-4-p23-body-1",
+            "page": 23,
+            "kind": "body",
+            "forms": [
+              "Basse Égypte",
+              "Basse-Égypte"
+            ]
+          },
+          {
+            "id": "boe-2026-4-note-98",
+            "page": 25,
+            "kind": "note",
+            "forms": [
+              "Basse Égypte",
+              "Basse-Égypte"
+            ]
+          },
+          {
+            "id": "boe-2026-4-note-178",
+            "page": 45,
+            "kind": "note",
+            "forms": [
+              "Basse Égypte",
+              "Basse-Égypte"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 3
+      },
+      {
+        "id": "nubia",
+        "label_fr": "Nubie",
+        "label_en": "Nubia",
+        "aliases": [
+          "Nubie",
+          "Nubia",
+          "Nubien",
+          "النوبة"
+        ],
+        "evidence": [
+          "Nubie",
+          "Nubia",
+          "Nubien",
+          "النوبة"
+        ],
+        "parents": [],
+        "related": [],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/world-heritage/nubian-monuments-from-abu-simbel-to-philae/"
+        ],
+        "alignments": [],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-4-note-65",
+            "page": 17,
+            "kind": "note",
+            "forms": [
+              "Nubia"
+            ]
+          },
+          {
+            "id": "boe-2026-5-p7-body-1",
+            "page": 7,
+            "kind": "body",
+            "forms": [
+              "Nubia"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 2
+      },
+      {
+        "id": "memphite-necropolis",
+        "label_fr": "Nécropole memphite",
+        "label_en": "Memphite necropolis",
+        "aliases": [
+          "nécropole memphite",
+          "nécropole de Memphis",
+          "Memphite necropolis",
+          "necropolis of Memphis",
+          "جبانة منف",
+          "جبانة ممفيس"
+        ],
+        "evidence": [
+          "nécropole memphite",
+          "nécropole de Memphis",
+          "Memphite necropolis",
+          "necropolis of Memphis",
+          "جبانة منف",
+          "جبانة ممفيس"
+        ],
+        "parents": [],
+        "related": [
+          "memphis"
+        ],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/world-heritage/memphis-and-its-necropolis/"
+        ],
+        "alignments": [],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-3-p8-body-1",
+            "page": 8,
+            "kind": "body",
+            "forms": [
+              "nécropole memphite"
+            ]
+          },
+          {
+            "id": "boe-2026-3-note-8",
+            "page": 8,
+            "kind": "note",
+            "forms": [
+              "nécropole memphite"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 2
+      },
+      {
+        "id": "memphis",
+        "label_fr": "Memphis",
+        "label_en": "Memphis",
+        "aliases": [
+          "Memphis",
+          "Men-nefer",
+          "Mennefer",
+          "منف",
+          "مدينة منف"
+        ],
+        "evidence": [
+          "Memphis",
+          "Men-nefer",
+          "Mennefer",
+          "منف",
+          "مدينة منف"
+        ],
+        "parents": [
+          "lower-egypt"
+        ],
+        "related": [
+          "memphite-necropolis",
+          "saqqara",
+          "abusir",
+          "dahshur",
+          "giza"
+        ],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/world-heritage/memphis-and-its-necropolis/",
+          "https://discovery.ucl.ac.uk/id/eprint/10072642/1/BibAlex%20Writing%20of%20the%20Birds%20Quirke%20Accepted.pdf"
+        ],
+        "alignments": [],
+        "exclude_evidence": [
+          "Memphis Tennessee",
+          "Memphis (Tennessee)",
+          "Memphis, Tennessee",
+          "Memphis-Misraïm",
+          "Memphis Misraim"
+        ],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-3-p4-body-1",
+            "page": 4,
+            "kind": "body",
+            "forms": [
+              "Memphis"
+            ]
+          },
+          {
+            "id": "boe-2026-3-note-5",
+            "page": 6,
+            "kind": "note",
+            "forms": [
+              "Memphis"
+            ]
+          },
+          {
+            "id": "boe-2026-4-note-20",
+            "page": 8,
+            "kind": "note",
+            "forms": [
+              "Memphis"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 3
+      },
+      {
+        "id": "saqqara",
+        "label_fr": "Saqqara",
+        "label_en": "Saqqara",
+        "aliases": [
+          "Saqqara",
+          "Saqqarah",
+          "Sakkara",
+          "Sakkarah",
+          "Saqqâra",
+          "سقارة"
+        ],
+        "evidence": [
+          "Saqqara",
+          "Saqqarah",
+          "Sakkara",
+          "Sakkarah",
+          "Saqqâra",
+          "سقارة"
+        ],
+        "parents": [
+          "memphite-necropolis"
+        ],
+        "related": [
+          "memphis"
+        ],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/archaeological-sites/saqqara/",
+          "https://egymonuments.gov.eg/ar/world-heritage/memphis-and-its-necropolis/",
+          "https://catalogue.bnf.fr/ark:/12148/cb119478206"
+        ],
+        "alignments": [
+          {
+            "scheme": "BnF-RAMEAU",
+            "uri": "https://catalogue.bnf.fr/ark:/12148/cb119478206",
+            "label": "Saqqarah (Égypte ; site archéologique)",
+            "match": "exact"
+          }
+        ],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-3-p2-body-1",
+            "page": 2,
+            "kind": "body",
+            "forms": [
+              "Saqqara",
+              "Saqqarah",
+              "Saqqâra"
+            ]
+          },
+          {
+            "id": "boe-2026-3-p3-body-1",
+            "page": 3,
+            "kind": "body",
+            "forms": [
+              "Saqqara",
+              "Saqqâra"
+            ]
+          },
+          {
+            "id": "boe-2026-3-note-1",
+            "page": 3,
+            "kind": "note",
+            "forms": [
+              "Saqqarah"
+            ]
+          },
+          {
+            "id": "boe-2026-3-p4-body-1",
+            "page": 4,
+            "kind": "body",
+            "forms": [
+              "Saqqara",
+              "Saqqâra"
+            ]
+          },
+          {
+            "id": "boe-2026-3-p5-body-1",
+            "page": 5,
+            "kind": "body",
+            "forms": [
+              "Saqqara",
+              "Saqqâra"
+            ]
+          },
+          {
+            "id": "boe-2026-3-p5-body-2",
+            "page": 5,
+            "kind": "body",
+            "forms": [
+              "Saqqara",
+              "Saqqâra"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 15
+      },
+      {
+        "id": "serapeum-saqqara",
+        "label_fr": "Sérapéum de Saqqara",
+        "label_en": "Serapeum of Saqqara",
+        "aliases": [
+          "Sérapéum de Saqqara",
+          "Sérapéum de Saqqarah",
+          "Serapeum of Saqqara",
+          "Serapeum of Sakkara",
+          "Serapeum of Saqqarah",
+          "Serapeum de Memphis",
+          "Sérapéum de Memphis",
+          "Serapieion de Memphis",
+          "Serapieion de Saqqarah",
+          "Sarapeum de Saqqarah",
+          "Sarapion de Saqqarah",
+          "سرابيوم سقارة",
+          "سيرابيوم سقارة",
+          "السيرابيوم بسقارة",
+          "السرابيوم بسقارة"
+        ],
+        "evidence": [
+          "Sérapéum de Saqqara",
+          "Sérapéum de Saqqarah",
+          "Serapeum of Saqqara",
+          "Serapeum of Sakkara",
+          "Serapeum of Saqqarah",
+          "Serapeum de Memphis",
+          "Sérapéum de Memphis",
+          "Serapieion de Memphis",
+          "Serapieion de Saqqarah",
+          "Sarapeum de Saqqarah",
+          "Sarapion de Saqqarah",
+          "سرابيوم سقارة",
+          "سيرابيوم سقارة",
+          "السيرابيوم بسقارة",
+          "السرابيوم بسقارة"
+        ],
+        "parents": [
+          "saqqara"
+        ],
+        "related": [],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/monuments/serapeum/",
+          "https://egymonuments.gov.eg/ar/archaeological-sites/saqqara/",
+          "https://catalogue.bnf.fr/ark:/12148/cb11969684s"
+        ],
+        "alignments": [
+          {
+            "scheme": "BnF-RAMEAU",
+            "uri": "https://catalogue.bnf.fr/ark:/12148/cb11969684s",
+            "label": "Saqqarah (Égypte ; site archéologique) -- Serapeum",
+            "match": "exact"
+          }
+        ],
+        "contextual_evidence": [
+          {
+            "form": "Sérapéum",
+            "requires": [
+              "Saqqara",
+              "Saqqarah",
+              "Sakkara",
+              "Sakkarah",
+              "سقارة"
+            ],
+            "within": 400
+          },
+          {
+            "form": "Serapeum",
+            "requires": [
+              "Saqqara",
+              "Saqqarah",
+              "Sakkara",
+              "Sakkarah",
+              "سقارة"
+            ],
+            "within": 400
+          },
+          {
+            "form": "السيرابيوم",
+            "requires": [
+              "Saqqara",
+              "Saqqarah",
+              "Sakkara",
+              "Sakkarah",
+              "سقارة"
+            ],
+            "within": 400
+          },
+          {
+            "form": "السرابيوم",
+            "requires": [
+              "Saqqara",
+              "Saqqarah",
+              "Sakkara",
+              "Sakkarah",
+              "سقارة"
+            ],
+            "within": 400
+          }
+        ],
+        "exclude_evidence": [
+          "Serapeum of Alexandria",
+          "Sérapéum d’Alexandrie",
+          "Sérapéum d'Alexandrie",
+          "سرابيوم الإسكندرية",
+          "سيرابيوم الإسكندرية"
+        ],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-5-note-10",
+            "page": 9,
+            "kind": "note",
+            "forms": [
+              "Serapeum of Sakkara"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 1
+      },
+      {
+        "id": "giza",
+        "label_fr": "Giza / Gizeh",
+        "label_en": "Giza",
+        "aliases": [
+          "Giza",
+          "Gizeh",
+          "Gîza",
+          "Gizah",
+          "Guizèh",
+          "Guizeh",
+          "الجيزة",
+          "جيزة"
+        ],
+        "evidence": [
+          "Giza",
+          "Gizeh",
+          "Gîza",
+          "Gizah",
+          "Guizèh",
+          "Guizeh",
+          "الجيزة",
+          "جيزة"
+        ],
+        "parents": [
+          "lower-egypt"
+        ],
+        "related": [
+          "memphis",
+          "memphite-necropolis"
+        ],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/world-heritage/memphis-and-its-necropolis/",
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/archaeology/sitesindex.html"
+        ],
+        "alignments": [],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-1-note-6",
+            "page": 4,
+            "kind": "note",
+            "forms": [
+              "Giza",
+              "Gîza"
+            ]
+          },
+          {
+            "id": "boe-2026-1-p8-bibliography-1",
+            "page": 8,
+            "kind": "bibliography",
+            "forms": [
+              "Giza",
+              "Gîza"
+            ]
+          },
+          {
+            "id": "boe-2026-1-p8-bibliography-2",
+            "page": 8,
+            "kind": "bibliography",
+            "forms": [
+              "Giza",
+              "Gîza"
+            ]
+          },
+          {
+            "id": "boe-2026-3-p3-body-1",
+            "page": 3,
+            "kind": "body",
+            "forms": [
+              "Giza",
+              "Gîza"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 4
+      },
+      {
+        "id": "abusir",
+        "label_fr": "Abousir (nécropole memphite)",
+        "label_en": "Abusir (Memphite necropolis)",
+        "aliases": [
+          "Abousir",
+          "Abusir",
+          "Abū Sīr",
+          "Abūsīr",
+          "Abūṣīr",
+          "Abu Sir",
+          "أبو صير",
+          "ابو صير",
+          "أبوصير",
+          "ابوصير"
+        ],
+        "evidence": [
+          "Abousir",
+          "Abusir",
+          "Abū Sīr",
+          "Abūsīr",
+          "Abūṣīr",
+          "Abu Sir",
+          "أبو صير",
+          "ابو صير",
+          "أبوصير",
+          "ابوصير"
+        ],
+        "parents": [
+          "memphite-necropolis"
+        ],
+        "related": [
+          "memphis"
+        ],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/world-heritage/memphis-and-its-necropolis/",
+          "https://catalogue.bnf.fr/ark:/12148/cb144053086"
+        ],
+        "alignments": [
+          {
+            "scheme": "BnF-RAMEAU",
+            "uri": "https://catalogue.bnf.fr/ark:/12148/cb144053086",
+            "label": "Abousir (Guizèh, Égypte ; site archéologique)",
+            "match": "exact"
+          }
+        ],
+        "exclude_evidence": [
+          "Abusir el-Meleq",
+          "Abousir el-Meleq",
+          "Abusir el Meleq",
+          "Abousir el Meleq",
+          "أبو صير الملق",
+          "أبوصير الملق",
+          "ابو صير الملق",
+          "أبو صير بنا",
+          "ابو صير بنا",
+          "أبوصير بنا",
+          "Abu Sir Bana",
+          "Taposiris Magna",
+          "Abousir (Taposiris Magna)",
+          "Abusir (Taposiris Magna)",
+          "Abousir Mariout",
+          "Abusir Mariut"
+        ],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-3-p3-body-1",
+            "page": 3,
+            "kind": "body",
+            "forms": [
+              "Abousir"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 1
+      },
+      {
+        "id": "dahshur",
+        "label_fr": "Dahchour",
+        "label_en": "Dahshur",
+        "aliases": [
+          "Dahchour",
+          "Dahshur",
+          "Dashur",
+          "Dahschur",
+          "دهشور"
+        ],
+        "evidence": [
+          "Dahchour",
+          "Dahshur",
+          "Dashur",
+          "Dahschur",
+          "دهشور"
+        ],
+        "parents": [
+          "memphite-necropolis"
+        ],
+        "related": [
+          "memphis"
+        ],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/archaeological-sites/dahshur/",
+          "https://egymonuments.gov.eg/ar/world-heritage/memphis-and-its-necropolis/",
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/archaeology/sitesindex.html"
+        ],
+        "alignments": [],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-3-p3-body-1",
+            "page": 3,
+            "kind": "body",
+            "forms": [
+              "Dahchour"
+            ]
+          },
+          {
+            "id": "boe-2026-3-note-14",
+            "page": 10,
+            "kind": "note",
+            "forms": [
+              "Dahchour"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 2
+      },
+      {
+        "id": "meidum",
+        "label_fr": "Meydoum",
+        "label_en": "Meidum",
+        "aliases": [
+          "Meydoum",
+          "Meidum",
+          "Maidum",
+          "Medum",
+          "ميدوم"
+        ],
+        "evidence": [
+          "Meydoum",
+          "Meidum",
+          "Maidum",
+          "Medum",
+          "ميدوم"
+        ],
+        "parents": [],
+        "related": [
+          "dahshur"
+        ],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/monuments/the-pyramid-of-meidum"
+        ],
+        "alignments": [],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-3-p3-body-1",
+            "page": 3,
+            "kind": "body",
+            "forms": [
+              "Meydoum"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 1
+      },
+      {
+        "id": "lisht",
+        "label_fr": "Licht",
+        "label_en": "Lisht",
+        "aliases": [
+          "Licht",
+          "Lisht",
+          "el-Lisht",
+          "El Lisht",
+          "اللشت",
+          "لشت"
+        ],
+        "evidence": [
+          "Lisht",
+          "el-Lisht",
+          "El Lisht",
+          "اللشت",
+          "لشت"
+        ],
+        "parents": [],
+        "related": [
+          "memphis",
+          "fayum"
+        ],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/collections/thebes"
+        ],
+        "alignments": [],
+        "corpus_anchors": [],
+        "contextual_evidence": [
+          {
+            "form": "Licht",
+            "requires": [
+              "Saqqara",
+              "Saqqarah",
+              "Meydoum",
+              "Meidum",
+              "fouilles",
+              "fouilla",
+              "pyramide",
+              "pyramid",
+              "excavations",
+              "site"
+            ],
+            "within": 400
+          }
+        ],
+        "raw_literal_anchor_count": 0
+      },
+      {
+        "id": "thebes",
+        "label_fr": "Thèbes (Égypte)",
+        "label_en": "Thebes (Egypt)",
+        "aliases": [
+          "Thèbes",
+          "Thebes",
+          "Waset",
+          "Wȝs.t",
+          "Wꜣs.t",
+          "مدينة طيبة",
+          "طيبة المصرية",
+          "واست",
+          "طيبة"
+        ],
+        "evidence": [
+          "Thèbes",
+          "Thebes",
+          "Waset",
+          "Wȝs.t",
+          "Wꜣs.t",
+          "مدينة طيبة",
+          "طيبة المصرية",
+          "مدينة واست"
+        ],
+        "parents": [
+          "upper-egypt"
+        ],
+        "related": [
+          "luxor"
+        ],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/collections/thebes",
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/religion/deitiesplaces.html",
+          "https://egymonuments.gov.eg/ar/world-heritage/ancient-thebes-and-its-necropolis"
+        ],
+        "alignments": [],
+        "exclude_evidence": [
+          "Thèbes de Béotie",
+          "Thebes in Boeotia",
+          "Thebes (Greece)",
+          "Thèbes (Grèce)",
+          "طيبة اليونانية",
+          "Thebes (Boeotia)",
+          "Thèbes (Béotie)",
+          "Thebes Boeotia",
+          "Thèbes Béotie",
+          "Thebes of Boeotia"
+        ],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-4-p4-body-2",
+            "page": 4,
+            "kind": "body",
+            "forms": [
+              "Thèbes",
+              "Thebes",
+              "Wȝs.t"
+            ]
+          },
+          {
+            "id": "boe-2026-5-note-10",
+            "page": 9,
+            "kind": "note",
+            "forms": [
+              "Thèbes",
+              "Thebes"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 2
+      },
+      {
+        "id": "luxor",
+        "label_fr": "Louxor (ville)",
+        "label_en": "Luxor (city)",
+        "aliases": [
+          "Louxor",
+          "Luxor",
+          "Louqsor",
+          "Louksor",
+          "الأقصر",
+          "الاقصر"
+        ],
+        "evidence": [
+          "Louxor",
+          "Luxor",
+          "Louqsor",
+          "Louksor",
+          "الأقصر",
+          "الاقصر"
+        ],
+        "parents": [
+          "upper-egypt"
+        ],
+        "related": [
+          "thebes"
+        ],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/collections/thebes"
+        ],
+        "alignments": [],
+        "exclude_evidence": [
+          "Temple de Louxor",
+          "Temple of Luxor",
+          "Luxor Temple",
+          "معبد الأقصر",
+          "معبد الاقصر",
+          "Obélisque de Louxor",
+          "Obelisk of Luxor",
+          "Luxor obelisk",
+          "Louxor temple",
+          "Louqsor temple",
+          "Louxor (temple)"
+        ],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-5-p7-body-1",
+            "page": 7,
+            "kind": "body",
+            "forms": [
+              "Luxor"
+            ]
+          },
+          {
+            "id": "boe-2026-5-p7-body-2",
+            "page": 7,
+            "kind": "body",
+            "forms": [
+              "Luxor"
+            ]
+          },
+          {
+            "id": "boe-2026-5-p37-body-1",
+            "page": 37,
+            "kind": "body",
+            "forms": [
+              "Louqsor"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 3
+      },
+      {
+        "id": "karnak",
+        "label_fr": "Karnak",
+        "label_en": "Karnak",
+        "aliases": [
+          "Karnak",
+          "Ipet-sout",
+          "Ipet-sut",
+          "Ipetsut",
+          "Ipet sout",
+          "إبت سوت",
+          "ايبت سوت",
+          "الكرنك",
+          "معبد الكرنك",
+          "معابد الكرنك"
+        ],
+        "evidence": [
+          "Karnak",
+          "Ipet-sout",
+          "Ipet-sut",
+          "Ipetsut",
+          "Ipet sout",
+          "إبت سوت",
+          "ايبت سوت",
+          "الكرنك",
+          "معبد الكرنك",
+          "معابد الكرنك"
+        ],
+        "parents": [
+          "thebes"
+        ],
+        "related": [
+          "luxor-temple"
+        ],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/archaeological-sites/karnak/",
+          "https://catalogue.bnf.fr/ark:/12148/cb15188748j",
+          "https://egymonuments.gov.eg/ar/world-heritage/ancient-thebes-and-its-necropolis"
+        ],
+        "alignments": [
+          {
+            "scheme": "BnF-geographic",
+            "uri": "https://catalogue.bnf.fr/ark:/12148/cb15188748j",
+            "label": "Karnak (Qena, Égypte ; site archéologique)",
+            "match": "exact"
+          }
+        ],
+        "exclude_evidence": [
+          "Carnac (France)",
+          "Carnac en Bretagne"
+        ],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-4-note-12",
+            "page": 4,
+            "kind": "note",
+            "forms": [
+              "Karnak"
+            ]
+          },
+          {
+            "id": "boe-2026-4-p9-body-1",
+            "page": 9,
+            "kind": "body",
+            "forms": [
+              "Karnak"
+            ]
+          },
+          {
+            "id": "boe-2026-4-note-26",
+            "page": 9,
+            "kind": "note",
+            "forms": [
+              "Karnak"
+            ]
+          },
+          {
+            "id": "boe-2026-5-p37-body-1",
+            "page": 37,
+            "kind": "body",
+            "forms": [
+              "Karnak"
+            ]
+          },
+          {
+            "id": "boe-2026-5-p38-body-1",
+            "page": 38,
+            "kind": "body",
+            "forms": [
+              "Karnak"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 5
+      },
+      {
+        "id": "luxor-temple",
+        "label_fr": "Temple de Louxor",
+        "label_en": "Luxor Temple",
+        "aliases": [
+          "Temple de Louxor",
+          "Temple of Luxor",
+          "Luxor Temple",
+          "Temple de Louqsor",
+          "Temple de Louksor",
+          "Opet du sud",
+          "Ipet-resyt",
+          "Ipet resyt",
+          "معبد الأقصر",
+          "معبد الاقصر",
+          "ايبت رسيت"
+        ],
+        "evidence": [
+          "Temple de Louxor",
+          "Temple of Luxor",
+          "Luxor Temple",
+          "Temple de Louqsor",
+          "Temple de Louksor",
+          "Opet du sud",
+          "Ipet-resyt",
+          "Ipet resyt",
+          "معبد الأقصر",
+          "معبد الاقصر",
+          "ايبت رسيت"
+        ],
+        "parents": [
+          "thebes"
+        ],
+        "related": [
+          "luxor",
+          "karnak"
+        ],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/monuments/luxor-temple/",
+          "https://catalogue.bnf.fr/ark:/12148/cb121771977",
+          "https://egymonuments.gov.eg/ar/world-heritage/ancient-thebes-and-its-necropolis"
+        ],
+        "alignments": [
+          {
+            "scheme": "BnF-RAMEAU",
+            "uri": "https://catalogue.bnf.fr/ark:/12148/cb121771977",
+            "label": "Louxor (Égypte) -- Temple",
+            "match": "exact"
+          }
+        ],
+        "corpus_anchors": [],
+        "raw_literal_anchor_count": 0
+      },
+      {
+        "id": "valley-kings",
+        "label_fr": "Vallée des Rois",
+        "label_en": "Valley of the Kings",
+        "aliases": [
+          "Vallée des Rois",
+          "Valley of the Kings",
+          "Valley of Kings",
+          "Tal der Könige",
+          "وادي الملوك",
+          "وادى الملوك"
+        ],
+        "evidence": [
+          "Vallée des Rois",
+          "Valley of the Kings",
+          "Valley of Kings",
+          "Tal der Könige",
+          "وادي الملوك",
+          "وادى الملوك"
+        ],
+        "parents": [
+          "thebes"
+        ],
+        "related": [],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/archaeological-sites/valley-of-the-kings/",
+          "https://egymonuments.gov.eg/ar/world-heritage/ancient-thebes-and-its-necropolis"
+        ],
+        "alignments": [],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-5-p3-body-3",
+            "page": 3,
+            "kind": "body",
+            "forms": [
+              "Valley of the Kings"
+            ]
+          },
+          {
+            "id": "boe-2026-5-note-10",
+            "page": 9,
+            "kind": "note",
+            "forms": [
+              "Valley of Kings"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 2
+      },
+      {
+        "id": "deir-bahari",
+        "label_fr": "Deir el-Bahari",
+        "label_en": "Deir el-Bahari",
+        "aliases": [
+          "Deir el-Bahari",
+          "Deir el Bahari",
+          "Deir el-Bahri",
+          "Deir el Bahri",
+          "الدير البحري",
+          "الدير البحرى"
+        ],
+        "evidence": [
+          "Deir el-Bahari",
+          "Deir el Bahari",
+          "Deir el-Bahri",
+          "Deir el Bahri",
+          "الدير البحري",
+          "الدير البحرى"
+        ],
+        "parents": [
+          "thebes"
+        ],
+        "related": [],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/archaeological-sites/deir-al-bahari",
+          "https://egymonuments.gov.eg/ar/world-heritage/ancient-thebes-and-its-necropolis"
+        ],
+        "alignments": [],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-5-note-10",
+            "page": 9,
+            "kind": "note",
+            "forms": [
+              "Deir el-Bahari",
+              "Deir el Bahari"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 1
+      },
+      {
+        "id": "abydos",
+        "label_fr": "Abydos",
+        "label_en": "Abydos",
+        "aliases": [
+          "Abydos",
+          "Abdjou",
+          "Abedjou",
+          "Abedju",
+          "أبيدوس",
+          "ابيدوس",
+          "مدينة أبيدوس"
+        ],
+        "evidence": [
+          "Abydos",
+          "Abdjou",
+          "Abedjou",
+          "Abedju",
+          "أبيدوس",
+          "ابيدوس",
+          "مدينة أبيدوس"
+        ],
+        "parents": [
+          "upper-egypt"
+        ],
+        "related": [],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/news/new-discovery-of-foundation-deposits-and-the-storerooms-of-ramesses-ii-s-temple-in-abydos",
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/religion/deitiesplaces.html"
+        ],
+        "alignments": [],
+        "exclude_evidence": [
+          "Abydos en Troade",
+          "Abydos in the Troad",
+          "Abydos (Turkey)",
+          "أبيدوس التركية"
+        ],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-1-p4-body-2",
+            "page": 4,
+            "kind": "body",
+            "forms": [
+              "Abydos"
+            ]
+          },
+          {
+            "id": "boe-2026-4-p31-petit-corps-14",
+            "page": 31,
+            "kind": "body",
+            "forms": [
+              "Abydos"
+            ]
+          },
+          {
+            "id": "boe-2026-5-p38-body-3",
+            "page": 38,
+            "kind": "body",
+            "forms": [
+              "Abydos"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 3
+      },
+      {
+        "id": "dendera",
+        "label_fr": "Dendérah",
+        "label_en": "Dendera",
+        "aliases": [
+          "Dendérah",
+          "Dendera",
+          "Dendara",
+          "Denderah",
+          "دندرة",
+          "دندره"
+        ],
+        "evidence": [
+          "Dendérah",
+          "Dendera",
+          "Dendara",
+          "Denderah",
+          "دندرة",
+          "دندره"
+        ],
+        "parents": [
+          "upper-egypt"
+        ],
+        "related": [],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/monuments/temple-of-dendera",
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/religion/deitiesplaces.html"
+        ],
+        "alignments": [],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-4-note-14",
+            "page": 5,
+            "kind": "note",
+            "forms": [
+              "Dendara"
+            ]
+          },
+          {
+            "id": "boe-2026-4-note-25",
+            "page": 9,
+            "kind": "note",
+            "forms": [
+              "Dendara"
+            ]
+          },
+          {
+            "id": "boe-2026-4-p18-body-1",
+            "page": 18,
+            "kind": "body",
+            "forms": [
+              "Dendara"
+            ]
+          },
+          {
+            "id": "boe-2026-4-note-97",
+            "page": 25,
+            "kind": "note",
+            "forms": [
+              "Dendara"
+            ]
+          },
+          {
+            "id": "boe-2026-4-note-98",
+            "page": 25,
+            "kind": "note",
+            "forms": [
+              "Dendera"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 5
+      },
+      {
+        "id": "edfu",
+        "label_fr": "Edfou",
+        "label_en": "Edfu",
+        "aliases": [
+          "Edfou",
+          "Edfu",
+          "Idfu",
+          "إدفو",
+          "ادفو"
+        ],
+        "evidence": [
+          "Edfou",
+          "Edfu",
+          "Idfu",
+          "إدفو",
+          "ادفو"
+        ],
+        "parents": [
+          "upper-egypt"
+        ],
+        "related": [],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/monuments/temple-of-edfu/",
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/religion/deitiesplaces.html"
+        ],
+        "alignments": [],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-4-p4-body-2",
+            "page": 4,
+            "kind": "body",
+            "forms": [
+              "Edfou"
+            ]
+          },
+          {
+            "id": "boe-2026-4-note-12",
+            "page": 4,
+            "kind": "note",
+            "forms": [
+              "Edfou",
+              "Edfu"
+            ]
+          },
+          {
+            "id": "boe-2026-4-p18-body-1",
+            "page": 18,
+            "kind": "body",
+            "forms": [
+              "Edfou"
+            ]
+          },
+          {
+            "id": "boe-2026-4-note-72",
+            "page": 19,
+            "kind": "note",
+            "forms": [
+              "Edfou"
+            ]
+          },
+          {
+            "id": "boe-2026-4-note-84",
+            "page": 21,
+            "kind": "note",
+            "forms": [
+              "Edfou"
+            ]
+          },
+          {
+            "id": "boe-2026-4-note-85",
+            "page": 21,
+            "kind": "note",
+            "forms": [
+              "Edfou"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 14
+      },
+      {
+        "id": "philae",
+        "label_fr": "Philae",
+        "label_en": "Philae",
+        "aliases": [
+          "Philae",
+          "Philæ",
+          "Philaé",
+          "فيلة",
+          "جزيرة فيلة",
+          "معابد فيلة",
+          "معبد فيلة"
+        ],
+        "evidence": [
+          "Philae",
+          "Philæ",
+          "Philaé",
+          "جزيرة فيلة",
+          "معابد فيلة",
+          "معبد فيلة"
+        ],
+        "parents": [],
+        "related": [
+          "aswan",
+          "nubia"
+        ],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/news/the-minister-of-antiquities-visits-the-temples-of-phila-in-asswan/",
+          "https://egymonuments.gov.eg/ar/world-heritage/nubian-monuments-from-abu-simbel-to-philae/"
+        ],
+        "alignments": [],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-4-p2-body-1",
+            "page": 2,
+            "kind": "body",
+            "forms": [
+              "Philae",
+              "Philaé"
+            ]
+          },
+          {
+            "id": "boe-2026-4-p2-body-2",
+            "page": 2,
+            "kind": "body",
+            "forms": [
+              "Philae",
+              "Philaé"
+            ]
+          },
+          {
+            "id": "boe-2026-4-p37-body-1",
+            "page": 37,
+            "kind": "body",
+            "forms": [
+              "Philae",
+              "Philaé"
+            ]
+          },
+          {
+            "id": "boe-2026-4-note-137",
+            "page": 37,
+            "kind": "note",
+            "forms": [
+              "Philae",
+              "Philaé"
+            ]
+          },
+          {
+            "id": "boe-2026-4-p47-body-1",
+            "page": 47,
+            "kind": "body",
+            "forms": [
+              "Philae",
+              "Philaé"
+            ]
+          },
+          {
+            "id": "boe-2026-5-p8-body-1",
+            "page": 8,
+            "kind": "body",
+            "forms": [
+              "Philae",
+              "Philaé"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 6
+      },
+      {
+        "id": "hermopolis",
+        "label_fr": "Hermopolis Magna",
+        "label_en": "Hermopolis Magna",
+        "aliases": [
+          "Hermopolis Magna",
+          "Hermopolis la Grande",
+          "Hermopolis",
+          "Khemenu",
+          "Khmun",
+          "Ashmunein",
+          "el-Ashmunein",
+          "El Ashmunein",
+          "الأشمونين",
+          "الاشمونين"
+        ],
+        "evidence": [
+          "Hermopolis Magna",
+          "Hermopolis la Grande",
+          "Hermopolis",
+          "Khemenu",
+          "Khmun",
+          "Ashmunein",
+          "el-Ashmunein",
+          "El Ashmunein",
+          "الأشمونين",
+          "الاشمونين"
+        ],
+        "parents": [
+          "upper-egypt"
+        ],
+        "related": [],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/news/uncovering-the-upper-part-of-a-colossal-statue-of-king-ramses-ii",
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/religion/deitiescreation.html"
+        ],
+        "alignments": [],
+        "exclude_evidence": [
+          "Hermopolis Parva",
+          "Hermopolis Minor",
+          "Hermopolis la Petite",
+          "هرموبوليس الصغرى"
+        ],
+        "corpus_anchors": [],
+        "raw_literal_anchor_count": 0
+      },
+      {
+        "id": "heliopolis",
+        "label_fr": "Héliopolis antique",
+        "label_en": "Ancient Heliopolis",
+        "aliases": [
+          "Héliopolis antique",
+          "Ancient Heliopolis",
+          "Héliopolis",
+          "Heliopolis",
+          "Iounou",
+          "Iunu",
+          "عين شمس القديمة",
+          "مدينة أون",
+          "أون القديمة",
+          "عين شمس",
+          "أون"
+        ],
+        "evidence": [
+          "Héliopolis antique",
+          "Ancient Heliopolis",
+          "Héliopolis",
+          "Heliopolis",
+          "Iounou",
+          "Iunu",
+          "عين شمس القديمة",
+          "مدينة أون",
+          "أون القديمة"
+        ],
+        "parents": [
+          "lower-egypt"
+        ],
+        "related": [],
+        "sources": [
+          "https://egymonuments.gov.eg/archaeological-sites/ayn-shams-city/",
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/religion/deitiescreation.html",
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/archaeology/sitesindex.html"
+        ],
+        "alignments": [],
+        "exclude_evidence": [
+          "Heliopolis modern",
+          "modern Heliopolis",
+          "Héliopolis moderne",
+          "Masr al-Gadida",
+          "Masr el-Gedida",
+          "Heliopolis (Cairo suburb)",
+          "quartier d’Héliopolis",
+          "quartier d'Héliopolis",
+          "quarter of Heliopolis",
+          "Heliopolis suburb",
+          "district of Heliopolis",
+          "حي هليوبوليس",
+          "Heliopolis (مصر الجديدة)",
+          "Héliopolis (مصر الجديدة)"
+        ],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-4-note-60",
+            "page": 17,
+            "kind": "note",
+            "forms": [
+              "Héliopolis",
+              "Heliopolis"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 1
+      },
+      {
+        "id": "alexandria",
+        "label_fr": "Alexandrie",
+        "label_en": "Alexandria",
+        "aliases": [
+          "Alexandrie",
+          "Alexandria",
+          "Alexandrië",
+          "الإسكندرية",
+          "الاسكندرية"
+        ],
+        "evidence": [
+          "Alexandrie",
+          "Alexandria",
+          "Alexandrië",
+          "الإسكندرية",
+          "الاسكندرية"
+        ],
+        "parents": [
+          "lower-egypt"
+        ],
+        "related": [],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/museums/graeco-roman-museum/"
+        ],
+        "alignments": [],
+        "exclude_evidence": [
+          "Alexandria Virginia",
+          "Alexandria (Virginia)",
+          "Alexandria, Virginia",
+          "Alexandria Troas"
+        ],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-4-note-5",
+            "page": 3,
+            "kind": "note",
+            "forms": [
+              "Alexandrie",
+              "Alexandrië"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 1
+      },
+      {
+        "id": "aswan",
+        "label_fr": "Assouan",
+        "label_en": "Aswan",
+        "aliases": [
+          "Assouan",
+          "Aswan",
+          "Assuan",
+          "أسوان",
+          "اسوان"
+        ],
+        "evidence": [
+          "Assouan",
+          "Aswan",
+          "Assuan",
+          "أسوان",
+          "اسوان"
+        ],
+        "parents": [
+          "upper-egypt"
+        ],
+        "related": [
+          "philae",
+          "nubia"
+        ],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/world-heritage/nubian-monuments-from-abu-simbel-to-philae/",
+          "https://egymonuments.gov.eg/ar/news/the-minister-of-antiquities-visits-the-temples-of-phila-in-asswan/"
+        ],
+        "alignments": [],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-4-note-116",
+            "page": 29,
+            "kind": "note",
+            "forms": [
+              "Assouan"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 1
+      },
+      {
+        "id": "fayum",
+        "label_fr": "Fayoum",
+        "label_en": "Fayum",
+        "aliases": [
+          "Fayoum",
+          "Fayum",
+          "Faiyum",
+          "Fayûm",
+          "الفيوم",
+          "فيوم"
+        ],
+        "evidence": [
+          "Fayoum",
+          "Fayum",
+          "Faiyum",
+          "Fayûm",
+          "الفيوم",
+          "فيوم"
+        ],
+        "parents": [],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/religion/deitiesplaces.html",
+          "https://egymonuments.gov.eg/ar/collections/thebes"
+        ],
+        "alignments": [],
+        "exclude_evidence": [
+          "Medinet el-Fayum",
+          "Médinet el-Fayoum"
+        ],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-4-note-74",
+            "page": 19,
+            "kind": "note",
+            "forms": [
+              "Fayoum"
+            ]
+          },
+          {
+            "id": "boe-2026-4-note-128",
+            "page": 34,
+            "kind": "note",
+            "forms": [
+              "Fayoum"
+            ]
+          },
+          {
+            "id": "boe-2026-5-note-10",
+            "page": 9,
+            "kind": "note",
+            "forms": [
+              "Fayum",
+              "Fayûm"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 3
+      },
+      {
+        "id": "amarna",
+        "label_fr": "Tell el-Amarna",
+        "label_en": "Tell el-Amarna",
+        "aliases": [
+          "Tell el-Amarna",
+          "Tell el Amarna",
+          "el-Amarna",
+          "Amarna",
+          "Akhetaten",
+          "Akhetaton",
+          "Akhétaton",
+          "آخت أتون",
+          "أخت آتون",
+          "تل العمارنة",
+          "العمارنة"
+        ],
+        "evidence": [
+          "Tell el-Amarna",
+          "Tell el Amarna",
+          "el-Amarna",
+          "Amarna",
+          "Akhetaten",
+          "Akhetaton",
+          "Akhétaton",
+          "آخت أتون",
+          "أخت آتون",
+          "تل العمارنة",
+          "العمارنة"
+        ],
+        "parents": [],
+        "related": [],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/collections/amarna/"
+        ],
+        "alignments": [],
+        "exclude_evidence": [
+          "Amarna Period",
+          "Amarna period",
+          "époque amarnienne",
+          "période amarnienne",
+          "العصر العمارني",
+          "الفترة العمارنية"
+        ],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-5-note-10",
+            "page": 9,
+            "kind": "note",
+            "forms": [
+              "Tell el-Amarna",
+              "Tell el Amarna",
+              "el-Amarna",
+              "Amarna"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 1
+      },
+      {
+        "id": "bubastis",
+        "label_fr": "Bubastis / Tell Basta",
+        "label_en": "Bubastis / Tell Basta",
+        "aliases": [
+          "Bubastis",
+          "Boubastis",
+          "Tell Basta",
+          "Tell el-Basta",
+          "Tal Basta",
+          "Per-Bastet",
+          "Per Bastet",
+          "تل بسطة",
+          "تل بسطا",
+          "بر باستت"
+        ],
+        "evidence": [
+          "Bubastis",
+          "Boubastis",
+          "Tell Basta",
+          "Tell el-Basta",
+          "Tal Basta",
+          "Per-Bastet",
+          "Per Bastet",
+          "تل بسطة",
+          "تل بسطا",
+          "بر باستت"
+        ],
+        "parents": [
+          "lower-egypt"
+        ],
+        "related": [],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/archaeological-sites/tal-basta/",
+          "https://egymonuments.gov.eg/ar/historical-periods/third-intermediate-period/"
+        ],
+        "alignments": [],
+        "exclude_evidence": [],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-5-note-10",
+            "page": 9,
+            "kind": "note",
+            "forms": [
+              "Bubastis"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 1
+      },
+      {
+        "id": "abu-simbel",
+        "label_fr": "Abou Simbel",
+        "label_en": "Abu Simbel",
+        "aliases": [
+          "Abou Simbel",
+          "Abu Simbel",
+          "Abu-Simbel",
+          "أبو سمبل",
+          "ابو سمبل",
+          "أبوسمبل",
+          "ابوسمبل"
+        ],
+        "evidence": [
+          "Abou Simbel",
+          "Abu Simbel",
+          "Abu-Simbel",
+          "أبو سمبل",
+          "ابو سمبل",
+          "أبوسمبل",
+          "ابوسمبل"
+        ],
+        "parents": [
+          "nubia"
+        ],
+        "related": [],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/archaeological-sites/abu-simbel/",
+          "https://egymonuments.gov.eg/ar/world-heritage/nubian-monuments-from-abu-simbel-to-philae/"
+        ],
+        "alignments": [],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-5-note-10",
+            "page": 9,
+            "kind": "note",
+            "forms": [
+              "Abu Simbel",
+              "Abu-Simbel"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 1
+      },
+      {
+        "id": "hierakonpolis",
+        "label_fr": "Hiéraconpolis",
+        "label_en": "Hierakonpolis",
+        "aliases": [
+          "Hiéraconpolis",
+          "Hierakonpolis",
+          "Hieraconpolis",
+          "Nekhen",
+          "Nékhen",
+          "Kom el-Ahmar",
+          "Kom al-Ahmar",
+          "الكوم الأحمر",
+          "الكوم الاحمر",
+          "نخن"
+        ],
+        "evidence": [
+          "Hiéraconpolis",
+          "Hierakonpolis",
+          "Hieraconpolis",
+          "Nekhen",
+          "Nékhen",
+          "Kom el-Ahmar",
+          "Kom al-Ahmar",
+          "الكوم الأحمر",
+          "الكوم الاحمر",
+          "نخن"
+        ],
+        "parents": [
+          "upper-egypt"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/hierakonpolis/index.html",
+          "https://egymonuments.gov.eg/ar/collections/narmer-palette-1/"
+        ],
+        "alignments": [],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-4-note-116",
+            "page": 29,
+            "kind": "note",
+            "forms": [
+              "Hiéraconpolis",
+              "Hieraconpolis"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 1
+      },
+      {
+        "id": "oxyrhynchus",
+        "label_fr": "Oxyrhynque",
+        "label_en": "Oxyrhynchus",
+        "aliases": [
+          "Oxyrhynque",
+          "Oxyrhynchus",
+          "Oxyrhynchos",
+          "al-Bahnasa",
+          "el-Bahnasa",
+          "Bahnasa",
+          "البهنسا"
+        ],
+        "evidence": [
+          "Oxyrhynchus",
+          "Oxyrhynchos",
+          "al-Bahnasa",
+          "el-Bahnasa",
+          "Bahnasa",
+          "البهنسا",
+          "terre d’Oxyrhynque",
+          "terre d'Oxyrhynque",
+          "ville d’Oxyrhynque",
+          "ville d'Oxyrhynque"
+        ],
+        "parents": [
+          "upper-egypt"
+        ],
+        "related": [],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/archaeological-sites/al-bahnasa-tombs/",
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/oxyrhynchus/index.html",
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/oxyrhynchus/arabic.html"
+        ],
+        "alignments": [],
+        "exclude_evidence": [
+          "Oxyrhynchus fish",
+          "oxyrhynchus fish",
+          "poisson oxyrhynque",
+          "poissons oxyrhynques"
+        ],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-4-p44-body-2",
+            "page": 44,
+            "kind": "body",
+            "forms": [
+              "terre d’Oxyrhynque",
+              "terre d'Oxyrhynque"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 1
+      },
+      {
+        "id": "bahariya",
+        "label_fr": "Oasis de Bahariya",
+        "label_en": "Bahariya Oasis",
+        "aliases": [
+          "Baharia",
+          "Bahariya",
+          "Bahariyya",
+          "Bahariya Oasis",
+          "Oasis de Bahariya",
+          "الواحات البحرية",
+          "واحة البحرية"
+        ],
+        "evidence": [
+          "Baharia",
+          "Bahariya",
+          "Bahariyya",
+          "Bahariya Oasis",
+          "Oasis de Bahariya",
+          "الواحات البحرية",
+          "واحة البحرية"
+        ],
+        "parents": [],
+        "related": [
+          "kharga"
+        ],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/archaeological-sites/al-bahnasa-tombs/",
+          "https://egymonuments.gov.eg/ar/news/the-guardian-published-a-photo-report-showcasing-the-beautiful-landscapes-of-the-white-desert/"
+        ],
+        "alignments": [],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-4-p44-body-2",
+            "page": 44,
+            "kind": "body",
+            "forms": [
+              "Baharia"
+            ]
+          },
+          {
+            "id": "boe-2026-4-p44-body-3",
+            "page": 44,
+            "kind": "body",
+            "forms": [
+              "Baharia"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 2
+      },
+      {
+        "id": "kharga",
+        "label_fr": "Oasis de Kharga",
+        "label_en": "Kharga Oasis",
+        "aliases": [
+          "Kharga",
+          "el-Kharga",
+          "El Kharga",
+          "Kharga Oasis",
+          "Oasis de Kharga",
+          "واحة الخارجة",
+          "الواحات الخارجة",
+          "الخارجة"
+        ],
+        "evidence": [
+          "Kharga",
+          "el-Kharga",
+          "El Kharga",
+          "Kharga Oasis",
+          "Oasis de Kharga",
+          "واحة الخارجة",
+          "الواحات الخارجة"
+        ],
+        "parents": [],
+        "related": [
+          "bahariya"
+        ],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/news/announcement-of-kharga-city-in-the-new-valley-governorate-as-the-first-environmentally-friendly-city-in-egypt/"
+        ],
+        "alignments": [],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-4-p44-body-2",
+            "page": 44,
+            "kind": "body",
+            "forms": [
+              "Kharga"
+            ]
+          },
+          {
+            "id": "boe-2026-4-p44-body-3",
+            "page": 44,
+            "kind": "body",
+            "forms": [
+              "Kharga"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 2
+      },
+      {
+        "id": "busiris",
+        "label_fr": "Busiris (Delta)",
+        "label_en": "Busiris (Delta)",
+        "aliases": [
+          "Busiris",
+          "Bousiris",
+          "Djedu",
+          "Djedou",
+          "Abu Sir Bana",
+          "Abou Sir Bana",
+          "أبو صير بنا",
+          "ابو صير بنا",
+          "أبوصير بنا",
+          "بوصير"
+        ],
+        "evidence": [
+          "Busiris",
+          "Bousiris",
+          "Djedu",
+          "Djedou",
+          "Abu Sir Bana",
+          "Abou Sir Bana",
+          "أبو صير بنا",
+          "ابو صير بنا",
+          "أبوصير بنا"
+        ],
+        "parents": [
+          "lower-egypt"
+        ],
+        "related": [],
+        "sources": [
+          "https://www.ucl.ac.uk/museums-static/digitalegypt/geo/nomel9.html"
+        ],
+        "alignments": [],
+        "exclude_evidence": [
+          "Busiris (mythologie)",
+          "Busiris (mythology)"
+        ],
+        "corpus_anchors": [
+          {
+            "id": "boe-2026-4-p13-body-2",
+            "page": 13,
+            "kind": "body",
+            "forms": [
+              "Busiris"
+            ]
+          },
+          {
+            "id": "boe-2026-4-p14-body-1",
+            "page": 14,
+            "kind": "body",
+            "forms": [
+              "Busiris"
+            ]
+          }
+        ],
+        "raw_literal_anchor_count": 2
+      },
+      {
+        "id": "tanis",
+        "label_fr": "Tanis / San el-Hagar",
+        "label_en": "Tanis / San el-Hagar",
+        "aliases": [
+          "Tanis",
+          "San el-Hagar",
+          "San el Hagar",
+          "San al-Hagar",
+          "صان الحجر",
+          "صان الحجر القبلية",
+          "تانيس"
+        ],
+        "evidence": [
+          "Tanis",
+          "San el-Hagar",
+          "San el Hagar",
+          "San al-Hagar",
+          "صان الحجر",
+          "صان الحجر القبلية",
+          "تانيس"
+        ],
+        "parents": [
+          "lower-egypt"
+        ],
+        "related": [],
+        "sources": [
+          "https://egymonuments.gov.eg/ar/historical-periods/third-intermediate-period/",
+          "https://pactols.frantiq.fr/?idc=24157&idt=th17",
+          "https://ark.frantiq.fr/ark:/26678/pcrt4sAd0fyyew"
+        ],
+        "alignments": [
+          {
+            "scheme": "PACTOLS-Lieux",
+            "uri": "https://ark.frantiq.fr/ark:/26678/pcrt4sAd0fyyew",
+            "label": "Tanis",
+            "match": "exact"
+          }
+        ],
+        "corpus_anchors": [],
+        "raw_literal_anchor_count": 0
+      }
+    ]
+  },
+  "hierarchy": [
+    [
+      "period:predynastic",
+      "period:badarian"
+    ],
+    [
+      "period:naqada",
+      "period:naqada-1"
+    ],
+    [
+      "period:predynastic",
+      "period:naqada-1"
+    ],
+    [
+      "period:naqada",
+      "period:naqada-2"
+    ],
+    [
+      "period:predynastic",
+      "period:naqada-2"
+    ],
+    [
+      "period:naqada",
+      "period:naqada-3"
+    ],
+    [
+      "period:pharaonic",
+      "period:early-dynastic"
+    ],
+    [
+      "period:pharaonic",
+      "period:old-kingdom"
+    ],
+    [
+      "period:pharaonic",
+      "period:first-intermediate"
+    ],
+    [
+      "period:pharaonic",
+      "period:middle-kingdom"
+    ],
+    [
+      "period:pharaonic",
+      "period:second-intermediate"
+    ],
+    [
+      "period:pharaonic",
+      "period:new-kingdom"
+    ],
+    [
+      "period:new-kingdom",
+      "period:ramesside"
+    ],
+    [
+      "period:pharaonic",
+      "period:third-intermediate"
+    ],
+    [
+      "period:pharaonic",
+      "period:late-period"
+    ],
+    [
+      "period:late-period",
+      "period:saite"
+    ],
+    [
+      "period:late-period",
+      "period:persian"
+    ],
+    [
+      "period:persian",
+      "period:first-persian"
+    ],
+    [
+      "period:persian",
+      "period:second-persian"
+    ],
+    [
+      "period:greco-roman",
+      "period:macedonian"
+    ],
+    [
+      "period:greco-roman",
+      "period:ptolemaic"
+    ],
+    [
+      "period:greco-roman",
+      "period:roman"
+    ],
+    [
+      "period:early-dynastic",
+      "dynasty:1"
+    ],
+    [
+      "period:early-dynastic",
+      "dynasty:2"
+    ],
+    [
+      "period:old-kingdom",
+      "dynasty:3"
+    ],
+    [
+      "period:old-kingdom",
+      "dynasty:4"
+    ],
+    [
+      "period:old-kingdom",
+      "dynasty:5"
+    ],
+    [
+      "period:old-kingdom",
+      "dynasty:6"
+    ],
+    [
+      "period:pharaonic",
+      "dynasty:7"
+    ],
+    [
+      "period:pharaonic",
+      "dynasty:8"
+    ],
+    [
+      "period:first-intermediate",
+      "dynasty:9"
+    ],
+    [
+      "period:first-intermediate",
+      "dynasty:10"
+    ],
+    [
+      "period:pharaonic",
+      "dynasty:11"
+    ],
+    [
+      "period:middle-kingdom",
+      "dynasty:12"
+    ],
+    [
+      "period:pharaonic",
+      "dynasty:13"
+    ],
+    [
+      "period:pharaonic",
+      "dynasty:14"
+    ],
+    [
+      "period:second-intermediate",
+      "dynasty:15"
+    ],
+    [
+      "period:second-intermediate",
+      "dynasty:16"
+    ],
+    [
+      "period:second-intermediate",
+      "dynasty:17"
+    ],
+    [
+      "period:new-kingdom",
+      "dynasty:18"
+    ],
+    [
+      "period:ramesside",
+      "dynasty:19"
+    ],
+    [
+      "period:ramesside",
+      "dynasty:20"
+    ],
+    [
+      "period:third-intermediate",
+      "dynasty:21"
+    ],
+    [
+      "period:third-intermediate",
+      "dynasty:22"
+    ],
+    [
+      "period:third-intermediate",
+      "dynasty:23"
+    ],
+    [
+      "period:third-intermediate",
+      "dynasty:24"
+    ],
+    [
+      "period:third-intermediate",
+      "dynasty:25"
+    ],
+    [
+      "period:saite",
+      "dynasty:26"
+    ],
+    [
+      "period:first-persian",
+      "dynasty:27"
+    ],
+    [
+      "period:late-period",
+      "dynasty:28"
+    ],
+    [
+      "period:late-period",
+      "dynasty:29"
+    ],
+    [
+      "period:late-period",
+      "dynasty:30"
+    ],
+    [
+      "period:second-persian",
+      "dynasty:31"
+    ],
+    [
+      "place:lower-egypt",
+      "place:memphis"
+    ],
+    [
+      "place:memphite-necropolis",
+      "place:saqqara"
+    ],
+    [
+      "place:saqqara",
+      "place:serapeum-saqqara"
+    ],
+    [
+      "place:lower-egypt",
+      "place:giza"
+    ],
+    [
+      "place:memphite-necropolis",
+      "place:abusir"
+    ],
+    [
+      "place:memphite-necropolis",
+      "place:dahshur"
+    ],
+    [
+      "place:upper-egypt",
+      "place:thebes"
+    ],
+    [
+      "place:upper-egypt",
+      "place:luxor"
+    ],
+    [
+      "place:thebes",
+      "place:karnak"
+    ],
+    [
+      "place:thebes",
+      "place:luxor-temple"
+    ],
+    [
+      "place:thebes",
+      "place:valley-kings"
+    ],
+    [
+      "place:thebes",
+      "place:deir-bahari"
+    ],
+    [
+      "place:upper-egypt",
+      "place:abydos"
+    ],
+    [
+      "place:upper-egypt",
+      "place:dendera"
+    ],
+    [
+      "place:upper-egypt",
+      "place:edfu"
+    ],
+    [
+      "place:upper-egypt",
+      "place:hermopolis"
+    ],
+    [
+      "place:lower-egypt",
+      "place:heliopolis"
+    ],
+    [
+      "place:lower-egypt",
+      "place:alexandria"
+    ],
+    [
+      "place:upper-egypt",
+      "place:aswan"
+    ],
+    [
+      "place:lower-egypt",
+      "place:bubastis"
+    ],
+    [
+      "place:nubia",
+      "place:abu-simbel"
+    ],
+    [
+      "place:upper-egypt",
+      "place:hierakonpolis"
+    ],
+    [
+      "place:upper-egypt",
+      "place:oxyrhynchus"
+    ],
+    [
+      "place:lower-egypt",
+      "place:busiris"
+    ],
+    [
+      "place:lower-egypt",
+      "place:tanis"
+    ]
+  ],
+  "associations": [
+    [
+      "period:predynastic",
+      "period:proto-dynastic"
+    ],
+    [
+      "period:naqada",
+      "period:predynastic"
+    ],
+    [
+      "period:naqada-3",
+      "period:proto-dynastic"
+    ],
+    [
+      "period:naqada-3",
+      "period:predynastic"
+    ],
+    [
+      "period:naqada-3",
+      "period:early-dynastic"
+    ],
+    [
+      "period:proto-dynastic",
+      "period:predynastic"
+    ],
+    [
+      "period:proto-dynastic",
+      "period:naqada-3"
+    ],
+    [
+      "period:proto-dynastic",
+      "period:early-dynastic"
+    ],
+    [
+      "period:early-dynastic",
+      "period:proto-dynastic"
+    ],
+    [
+      "period:greco-roman",
+      "period:byzantine"
+    ],
+    [
+      "period:macedonian",
+      "period:ptolemaic"
+    ],
+    [
+      "period:ptolemaic",
+      "period:macedonian"
+    ],
+    [
+      "period:roman",
+      "period:byzantine"
+    ],
+    [
+      "period:roman",
+      "period:coptic-period"
+    ],
+    [
+      "period:byzantine",
+      "period:roman"
+    ],
+    [
+      "period:byzantine",
+      "period:coptic-period"
+    ],
+    [
+      "period:byzantine",
+      "period:greco-roman"
+    ],
+    [
+      "period:coptic-period",
+      "period:byzantine"
+    ],
+    [
+      "period:coptic-period",
+      "period:roman"
+    ],
+    [
+      "dynasty:7",
+      "period:old-kingdom"
+    ],
+    [
+      "dynasty:7",
+      "period:first-intermediate"
+    ],
+    [
+      "dynasty:8",
+      "period:old-kingdom"
+    ],
+    [
+      "dynasty:8",
+      "period:first-intermediate"
+    ],
+    [
+      "dynasty:11",
+      "period:first-intermediate"
+    ],
+    [
+      "dynasty:11",
+      "period:middle-kingdom"
+    ],
+    [
+      "dynasty:13",
+      "period:middle-kingdom"
+    ],
+    [
+      "dynasty:13",
+      "period:second-intermediate"
+    ],
+    [
+      "dynasty:14",
+      "period:middle-kingdom"
+    ],
+    [
+      "dynasty:14",
+      "period:second-intermediate"
+    ],
+    [
+      "dynasty:25",
+      "period:late-period"
+    ],
+    [
+      "place:memphite-necropolis",
+      "place:memphis"
+    ],
+    [
+      "place:memphis",
+      "place:memphite-necropolis"
+    ],
+    [
+      "place:memphis",
+      "place:saqqara"
+    ],
+    [
+      "place:memphis",
+      "place:abusir"
+    ],
+    [
+      "place:memphis",
+      "place:dahshur"
+    ],
+    [
+      "place:memphis",
+      "place:giza"
+    ],
+    [
+      "place:saqqara",
+      "place:memphis"
+    ],
+    [
+      "place:giza",
+      "place:memphis"
+    ],
+    [
+      "place:giza",
+      "place:memphite-necropolis"
+    ],
+    [
+      "place:abusir",
+      "place:memphis"
+    ],
+    [
+      "place:dahshur",
+      "place:memphis"
+    ],
+    [
+      "place:meidum",
+      "place:dahshur"
+    ],
+    [
+      "place:lisht",
+      "place:memphis"
+    ],
+    [
+      "place:lisht",
+      "place:fayum"
+    ],
+    [
+      "place:thebes",
+      "place:luxor"
+    ],
+    [
+      "place:luxor",
+      "place:thebes"
+    ],
+    [
+      "place:karnak",
+      "place:luxor-temple"
+    ],
+    [
+      "place:luxor-temple",
+      "place:luxor"
+    ],
+    [
+      "place:luxor-temple",
+      "place:karnak"
+    ],
+    [
+      "place:philae",
+      "place:aswan"
+    ],
+    [
+      "place:philae",
+      "place:nubia"
+    ],
+    [
+      "place:aswan",
+      "place:philae"
+    ],
+    [
+      "place:aswan",
+      "place:nubia"
+    ],
+    [
+      "place:bahariya",
+      "place:kharga"
+    ],
+    [
+      "place:kharga",
+      "place:bahariya"
+    ]
+  ],
+  "equivalences": [
+    [
+      "period:saite",
+      "dynasty:26"
+    ],
+    [
+      "period:first-persian",
+      "dynasty:27"
+    ],
+    [
+      "period:second-persian",
+      "dynasty:31"
+    ]
+  ],
+  "descendants": {
+    "period:pharaonic": [
+      "dynasty:1",
+      "dynasty:10",
+      "dynasty:11",
+      "dynasty:12",
+      "dynasty:13",
+      "dynasty:14",
+      "dynasty:15",
+      "dynasty:16",
+      "dynasty:17",
+      "dynasty:18",
+      "dynasty:19",
+      "dynasty:2",
+      "dynasty:20",
+      "dynasty:21",
+      "dynasty:22",
+      "dynasty:23",
+      "dynasty:24",
+      "dynasty:25",
+      "dynasty:26",
+      "dynasty:27",
+      "dynasty:28",
+      "dynasty:29",
+      "dynasty:3",
+      "dynasty:30",
+      "dynasty:31",
+      "dynasty:4",
+      "dynasty:5",
+      "dynasty:6",
+      "dynasty:7",
+      "dynasty:8",
+      "dynasty:9",
+      "period:early-dynastic",
+      "period:first-intermediate",
+      "period:first-persian",
+      "period:late-period",
+      "period:middle-kingdom",
+      "period:new-kingdom",
+      "period:old-kingdom",
+      "period:persian",
+      "period:ramesside",
+      "period:saite",
+      "period:second-intermediate",
+      "period:second-persian",
+      "period:third-intermediate"
+    ],
+    "period:predynastic": [
+      "period:badarian",
+      "period:naqada-1",
+      "period:naqada-2"
+    ],
+    "period:badarian": [],
+    "period:naqada": [
+      "period:naqada-1",
+      "period:naqada-2",
+      "period:naqada-3"
+    ],
+    "period:naqada-1": [],
+    "period:naqada-2": [],
+    "period:naqada-3": [],
+    "period:proto-dynastic": [],
+    "period:early-dynastic": [
+      "dynasty:1",
+      "dynasty:2"
+    ],
+    "period:old-kingdom": [
+      "dynasty:3",
+      "dynasty:4",
+      "dynasty:5",
+      "dynasty:6"
+    ],
+    "period:first-intermediate": [
+      "dynasty:10",
+      "dynasty:9"
+    ],
+    "period:middle-kingdom": [
+      "dynasty:12"
+    ],
+    "period:second-intermediate": [
+      "dynasty:15",
+      "dynasty:16",
+      "dynasty:17"
+    ],
+    "period:new-kingdom": [
+      "dynasty:18",
+      "dynasty:19",
+      "dynasty:20",
+      "period:ramesside"
+    ],
+    "period:ramesside": [
+      "dynasty:19",
+      "dynasty:20"
+    ],
+    "period:third-intermediate": [
+      "dynasty:21",
+      "dynasty:22",
+      "dynasty:23",
+      "dynasty:24",
+      "dynasty:25"
+    ],
+    "period:late-period": [
+      "dynasty:26",
+      "dynasty:27",
+      "dynasty:28",
+      "dynasty:29",
+      "dynasty:30",
+      "dynasty:31",
+      "period:first-persian",
+      "period:persian",
+      "period:saite",
+      "period:second-persian"
+    ],
+    "period:saite": [
+      "dynasty:26"
+    ],
+    "period:persian": [
+      "dynasty:27",
+      "dynasty:31",
+      "period:first-persian",
+      "period:second-persian"
+    ],
+    "period:first-persian": [
+      "dynasty:27"
+    ],
+    "period:second-persian": [
+      "dynasty:31"
+    ],
+    "period:greco-roman": [
+      "period:macedonian",
+      "period:ptolemaic",
+      "period:roman"
+    ],
+    "period:macedonian": [],
+    "period:ptolemaic": [],
+    "period:roman": [],
+    "period:byzantine": [],
+    "period:coptic-period": [],
+    "dynasty:1": [],
+    "dynasty:2": [],
+    "dynasty:3": [],
+    "dynasty:4": [],
+    "dynasty:5": [],
+    "dynasty:6": [],
+    "dynasty:7": [],
+    "dynasty:8": [],
+    "dynasty:9": [],
+    "dynasty:10": [],
+    "dynasty:11": [],
+    "dynasty:12": [],
+    "dynasty:13": [],
+    "dynasty:14": [],
+    "dynasty:15": [],
+    "dynasty:16": [],
+    "dynasty:17": [],
+    "dynasty:18": [],
+    "dynasty:19": [],
+    "dynasty:20": [],
+    "dynasty:21": [],
+    "dynasty:22": [],
+    "dynasty:23": [],
+    "dynasty:24": [],
+    "dynasty:25": [],
+    "dynasty:26": [],
+    "dynasty:27": [],
+    "dynasty:28": [],
+    "dynasty:29": [],
+    "dynasty:30": [],
+    "dynasty:31": [],
+    "place:upper-egypt": [
+      "place:abydos",
+      "place:aswan",
+      "place:deir-bahari",
+      "place:dendera",
+      "place:edfu",
+      "place:hermopolis",
+      "place:hierakonpolis",
+      "place:karnak",
+      "place:luxor",
+      "place:luxor-temple",
+      "place:oxyrhynchus",
+      "place:thebes",
+      "place:valley-kings"
+    ],
+    "place:lower-egypt": [
+      "place:alexandria",
+      "place:bubastis",
+      "place:busiris",
+      "place:giza",
+      "place:heliopolis",
+      "place:memphis",
+      "place:tanis"
+    ],
+    "place:nubia": [
+      "place:abu-simbel"
+    ],
+    "place:memphite-necropolis": [
+      "place:abusir",
+      "place:dahshur",
+      "place:saqqara",
+      "place:serapeum-saqqara"
+    ],
+    "place:memphis": [],
+    "place:saqqara": [
+      "place:serapeum-saqqara"
+    ],
+    "place:serapeum-saqqara": [],
+    "place:giza": [],
+    "place:abusir": [],
+    "place:dahshur": [],
+    "place:meidum": [],
+    "place:lisht": [],
+    "place:thebes": [
+      "place:deir-bahari",
+      "place:karnak",
+      "place:luxor-temple",
+      "place:valley-kings"
+    ],
+    "place:luxor": [],
+    "place:karnak": [],
+    "place:luxor-temple": [],
+    "place:valley-kings": [],
+    "place:deir-bahari": [],
+    "place:abydos": [],
+    "place:dendera": [],
+    "place:edfu": [],
+    "place:philae": [],
+    "place:hermopolis": [],
+    "place:heliopolis": [],
+    "place:alexandria": [],
+    "place:aswan": [],
+    "place:fayum": [],
+    "place:amarna": [],
+    "place:bubastis": [],
+    "place:abu-simbel": [],
+    "place:hierakonpolis": [],
+    "place:oxyrhynchus": [],
+    "place:bahariya": [],
+    "place:kharga": [],
+    "place:busiris": [],
+    "place:tanis": []
+  },
+  "period_policy": [
+    "Parents are search-group relations: a broad search may include the explicit attestation of a narrower concept. They do not rewrite the source date.",
+    "Related concepts are navigation only and must never produce evidence for each other.",
+    "Aliases are query names; evidence lists literal wording allowed in excerpts. Coordinated Old and Middle Kingdom explicitly attests both.",
+    "Never equate a language or script with its namesake historical period. No classification from a ruler name, citation year or a bare numeral.",
+    "The traditional1–31 numbering is supported. Endpoints of a written range may be recognized, but intermediate numbers are not invented.",
+    "Period dates vary between authorities; no absolute dating intervals are supplied for automatic filtering.",
+    "PACTOLS and BnF alignments are curated individually, not an exhaustive imported thesaurus. Observed authority labels are preserved in alignment metadata.",
+    "Dynasties7,8,11,13,14 belong to the general Pharaonic search group; debated narrower period boundaries remain related links only. This editorial grouping does not resolve their chronology."
+  ],
+  "place_policy": {},
+  "sources": {
+    "periods": [],
+    "places": []
+  },
+  "engine_normalized_lf_sha256": "1b166ba084421544065392b03920e70813e1a12e51ac79d297d85a470244deb9",
+  "license": {
+    "name": "Open Database License 1.0 (ODbL) — référentiel de données adapté",
+    "uri": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "scope": "Ce fichier de données historiques et géographiques ; les textes des articles conservent leur propre licence."
+  },
+  "attribution": [
+    {
+      "name": "Bibliothèque nationale de France",
+      "dataset": "RAMEAU / autorités BnF",
+      "reference": "https://rameau.bnf.fr/informations/produits",
+      "license": "Licence ouverte"
+    },
+    {
+      "name": "CNRS-Frantiq",
+      "dataset": "PACTOLS",
+      "reference": "https://www.frantiq.fr/pactols/le-thesaurus/",
+      "license": "ODbL 1.0"
+    },
+    {
+      "name": "BOE",
+      "contribution": "Sélection des concepts et alignements vérifiés ; variantes et relations documentées par les autres sources citées dans chaque entrée."
+    }
+  ],
+  "description": "Sous-ensemble documentaire contrôlé pour les mentions de périodes, dynasties et lieux dans les extraits BOE. Les alignements ne constituent pas un import exhaustif des référentiels. Aucune datation ni provenance n’est déduite du nom d’un roi ou d’une date isolée."
+}
