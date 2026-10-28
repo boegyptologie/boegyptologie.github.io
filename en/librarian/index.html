@@ -57,8 +57,8 @@
   </script>
   <!-- BOE institutional styles, followed by shared search-tool styles. -->
   <link rel="stylesheet" href="/assets/style.css?v=16">
-  <link rel="stylesheet" href="../../fr/bibliothecaire/styles.css?v=22">
-  <script type="module" src="../../fr/bibliothecaire/app.js?v=22"></script>
+  <link rel="stylesheet" href="../../fr/bibliothecaire/styles.css?v=23">
+  <script type="module" src="../../fr/bibliothecaire/app.js?v=23"></script>
   <meta property="og:locale:alternate" content="fr_FR">
   <meta name="twitter:image:alt" content="Bibliothèque Ouverte d’Égyptologie logo">
   <meta name="DC.description" content="Explore BOE publications: multilingual search, periods, sites, museums and papyri, with source excerpts and links to the original PDFs.">
@@ -96,6 +96,15 @@
         <label for="theme-input">Topic or keywords</label>
         <textarea id="theme-input" name="theme" rows="3" maxlength="1800" required dir="auto" enterkeyhint="search" placeholder="E.g. Coptic, Pyramid Texts, mꜣꜥ"></textarea>
         <div class="form-bottom">
+          <fieldset class="search-match-options" aria-describedby="search-match-help">
+            <legend>Matching</legend>
+            <div class="search-match-choices">
+              <label for="match-expanded"><input id="match-expanded" type="radio" name="search-match" value="expanded" aria-label="Expanded search" checked disabled> <span>Expanded</span></label>
+              <label for="match-variants"><input id="match-variants" type="radio" name="search-match" value="variants" aria-label="Close variants" disabled> <span>Close variants</span></label>
+              <label for="match-exact"><input id="match-exact" type="radio" name="search-match" value="exact" aria-label="Exact word or phrase" disabled> <span>Exact</span></label>
+            </div>
+            <p id="search-match-help">Includes spelling variants and some equivalents.</p>
+          </fieldset>
           <button id="search-button" type="submit" disabled>Search</button>
         </div>
       </form>

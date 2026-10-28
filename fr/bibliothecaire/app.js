@@ -139,10 +139,16 @@ const ENGLISH_UI={
   "témoin": "manuscript witness",
   "référence d’inventaire": "inventory reference",
   "Ces filtres portent sur les périodes, lieux, musées et sources mentionnés dans les extraits. Ils se cumulent. Cliquez à nouveau pour retirer un filtre.": "These filters use periods, places, museums and sources mentioned in the excerpts. Filters are combined. Click again to remove a filter.",
+  "Recherche exacte : « {query} ». Aucun élargissement aux équivalences.": "Exact search: “{query}”. No expansion to equivalents.",
+  "Recherche avec variantes proches : « {query} ». Sans associations thématiques.": "Close-variant search: “{query}”. No thematic associations.",
+  "Formes attestées : {forms}.": "Attested forms: {forms}.",
+  "Sans équivalences. Majuscules ignorées, accents conservés.": "No equivalents. Case is ignored; accents are preserved.",
+  "Variantes graphiques et formes proches répertoriées, sans associations thématiques.": "Listed spelling variants and close forms, without thematic associations.",
+  "Inclut les variantes et certaines équivalences.": "Includes spelling variants and some equivalents.",
   "Copte": "Coptic"
 };
 function t(message,values={}){const template=LANGUAGE==='en'?(ENGLISH_UI[message]??message):message;return template.replace(/\{(\w+)\}/g,(match,key)=>Object.hasOwn(values,key)?String(values[key]):match);}
-const state = { corpus:null, docs:new Map(), result:[], baseResult:[], keywordRefinements:[], contextRefinements:[], contextExpanded:{period:false,place:false,source:false}, contextEvidence:new Map(), search:'', filter:'all', visibleCount:18, lexicon:new Map(), egyptianIndex:new Map(), citedNames:new Set(), activeTerms:[], plan:null, running:false };
+const state = { corpus:null, docs:new Map(), result:[], baseResult:[], keywordRefinements:[], contextRefinements:[], contextExpanded:{period:false,place:false,source:false}, contextEvidence:new Map(), search:'', filter:'all', visibleCount:18, lexicon:new Map(), egyptianIndex:new Map(), citedNames:new Set(), activeTerms:[], plan:null, running:false, exact:false, matchMode:'expanded' };
 const STOP = new Set('a à au aux avec car ce ces cet cette comme dans de des du elle elles en est et être il ils je la le les leur leurs mais me mon ne non nos notre nous on ont ou où par pas plus pour qu que quel quelle quels quelles qui quoi sa se ses son sont sous sur ta te tes ton tous tout un une vos votre vous y about after all also an and are as at be been between by can for from had has have in into is it its more not of on or other our over that the their there these this those to was were what when where which who why with would your der die das den dem ein eine einer eins nicht und über von im mit zur des aux sous sont في من عن على الى إلى مع كما الذي التي هذا هذه ذلك هناك بين عند هو هي هم ثم او أو'.split(' '));
 const THEMES = [
   {label:'Vérité', triggers:['truth','true','truthfulness','vérité','vérités','verite','verdade','verdad','verità','Wahrheit','الحقيقة','حقيقة','الصدق'], keywords:['truth','true','truly','vérité']},
@@ -1205,7 +1211,166 @@ function queryRelations(query,groups){
   }
   return relations;
 }
-function buildPlan(query){
+// Recherche littérale : aucune équivalence, correction ou relation de concepts.
+// La composition Unicode, la casse et les blancs sont les seules tolérances.
+// Variantes proches : familles lexicales explicites et graphies, jamais thèmes,
+// synonymes opaques, traduction entre écritures ou descendants d'un concept.
+// Les flexions ne sont pas produites par une règle générale de troncature.
+const CLOSE_VARIANT_FAMILIES=[
+ ['etymology','etymologies','etymological','etymologically','étymologie','étymologies','étymologique','étymologiques','étymologiquement'],
+ ['morphology','morphologies','morphological','morphologically','morphologie','morphologies','morphologique','morphologiques','morphologiquement'],
+ ['phonetic','phonetics','phonetically','phonétique','phonétiques','phonétiquement'],
+ ['phonology','phonologies','phonological','phonologically','phonologie','phonologies','phonologique','phonologiques'],
+ ['orthography','orthographies','orthographic','orthographical','orthographically','orthographe','orthographes','orthographique','orthographiques','orthographiquement'],
+ ['graphie','graphies','graphique','graphiques','graphiquement','graphic','graphically'],
+ ['linguistic','linguistics','linguistically','linguistique','linguistiques','linguistiquement'],
+ ['hieroglyph','hieroglyphs','hieroglyphic','hieroglyphics','hiéroglyphe','hiéroglyphes','hiéroglyphique','hiéroglyphiques'],
+ ['grammaticalisation','grammaticalisations','grammaticaliser','grammaticalization','grammaticalizations','grammaticalize','grammaticalizes','grammaticalized','grammaticalizing','grammaticalise','grammaticalised','grammaticalising'],
+ ['nominaliseur','nominaliseurs','nominalizer','nominalizers','nominaliser','nominalisers'],
+ ['nominalisation','nominalisations','nominalization','nominalizations'],
+ ['participe','participes','participle','participles','participial','participiale','participiales','participiaux'],
+ ['infinitif','infinitifs','infinitive','infinitives','infinitival'],
+ ['pronom','pronoms','pronoun','pronouns','pronominal','pronominale','pronominales','pronominaux'],
+ ['verbe','verbes','verb','verbs','verbal','verbale','verbales','verbaux','verbally'],
+ ['nom','noms'],['noun','nouns'],
+ ['copte','coptes','coptic','copta','copto'],
+ ['grec','grecs','grecque','grecques','greek'],
+ ['égyptien','égyptiens','égyptienne','égyptiennes','egyptian','egyptians'],
+ ['égyptologie','égyptologique','égyptologiques','egyptology','egyptological'],
+ ['égyptologue','égyptologues','egyptologist','egyptologists'],
+ ['bibliographie','bibliographies','bibliographique','bibliographiques','bibliography','bibliographic','bibliographical','bibliographically'],
+ ['translittération','translittérations','transliteration','transliterations','translittérer','transliterate','transliterates','transliterated','transliterating'],
+ ['papyrus','papyri'],['manuscrit','manuscrits','manuscript','manuscripts'],
+ ['stèle','stèles','stele','steles','stela','stelae'],['statue','statues'],
+ ['ouvrier','ouvriers','ouvrière','ouvrières'],['worker','workers'],
+ // Noms propres : graphies du même nom, pas lieux ou personnages associés.
+ ['Saqqara','Saqqarah','Sakkara','Sakkarah'],['Giza','Gizeh','Gizah'],
+ ['Abousir','Abusir'],['Dahchour','Dahshur'],['Dendara','Dendera','Dendérah'],
+ ['Louqsor','Louksor','Luxor'],['Thèbes','Thebes'],['Abydos','Abidos'],
+ ['Caire','Cairo'],['Plutarque','Plutarch'],
+];
+function variantPlainWord(value){
+ return String(value||'').normalize('NFD').replace(/\u0345/gu,'ι').replace(/\p{M}/gu,'').replace(/ـ/gu,'').replace(/[ىی]/gu,'ي').replace(/ک/gu,'ك').toLowerCase().replace(/[ςϲ]/gu,'σ');
+}
+const CLOSE_VARIANT_BY_WORD=new Map();
+for(let index=0;index<CLOSE_VARIANT_FAMILIES.length;index++)for(const form of CLOSE_VARIANT_FAMILIES[index]){
+ const key=variantPlainWord(form),previous=CLOSE_VARIANT_BY_WORD.get(key);
+ if(previous!==undefined&&previous!==index)throw Error('Familles de variantes ambiguës : '+form);
+ CLOSE_VARIANT_BY_WORD.set(key,index);
+}
+function variantEgyptianKey(value,markedOnly=false){
+ const nfc=String(value||'').normalize('NFC');
+ const marked=/[ꜣꜢꜥꜤȝȜʿʕˁʾʔʼʻꞽꞼỉḥḤḫḪẖśŚšŠṯṮṱṰṭṬčČḏḎḳḲïÏ\u032F]/u.test(nfc);
+ // Les capitales de MdC ne sont pas la casse d'un mot ordinaire.
+ const mdc=!markedOnly&&/^[A-Za-z]{2,8}$/u.test(nfc)&&(/[a-z][AHXSTD][a-z]/u.test(nfc)||(/^[AHXSTD][a-z]{2,7}$/u.test(nfc)&&!/[aeiou]/iu.test(nfc)));
+ if(!marked&&!mdc)return null;
+ let key=nfc.replace(/[iI]\u032F/gu,'I').replace(/[uU]\u032F/gu,'U').replace(/[Hh][\u0331\u032d]/gu,'ẖ').replace(/[čČ]\u0323/gu,'ḏ')
+  .replace(/[ꜣꜢȝȜ]/gu,'A').replace(/[ʾʔʼ]/gu,'E').replace(/[ꜥꜤʿʕˁʻ]/gu,'a').replace(/[ꞽꞼỉ]/gu,'j')
+  .replace(/[ḥḤ]/gu,'H').replace(/[ḫḪ]/gu,'x').replace(/ẖ/gu,'X').replace(/[śŚ]/gu,'s').replace(/[šŠ]/gu,'S')
+  .replace(/[ṯṮṱṰčČ]/gu,'T').replace(/[ṭṬ]/gu,'d').replace(/[ḏḎ]/gu,'D').replace(/[ïÏ]/gu,'V').replace(/[ḳḲ]/gu,'q').replace(/3/gu,'A');
+ if(/[^A-Za-z0-9]/u.test(key))return 'marked:'+nfc;
+ return 'egypt:'+Array.from(key,char=>'AHXSTDIUVE'.includes(char)?char:char.toLowerCase()).join('');
+}
+function variantWordKey(value){
+ const marked=variantEgyptianKey(value,true);if(marked)return marked;
+ const plain=variantPlainWord(value),family=CLOSE_VARIANT_BY_WORD.get(plain);
+ if(family!==undefined)return 'family:'+family;
+ return variantEgyptianKey(value)||'literal:'+plain;
+}
+const CLOSE_VARIANT_TEXT_CACHE=new Map();
+let closeVariantCorpus;
+function variantTokens(value){
+ const corpus=typeof state!=='undefined'?state.corpus:null;
+ if(corpus!==closeVariantCorpus){CLOSE_VARIANT_TEXT_CACHE.clear();closeVariantCorpus=corpus;}
+ const text=String(value||'');if(CLOSE_VARIANT_TEXT_CACHE.has(text))return CLOSE_VARIANT_TEXT_CACHE.get(text);
+ const tokens=[];
+ for(const match of text.matchAll(/[\p{L}\p{M}\p{N}]+|\s+|[^\p{L}\p{M}\p{N}\s]/gu)){
+  const raw=match[0],kind=/^[\p{L}\p{M}\p{N}]/u.test(raw)?'word':/^\s/u.test(raw)?'space':'punct';
+  const key=kind==='word'?variantWordKey(raw):kind==='space'?' ':raw.replace(/[’‘]/gu,"'").replace(/[‐‑]/gu,'-');
+  tokens.push({kind,key,start:match.index,end:match.index+raw.length});
+ }
+ if(CLOSE_VARIANT_TEXT_CACHE.size>=900)CLOSE_VARIANT_TEXT_CACHE.delete(CLOSE_VARIANT_TEXT_CACHE.keys().next().value);
+ CLOSE_VARIANT_TEXT_CACHE.set(text,tokens);return tokens;
+}
+function variantMatches(text,query){
+ text=String(text||'');const wanted=variantTokens(String(query||'').trim());if(!wanted.length)return [];
+ const tokens=variantTokens(text),hits=[];
+ for(let at=0;at<=tokens.length-wanted.length;at++){
+  if(tokens[at].kind!==wanted[0].kind||tokens[at].key!==wanted[0].key)continue;
+  let matches=true;for(let offset=1;offset<wanted.length;offset++)if(tokens[at+offset].kind!==wanted[offset].kind||tokens[at+offset].key!==wanted[offset].key){matches=false;break;}
+  if(matches){const first=tokens[at],last=tokens[at+wanted.length-1],before=tokens[at-1],after=tokens[at+wanted.length];
+   // Un numéro à l'intérieur d'un numéro composé n'est pas son identifiant.
+   const numberStart=/\d/u.test(text.slice(first.start,first.end)),numberEnd=/\d/u.test(text.slice(last.start,last.end));
+   if(numberStart&&before?.kind==='punct'&&/[.,/\-–]/u.test(before.key)&&before.end===first.start&&/\d/u.test(text.slice(tokens[at-2]?.start,before.start)))continue;
+   if(numberEnd&&after?.kind==='punct'&&/[.,/\-–]/u.test(after.key)&&after.start===last.end&&tokens[at+wanted.length+1]?.kind==='word'&&tokens[at+wanted.length+1].start===after.end)continue;
+   const start=first.start,end=last.end;hits.push({start,end,surface:text.slice(start,end)});at+=wanted.length-1;}
+ }
+ return hits;
+}
+function variantScores(query){
+ return state.corpus.passages.map(passage=>[passage.id,variantMatches(passage.text,query).length]).filter(([,count])=>count).sort((a,b)=>b[1]-a[1]);
+}
+function variantForms(query,passages){
+ const forms=new Map();for(const passage of passages||state.corpus.passages)for(const hit of variantMatches(passage.text,query)){
+  const key=hit.surface.normalize('NFC').toLowerCase();if(!forms.has(key))forms.set(key,{surface:hit.surface,count:0});forms.get(key).count++;
+ }
+ return [...forms.values()].sort((a,b)=>b.count-a.count).map(item=>item.surface);
+}
+function variantLexicalForms(query){
+ const value=String(query||'').trim();if(!/^[\p{L}\p{M}\p{N}]+$/u.test(value)||variantEgyptianKey(value,true))return [];
+ const family=CLOSE_VARIANT_BY_WORD.get(variantPlainWord(value));return family===undefined?[]:[...new Set(CLOSE_VARIANT_FAMILIES[family])];
+}
+
+function exactPattern(query){
+  const value=String(query||'').normalize('NFD').trim();if(!value)return null;
+  const word=/[\p{L}\p{N}\p{M}]/u,characters=Array.from(value);
+  const escaped=value.split(/(\s+)/u).map(part=>/^\s+$/u.test(part)?'\\s+':part.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('');
+  return new RegExp((word.test(characters[0])?'(?<![\\p{L}\\p{N}\\p{M}])':'')+escaped+(word.test(characters.at(-1))?'(?![\\p{L}\\p{N}\\p{M}])':''),'giu');
+}
+let exactSegmenter;
+function exactOffsets(text){
+  if(exactSegmenter===undefined)exactSegmenter=typeof Intl!=='undefined'&&typeof Intl.Segmenter==='function'?new Intl.Segmenter(undefined,{granularity:'grapheme'}):null;
+  const starts=[],ends=[],parts=exactSegmenter?exactSegmenter.segment(text):Array.from(text.matchAll(/\P{M}\p{M}*|\p{M}+/gu),match=>({segment:match[0],index:match.index}));
+  for(const part of parts){const normalized=part.segment.normalize('NFD');for(let index=0;index<normalized.length;index++){starts.push(part.index);ends.push(part.index+part.segment.length);}}
+  return {starts,ends};
+}
+function exactMatches(text,query){
+  const pattern=exactPattern(query);if(!pattern)return [];
+  text=String(text||'');const normalized=text.normalize('NFD'),hits=[];let offsets=null;
+  for(const match of normalized.matchAll(pattern)){
+    if(normalized!==text&&!offsets)offsets=exactOffsets(text);
+    const start=offsets?offsets.starts[match.index]:match.index,end=offsets?offsets.ends[match.index+match[0].length-1]:match.index+match[0].length;
+    hits.push({start,end,surface:text.slice(start,end)});
+  }
+  return hits;
+}
+function exactScores(query){
+  return state.corpus.passages.map(passage=>[passage.id,exactMatches(passage.text,query).length]).filter(([,count])=>count).sort((a,b)=>b[1]-a[1]);
+}
+function getSearchMatchMode(){
+  return $('match-exact')?.checked?'exact':$('match-variants')?.checked?'variants':'expanded';
+}
+function updateSearchMatchHelp(){
+  const mode=getSearchMatchMode(),note=$('search-match-help');if(!note)return;
+  note.textContent=t(mode==='exact'?'Sans équivalences. Majuscules ignorées, accents conservés.':mode==='variants'?'Variantes graphiques et formes proches répertoriées, sans associations thématiques.':'Inclut les variantes et certaines équivalences.');
+}
+function highlightSearchMatch(node,text,query,mode){
+  const primary=mode==='variants'?variantMatches(text,query):exactMatches(text,query);
+  const spans=[...primary,...state.keywordRefinements.flatMap(term=>exactMatches(text,term))].sort((a,b)=>a.start-b.start||b.end-a.end),merged=[];
+  for(const span of spans){const previous=merged.at(-1);if(previous&&span.start<previous.end)previous.end=Math.max(previous.end,span.end);else merged.push({...span});}
+  let at=0;for(const span of merged){node.append(document.createTextNode(text.slice(at,span.start)));const mark=document.createElement('mark');mark.textContent=text.slice(span.start,span.end);node.append(mark);at=span.end;}node.append(document.createTextNode(text.slice(at)));
+}
+function changeSearchMatchMode(){
+  updateSearchMatchHelp();if(state.running||!state.corpus)return;
+  if($('theme-input').value.trim()){runSearch();return;}
+  state.matchMode=getSearchMatchMode();state.exact=state.matchMode==='exact';state.search='';state.plan=null;state.result=[];state.baseResult=[];state.activeTerms=[];state.keywordRefinements=[];state.contextRefinements=[];state.contextExpanded={period:false,place:false,source:false};state.filter='all';state.visibleCount=18;
+  updateGrammarRelations(null);updateContextRelations(null);drawKeywordChips();drawChips('topic-chips',[]);$('topic-analysis').hidden=true;$('query-corrections').hidden=true;
+  for(const button of document.querySelectorAll('[data-filter]')){const active=button.dataset.filter==='all';button.classList.toggle('selected',active);button.setAttribute('aria-pressed',String(active));}
+  render();
+}
+
+function buildPlan(query,mode='expanded'){
+  if(mode==='exact'||mode==='variants')return {exact:mode==='exact',variants:mode==='variants',matchMode:mode,query,groups:[{source:query,terms:[query],coreTerms:[query],egyptKeys:[]}],terms:[query],topics:[{label:query}],corrections:[],relations:[]};
   query=corpusQuestion(query);
   const egyptian=egyptianQueryMatches(query);
   const egyptByStart=new Map(egyptian.map(m=>[m.start,m]));
@@ -1241,7 +1406,7 @@ function buildPlan(query){
     const egyptKeys=[...new Set(egyptMatches.map(m=>m.key))];
     const egyptAliases=[...new Set(egyptKeys.flatMap(key=>[...state.egyptianIndex.get(key).forms].flatMap(words)))];
     const curated=[...new Set(variants.flatMap(v=>CURATED_EQUIVALENTS.get(v)||[]))];
-    const suggestions=[...new Set([...egyptAliases,...curated])];
+    const suggestions=[...new Set([...egyptAliases,...curated,...variantLexicalForms(source).flatMap(words)])];
     for(const match of egyptMatches){
       const representative=[...state.egyptianIndex.get(match.key).forms].find(form=>EGYPT_MARKED.test(form));
       if(representative&&fold(representative)!==source)corrections.push(`${match.raw} → ${representative} (${t('translittération égyptologique')})`);
@@ -1257,7 +1422,7 @@ function buildPlan(query){
   }
   const topics=[...foundThemes.values()];
   const terms=[...new Set(groups.flatMap(g=>g.terms))].slice(0,55);
-  return {groups,terms,topics,corrections,relations:queryRelations(query,groups)};
+  return {groups,terms,topics,corrections,relations:queryRelations(query,groups),matchMode:'expanded'};
 }
 function excerptType(p){return p.kind==='note'?(p.number?t('Note {number}',{number:p.number}):t('Note à contrôler')):p.kind==='bibliography'?t('Bibliographie'):t('Texte de l’article');}
 function pdfURL(p){const d=state.docs.get(p.doc_id);return d.url?`${d.url}#page=${p.page}`:d.doi?`https://doi.org/${encodeURIComponent(d.doi)}`:null;}
@@ -1404,6 +1569,7 @@ function rankedResults(lexical,question,plan=null){
   // Chaque résultat conserve les attestations lexicales, grammaticales
   // et philologiques exigées par la recherche.
   if(!lexical.length)return [];
+  if(plan?.exact||plan?.variants)return lexical.map(([id,score])=>({id,score}));
   const groups=plan?.groups||[];
   if(groups.length===1&&groups[0].egyptKeys?.length){
     const keys=groups[0].egyptKeys;
@@ -1498,12 +1664,12 @@ function render(){
   for(const item of selected){const d=state.docs.get(item.doc_id);const card=document.createElement('article');card.className='source-card';
     const head=document.createElement('div');head.className='source-top';const tag=document.createElement('span');tag.className=`source-kind ${item.kind}`;tag.textContent=excerptType(item);const page=document.createElement('span');page.className='source-page';page.textContent=`p. ${item.page} · ${d.author}`;head.append(tag,page);card.append(head);
     const title=document.createElement('h4');title.textContent=d.title;card.append(title);const meta=document.createElement('div');meta.className='source-meta';meta.textContent=`${d.journal}${d.doi?' · '+d.doi:''}`;card.append(meta);
-    const egyptEvidence=(state.plan?.groups||[]).flatMap(g=>(g.egyptKeys||[]).flatMap(key=>state.egyptianIndex.get(key)?.byId.get(item.id)?.map(hit=>hit.raw)||[]));
-    const corpusEvidence=[...(state.plan?.groups||[]),...state.contextRefinements.map(concept=>({concept}))].flatMap(g=>g.concept?conceptMentions(item.text,g).map(hit=>hit.surface):[]);
+    const egyptEvidence=state.plan?.exact||state.plan?.variants?[]:(state.plan?.groups||[]).flatMap(g=>(g.egyptKeys||[]).flatMap(key=>state.egyptianIndex.get(key)?.byId.get(item.id)?.map(hit=>hit.raw)||[]));
+    const corpusEvidence=state.plan?.exact||state.plan?.variants?[]:[...(state.plan?.groups||[]),...state.contextRefinements.map(concept=>({concept}))].flatMap(g=>g.concept?conceptMentions(item.text,g).map(hit=>hit.surface):[]);
     const keys=[...new Set([...words(state.search),...state.activeTerms,...egyptEvidence,...corpusEvidence.slice(0,10)])];
-    const evidence=[...new Set([...state.keywordRefinements,...corpusEvidence,...egyptEvidence,...(state.plan?.groups||[]).map(g=>g.terms.find(term=>includesTerm(item.text,term))).filter(Boolean)])];
+    const evidence=state.plan?.exact||state.plan?.variants?[...new Set((state.plan.variants?variantMatches(item.text,state.search):exactMatches(item.text,state.search)).map(hit=>hit.surface))]:[...new Set([...state.keywordRefinements,...corpusEvidence,...egyptEvidence,...(state.plan?.groups||[]).map(g=>g.terms.find(term=>includesTerm(item.text,term))).filter(Boolean)])];
     if(evidence.length){const why=document.createElement('div');why.className='source-meta';why.textContent=t('Indices présents dans cet extrait : {terms}{more}',{terms:evidence.slice(0,6).join(' · '),more:evidence.length>6?'…':''});card.append(why);}
-    const excerpt=document.createElement('blockquote');excerpt.dir='auto';highlight(excerpt,item.text,keys);card.append(excerpt);const bar=document.createElement('div');bar.className='source-links';const link=document.createElement('a');link.textContent=t('Vérifier sur le PDF ↗');const url=pdfURL(item);if(url){link.href=url;link.target='_blank';link.rel='noopener noreferrer';}else{link.textContent=t('PDF à renseigner');}
+    const excerpt=document.createElement('blockquote');excerpt.dir='auto';if(state.plan?.exact||state.plan?.variants)highlightSearchMatch(excerpt,item.text,state.search,state.plan.matchMode);else highlight(excerpt,item.text,keys);card.append(excerpt);const bar=document.createElement('div');bar.className='source-links';const link=document.createElement('a');link.textContent=t('Vérifier sur le PDF ↗');const url=pdfURL(item);if(url){link.href=url;link.target='_blank';link.rel='noopener noreferrer';}else{link.textContent=t('PDF à renseigner');}
     const copy=document.createElement('button');copy.type='button';copy.textContent=t('Copier l’extrait et la référence');copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(`${reference(item)}\n${t('« {text} »',{text:item.text})}`);copy.textContent=t('Référence copiée ✓');setTimeout(()=>copy.textContent=t('Copier l’extrait et la référence'),2000);}catch{copy.textContent=t('Copie indisponible');}});bar.append(link,copy);card.append(bar);wrap.append(card);
   }
 }
@@ -1511,6 +1677,8 @@ function render(){
 function updateSearchControls(){
   const unavailable=!state.corpus;
   $('search-button').disabled=unavailable||state.running;
+  for(const id of ['match-expanded','match-variants','match-exact'])if($(id))$(id).disabled=unavailable||state.running;
+  updateSearchMatchHelp();
   $('search-button').textContent=state.running?t('Recherche en cours…'):t('Rechercher');
   for(const button of document.querySelectorAll('[data-example]'))button.disabled=unavailable||state.running;
   $('result-list').setAttribute('aria-busy',String(state.running));
@@ -1570,12 +1738,13 @@ function updateGrammarRelations(plan){
 function showSearchResults(query,plan,lex){
   const scored=rankedResults(lex,query,plan);
   const map=new Map(state.corpus.passages.map(p=>[p.id,p]));state.baseResult=scored.map(({id})=>map.get(id)).filter(Boolean);
+  if(plan.variants)plan.terms=variantForms(query,state.baseResult);
   state.activeTerms=plan.terms;state.plan=plan;
   updateGrammarRelations(plan);updateContextRelations(plan);
   applyKeywordRefinements();
   drawChips('topic-chips',plan.topics.length?plan.topics.map(topic=>t(topic.label)):[t('Terme attesté dans le corpus')]);
 
-  const corrections=$('query-corrections');if(corrections){corrections.hidden=!plan.corrections.length;corrections.textContent=plan.corrections.length?t('Graphies et termes rapprochés : {terms}.',{terms:plan.corrections.join(' ; ')}):'';}
+  const corrections=$('query-corrections');if(corrections){corrections.hidden=!plan.exact&&!plan.variants&&!plan.corrections.length;corrections.textContent=plan.exact?t('Recherche exacte : « {query} ». Aucun élargissement aux équivalences.',{query}):plan.variants?t('Recherche avec variantes proches : « {query} ». Sans associations thématiques.',{query})+(plan.terms.length?' '+t('Formes attestées : {forms}.',{forms:plan.terms.slice(0,12).join(' · ')}):''):plan.corrections.length?t('Graphies et termes rapprochés : {terms}.',{terms:plan.corrections.join(' ; ')}):'';}
   state.filter='all';state.visibleCount=18;
   for(const btn of document.querySelectorAll('[data-filter]')){
     const selected=btn.dataset.filter===state.filter;
@@ -1587,11 +1756,12 @@ function showSearchResults(query,plan,lex){
 function runSearch(){
   if(state.running||!state.corpus)return;
   const query=$('theme-input').value.trim();if(!query)return;
-  if(query!==state.search){state.keywordRefinements=[];state.contextRefinements=[];state.contextExpanded={period:false,place:false,source:false};}
-  state.running=true;state.search=query;updateSearchControls();
+  const mode=getSearchMatchMode();
+  if(query!==state.search||mode!==state.matchMode){state.keywordRefinements=[];state.contextRefinements=[];state.contextExpanded={period:false,place:false,source:false};}
+  state.running=true;state.search=query;state.matchMode=mode;state.exact=mode==='exact';updateSearchControls();
   $('method-status').hidden=true;
   try{
-    const plan=buildPlan(query),lex=lexicalScores(query,plan.terms,plan);
+    const plan=buildPlan(query,mode),lex=mode==='exact'?exactScores(query):mode==='variants'?variantScores(query):lexicalScores(query,plan.terms,plan);
     showSearchResults(query,plan,lex);
   }catch(error){
     $('method-status').hidden=false;
@@ -1630,6 +1800,7 @@ async function init(){
 
 $('search-form').addEventListener('submit',event=>{event.preventDefault();runSearch();});
 $('retry-corpus').addEventListener('click',init);
+for(const id of ['match-expanded','match-variants','match-exact'])$(id)?.addEventListener('change',changeSearchMatchMode);
 for(const button of document.querySelectorAll('[data-example]'))button.addEventListener('click',()=>{if(state.running||!state.corpus)return;$('theme-input').value=button.dataset.example;runSearch();});
 for(const button of document.querySelectorAll('[data-filter]'))button.addEventListener('click',()=>{state.filter=button.dataset.filter;state.visibleCount=18;for(const b of document.querySelectorAll('[data-filter]')){const selected=b===button;b.classList.toggle('selected',selected);b.setAttribute('aria-pressed',String(selected));}render();});
 $('more-results').addEventListener('click',()=>{state.visibleCount+=18;render();});

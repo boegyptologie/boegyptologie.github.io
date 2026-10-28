@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "version": 22,
-  "engine_sha256": "8df948e39e862b057471f8cbefc70c25f357275771aee4065b033d5ee48732c7",
+  "version": 23,
+  "engine_sha256": "3ee8db0e0c60bc1eeba4aa1579f559ef57839caa9a1f03d97034b4e029c9c5a1",
   "vocabulary": {
     "periods": [
       {
@@ -5063,7 +5063,7 @@
     "periods": [],
     "places": []
   },
-  "engine_normalized_lf_sha256": "0ccc816f9a4c448980546f483aa0a9cc74c0c7f64ceee4625734226eea5f2baa",
+  "engine_normalized_lf_sha256": "abf52ef1c966fe102159370cfbec11c1cc35d3b28ec38802cc734367ef838c29",
   "source_vocabulary": {
     "museums": {
       "schema": 1,
@@ -12835,5 +12835,452 @@
       "contribution": "Sélection des concepts, variantes et relations ; vérification des alignements et des attestations dans le corpus."
     }
   ],
-  "description": "Sélection documentaire contrôlée pour les mentions de périodes, dynasties, lieux, musées, inventaires et sources littéraires ou papyrologiques dans les extraits BOE. Les alignements sont partiels et vérifiés individuellement. Aucun import exhaustif des référentiels ou catalogues ; aucune datation ni provenance déduite d’un roi ou d’un nombre isolé. Les numéros restent liés à leur propre catalogue. Les relations entre œuvres, manuscrits et faces ne sont pas des équivalences générales."
+  "description": "Sélection documentaire contrôlée pour les mentions de périodes, dynasties, lieux, musées, inventaires et sources littéraires ou papyrologiques dans les extraits BOE. Les alignements sont partiels et vérifiés individuellement. Aucun import exhaustif des référentiels ou catalogues ; aucune datation ni provenance déduite d’un roi ou d’un nombre isolé. Les numéros restent liés à leur propre catalogue. Les relations entre œuvres, manuscrits et faces ne sont pas des équivalences générales.",
+  "search_match_modes": {
+    "default": "expanded",
+    "expanded": {
+      "fr": "Élargie",
+      "en": "Expanded",
+      "policy": "Le plan thématique, les concepts et les équivalences contrôlées restent disponibles. Les nouvelles familles de formes proches enrichissent aussi les composantes lexicales non conceptuelles."
+    },
+    "variants": {
+      "fr": "Variantes proches",
+      "en": "Close variants",
+      "policy": "Mots entiers et expression contiguë ; variantes graphiques et familles proches répertoriées, sans thèmes, synonymes opaques ni hiérarchie de concepts. Les surfaces affichées doivent être présentes dans passage.text.",
+      "reference": {
+        "schema": 1,
+        "version": 1,
+        "scope": "Bounded close spelling and word-family matching for literal BOE excerpts, distinct from expanded conceptual search.",
+        "curation": "Explicit user-requested etymology forms, transparent lexical forms selected for the BOE vocabulary, and Latin-script variants of the same names already used in the controlled vocabulary. A listed form is a candidate only; retrieval and the displayed form list require its literal occurrence in passage text.",
+        "not_exhaustive": true,
+        "normalizations": [
+          "Canonical Unicode and case for ordinary words; accents and combining marks ignored except meaningful Egyptian transliteration distinctions.",
+          "Greek iota subscript U+0345 is preserved as iota; final and lunate sigma are aligned.",
+          "Arabic harakat/tatweel and Persian-style yeh/kaf variants are aligned, without removing the definite article or clitics.",
+          "Straight apostrophe and curly U+2018/U+2019 are aligned; modifier-letter U+02BC is preserved for philological use.",
+          "Unicode whitespace and typographic hyphen U+2010/U+2011 are aligned, while punctuation remains in the expression."
+        ],
+        "constraints": [
+          "Whole words and a contiguous expression: every word and punctuation unit typed is required.",
+          "Egyptian consonants ḥ/h/ḫ/ẖ and significant Manuel de Codage capitals remain distinct. Only explicit canonical graphic representations are aligned.",
+          "No general stemming, Levenshtein distance, themes, opaque synonyms, cross-script translations, work-witness identities, broader/narrower concepts or museum catalogue inference.",
+          "Catalogue number punctuation, leading zeros and suffixes are preserved. A bare numeric prefix inside a larger identifier is not accepted.",
+          "Candidates and highlighted evidence come from passage.text, not document metadata."
+        ],
+        "families": [
+          {
+            "id": "close-family:1",
+            "forms": [
+              "etymology",
+              "etymologies",
+              "etymological",
+              "etymologically",
+              "étymologie",
+              "étymologies",
+              "étymologique",
+              "étymologiques",
+              "étymologiquement"
+            ]
+          },
+          {
+            "id": "close-family:2",
+            "forms": [
+              "morphology",
+              "morphologies",
+              "morphological",
+              "morphologically",
+              "morphologie",
+              "morphologique",
+              "morphologiques",
+              "morphologiquement"
+            ]
+          },
+          {
+            "id": "close-family:3",
+            "forms": [
+              "phonetic",
+              "phonetics",
+              "phonetically",
+              "phonétique",
+              "phonétiques",
+              "phonétiquement"
+            ]
+          },
+          {
+            "id": "close-family:4",
+            "forms": [
+              "phonology",
+              "phonologies",
+              "phonological",
+              "phonologically",
+              "phonologie",
+              "phonologique",
+              "phonologiques"
+            ]
+          },
+          {
+            "id": "close-family:5",
+            "forms": [
+              "orthography",
+              "orthographies",
+              "orthographic",
+              "orthographical",
+              "orthographically",
+              "orthographe",
+              "orthographes",
+              "orthographique",
+              "orthographiques",
+              "orthographiquement"
+            ]
+          },
+          {
+            "id": "close-family:6",
+            "forms": [
+              "graphie",
+              "graphies",
+              "graphique",
+              "graphiques",
+              "graphiquement",
+              "graphic",
+              "graphically"
+            ]
+          },
+          {
+            "id": "close-family:7",
+            "forms": [
+              "linguistic",
+              "linguistics",
+              "linguistically",
+              "linguistique",
+              "linguistiques",
+              "linguistiquement"
+            ]
+          },
+          {
+            "id": "close-family:8",
+            "forms": [
+              "hieroglyph",
+              "hieroglyphs",
+              "hieroglyphic",
+              "hieroglyphics",
+              "hiéroglyphe",
+              "hiéroglyphes",
+              "hiéroglyphique",
+              "hiéroglyphiques"
+            ]
+          },
+          {
+            "id": "close-family:9",
+            "forms": [
+              "grammaticalisation",
+              "grammaticalisations",
+              "grammaticaliser",
+              "grammaticalization",
+              "grammaticalizations",
+              "grammaticalize",
+              "grammaticalizes",
+              "grammaticalized",
+              "grammaticalizing",
+              "grammaticalise",
+              "grammaticalised",
+              "grammaticalising"
+            ]
+          },
+          {
+            "id": "close-family:10",
+            "forms": [
+              "nominaliseur",
+              "nominaliseurs",
+              "nominalizer",
+              "nominalizers",
+              "nominaliser",
+              "nominalisers"
+            ]
+          },
+          {
+            "id": "close-family:11",
+            "forms": [
+              "nominalisation",
+              "nominalisations",
+              "nominalization",
+              "nominalizations"
+            ]
+          },
+          {
+            "id": "close-family:12",
+            "forms": [
+              "participe",
+              "participes",
+              "participle",
+              "participles",
+              "participial",
+              "participiale",
+              "participiales",
+              "participiaux"
+            ]
+          },
+          {
+            "id": "close-family:13",
+            "forms": [
+              "infinitif",
+              "infinitifs",
+              "infinitive",
+              "infinitives",
+              "infinitival"
+            ]
+          },
+          {
+            "id": "close-family:14",
+            "forms": [
+              "pronom",
+              "pronoms",
+              "pronoun",
+              "pronouns",
+              "pronominal",
+              "pronominale",
+              "pronominales",
+              "pronominaux"
+            ]
+          },
+          {
+            "id": "close-family:15",
+            "forms": [
+              "verbe",
+              "verbes",
+              "verb",
+              "verbs",
+              "verbal",
+              "verbale",
+              "verbales",
+              "verbaux",
+              "verbally"
+            ]
+          },
+          {
+            "id": "close-family:16",
+            "forms": [
+              "nom",
+              "noms"
+            ]
+          },
+          {
+            "id": "close-family:17",
+            "forms": [
+              "noun",
+              "nouns"
+            ]
+          },
+          {
+            "id": "close-family:18",
+            "forms": [
+              "copte",
+              "coptes",
+              "coptic",
+              "copta",
+              "copto"
+            ]
+          },
+          {
+            "id": "close-family:19",
+            "forms": [
+              "grec",
+              "grecs",
+              "grecque",
+              "grecques",
+              "greek"
+            ]
+          },
+          {
+            "id": "close-family:20",
+            "forms": [
+              "égyptien",
+              "égyptiens",
+              "égyptienne",
+              "égyptiennes",
+              "egyptian",
+              "egyptians"
+            ]
+          },
+          {
+            "id": "close-family:21",
+            "forms": [
+              "égyptologie",
+              "égyptologique",
+              "égyptologiques",
+              "egyptology",
+              "egyptological"
+            ]
+          },
+          {
+            "id": "close-family:22",
+            "forms": [
+              "égyptologue",
+              "égyptologues",
+              "egyptologist",
+              "egyptologists"
+            ]
+          },
+          {
+            "id": "close-family:23",
+            "forms": [
+              "bibliographie",
+              "bibliographies",
+              "bibliographique",
+              "bibliographiques",
+              "bibliography",
+              "bibliographic",
+              "bibliographical",
+              "bibliographically"
+            ]
+          },
+          {
+            "id": "close-family:24",
+            "forms": [
+              "translittération",
+              "translittérations",
+              "transliteration",
+              "transliterations",
+              "translittérer",
+              "transliterate",
+              "transliterates",
+              "transliterated",
+              "transliterating"
+            ]
+          },
+          {
+            "id": "close-family:25",
+            "forms": [
+              "papyrus",
+              "papyri"
+            ]
+          },
+          {
+            "id": "close-family:26",
+            "forms": [
+              "manuscrit",
+              "manuscrits",
+              "manuscript",
+              "manuscripts"
+            ]
+          },
+          {
+            "id": "close-family:27",
+            "forms": [
+              "stèle",
+              "stèles",
+              "stele",
+              "steles",
+              "stela",
+              "stelae"
+            ]
+          },
+          {
+            "id": "close-family:28",
+            "forms": [
+              "statue",
+              "statues"
+            ]
+          },
+          {
+            "id": "close-family:29",
+            "forms": [
+              "ouvrier",
+              "ouvriers",
+              "ouvrière",
+              "ouvrières"
+            ]
+          },
+          {
+            "id": "close-family:30",
+            "forms": [
+              "worker",
+              "workers"
+            ]
+          },
+          {
+            "id": "close-family:31",
+            "forms": [
+              "Saqqara",
+              "Saqqarah",
+              "Sakkara",
+              "Sakkarah"
+            ]
+          },
+          {
+            "id": "close-family:32",
+            "forms": [
+              "Giza",
+              "Gizeh",
+              "Gizah"
+            ]
+          },
+          {
+            "id": "close-family:33",
+            "forms": [
+              "Abousir",
+              "Abusir"
+            ]
+          },
+          {
+            "id": "close-family:34",
+            "forms": [
+              "Dahchour",
+              "Dahshur"
+            ]
+          },
+          {
+            "id": "close-family:35",
+            "forms": [
+              "Dendara",
+              "Dendera",
+              "Dendérah"
+            ]
+          },
+          {
+            "id": "close-family:36",
+            "forms": [
+              "Louqsor",
+              "Louksor",
+              "Luxor"
+            ]
+          },
+          {
+            "id": "close-family:37",
+            "forms": [
+              "Thèbes",
+              "Thebes"
+            ]
+          },
+          {
+            "id": "close-family:38",
+            "forms": [
+              "Abydos",
+              "Abidos"
+            ]
+          },
+          {
+            "id": "close-family:39",
+            "forms": [
+              "Caire",
+              "Cairo"
+            ]
+          },
+          {
+            "id": "close-family:40",
+            "forms": [
+              "Plutarque",
+              "Plutarch"
+            ]
+          }
+        ],
+        "helper_sha256": "a4a44c1458f056535559c6e1f5ea90a3dccad88238d204b7763a10089b11e958"
+      }
+    },
+    "exact": {
+      "fr": "Exacte",
+      "en": "Exact",
+      "policy": "Mot entier ou expression contiguë saisis, présents dans passage.text. Équivalence Unicode canonique en NFD, casse et espaces normalisés ; accents, marques et ponctuation conservés. Aucune correction, équivalence lexicale, traduction ou inférence de catalogue. Les positions de surlignage renvoient au texte original."
+    },
+    "controls": "Trois choix natifs exclusifs. Une bascule relance la même requête en réinitialisant les filtres et la pagination ; les filtres peuvent ensuite être combinés avec la nouvelle base de résultats."
+  }
 }

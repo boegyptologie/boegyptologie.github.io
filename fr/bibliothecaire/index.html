@@ -59,8 +59,8 @@
   </script>
   <!-- La feuille BOE originale vient en premier ; les styles spécifiques à la recherche la complètent. -->
   <link rel="stylesheet" href="/assets/style.css?v=16">
-  <link rel="stylesheet" href="styles.css?v=22">
-  <script type="module" src="app.js?v=22"></script>
+  <link rel="stylesheet" href="styles.css?v=23">
+  <script type="module" src="app.js?v=23"></script>
 </head>
 <body class="bibliothecaire-page">
 <header>
@@ -95,6 +95,15 @@
         <label for="theme-input">Thème ou mots-clés</label>
         <textarea id="theme-input" name="theme" rows="3" maxlength="1800" required dir="auto" enterkeyhint="search" placeholder="Ex. : Plutarque, Textes des Pyramides, mꜣꜥ"></textarea>
         <div class="form-bottom">
+          <fieldset class="search-match-options" aria-describedby="search-match-help">
+            <legend>Correspondances</legend>
+            <div class="search-match-choices">
+              <label for="match-expanded"><input id="match-expanded" type="radio" name="search-match" value="expanded" aria-label="Recherche élargie" checked disabled> <span>Élargie</span></label>
+              <label for="match-variants"><input id="match-variants" type="radio" name="search-match" value="variants" aria-label="Variantes proches" disabled> <span>Variantes proches</span></label>
+              <label for="match-exact"><input id="match-exact" type="radio" name="search-match" value="exact" aria-label="Mot ou expression exacts" disabled> <span>Exacte</span></label>
+            </div>
+            <p id="search-match-help">Inclut les variantes et certaines équivalences.</p>
+          </fieldset>
           <button id="search-button" type="submit" disabled>Rechercher</button>
         </div>
       </form>
