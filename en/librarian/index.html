@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>The Librarian | BOE Multilingual Research Tool</title>
-  <meta name="description" content="Search BOE articles, notes and bibliographies with keywords or advanced multilingual search. Read original excerpts and check their PDF sources.">
+  <meta name="description" content="Search BOE articles, notes and bibliographies using multilingual keywords, spelling variants and filters. Read original excerpts and check their PDF sources.">
   <meta name="keywords" content="The Librarian, BOE, BOMA, Egyptology, topic search, research tool, footnotes, excerpts, multilingual">
   <meta name="author" content="Bibliothèque Ouverte des Mondes Anciens (BOMA)">
   <meta name="robots" content="index, follow">
@@ -14,7 +14,7 @@
   <link rel="alternate" hreflang="x-default" href="https://boegyptologie.github.io/fr/bibliothecaire/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="The Librarian | BOE Multilingual Research Tool">
-  <meta property="og:description" content="Search BOE articles, notes and bibliographies with keywords or advanced multilingual search. Read original excerpts and check their PDF sources.">
+  <meta property="og:description" content="Search BOE articles, notes and bibliographies using multilingual keywords, spelling variants and filters. Read original excerpts and check their PDF sources.">
   <meta property="og:url" content="https://boegyptologie.github.io/en/librarian/">
   <meta property="og:image" content="https://boegyptologie.github.io/assets/logo.png">
   <meta property="og:image:alt" content="Bibliothèque Ouverte d’Égyptologie logo">
@@ -22,7 +22,7 @@
   <meta property="og:site_name" content="Bibliothèque Ouverte d'Égyptologie (BOE)">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="The Librarian | BOE Multilingual Research Tool">
-  <meta name="twitter:description" content="Search BOE articles, notes and bibliographies with keywords or advanced multilingual search. Read original excerpts and check their PDF sources.">
+  <meta name="twitter:description" content="Search BOE articles, notes and bibliographies using multilingual keywords, spelling variants and filters. Read original excerpts and check their PDF sources.">
   <meta name="twitter:image" content="https://boegyptologie.github.io/assets/logo.png">
   <meta name="DC.title" content="The Librarian | BOE Multilingual Research Tool">
   <meta name="DC.creator" content="Bibliothèque Ouverte des Mondes Anciens (BOMA)">
@@ -38,7 +38,7 @@
     "@context": "https://schema.org",
     "@type": "WebApplication",
     "name": "The Librarian",
-    "description": "A multilingual topic search tool for excerpts from BOE publications.",
+    "description": "Search BOE articles, notes and bibliographies using multilingual keywords, spelling variants and filters. Read original excerpts and check their PDF sources.",
     "url": "https://boegyptologie.github.io/en/librarian/",
     "applicationCategory": "EducationalApplication",
     "inLanguage": "en",
@@ -57,11 +57,11 @@
   </script>
   <!-- BOE institutional styles, followed by shared search-tool styles. -->
   <link rel="stylesheet" href="/assets/style.css?v=16">
-  <link rel="stylesheet" href="../../fr/bibliothecaire/styles.css?v=18">
-  <script type="module" src="../../fr/bibliothecaire/app.js?v=19"></script>
+  <link rel="stylesheet" href="../../fr/bibliothecaire/styles.css?v=20">
+  <script type="module" src="../../fr/bibliothecaire/app.js?v=20"></script>
   <meta property="og:locale:alternate" content="fr_FR">
   <meta name="twitter:image:alt" content="Bibliothèque Ouverte d’Égyptologie logo">
-  <meta name="DC.description" content="Search BOE articles, notes and bibliographies with keywords or advanced multilingual search. Read original excerpts and check their PDF sources.">
+  <meta name="DC.description" content="Search BOE articles, notes and bibliographies using multilingual keywords, spelling variants and filters. Read original excerpts and check their PDF sources.">
 </head>
 <body class="bibliothecaire-page">
 <header>
@@ -91,17 +91,11 @@
 
     <section class="search-section" aria-labelledby="search-heading">
       <h2 id="search-heading">Search by topic</h2>
-      <form id="search-form">
+      <p id="search-help" class="search-help">Search articles, notes and bibliographies in several languages. Spelling variants and known equivalents are included.</p>
+      <form id="search-form" aria-describedby="search-help">
         <label for="theme-input">Topic or keywords</label>
         <textarea id="theme-input" name="theme" rows="3" maxlength="1800" required dir="auto" enterkeyhint="search" placeholder="E.g. Coptic, Pyramid Texts, mꜣꜥ"></textarea>
         <div class="form-bottom">
-          <fieldset id="search-mode" disabled aria-describedby="model-explanation">
-            <legend>Search mode</legend>
-            <div class="mode-options">
-              <label class="mode-option" for="mode-lexical"><input type="radio" name="search-mode" id="mode-lexical" value="lexical" checked><span><strong>Without model</strong><small>Keyword search</small></span></label>
-              <label class="mode-option" for="mode-semantic"><input type="radio" name="search-mode" id="mode-semantic" value="semantic"><span><strong>With model</strong><small>Advanced multilingual search</small></span></label>
-            </div>
-          </fieldset>
           <button id="search-button" type="submit" disabled>Search</button>
         </div>
       </form>
@@ -125,14 +119,9 @@
       </details>
 
       <div class="method-row" aria-live="polite">
-        <div class="method-description">
-          <strong id="method-title">Keyword search</strong>
-          <p id="method-status" role="status">Loading the corpus…</p>
-        </div>
+        <p id="method-status" role="status">Loading the corpus…</p>
         <button type="button" id="retry-corpus" hidden>Retry</button>
       </div>
-      <p id="model-explanation" class="privacy-note">Advanced mode requires a model download of about 118 MB on first use. It then runs in your browser.</p>
-      <p class="privacy-note">The <a href="https://huggingface.co/Xenova/multilingual-e5-small" target="_blank" rel="noopener noreferrer">multilingual-e5-small</a> model runs in your browser. Your searches are not sent to any AI service.</p>
 
       <p id="query-corrections" class="tag-hint" aria-live="polite" hidden></p>
       <section id="grammar-relations" class="topic-analysis" aria-label="Related grammatical categories" hidden>
