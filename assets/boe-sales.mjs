@@ -3,30 +3,30 @@ import { BOOK_AMOUNT, configuredApiBase, validatedQuote, checkoutUrl } from "./b
 const locale = document.documentElement.lang === "en" ? "en" : "fr";
 const messages = {
   fr: {
-    chooseCountry: "Choisir un pays", notConfigured: "Le parcours de test est en cours de préparation. Aucun paiement n’est disponible pour le moment.",
-    calculating: "Calcul des frais de livraison…", chooseShipping: "Choisis un mode de livraison pour continuer.", redirecting: "Ouverture du paiement de test sécurisé Stripe…",
-    unavailable: "La livraison n’est pas disponible pour cette destination. Vérifie l’adresse ou contacte BOMA.",
-    expired: "Ce devis a expiré. Calcule à nouveau les frais de livraison.",
-    invalid: "Le devis n’a pas pu être vérifié. Réessaie de calculer les frais de livraison.",
-    network: "La connexion a été interrompue. Réessaie dans un instant.",
-    address: "Vérifie les coordonnées et l’adresse. Le code postal et la région sont nécessaires pour certaines destinations.",
-    service: "Le service est temporairement indisponible. Réessaie dans un instant.",
-    checkout: "Le paiement n’a pas pu être ouvert. Réessaie dans un instant.",
-    toCalculate: "À calculer", select: "À choisir", expires: "Devis valable jusqu’à", cancel: "Le paiement a été interrompu. Tu peux recalculer la livraison pour reprendre.",
-    returned: "Retour de Stripe. Ce parcours reste un test et ne déclenche aucune impression facturée."
+    chooseCountry: "Choisir un pays", notConfigured: "Le paiement de test n’est pas encore disponible.",
+    calculating: "Calcul des frais de livraison…", chooseShipping: "Choisissez un mode de livraison pour continuer.", redirecting: "Ouverture du paiement fictif Stripe…",
+    unavailable: "Aucune livraison disponible pour cette destination. Vérifiez l’adresse ou contactez BOMA.",
+    expired: "Ce devis a expiré. Veuillez recalculer la livraison.",
+    invalid: "Le devis n’a pas pu être confirmé. Veuillez réessayer.",
+    network: "Connexion interrompue. Veuillez réessayer.",
+    address: "Vérifiez les coordonnées, le code postal et la région de livraison.",
+    service: "Service momentanément indisponible. Veuillez réessayer.",
+    checkout: "Le paiement fictif n’a pas pu être ouvert. Veuillez réessayer.",
+    toCalculate: "À calculer", select: "À choisir", expires: "Devis valable jusqu’à", cancel: "Paiement interrompu. Vous pouvez recalculer la livraison pour reprendre.",
+    returned: "Retour du paiement fictif. Aucune impression n’a été commandée."
   },
   en: {
-    chooseCountry: "Choose a country", notConfigured: "The test checkout is being prepared. Payments are not available yet.",
+    chooseCountry: "Choose a country", notConfigured: "Test checkout is not available yet.",
     calculating: "Calculating delivery costs…", chooseShipping: "Choose a delivery option to continue.", redirecting: "Opening secure Stripe test checkout…",
     unavailable: "Delivery is unavailable for this destination. Check the address or contact BOMA.",
-    expired: "This quote has expired. Calculate delivery costs again.",
-    invalid: "The quote could not be verified. Try calculating delivery costs again.",
-    network: "The connection was interrupted. Try again in a moment.",
-    address: "Check the contact details and address. A postal code and state or region are required for some destinations.",
-    service: "The service is temporarily unavailable. Try again in a moment.",
-    checkout: "Checkout could not be opened. Try again in a moment.",
-    toCalculate: "To be calculated", select: "Choose an option", expires: "Quote valid until", cancel: "Checkout was interrupted. You can calculate delivery again to continue.",
-    returned: "Returned from Stripe. This is a test checkout and no paid print order is placed."
+    expired: "This quote has expired. Please calculate delivery again.",
+    invalid: "The quote could not be confirmed. Please try again.",
+    network: "Connection interrupted. Please try again.",
+    address: "Check the contact details, postal code and state or region.",
+    service: "Service temporarily unavailable. Please try again.",
+    checkout: "Test checkout could not be opened. Please try again.",
+    toCalculate: "To be calculated", select: "Choose an option", expires: "Quote valid until", cancel: "Checkout interrupted. You can calculate delivery again to continue.",
+    returned: "Returned from test checkout. No print order has been placed."
   }
 }[locale];
 
@@ -217,3 +217,19 @@ else {
   if (paymentState === "cancelled") showStatus(messages.cancel);
   if (paymentState === "success") showStatus(messages.returned);
 }
+
+function updateMobileMenuSeparators() {
+  const links = Array.from(document.querySelectorAll('nav a'));
+  let previousTop = null;
+  links.forEach((link, index) => {
+    link.classList.remove('row-start');
+    const currentTop = link.offsetTop;
+    if (index === 0 || currentTop > previousTop) {
+      link.classList.add('row-start');
+    }
+    previousTop = currentTop;
+  });
+}
+window.addEventListener('load', updateMobileMenuSeparators);
+window.addEventListener('resize', updateMobileMenuSeparators);
+if (document.fonts) document.fonts.ready.then(updateMobileMenuSeparators);

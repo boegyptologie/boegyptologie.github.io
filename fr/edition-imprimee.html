@@ -7,10 +7,10 @@
   <meta name="description" content="Édition imprimée de la Bibliothèque Ouverte d’Égyptologie : 35 € hors livraison. Les frais de livraison sont calculés selon votre destination.">
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="stylesheet" href="/assets/style.css">
-  <link rel="stylesheet" href="/assets/boe-sales.css">
+  <link rel="stylesheet" href="/assets/style.css?v=16">
+  <link rel="stylesheet" href="/assets/boe-sales.css?v=2">
   <script src="/assets/boe-sales-config.js" defer></script>
-  <script type="module" src="/assets/boe-sales.mjs"></script>
+  <script type="module" src="/assets/boe-sales.mjs?v=2"></script>
 </head>
 <body class="sales-page">
 <a class="skip-link" href="#main">Aller au contenu</a>
@@ -18,35 +18,33 @@
   <div class="container">
     <a class="brand" href="/fr/about.html">
       <img src="/assets/logo.png" alt="Logo BOE">
-      <span class="brand-text"><span class="title">Bibliothèque ouverte d’égyptologie</span><span class="header-issn">ISSN&nbsp;3129-6424</span></span>
+      <span class="brand-text">
+        <span class="title">Bibliothèque ouverte d'égyptologie</span>
+        <span class="header-issn">ISSN&nbsp;3129-6424</span>
+      </span>
     </a>
     <span class="lang-switch"><a href="/en/printed-edition.html" lang="en" hreflang="en" aria-label="Read this page in English">EN</a></span>
     <nav aria-label="Navigation principale">
       <a href="/fr/about.html">À propos</a>
       <a href="/fr/numeros.html">Tous les numéros</a>
+      <a href="/fr/processus-editorial.html">Processus éditorial</a>
+      <a href="/fr/soumettre-un-article-submit-a-paper.html">Soumettre un article</a>
+      <a href="/fr/politique-editoriale.html">Politique éditoriale</a>
       <a class="nav-library" href="/fr/bibliothecaire/">Le bibliothécaire</a>
     </nav>
   </div>
 </header>
 <main id="main">
-  <p class="eyebrow">Bibliothèque Ouverte d’Égyptologie · BOMA</p>
-  <h1>L’édition imprimée</h1>
-  <p class="intro">Retrouver la BOE en volume. Le livre est imprimé à la demande et expédié par Cloudprinter. Les <a href="/fr/numeros.html">articles restent disponibles gratuitement en ligne</a>.</p>
-  <p class="test-notice"><strong>Mode test</strong> — paiement simulé et aucune impression facturée. Utilisez uniquement des coordonnées fictives. Ce parcours sert à vérifier le fonctionnement avant l’ouverture des ventes.</p>
-  <div class="sales-layout">
-    <aside class="volume-card" aria-labelledby="volume-title">
-      <h2 id="volume-title" class="volume-title">BOE · Volume 2026</h2>
-      <p class="muted">Édition imprimée<br>Publiée par l’association BOMA</p>
-      <p class="muted">A5 · 174 pages · couverture rigide</p>
-      <p class="price">35&nbsp;€</p>
-      <p class="muted">Hors frais de livraison<br>Un exemplaire par commande</p>
-      <p>Renseigne la destination pour connaître les modes de livraison disponibles et le montant total avant le paiement.</p>
-    </aside>
-    <div>
+  <article>
+    <section aria-labelledby="printed-edition-title">
+      <h1 id="printed-edition-title"><strong>Édition imprimée<span class="verspunkt">·</span></strong></h1>
+      <p>Le volume 2026 de la <em>Bibliothèque Ouverte d’Égyptologie</em> est publié par l’association BOMA, imprimé et expédié à la demande par Cloudprinter. Les <a href="/fr/numeros.html">articles restent consultables en libre accès</a>.</p>
+      <p><strong>35&nbsp;€ hors livraison.</strong> Format A5, 174 pages, couverture rigide à finition brillante. Un exemplaire par commande. Les frais de livraison sont calculés selon la destination.</p>
+      <p class="submission-declaration" role="note"><strong>Mode test.</strong> Paiement fictif, sans commande d’impression. Veuillez utiliser des coordonnées fictives.</p>
       <form id="destination-form">
         <fieldset>
-          <legend>1. Coordonnées et destination</legend>
-          <p class="hint">Les champs indiqués « facultatif » peuvent être laissés vides.</p>
+          <legend>Coordonnées de livraison</legend>
+          <p class="hint">Les champs facultatifs sont indiqués.</p>
           <div class="fields">
             <label class="full" for="name">Nom complet
               <input id="name" name="name" autocomplete="shipping name" maxlength="120" required>
@@ -79,9 +77,9 @@
         </fieldset>
         <button id="quote-button" type="submit" disabled>Calculer les frais de livraison</button>
       </form>
-      <p id="sales-status" class="status" role="status" aria-live="polite">Le parcours de test est en cours de préparation. Aucun paiement n’est disponible pour le moment.</p>
+      <p id="sales-status" class="status" role="status" aria-live="polite">Le paiement de test n’est pas encore disponible.</p>
       <fieldset id="shipping-section" hidden>
-        <legend>2. Mode de livraison</legend>
+        <legend>Mode de livraison</legend>
         <div id="shipping-choices"></div>
         <p id="quote-expiry" class="hint"></p>
       </fieldset>
@@ -90,12 +88,18 @@
         <div><dt>Livraison</dt><dd id="shipping-amount">À calculer</dd></div>
         <div class="total"><dt>Total</dt><dd id="total-amount">—</dd></div>
       </dl>
-      <button id="pay-button" class="primary" type="button" disabled>Continuer vers le paiement de test Stripe</button>
-      <p class="privacy">Les coordonnées sont utilisées pour calculer la livraison, établir la facture et préparer l’expédition. Le paiement est pris en charge par Stripe ; l’impression et la livraison par Cloudprinter.</p>
-      <noscript><p>Active JavaScript pour calculer les frais de livraison et accéder au paiement de test.</p></noscript>
-    </div>
-  </div>
+      <button id="pay-button" class="primary" type="button" disabled>Poursuivre le paiement fictif avec Stripe</button>
+      <p class="privacy">Vos coordonnées servent à la livraison et à la facturation. Stripe traite le paiement ; Cloudprinter assure l’impression et l’expédition.</p>
+      <noscript><p>Veuillez activer JavaScript pour calculer la livraison et accéder au paiement fictif.</p></noscript>
+    </section>
+  </article>
 </main>
-<footer><div class="container small">© Bibliothèque Ouverte des Mondes Anciens, 2026 · <a href="/fr/mentions-legales.html">Mentions légales</a></div></footer>
+<footer>
+  <div class="container small">
+    © Bibliothèque Ouverte des Mondes Anciens, 2026 ·
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC&nbsp;BY&nbsp;4.0</a> ·
+    <a href="/fr/mentions-legales.html">Mentions légales</a>
+  </div>
+</footer>
 </body>
 </html>
