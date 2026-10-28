@@ -17,6 +17,12 @@ const messages = {
     referenceLoading: "Chargement des destinations…", referenceUnavailable: "Les destinations de livraison sont indisponibles. Veuillez réessayer.",
     chooseRegion: "Choisir une zone de livraison", regionHint: "Consultez les indications postales de chaque zone avant de la choisir.",
     regionRequired: "Veuillez choisir une zone de livraison pour ce pays.", invalidRegion: "La zone choisie ne correspond pas au pays. Veuillez la sélectionner à nouveau.",
+    brazilPostalCodeInvalid: "Veuillez saisir un code postal brésilien (CEP) de huit chiffres, au format 00000-000.",
+    brazilPostalCodeUnavailable: "Ce CEP ne correspond à aucune zone du référentiel de livraison. Veuillez vérifier le code postal ou contacter BOMA.",
+    brazilPostalRegionMismatch: "La zone de livraison choisie ne correspond pas à ce code postal brésilien. Veuillez vérifier le CEP et la zone.",
+    brazilStateInvalid: "Veuillez saisir un code d’État brésilien (UF) valide à deux lettres, ou laisser ce champ facultatif vide.",
+    brazilStateRegionMismatch: "L’État indiqué (UF) ne correspond pas au code postal ou à la zone de livraison. Veuillez vérifier ces informations.",
+    brazilTariffUnavailable: "La livraison vers le Brésil est momentanément indisponible. Veuillez réessayer ultérieurement ou contacter BOMA.",
     unsupportedCountry: "La livraison n’est pas disponible pour ce pays.", stateOptional: "État, province ou région (facultatif)", stateRequired: "État ou province (obligatoire)",
     liveLabel: "Commande imprimée.", liveDescription: "Le paiement déclenche l’impression et l’expédition de votre exemplaire. Le total inclut la livraison choisie.",
     livePay: "Commander et payer avec Stripe", liveRedirecting: "Ouverture du paiement sécurisé Stripe…", liveCheckoutError: "Le paiement n’a pas pu être ouvert. Veuillez réessayer.",
@@ -45,6 +51,12 @@ const messages = {
     referenceLoading: "Loading delivery destinations…", referenceUnavailable: "Delivery destinations are unavailable. Please try again.",
     chooseRegion: "Choose a delivery zone", regionHint: "Check the postal information for each zone before choosing it.",
     regionRequired: "Please choose a delivery zone for this country.", invalidRegion: "The delivery zone does not match the country. Please select it again.",
+    brazilPostalCodeInvalid: "Enter a Brazilian postal code (CEP) with eight digits, in the format 00000-000.",
+    brazilPostalCodeUnavailable: "This Brazilian postal code does not match any available delivery zone. Check the CEP or contact BOMA.",
+    brazilPostalRegionMismatch: "The selected delivery zone does not match this Brazilian postal code. Check the CEP and delivery zone.",
+    brazilStateInvalid: "Enter a valid two-letter Brazilian state code (UF), or leave this optional field blank.",
+    brazilStateRegionMismatch: "The state code (UF) does not match the postal code or delivery zone. Check these details.",
+    brazilTariffUnavailable: "Delivery to Brazil is temporarily unavailable. Please try again later or contact BOMA.",
     unsupportedCountry: "Delivery is unavailable for this country.", stateOptional: "State, province or region (optional)", stateRequired: "State or province (required)",
     liveLabel: "Printed book order.", liveDescription: "Payment starts printing and shipping your copy. The total includes the delivery option you select.",
     livePay: "Order and pay with Stripe", liveRedirecting: "Opening secure Stripe checkout…", liveCheckoutError: "Checkout could not be opened. Please try again.",
@@ -521,6 +533,12 @@ function errorMessage(error, stage) {
   if (code === "unsupported_country") return messages.unsupportedCountry;
   if (code === "cloudprinter_region_required") return messages.regionRequired;
   if (code === "invalid_cloudprinter_region") return messages.invalidRegion;
+  if (code === "invalid_brazil_postal_code") return messages.brazilPostalCodeInvalid;
+  if (code === "brazil_postal_code_unavailable") return messages.brazilPostalCodeUnavailable;
+  if (code === "brazil_region_postal_mismatch") return messages.brazilPostalRegionMismatch;
+  if (code === "invalid_brazil_state") return messages.brazilStateInvalid;
+  if (code === "brazil_state_region_mismatch") return messages.brazilStateRegionMismatch;
+  if (code === "brazil_tariff_metadata_unavailable") return messages.brazilTariffUnavailable;
   if (code === "terms_acceptance_required") return messages.termsRequired;
   if (["legal_configuration_required", "legal_version_mismatch", "legal_not_configured"].includes(code)) return messages.legalUnavailable;
   if (["invalid_customer_identification", "customer_identification_required", "invalid_cloudprinter_customer_identification"].includes(code)) return messages.cpfError;
