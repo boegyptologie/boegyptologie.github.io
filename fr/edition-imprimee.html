@@ -2,15 +2,17 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'none'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src https://boe-sales-test.editionsboma.workers.dev https://boe-sales-staging.editionsboma.workers.dev https://boe-sales.editionsboma.workers.dev; form-action 'none'; frame-src 'none'">
+  <meta name="referrer" content="no-referrer">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Édition imprimée 2026 | Bibliothèque Ouverte d’Égyptologie</title>
   <meta name="description" content="Édition imprimée de la Bibliothèque Ouverte d’Égyptologie : 35 € hors livraison. Les frais de livraison sont calculés selon votre destination.">
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="stylesheet" href="/assets/style.css?v=16">
-  <link rel="stylesheet" href="/assets/boe-sales.css?v=2">
-  <script src="/assets/boe-sales-config.js" defer></script>
-  <script type="module" src="/assets/boe-sales.mjs?v=2"></script>
+  <link rel="stylesheet" href="/assets/boe-sales.css?v=5">
+  <script src="/assets/boe-sales-config.js?v=5" defer></script>
+  <script type="module" src="/assets/boe-sales.mjs?v=5"></script>
 </head>
 <body class="sales-page">
 <a class="skip-link" href="#main">Aller au contenu</a>
@@ -40,21 +42,75 @@
       <h1 id="printed-edition-title"><strong>Lire la BOE sur papier<span class="verspunkt">·</span></strong></h1>
       <p>Découvrez le volume 2026 de la <em>Bibliothèque Ouverte d’Égyptologie</em> en édition reliée.</p>
       <p><strong>35&nbsp;€ hors livraison.</strong> Format A5, 174 pages, couverture rigide à finition brillante. Un exemplaire par commande. Les frais de livraison sont calculés selon la destination.</p>
-      <p class="submission-declaration" role="note"><strong>Mode test.</strong> Paiement fictif, sans commande d’impression. Veuillez utiliser des coordonnées fictives.</p>
+      <p class="submission-declaration" id="sales-mode-notice" role="note"><strong id="sales-mode-label">Mode essai.</strong> <span id="sales-mode-description">Paiement fictif et commande d’essai complète, sans fabrication ni expédition réelles. Veuillez utiliser uniquement des coordonnées fictives.</span></p>
+      <section id="order-status-section" aria-labelledby="order-status-title" hidden>
+        <h2 id="order-status-title"><strong>Suivi de votre commande<span class="verspunkt">·</span></strong></h2>
+        <p id="order-status-message" role="status" aria-live="polite"></p>
+        <p class="hint">Ce suivi est privé. Conservez le lien reçu avec votre facture.</p>
+        <p id="order-tracking-reference" hidden></p>
+        <p class="order-status-links"><a id="order-invoice-link" target="_blank" rel="noopener noreferrer" hidden>Consulter la facture</a> <a id="order-tracking-link" target="_blank" rel="noopener noreferrer" hidden>Suivre la livraison</a></p>
+        <button id="order-status-refresh" type="button" hidden>Actualiser le suivi</button>
+        <section id="withdrawal-section" aria-labelledby="withdrawal-title" hidden>
+          <h3 id="withdrawal-title">Retour et rétractation</h3>
+          <p>Vous pouvez adresser votre déclaration à BOMA. La demande est enregistrée pour traitement ; elle ne garantit pas l’arrêt d’une fabrication déjà engagée et ne déclenche pas de remboursement automatique.</p>
+          <p class="hint">Commande : <span id="withdrawal-order-reference"></span></p>
+          <button id="withdrawal-open" type="button">Renoncer au contrat ici</button>
+          <form id="withdrawal-form" hidden>
+            <fieldset>
+              <legend>Votre déclaration</legend>
+              <div class="fields">
+                <label for="withdrawal-first-name">Prénom
+                  <input id="withdrawal-first-name" name="firstName" autocomplete="given-name" maxlength="75" required>
+                </label>
+                <label for="withdrawal-last-name">Nom
+                  <input id="withdrawal-last-name" name="lastName" autocomplete="family-name" maxlength="75" required>
+                </label>
+                <label class="full" for="withdrawal-email">Adresse e-mail à utiliser pour l’accusé de réception et la réponse
+                  <input id="withdrawal-email" name="email" type="email" autocomplete="email" maxlength="254" required>
+                </label>
+              </div>
+            </fieldset>
+            <p class="hint">Un accusé de réception sera disponible en téléchargement après confirmation, indépendamment de l’envoi d’un courriel.</p>
+            <button type="submit">Vérifier ma déclaration</button>
+            <button id="withdrawal-close" type="button">Fermer</button>
+          </form>
+          <div id="withdrawal-confirmation" hidden>
+            <p>Je vous informe de ma décision de me rétracter du contrat relatif à cette commande.</p>
+            <p id="withdrawal-review"></p>
+            <button id="withdrawal-confirm" type="button">Confirmer la rétractation</button>
+            <button id="withdrawal-edit" type="button">Modifier</button>
+          </div>
+          <p id="withdrawal-status" class="status" role="status" aria-live="polite"></p>
+          <button id="withdrawal-receipt" type="button" hidden>Télécharger l’accusé de réception (.txt)</button>
+          <p id="withdrawal-notification" class="hint" hidden></p>
+        </section>
+      </section>
       <form id="destination-form">
         <fieldset>
           <legend>Coordonnées de livraison</legend>
           <p class="hint">Les champs facultatifs sont indiqués.</p>
           <div class="fields">
-            <label class="full" for="name">Nom complet
-              <input id="name" name="name" autocomplete="shipping name" maxlength="120" required>
+            <label for="firstName">Prénom
+              <input id="firstName" name="firstName" autocomplete="shipping given-name" maxlength="75" required>
+            </label>
+            <label for="lastName">Nom
+              <input id="lastName" name="lastName" autocomplete="shipping family-name" maxlength="75" required>
             </label>
             <label class="full" for="email">Adresse e-mail
               <input id="email" name="email" type="email" autocomplete="email" maxlength="254" required>
             </label>
-            <label class="full" for="phone">Téléphone (facultatif)
-              <input id="phone" name="phone" type="tel" autocomplete="shipping tel" maxlength="40">
+            <label class="full" for="phone">Téléphone
+              <input id="phone" name="phone" type="tel" autocomplete="shipping tel" maxlength="40" required>
             </label>
+            <label class="full" for="country">Pays ou territoire
+              <select id="country" name="country" autocomplete="shipping country" required disabled></select>
+            </label>
+            <div class="full" id="customer-identification-field" hidden>
+              <label for="customer-identification">CPF du destinataire
+                <input id="customer-identification" name="cloudprinterCustomerIdentification" type="text" inputmode="numeric" autocomplete="off" maxlength="14" placeholder="000.000.000-00" pattern="[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}|[0-9]{11}" aria-describedby="customer-identification-note" disabled>
+              </label>
+              <p id="customer-identification-note" class="hint">Ce numéro est demandé par Cloudprinter pour l’expédition au Brésil. Format : 000.000.000-00.</p>
+            </div>
             <label class="full" for="line1">Adresse
               <input id="line1" name="line1" autocomplete="shipping address-line1" maxlength="150" required>
             </label>
@@ -67,17 +123,21 @@
             <label for="city">Ville
               <input id="city" name="city" autocomplete="shipping address-level2" maxlength="100" required>
             </label>
-            <label class="full" for="state">État, province ou région (si applicable)
+            <label class="full" for="state"><span id="state-label">État, province ou région (facultatif)</span>
               <input id="state" name="state" autocomplete="shipping address-level1" maxlength="100">
             </label>
-            <label class="full" for="country">Pays ou territoire
-              <select id="country" name="country" autocomplete="shipping country" required></select>
-            </label>
+            <div class="full" id="cloudprinter-region-field" hidden>
+              <label for="cloudprinter-region">Zone de livraison
+                <select id="cloudprinter-region" name="cloudprinterRegion" aria-describedby="cloudprinter-region-note" disabled></select>
+              </label>
+              <p id="cloudprinter-region-note" class="hint"></p>
+            </div>
           </div>
         </fieldset>
         <button id="quote-button" type="submit" disabled>Calculer les frais de livraison</button>
       </form>
-      <p id="sales-status" class="status" role="status" aria-live="polite">Le paiement de test n’est pas encore disponible.</p>
+      <p id="sales-status" class="status" role="status" aria-live="polite">Le paiement n’est pas encore disponible.</p>
+      <button id="reference-retry" type="button" hidden>Recharger les destinations</button>
       <fieldset id="shipping-section" hidden>
         <legend>Mode de livraison</legend>
         <div id="shipping-choices"></div>
@@ -88,6 +148,9 @@
         <div><dt>Livraison</dt><dd id="shipping-amount">À calculer</dd></div>
         <div class="total"><dt>Total</dt><dd id="total-amount">—</dd></div>
       </dl>
+      <div id="terms-field" class="terms-acceptance" hidden>
+        <label for="terms-accepted"><input id="terms-accepted" type="checkbox"><span>J’ai lu et j’accepte les <a id="terms-link" target="_blank" rel="noopener noreferrer">conditions générales de vente</a>.</span></label>
+      </div>
       <button id="pay-button" class="primary" type="button" disabled>Poursuivre le paiement fictif avec Stripe</button>
       <p class="privacy">Vos coordonnées servent à la livraison et à la facturation. Stripe traite le paiement ; Cloudprinter assure l’impression et l’expédition.</p>
       <noscript><p>Veuillez activer JavaScript pour calculer la livraison et accéder au paiement fictif.</p></noscript>

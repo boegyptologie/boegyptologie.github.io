@@ -5,11 +5,20 @@
 .sales-page fieldset { border: 0; padding: 0; margin: 0 0 1em; min-width: 0; }
 .sales-page legend { padding: 0; font-weight: 700; }
 .sales-page .fields { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: .7em 1em; }
-.sales-page .full { grid-column: 1 / -1; }
+.sales-page .full { grid-column: 1 / -1; min-width: 0; }
 .sales-page label { display: block; }
-.sales-page input:not([type=radio]), .sales-page select { display: block; width: 100%; min-height: 44px; padding: .32em .5em; border: 1px solid #bbb; border-radius: 0; background: #fff; }
+.sales-page input:not([type=radio]):not([type=checkbox]), .sales-page select { display: block; width: 100%; min-height: 44px; padding: .32em .5em; border: 1px solid #bbb; border-radius: 0; background: #fff; }
 .sales-page input:focus-visible, .sales-page select:focus-visible, .sales-page button:focus-visible, .sales-page .skip-link:focus-visible { outline: 2px solid var(--accent-red); outline-offset: 2px; }
 .sales-page .hint { font-size: .82em !important; color: #777; margin: .15em 0 .75em; }
+.sales-page #cloudprinter-region-note { white-space: pre-wrap; overflow-wrap: anywhere; }
+.sales-page #order-status-section { margin: 1.5em 0; }
+.sales-page #withdrawal-section { margin-top: 1.5em; }
+.sales-page #withdrawal-section button { margin: .2em .35em .2em 0; }
+.sales-page #withdrawal-review { white-space: pre-line; overflow-wrap: anywhere; }
+.sales-page .order-status-links a + a { margin-left: 1em; }
+.sales-page .terms-acceptance { margin: 1em 0; }
+.sales-page .terms-acceptance label { display: flex; gap: .55em; align-items: flex-start; cursor: pointer; }
+.sales-page .terms-acceptance input { margin-top: .3em; accent-color: var(--accent-red); }
 .sales-page button { display: inline-block; min-height: 44px; padding: .42em 1.2em; border: 1px solid var(--accent-red); border-radius: 0; background: #fff; cursor: pointer; }
 .sales-page button.primary { background: var(--accent-red); color: #fff !important; }
 .sales-page button:hover:not(:disabled) { opacity: .85; }
