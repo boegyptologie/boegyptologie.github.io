@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Le bibliothécaire | Recherche dans les publications de la BOE</title>
-  <meta name="description" content="Recherchez dans les articles, notes et bibliographies de la BOE avec des mots-clés multilingues, leurs variantes et des filtres. Consultez les extraits et leurs sources PDF.">
+  <meta name="description" content="Recherchez dans les articles, notes et bibliographies de la BOE : mots-clés multilingues, périodes, lieux et extraits sourcés avec liens vers les PDF.">
   <meta name="author" content="Bibliothèque Ouverte des Mondes Anciens (BOMA)">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://boegyptologie.github.io/fr/bibliothecaire/">
@@ -13,7 +13,7 @@
   <link rel="alternate" hreflang="x-default" href="https://boegyptologie.github.io/fr/bibliothecaire/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Le bibliothécaire | Recherche dans les publications de la BOE">
-  <meta property="og:description" content="Recherchez dans les articles, notes et bibliographies de la BOE avec des mots-clés multilingues, leurs variantes et des filtres. Consultez les extraits et leurs sources PDF.">
+  <meta property="og:description" content="Recherchez dans les articles, notes et bibliographies de la BOE : mots-clés multilingues, périodes, lieux et extraits sourcés avec liens vers les PDF.">
   <meta property="og:url" content="https://boegyptologie.github.io/fr/bibliothecaire/">
   <meta property="og:image" content="https://boegyptologie.github.io/assets/logo.png">
   <meta property="og:image:alt" content="Logo de la Bibliothèque Ouverte d'Égyptologie">
@@ -21,7 +21,7 @@
   <meta property="og:site_name" content="Bibliothèque Ouverte d'Égyptologie (BOE)">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Le bibliothécaire | Recherche dans les publications de la BOE">
-  <meta name="twitter:description" content="Recherchez dans les articles, notes et bibliographies de la BOE avec des mots-clés multilingues, leurs variantes et des filtres. Consultez les extraits et leurs sources PDF.">
+  <meta name="twitter:description" content="Recherchez dans les articles, notes et bibliographies de la BOE : mots-clés multilingues, périodes, lieux et extraits sourcés avec liens vers les PDF.">
   <meta name="twitter:image" content="https://boegyptologie.github.io/assets/logo.png">
   <meta name="DC.title" content="Le bibliothécaire | Recherche dans les publications de la BOE">
   <meta name="DC.creator" content="Bibliothèque Ouverte des Mondes Anciens (BOMA)">
@@ -33,14 +33,14 @@
   <meta name="DC.format" content="text/html">
   <meta property="og:locale:alternate" content="en_US">
   <meta name="twitter:image:alt" content="Logo de la Bibliothèque Ouverte d'Égyptologie">
-  <meta name="DC.description" content="Recherchez dans les articles, notes et bibliographies de la BOE avec des mots-clés multilingues, leurs variantes et des filtres. Consultez les extraits et leurs sources PDF.">
+  <meta name="DC.description" content="Recherchez dans les articles, notes et bibliographies de la BOE : mots-clés multilingues, périodes, lieux et extraits sourcés avec liens vers les PDF.">
   <link rel="icon" type="image/png" href="/favicon.png">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
     "name": "Le bibliothécaire",
-    "description": "Recherchez dans les articles, notes et bibliographies de la BOE avec des mots-clés multilingues, leurs variantes et des filtres. Consultez les extraits et leurs sources PDF.",
+    "description": "Recherchez dans les articles, notes et bibliographies de la BOE : mots-clés multilingues, périodes, lieux et extraits sourcés avec liens vers les PDF.",
     "url": "https://boegyptologie.github.io/fr/bibliothecaire/",
     "applicationCategory": "EducationalApplication",
     "inLanguage": "fr",
@@ -59,8 +59,8 @@
   </script>
   <!-- La feuille BOE originale vient en premier ; les styles spécifiques à la recherche la complètent. -->
   <link rel="stylesheet" href="/assets/style.css?v=16">
-  <link rel="stylesheet" href="styles.css?v=20">
-  <script type="module" src="app.js?v=20"></script>
+  <link rel="stylesheet" href="styles.css?v=21">
+  <script type="module" src="app.js?v=21"></script>
 </head>
 <body class="bibliothecaire-page">
 <header>
@@ -110,6 +110,9 @@
         <button type="button" data-example="arabe">Arabe</button>
         <button type="button" data-example="grec">Grec</button>
         <button type="button" data-example="IIe siècle">IIe siècle</button>
+        <button type="button" data-example="Ancien Empire">Ancien Empire</button>
+        <button type="button" data-example="XVIIIe dynastie">XVIIIe dynastie</button>
+        <button type="button" data-example="سقارة" lang="ar" dir="rtl">سقارة</button>
         <button type="button" data-example="Τυφῶνος">Τυφῶνος</button>
         <button type="button" data-example="Textes des Pyramides">Textes des Pyramides</button>
         <button type="button" data-example="Signe U23">Signe U23</button>
@@ -128,6 +131,11 @@
         <p id="grammar-relation-note" class="privacy-note"></p>
         <div id="grammar-related-chips" class="chips"></div>
       </section>
+      <section id="context-relations" class="topic-analysis" aria-label="Périodes et lieux liés" hidden>
+        <h3>Périodes et lieux liés</h3>
+        <p id="context-relation-note" class="privacy-note"></p>
+        <div id="context-related-chips" class="chips"></div>
+      </section>
       <section id="topic-analysis" class="topic-analysis" aria-label="Analyse des termes de recherche" hidden>
         <h3>Notions identifiées</h3>
         <div id="topic-chips" class="chips"></div>
@@ -135,6 +143,20 @@
         <p id="keyword-refinement-note" class="privacy-note">Cliquez sur un mot-clé pour ne garder que les extraits qui le contiennent. Cliquez à nouveau pour retirer ce filtre.</p>
         <div id="keyword-chips" class="chips keywords" role="group" aria-label="Affiner la recherche par mots-clés" aria-describedby="keyword-refinement-note"></div>
       </section>
+      <details id="context-filters" class="context-filters" hidden>
+        <summary>Affiner par période ou lieu</summary>
+        <p id="context-filter-note" class="privacy-note" aria-live="polite"></p>
+        <div id="period-filter-group" class="context-filter-group">
+          <h3>Périodes et dynasties</h3>
+          <div id="period-filters" class="chips context-filter-chips" role="group" aria-label="Filtrer par période ou dynastie" aria-describedby="context-filter-note"></div>
+          <button id="period-more" type="button" class="context-more" hidden>Afficher toutes les périodes</button>
+        </div>
+        <div id="place-filter-group" class="context-filter-group">
+          <h3>Lieux et sites</h3>
+          <div id="place-filters" class="chips context-filter-chips" role="group" aria-label="Filtrer par lieu ou site" aria-describedby="context-filter-note"></div>
+          <button id="place-more" type="button" class="context-more" hidden>Afficher tous les lieux</button>
+        </div>
+      </details>
     </section>
 
     <section class="results-section" aria-labelledby="results-heading">
@@ -153,6 +175,11 @@
     </section>
 
     <p class="corpus-count"><strong id="corpus-total">Chargement du corpus…</strong> <span id="corpus-subtitle"></span></p>
+
+    <details class="vocabulary-sources">
+      <summary>Sources des noms et des périodes</summary>
+      <p>Le référentiel BOE s’appuie sur une sélection de notices de <a href="https://rameau.bnf.fr/informations/produits" target="_blank" rel="noopener noreferrer">RAMEAU — Bibliothèque nationale de France</a>, de <a href="https://www.frantiq.fr/pactols/le-thesaurus/" target="_blank" rel="noopener noreferrer">PACTOLS — CNRS–Frantiq</a>, ainsi que sur les sources égyptologiques citées dans les <a href="data/referentiels.json">références et attributions</a>. Les données adaptées de PACTOLS sont réutilisées sous licence ODbL.</p>
+    </details>
 
     <div class="boma-logo-wrap">
       <img src="/assets/boma-logo.png" alt="BOMA" class="boma-logo">

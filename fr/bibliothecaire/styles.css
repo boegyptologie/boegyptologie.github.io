@@ -193,6 +193,16 @@ h1, h2, h3, h4 { font-weight: 700; }
 .keywords button.chip[aria-pressed="true"] { background: #fff7f5; }
 #grammar-related-chips { margin-top: 8px; }
 #grammar-related-chips button { min-height: 44px; text-align: left; }
+#context-related-chips { margin-top: 8px; }
+#context-related-chips button { min-height: 44px; text-align: left; }
+.context-filters { margin-top: 16px; }
+.context-filters summary { cursor: pointer; width: fit-content; min-height: 44px; padding: 6px 0; }
+.context-filters summary:hover { color: var(--accent-red); }
+.context-filter-chips button.chip { min-height: 44px; text-align: left; }
+.context-filter-chips button.chip:hover, .context-filter-chips button.chip[aria-pressed="true"] { border-color: var(--accent-red); color: var(--accent-red); }
+.context-filter-chips button.chip[aria-pressed="true"] { background: #fff7f5; }
+.context-more { min-height: 44px; margin: 6px 0 0; padding: 2px 0; border: 0; border-bottom: 1px solid var(--accent-red); border-radius: 0; background: transparent; color: var(--ink); }
+.context-more:hover { color: var(--accent-red); }
 
 .results-section {
   margin-top: 8px;
@@ -268,6 +278,9 @@ mark { background: #ffe7bc; color: #222; }
   padding-top: 11px;
 }
 .corpus-count span { margin-left: 10px; color: var(--muted) !important; }
+.vocabulary-sources { margin-top: 12px; color: var(--muted); font-size: .91rem; }
+.vocabulary-sources summary { cursor: pointer; min-height: 44px; width: fit-content; padding: 6px 0; }
+.vocabulary-sources p { margin: 0 0 12px; text-align: left; overflow-wrap: anywhere; }
 @media (max-width: 800px) {
   main {
     border-left: 0;
