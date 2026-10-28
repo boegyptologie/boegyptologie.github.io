@@ -1,4 +1,4 @@
-import { BOOK_AMOUNT, configuredApiBase, configuredSalesMode, validatedOrderServiceHealth, validatedSalesHealth, validatedLegalConfiguration, validatedQuote, checkoutUrl, validatedShippingReference, cloudprinterRegionValue, cloudprinterCustomerIdentificationValue, validatedOrderCapability, orderCapabilityFromFragment, validatedOrderStatus, withdrawalDeclaration, withdrawalTextReceipt, validatedWithdrawal } from "./boe-sales-core.mjs?v=7";
+import { BOOK_AMOUNT, configuredApiBase, configuredSalesMode, validatedOrderServiceHealth, validatedSalesHealth, validatedLegalConfiguration, validatedQuote, checkoutUrl, validatedShippingReference, cloudprinterRegionValue, cloudprinterCustomerIdentificationValue, validatedOrderCapability, orderCapabilityFromFragment, validatedOrderStatus, withdrawalDeclaration, withdrawalTextReceipt, validatedWithdrawal } from "./boe-sales-core.mjs?v=8";
 
 const locale = document.documentElement.lang === "en" ? "en" : "fr";
 const messages = {
@@ -33,6 +33,7 @@ const messages = {
     trackingPending: "Le paiement est en cours de vérification. Veuillez patienter.", trackingFailed: "Le paiement n’a pas été confirmé. Vous pouvez reprendre votre commande.",
     trackingPreparing: "Paiement confirmé. Votre exemplaire est en cours de préparation.", trackingReview: "Paiement confirmé. La préparation de votre commande est en cours de vérification.",
     trackingShipped: "Votre exemplaire a été expédié.", trackingDelivered: "Votre exemplaire a été livré.",
+    refundTest: "Essai —", refundPending: "Remboursement en attente :", refundPartial: "Remboursement partiel confirmé :", refundSucceeded: "Remboursement confirmé :", refundFailed: "Le remboursement n’a pas abouti. Veuillez contacter BOMA.", refundAlreadyConfirmed: "Remboursement déjà confirmé :", refundFailedAmount: "Montant cumulé des tentatives non abouties :",
     termsRequired: "Veuillez lire et accepter les conditions générales de vente avant le paiement.", legalUnavailable: "Les conditions de vente doivent être vérifiées. Veuillez actualiser la page.",
     sandboxDescription: "Paiement fictif et commande d’essai complète, sans fabrication ni expédition réelles. Veuillez utiliser uniquement des coordonnées fictives.", trackingConfirmed: "Paiement confirmé. Le suivi de votre exemplaire sera actualisé ici.", trackingSandboxComplete: "Commande d’essai confirmée, sans fabrication ni expédition réelles.", trackingReference: "Référence de suivi :",
     salesPaused: "Les nouvelles commandes sont momentanément indisponibles. Le suivi des commandes reste accessible.", withdrawalHold: "Votre déclaration est enregistrée. La préparation est en pause pour traitement par BOMA.", withdrawalRecorded: "Votre déclaration est enregistrée pour traitement par BOMA. Vous pouvez télécharger l’accusé de réception.", withdrawalSending: "Enregistrement de votre déclaration…", withdrawalError: "L’enregistrement de la déclaration n’a pas pu être confirmé. Veuillez réessayer ou contacter BOMA.", withdrawalFields: "Veuillez vérifier vos prénom, nom et adresse e-mail avant de confirmer.", withdrawalNoEmail: "L’envoi d’un courriel n’est pas confirmé sur cette page. Veuillez conserver l’accusé téléchargeable.", withdrawalNotificationUnconfirmed: "L’accusé est disponible en téléchargement. Aucun envoi de courriel n’est confirmé ici.", withdrawalReceiptLoading: "Préparation de l’accusé de réception…", withdrawalReceiptReady: "L’accusé de réception est prêt à être conservé sur votre appareil.", withdrawalReceiptError: "L’accusé de réception n’a pas pu être téléchargé. Veuillez réessayer ou contacter BOMA."
@@ -68,6 +69,7 @@ const messages = {
     trackingPending: "Payment is being checked. Please wait.", trackingFailed: "Payment has not been confirmed. You can try ordering again.",
     trackingPreparing: "Payment confirmed. Your copy is being prepared.", trackingReview: "Payment confirmed. Your order is being checked before preparation.",
     trackingShipped: "Your copy has been shipped.", trackingDelivered: "Your copy has been delivered.",
+    refundTest: "Test —", refundPending: "Refund pending:", refundPartial: "Partial refund confirmed:", refundSucceeded: "Refund confirmed:", refundFailed: "The refund did not succeed. Please contact BOMA.", refundAlreadyConfirmed: "Refund already confirmed:", refundFailedAmount: "Total amount of unsuccessful attempts:",
     termsRequired: "Please read and accept the terms of sale before paying.", legalUnavailable: "The terms of sale need to be checked. Please reload the page.",
     sandboxDescription: "Simulated payment and complete test order, with no real production or shipping. Please use fictitious contact details only.", trackingConfirmed: "Payment confirmed. Tracking for your copy will be updated here.", trackingSandboxComplete: "Test order confirmed, with no real production or shipping.", trackingReference: "Tracking reference:",
     salesPaused: "New orders are temporarily unavailable. Existing orders can still be tracked.", withdrawalHold: "Your declaration has been recorded. Preparation is on hold for review by BOMA.", withdrawalRecorded: "Your declaration has been recorded for review by BOMA. You can download the acknowledgement.", withdrawalSending: "Recording your declaration…", withdrawalError: "Your declaration could not be confirmed as recorded. Please try again or contact BOMA.", withdrawalFields: "Please check your first name, last name and email address before confirming.", withdrawalNoEmail: "Email sending is not confirmed on this page. Please save the downloadable acknowledgement.", withdrawalNotificationUnconfirmed: "The acknowledgement is available to download. No email delivery is confirmed here.", withdrawalReceiptLoading: "Preparing the acknowledgement…", withdrawalReceiptReady: "The acknowledgement is ready to save on your device.", withdrawalReceiptError: "The acknowledgement could not be downloaded. Please try again or contact BOMA."
@@ -122,6 +124,7 @@ const identificationInput = document.getElementById("customer-identification");
 const identificationNote = document.getElementById("customer-identification-note");
 const orderStatusSection = document.getElementById("order-status-section");
 const orderStatusMessage = document.getElementById("order-status-message");
+const orderRefundStatus = document.getElementById("order-refund-status");
 const orderStatusRefresh = document.getElementById("order-status-refresh");
 const orderInvoiceLink = document.getElementById("order-invoice-link");
 const orderTrackingLink = document.getElementById("order-tracking-link");
@@ -191,7 +194,23 @@ function renderOrderStatus(result) {
     if (result.trackingUrl) { orderTrackingLink.href = result.trackingUrl; orderTrackingLink.hidden = false; }
     if (result.trackingCode) { orderTrackingReference.textContent = `${messages.trackingReference} ${result.trackingCode}`; orderTrackingReference.hidden = false; }
   }
+  renderRefundStatus(result.refund);
   renderWithdrawalAvailability();
+}
+
+function renderRefundStatus(refund) {
+  orderRefundStatus.hidden = !refund;
+  orderRefundStatus.textContent = "";
+  if (!refund) return;
+  const parts = [];
+  if (refund.status === "pending") {
+    parts.push(`${messages.refundPending} ${money(refund.pendingAmount)}.`);
+    if (refund.amount > 0) parts.push(`${messages.refundAlreadyConfirmed} ${money(refund.amount)}.`);
+  } else if (refund.status === "partial") parts.push(`${messages.refundPartial} ${money(refund.amount)}.`);
+  else if (refund.status === "succeeded") parts.push(`${messages.refundSucceeded} ${money(refund.amount)}.`);
+  else parts.push(messages.refundFailed);
+  if (refund.failedAmount > 0) parts.push(`${messages.refundFailedAmount} ${money(refund.failedAmount)}.`);
+  orderRefundStatus.textContent = `${expectedMode === "test" ? messages.refundTest + " " : ""}${parts.join(" ")}`;
 }
 
 function canAccessWithdrawal() {
@@ -339,6 +358,7 @@ async function refreshOrderStatus(automatic = false) {
   orderStatusBusy = true;
   orderStatusRefresh.disabled = true;
   orderStatusMessage.textContent = messages.trackingChecking;
+  renderRefundStatus(null);
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 20000);
   try {
