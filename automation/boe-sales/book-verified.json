@@ -1,0 +1,19 @@
+{
+  "verified": true,
+  "verifiedFrom": {
+    "cloudprinterOrder": "3009261",
+    "orderReference": "qo-BOE_2-1792018505839",
+    "catalogueProductId": "1031",
+    "catalogueLabel": "Textbook CW A5 P FC TNR",
+    "interiorMd5": "e4e33123ddaf266fa5c258b298b27e95",
+    "coverMd5": "3721b03157672236f14dbeb4fc4d3c30"
+  },
+  "product": "textbook_cw_a5_p_fc",
+  "options": [
+    { "type": "pageblock_130mcs", "count": "174" },
+    { "type": "cover_130mcg", "count": "1" },
+    { "type": "cover_finish_gloss", "count": "1" },
+    { "type": "total_pages", "count": "174" }
+  ],
+  "name": "Bibliothèque Ouverte d’Égyptologie — édition imprimée 2026"
+}

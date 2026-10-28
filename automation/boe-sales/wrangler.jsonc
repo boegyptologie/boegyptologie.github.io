@@ -1,0 +1,23 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "boe-sales-test",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-10-28",
+  "workers_dev": true,
+  "observability": { "enabled": true },
+  "vars": {
+    "SALES_MODE": "test",
+    "FULFILLMENT_MODE": "disabled",
+    "SITE_ORIGIN": "https://boegyptologie.github.io",
+    "STRIPE_PRICE_ID": "price_1UVSkJKW1rK64N8huxg2ryNJ",
+    "BOOK_CONFIG_JSON": "{\"verified\":true,\"product\":\"textbook_cw_a5_p_fc\",\"options\":[{\"type\":\"pageblock_130mcs\",\"count\":\"174\"},{\"type\":\"cover_130mcg\",\"count\":\"1\"},{\"type\":\"cover_finish_gloss\",\"count\":\"1\"},{\"type\":\"total_pages\",\"count\":\"174\"}],\"name\":\"Bibliothèque Ouverte d’Égyptologie — édition imprimée 2026\"}"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "boe-sales-test",
+      "database_id": "3b99d54f-e81d-4406-9977-3f79c7581dad"
+    }
+  ],
+  "triggers": { "crons": ["17 3 * * *"] }
+}

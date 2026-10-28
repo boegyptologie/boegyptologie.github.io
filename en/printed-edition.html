@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Printed edition 2026 | Bibliothèque Ouverte d’Égyptologie</title>
+  <meta name="description" content="The printed edition of the Bibliothèque Ouverte d’Égyptologie: €35 plus delivery. Delivery costs are calculated for your destination.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/assets/boe-sales.css">
+  <script src="/assets/boe-sales-config.js" defer></script>
+  <script type="module" src="/assets/boe-sales.mjs"></script>
+</head>
+<body class="sales-page">
+<a class="skip-link" href="#main">Skip to content</a>
+<header>
+  <div class="container">
+    <a class="brand" href="/en/about.html">
+      <img src="/assets/logo.png" alt="BOE logo">
+      <span class="brand-text"><span class="title">Bibliothèque ouverte d’égyptologie</span><span class="header-issn">ISSN&nbsp;3129-6424</span></span>
+    </a>
+    <span class="lang-switch"><a href="/fr/edition-imprimee.html" lang="fr" hreflang="fr" aria-label="Lire cette page en français">FR</a></span>
+    <nav aria-label="Main navigation">
+      <a href="/en/about.html">About</a>
+      <a href="/en/numeros.html">All issues</a>
+      <a class="nav-library" href="/en/bibliothecaire/">The librarian</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <p class="eyebrow">Bibliothèque Ouverte d’Égyptologie · BOMA</p>
+  <h1>The printed edition</h1>
+  <p class="intro">Read the BOE in print. The book is printed on demand and shipped by Cloudprinter. The <a href="/en/numeros.html">articles remain freely available online</a>.</p>
+  <p class="test-notice"><strong>Test mode</strong> — simulated payment and no paid print order. Use fictitious contact details only. This checkout is used to check the service before sales open.</p>
+  <div class="sales-layout">
+    <aside class="volume-card" aria-labelledby="volume-title">
+      <h2 id="volume-title" class="volume-title">BOE · 2026 volume</h2>
+      <p class="muted">Printed edition<br>Published by the BOMA association</p>
+      <p class="muted">A5 · 174 pages · hardcover</p>
+      <p class="price">€35</p>
+      <p class="muted">Plus delivery<br>One copy per order</p>
+      <p>Enter the destination to see the available delivery options and the total price before checkout.</p>
+    </aside>
+    <div>
+      <form id="destination-form">
+        <fieldset>
+          <legend>1. Contact details and destination</legend>
+          <p class="hint">Fields marked “optional” may be left blank.</p>
+          <div class="fields">
+            <label class="full" for="name">Full name
+              <input id="name" name="name" autocomplete="shipping name" maxlength="120" required>
+            </label>
+            <label class="full" for="email">Email address
+              <input id="email" name="email" type="email" autocomplete="email" maxlength="254" required>
+            </label>
+            <label class="full" for="phone">Phone (optional)
+              <input id="phone" name="phone" type="tel" autocomplete="shipping tel" maxlength="40">
+            </label>
+            <label class="full" for="line1">Address
+              <input id="line1" name="line1" autocomplete="shipping address-line1" maxlength="150" required>
+            </label>
+            <label class="full" for="line2">Address line 2 (optional)
+              <input id="line2" name="line2" autocomplete="shipping address-line2" maxlength="150">
+            </label>
+            <label for="postalCode">Postal code (if applicable)
+              <input id="postalCode" name="postalCode" autocomplete="shipping postal-code" maxlength="20">
+            </label>
+            <label for="city">City
+              <input id="city" name="city" autocomplete="shipping address-level2" maxlength="100" required>
+            </label>
+            <label class="full" for="state">State, province or region (if applicable)
+              <input id="state" name="state" autocomplete="shipping address-level1" maxlength="100">
+            </label>
+            <label class="full" for="country">Country or territory
+              <select id="country" name="country" autocomplete="shipping country" required></select>
+            </label>
+          </div>
+        </fieldset>
+        <button id="quote-button" type="submit" disabled>Calculate delivery costs</button>
+      </form>
+      <p id="sales-status" class="status" role="status" aria-live="polite">The test checkout is being prepared. Payments are not available yet.</p>
+      <fieldset id="shipping-section" hidden>
+        <legend>2. Delivery option</legend>
+        <div id="shipping-choices"></div>
+        <p id="quote-expiry" class="hint"></p>
+      </fieldset>
+      <dl class="summary" aria-label="Order summary" aria-live="polite">
+        <div><dt>One copy</dt><dd>€35.00</dd></div>
+        <div><dt>Delivery</dt><dd id="shipping-amount">To be calculated</dd></div>
+        <div class="total"><dt>Total</dt><dd id="total-amount">—</dd></div>
+      </dl>
+      <button id="pay-button" class="primary" type="button" disabled>Continue to Stripe test checkout</button>
+      <p class="privacy">Contact details are used to calculate delivery, prepare the invoice and arrange shipping. Payments are handled by Stripe; printing and delivery are handled by Cloudprinter.</p>
+      <noscript><p>Enable JavaScript to calculate delivery costs and open test checkout.</p></noscript>
+    </div>
+  </div>
+</main>
+<footer><div class="container small">© Bibliothèque Ouverte des Mondes Anciens, 2026 · <a href="/en/mentions-legales.html">Legal notice</a></div></footer>
+</body>
+</html>

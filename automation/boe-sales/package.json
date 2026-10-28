@@ -1,0 +1,6 @@
+{
+  "name": "boe-print-sales-worker",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "node --test" }
+}
