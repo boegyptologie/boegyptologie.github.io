@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>The Librarian | BOE Multilingual Research Tool</title>
-  <meta name="description" content="Search BOE articles, notes and bibliographies using multilingual keywords, spelling variants and filters. Read original excerpts and check their PDF sources.">
+  <meta name="description" content="Search BOE articles, notes and bibliographies in several languages. Filter by period or place and check original excerpts against their PDF sources.">
   <meta name="keywords" content="The Librarian, BOE, BOMA, Egyptology, topic search, research tool, footnotes, excerpts, multilingual">
   <meta name="author" content="Bibliothèque Ouverte des Mondes Anciens (BOMA)">
   <meta name="robots" content="index, follow">
@@ -14,7 +14,7 @@
   <link rel="alternate" hreflang="x-default" href="https://boegyptologie.github.io/fr/bibliothecaire/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="The Librarian | BOE Multilingual Research Tool">
-  <meta property="og:description" content="Search BOE articles, notes and bibliographies using multilingual keywords, spelling variants and filters. Read original excerpts and check their PDF sources.">
+  <meta property="og:description" content="Search BOE articles, notes and bibliographies in several languages. Filter by period or place and check original excerpts against their PDF sources.">
   <meta property="og:url" content="https://boegyptologie.github.io/en/librarian/">
   <meta property="og:image" content="https://boegyptologie.github.io/assets/logo.png">
   <meta property="og:image:alt" content="Bibliothèque Ouverte d’Égyptologie logo">
@@ -22,7 +22,7 @@
   <meta property="og:site_name" content="Bibliothèque Ouverte d'Égyptologie (BOE)">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="The Librarian | BOE Multilingual Research Tool">
-  <meta name="twitter:description" content="Search BOE articles, notes and bibliographies using multilingual keywords, spelling variants and filters. Read original excerpts and check their PDF sources.">
+  <meta name="twitter:description" content="Search BOE articles, notes and bibliographies in several languages. Filter by period or place and check original excerpts against their PDF sources.">
   <meta name="twitter:image" content="https://boegyptologie.github.io/assets/logo.png">
   <meta name="DC.title" content="The Librarian | BOE Multilingual Research Tool">
   <meta name="DC.creator" content="Bibliothèque Ouverte des Mondes Anciens (BOMA)">
@@ -38,7 +38,7 @@
     "@context": "https://schema.org",
     "@type": "WebApplication",
     "name": "The Librarian",
-    "description": "Search BOE articles, notes and bibliographies using multilingual keywords, spelling variants and filters. Read original excerpts and check their PDF sources.",
+    "description": "Search BOE articles, notes and bibliographies in several languages. Filter by period or place and check original excerpts against their PDF sources.",
     "url": "https://boegyptologie.github.io/en/librarian/",
     "applicationCategory": "EducationalApplication",
     "inLanguage": "en",
@@ -57,11 +57,11 @@
   </script>
   <!-- BOE institutional styles, followed by shared search-tool styles. -->
   <link rel="stylesheet" href="/assets/style.css?v=16">
-  <link rel="stylesheet" href="../../fr/bibliothecaire/styles.css?v=20">
-  <script type="module" src="../../fr/bibliothecaire/app.js?v=20"></script>
+  <link rel="stylesheet" href="../../fr/bibliothecaire/styles.css?v=21">
+  <script type="module" src="../../fr/bibliothecaire/app.js?v=21"></script>
   <meta property="og:locale:alternate" content="fr_FR">
   <meta name="twitter:image:alt" content="Bibliothèque Ouverte d’Égyptologie logo">
-  <meta name="DC.description" content="Search BOE articles, notes and bibliographies using multilingual keywords, spelling variants and filters. Read original excerpts and check their PDF sources.">
+  <meta name="DC.description" content="Search BOE articles, notes and bibliographies in several languages. Filter by period or place and check original excerpts against their PDF sources.">
 </head>
 <body class="bibliothecaire-page">
 <header>
@@ -111,6 +111,9 @@
         <button type="button" data-example="Arabic">Arabic</button>
         <button type="button" data-example="Greek">Greek</button>
         <button type="button" data-example="2nd century">2nd century</button>
+        <button type="button" data-example="Old Kingdom">Old Kingdom</button>
+        <button type="button" data-example="18th dynasty">18th dynasty</button>
+        <button type="button" data-example="سقارة" lang="ar" dir="rtl">سقارة</button>
         <button type="button" data-example="Τυφῶνος">Τυφῶνος</button>
         <button type="button" data-example="Pyramid Texts">Pyramid Texts</button>
         <button type="button" data-example="Sign U23">Sign U23</button>
@@ -129,6 +132,11 @@
         <p id="grammar-relation-note" class="privacy-note"></p>
         <div id="grammar-related-chips" class="chips"></div>
       </section>
+      <section id="context-relations" class="topic-analysis" aria-label="Related periods and places" hidden>
+        <h3>Related periods and places</h3>
+        <p id="context-relation-note" class="privacy-note"></p>
+        <div id="context-related-chips" class="chips"></div>
+      </section>
       <section id="topic-analysis" class="topic-analysis" aria-label="Search term analysis" hidden>
         <h3>Identified concepts</h3>
         <div id="topic-chips" class="chips"></div>
@@ -136,6 +144,20 @@
         <p id="keyword-refinement-note" class="privacy-note">Click a keyword to keep only excerpts containing it. Click again to remove the filter.</p>
         <div id="keyword-chips" class="chips keywords" role="group" aria-label="Refine the search by keywords" aria-describedby="keyword-refinement-note"></div>
       </section>
+      <details id="context-filters" class="context-filters" hidden>
+        <summary>Narrow by period or place</summary>
+        <p id="context-filter-note" class="privacy-note" aria-live="polite"></p>
+        <div id="period-filter-group" class="context-filter-group">
+          <h3>Periods and dynasties</h3>
+          <div id="period-filters" class="chips context-filter-chips" role="group" aria-label="Filter by period or dynasty" aria-describedby="context-filter-note"></div>
+          <button id="period-more" type="button" class="context-more" hidden>Show all periods</button>
+        </div>
+        <div id="place-filter-group" class="context-filter-group">
+          <h3>Places and sites</h3>
+          <div id="place-filters" class="chips context-filter-chips" role="group" aria-label="Filter by place or site" aria-describedby="context-filter-note"></div>
+          <button id="place-more" type="button" class="context-more" hidden>Show all places</button>
+        </div>
+      </details>
     </section>
 
     <section class="results-section" aria-labelledby="results-heading">
@@ -154,6 +176,11 @@
     </section>
 
     <p class="corpus-count"><strong id="corpus-total">Loading the corpus…</strong> <span id="corpus-subtitle"></span></p>
+
+    <details class="vocabulary-sources">
+      <summary>Sources for place and period names</summary>
+      <p>The BOE reference vocabulary draws on selected records from <a href="https://rameau.bnf.fr/informations/produits" target="_blank" rel="noopener noreferrer">RAMEAU — Bibliothèque nationale de France</a>, <a href="https://www.frantiq.fr/pactols/le-thesaurus/" target="_blank" rel="noopener noreferrer">PACTOLS — CNRS–Frantiq</a> and the Egyptological sources listed in the <a href="../../fr/bibliothecaire/data/referentiels.json">references and credits</a>. Adapted PACTOLS data are reused under the ODbL licence.</p>
+    </details>
 
     <div class="boma-logo-wrap">
       <img src="/assets/boma-logo.png" alt="BOMA" class="boma-logo">
