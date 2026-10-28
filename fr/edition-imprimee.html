@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Édition imprimée 2026 | Bibliothèque Ouverte d’Égyptologie</title>
+  <meta name="description" content="Édition imprimée de la Bibliothèque Ouverte d’Égyptologie : 35 € hors livraison. Les frais de livraison sont calculés selon votre destination.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/assets/boe-sales.css">
+  <script src="/assets/boe-sales-config.js" defer></script>
+  <script type="module" src="/assets/boe-sales.mjs"></script>
+</head>
+<body class="sales-page">
+<a class="skip-link" href="#main">Aller au contenu</a>
+<header>
+  <div class="container">
+    <a class="brand" href="/fr/about.html">
+      <img src="/assets/logo.png" alt="Logo BOE">
+      <span class="brand-text"><span class="title">Bibliothèque ouverte d’égyptologie</span><span class="header-issn">ISSN&nbsp;3129-6424</span></span>
+    </a>
+    <span class="lang-switch"><a href="/en/printed-edition.html" lang="en" hreflang="en" aria-label="Read this page in English">EN</a></span>
+    <nav aria-label="Navigation principale">
+      <a href="/fr/about.html">À propos</a>
+      <a href="/fr/numeros.html">Tous les numéros</a>
+      <a class="nav-library" href="/fr/bibliothecaire/">Le bibliothécaire</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <p class="eyebrow">Bibliothèque Ouverte d’Égyptologie · BOMA</p>
+  <h1>L’édition imprimée</h1>
+  <p class="intro">Retrouver la BOE en volume. Le livre est imprimé à la demande et expédié par Cloudprinter. Les <a href="/fr/numeros.html">articles restent disponibles gratuitement en ligne</a>.</p>
+  <p class="test-notice"><strong>Mode test</strong> — paiement simulé et aucune impression facturée. Utilisez uniquement des coordonnées fictives. Ce parcours sert à vérifier le fonctionnement avant l’ouverture des ventes.</p>
+  <div class="sales-layout">
+    <aside class="volume-card" aria-labelledby="volume-title">
+      <h2 id="volume-title" class="volume-title">BOE · Volume 2026</h2>
+      <p class="muted">Édition imprimée<br>Publiée par l’association BOMA</p>
+      <p class="muted">A5 · 174 pages · couverture rigide</p>
+      <p class="price">35&nbsp;€</p>
+      <p class="muted">Hors frais de livraison<br>Un exemplaire par commande</p>
+      <p>Renseigne la destination pour connaître les modes de livraison disponibles et le montant total avant le paiement.</p>
+    </aside>
+    <div>
+      <form id="destination-form">
+        <fieldset>
+          <legend>1. Coordonnées et destination</legend>
+          <p class="hint">Les champs indiqués « facultatif » peuvent être laissés vides.</p>
+          <div class="fields">
+            <label class="full" for="name">Nom complet
+              <input id="name" name="name" autocomplete="shipping name" maxlength="120" required>
+            </label>
+            <label class="full" for="email">Adresse e-mail
+              <input id="email" name="email" type="email" autocomplete="email" maxlength="254" required>
+            </label>
+            <label class="full" for="phone">Téléphone (facultatif)
+              <input id="phone" name="phone" type="tel" autocomplete="shipping tel" maxlength="40">
+            </label>
+            <label class="full" for="line1">Adresse
+              <input id="line1" name="line1" autocomplete="shipping address-line1" maxlength="150" required>
+            </label>
+            <label class="full" for="line2">Complément d’adresse (facultatif)
+              <input id="line2" name="line2" autocomplete="shipping address-line2" maxlength="150">
+            </label>
+            <label for="postalCode">Code postal (si applicable)
+              <input id="postalCode" name="postalCode" autocomplete="shipping postal-code" maxlength="20">
+            </label>
+            <label for="city">Ville
+              <input id="city" name="city" autocomplete="shipping address-level2" maxlength="100" required>
+            </label>
+            <label class="full" for="state">État, province ou région (si applicable)
+              <input id="state" name="state" autocomplete="shipping address-level1" maxlength="100">
+            </label>
+            <label class="full" for="country">Pays ou territoire
+              <select id="country" name="country" autocomplete="shipping country" required></select>
+            </label>
+          </div>
+        </fieldset>
+        <button id="quote-button" type="submit" disabled>Calculer les frais de livraison</button>
+      </form>
+      <p id="sales-status" class="status" role="status" aria-live="polite">Le parcours de test est en cours de préparation. Aucun paiement n’est disponible pour le moment.</p>
+      <fieldset id="shipping-section" hidden>
+        <legend>2. Mode de livraison</legend>
+        <div id="shipping-choices"></div>
+        <p id="quote-expiry" class="hint"></p>
+      </fieldset>
+      <dl class="summary" aria-label="Récapitulatif" aria-live="polite">
+        <div><dt>Un exemplaire</dt><dd>35,00&nbsp;€</dd></div>
+        <div><dt>Livraison</dt><dd id="shipping-amount">À calculer</dd></div>
+        <div class="total"><dt>Total</dt><dd id="total-amount">—</dd></div>
+      </dl>
+      <button id="pay-button" class="primary" type="button" disabled>Continuer vers le paiement de test Stripe</button>
+      <p class="privacy">Les coordonnées sont utilisées pour calculer la livraison, établir la facture et préparer l’expédition. Le paiement est pris en charge par Stripe ; l’impression et la livraison par Cloudprinter.</p>
+      <noscript><p>Active JavaScript pour calculer les frais de livraison et accéder au paiement de test.</p></noscript>
+    </div>
+  </div>
+</main>
+<footer><div class="container small">© Bibliothèque Ouverte des Mondes Anciens, 2026 · <a href="/fr/mentions-legales.html">Mentions légales</a></div></footer>
+</body>
+</html>
