@@ -1,0 +1,52 @@
+.sales-page { --size-body: 1.12rem; }
+.sales-page .skip-link { position: absolute; left: -9999px; top: 0; background: #fff; padding: .6rem; z-index: 10; }
+.sales-page .skip-link:focus { left: 1rem; top: 1rem; }
+.sales-page main { max-width: 1050px; padding-top: 2.1rem; padding-bottom: 3rem; }
+.sales-page .container { max-width: 1050px; }
+.sales-page h1 { font-size: clamp(1.8rem, 4vw, 2.5rem); line-height: 1.16; font-weight: 500; margin: .4rem 0 1rem; }
+.sales-page h2, .sales-page legend { font-size: 1.25rem; font-weight: 600; }
+.sales-page .eyebrow { color: #9a221a; text-transform: uppercase; letter-spacing: .08em; font-size: .88rem; }
+.sales-page .intro { max-width: 62ch; }
+.sales-page main p { text-align: left; }
+.sales-page .test-notice { background: #fff4e8; border-left: 3px solid #a24b14; padding: .7rem 1rem; margin: 1.5rem 0; }
+.sales-page .sales-layout { display: grid; grid-template-columns: 1fr 1.75fr; gap: 2.3rem; align-items: start; margin-top: 2rem; }
+.sales-page .volume-card { border-top: 2px solid var(--accent-red); padding-top: 1rem; }
+.sales-page .volume-title { font-size: 1.65rem; line-height: 1.2; margin: 0; }
+.sales-page .price { font-size: 2.3rem; margin: 1rem 0 0; line-height: 1.2; }
+.sales-page .muted { color: #5a5a5a; }
+.sales-page .volume-card .muted { margin-top: .3rem; }
+.sales-page form { margin: 0; }
+.sales-page fieldset { border: 0; padding: 0; margin: 0 0 1.5rem; min-width: 0; }
+.sales-page legend { padding: 0; margin-bottom: .85rem; }
+.sales-page .fields { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem 1rem; }
+.sales-page .full { grid-column: 1 / -1; }
+.sales-page label { display: block; font-size: 1rem; }
+.sales-page input:not([type=radio]), .sales-page select { width: 100%; min-height: 44px; border: 1px solid #8e8e8e; border-radius: 2px; padding: .48rem .65rem; background: #fff; }
+.sales-page input:focus-visible, .sales-page select:focus-visible, .sales-page button:focus-visible, .sales-page a:focus-visible { outline: 2px solid #b52211; outline-offset: 3px; }
+.sales-page .hint { font-size: .94rem; color: #595959; margin: .35rem 0 1rem; }
+.sales-page button { border: 1px solid #aa2416; border-radius: 2px; background: #fff; color: #8b2015; font-weight: 600; min-height: 46px; padding: .55rem 1rem; cursor: pointer; }
+.sales-page button:hover:not(:disabled) { background: #fff0ed; }
+.sales-page button.primary { background: #b52717; color: white; width: 100%; }
+.sales-page button.primary:hover:not(:disabled) { background: #942012; }
+.sales-page button:disabled { cursor: default; opacity: .5; }
+.sales-page .status { min-height: 1.6em; margin: .85rem 0; }
+.sales-page .status.error { color: #982318; }
+.sales-page .option { display: flex; align-items: baseline; gap: .65rem; border: 1px solid #c9c4bf; padding: .65rem .8rem; margin-bottom: .6rem; cursor: pointer; }
+.sales-page .option:has(input:checked) { border-color: #ab2616; background: #fff6f3; }
+.sales-page .option input { flex-shrink: 0; accent-color: #ad2818; }
+.sales-page .option-label { flex: 1; }
+.sales-page .option-price { white-space: nowrap; }
+.sales-page .summary { border-top: 1px solid #bcb4ad; border-bottom: 1px solid #bcb4ad; margin: 1rem 0; padding: .75rem 0; }
+.sales-page .summary div { display: flex; justify-content: space-between; gap: 1rem; }
+.sales-page .summary dt, .sales-page .summary dd { margin: 0; }
+.sales-page .summary .total { margin-top: .5rem; padding-top: .4rem; border-top: 1px solid #e5e0dc; font-weight: 700; }
+.sales-page .summary .total * { font-size: 1.25rem; }
+.sales-page .privacy { margin-top: 1.4rem; font-size: .96rem; color: #57514d; }
+.sales-page [hidden] { display: none !important; }
+@media (max-width: 700px) {
+  .sales-page .sales-layout { grid-template-columns: 1fr; gap: 1.2rem; }
+  .sales-page .volume-card { border-bottom: 1px solid #e0d7d1; padding-bottom: .8rem; }
+  .sales-page main { margin: 0 12px; padding: 1.4rem 18px 2rem; }
+  .sales-page header { padding-left: 20px; padding-right: 20px; }
+}
+@media (max-width: 420px) { .sales-page .fields { grid-template-columns: 1fr; } }
