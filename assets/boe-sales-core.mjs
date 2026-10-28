@@ -99,11 +99,19 @@ function safeHttpsLink(value, hosts) {
   } catch { return null; }
 }
 
+function validatedRefund(value) {
+  if (!sourceObject(value) || !["pending", "partial", "succeeded", "failed"].includes(value.status) || value.currency !== "EUR" || ![value.amount, value.pendingAmount, value.failedAmount].every(amount => Number.isSafeInteger(amount) && amount >= 0) || typeof value.updatedAt !== "string" || !/^\d{4}-\d{2}-\d{2}T/.test(value.updatedAt) || !Number.isFinite(Date.parse(value.updatedAt))) throw new Error("invalid_order_status");
+  if (value.status === "pending" ? value.pendingAmount === 0 : value.pendingAmount !== 0) throw new Error("invalid_order_status");
+  if (["partial", "succeeded"].includes(value.status) && value.amount === 0 || value.status === "failed" && (value.amount !== 0 || value.failedAmount === 0)) throw new Error("invalid_order_status");
+  return { status: value.status, amount: value.amount, pendingAmount: value.pendingAmount, failedAmount: value.failedAmount, currency: "EUR", updatedAt: value.updatedAt };
+}
+
 export function validatedOrderStatus(value, expectedMode) {
   if (!configuredSalesMode(expectedMode) || !sourceObject(value) || value.mode !== expectedMode || !["paid", "pending", "failed"].includes(value.paymentStatus) || typeof value.fulfillmentStatus !== "string" || !value.fulfillmentStatus || value.fulfillmentStatus.length > 100) throw new Error("invalid_order_status");
   return {
     paymentStatus: value.paymentStatus,
     fulfillmentStatus: value.fulfillmentStatus,
+    refund: value.refund == null ? null : validatedRefund(value.refund),
     withdrawalStatus: typeof value.withdrawalStatus === "string" && /^[a-z_]{1,50}$/.test(value.withdrawalStatus) ? value.withdrawalStatus : "",
     invoiceUrl: safeHttpsLink(value.invoiceUrl, ["invoice.stripe.com", "pay.stripe.com"]),
     trackingUrl: safeHttpsLink(value.tracking?.url),
