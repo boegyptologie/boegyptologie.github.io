@@ -6,7 +6,7 @@ const ASSET_BASE=new URL('.',import.meta.url);
 const ENGLISH_UI={
   "Toutes les publications": "All publications",
   "Autres publications": "Other publications",
-  "N° {number}": "No. {number}",
+  "Toutes les publications de {year}": "All publications from {year}",
   "variation finale -t": "final -t variation",
   "Insérer {character}": "Insert {character}",
   "Majuscules": "Uppercase",
@@ -2096,43 +2096,150 @@ function updateScriptKeyboardControls(disabled){
   for(const button of SCRIPT_KEYBOARD_STATE.buttons)button.disabled=Boolean(disabled);
 }
 
+const PUBLICATION_SCOPE_UI={ready:false,open:false,options:[],active:-1,restoreFocus:false};
 function publicationReference(doc){
-  const identifier=/^boe-(\d{4})-(\d+)$/u.exec(String(doc.id||''));
-  const dated=/^(\d{4})(?:-|$)/u.exec(String(doc.publication_date||''));
+  const identifier=/^boe-(\d{4})-(\d+)$/u.exec(String(doc?.id||''));
+  const dated=/^(\d{4})(?:-|$)/u.exec(String(doc?.publication_date||''));
   return {year:identifier?identifier[1]:dated?dated[1]:'',number:identifier?Number(identifier[2]):null};
 }
 function publicationOptionLabel(doc){
   const {number}=publicationReference(doc);
-  return `${number===null?'':`${t('N° {number}',{number})} · `}${doc.author} : ${doc.title}`;
+  return `${number===null?'':`${number} · `}${doc.author||''} : ${doc.title||''}`;
 }
-function updateArticleScopeDescription(){
-  const note=$('article-scope-description');if(!note)return;
-  const doc=state.docs.get(state.articleId);note.hidden=!doc;
-  note.textContent=doc?`${publicationReference(doc).year?`${publicationReference(doc).year} · `:''}${publicationOptionLabel(doc)}`:'';
+function publicationScopeYear(value=state.articleId){
+  const match=/^year:(\d{4})$/u.exec(String(value||''));
+  return match&&[...state.docs.values()].some(doc=>publicationReference(doc).year===match[1])?match[1]:'';
 }
-function populateArticleScope(){
-  const select=$('article-scope');if(!select)return;
-  if(state.articleId&&!state.docs.has(state.articleId))state.articleId='';
-  const all=document.createElement('option');all.value='';all.textContent=t('Toutes les publications');
-  select.replaceChildren(all);
-  const groups=new Map();
+function validPublicationScope(value){
+  value=String(value||'');return state.docs.has(value)||publicationScopeYear(value)?value:'';
+}
+function publicationMatchesScope(passage){
+  const value=validPublicationScope(state.articleId);if(!value)return true;
+  const year=publicationScopeYear(value);
+  return year?publicationReference(state.docs.get(passage.doc_id)).year===year:passage.doc_id===value;
+}
+function publicationScopeGroups(){
   const docs=[...state.docs.values()].sort((a,b)=>{
     const left=publicationReference(a),right=publicationReference(b);
     return right.year.localeCompare(left.year)||(left.number??Infinity)-(right.number??Infinity);
-  });
-  for(const doc of docs){
-    const {year}=publicationReference(doc);
-    if(!groups.has(year)){
-      const group=document.createElement('optgroup');group.label=year||t('Autres publications');select.append(group);groups.set(year,group);
-    }
-    const option=document.createElement('option');option.value=doc.id;option.textContent=publicationOptionLabel(doc);option.title=option.textContent;groups.get(year).append(option);
+  }),groups=new Map();
+  for(const doc of docs){const {year}=publicationReference(doc);if(!groups.has(year))groups.set(year,[]);groups.get(year).push(doc);}
+  return groups;
+}
+function appendPublicationReference(node,doc,{year=false,title=false,stacked=false}={}){
+  const reference=publicationReference(doc);
+  if(year&&reference.year){const value=document.createElement('span');value.className='publication-scope-year';value.textContent=reference.year;node.append(value,document.createTextNode(' / '));}
+  if(reference.number!==null){
+    const number=document.createElement('span');number.className='publication-scope-number';number.textContent=String(reference.number);
+    const point=document.createElement('span');point.className='verspunkt publication-scope-point';point.textContent='·';point.setAttribute('aria-hidden','true');
+    node.append(number,point,document.createTextNode(' '));
+  }
+  const author=document.createElement('span');author.className='publication-scope-option-author';author.textContent=String(doc.author||'')+(title?' :':'');node.append(author);
+  if(title){const text=document.createElement('span');text.className=stacked?'publication-scope-option-title':'publication-scope-reference-title';text.textContent=String(doc.title||'');node.append(document.createTextNode(' '),text);}
+}
+function updateArticleScopeDescription(){
+  const note=$('article-scope-description'),doc=state.docs.get(state.articleId),year=publicationScopeYear();
+  if(note){
+    note.replaceChildren();note.hidden=!doc&&!year;
+    if(doc)appendPublicationReference(note,doc,{year:true,title:true});
+    else if(year)note.textContent=t('Toutes les publications de {year}',{year});
+  }
+  const value=$('publication-scope-value'),toggle=$('publication-scope-toggle');
+  if(value){
+    value.replaceChildren();
+    if(doc)appendPublicationReference(value,doc,{year:true});
+    else value.textContent=year||t('Toutes les publications');
+  }
+  if(toggle)toggle.title=doc?`${publicationReference(doc).year?`${publicationReference(doc).year} / `:''}${publicationOptionLabel(doc)}`:year?t('Toutes les publications de {year}',{year}):t('Toutes les publications');
+  for(const option of PUBLICATION_SCOPE_UI.options)option.node.setAttribute('aria-selected',String(option.value===state.articleId));
+}
+function setPublicationScopeActive(index){
+  const list=$('publication-scope-list'),options=PUBLICATION_SCOPE_UI.options;if(!list||!options.length)return;
+  PUBLICATION_SCOPE_UI.active=Math.max(0,Math.min(options.length-1,index));
+  for(let at=0;at<options.length;at++)options[at].node.classList.toggle('publication-scope-option-active',at===PUBLICATION_SCOPE_UI.active);
+  const active=options[PUBLICATION_SCOPE_UI.active].node;list.setAttribute('aria-activedescendant',active.id);active.scrollIntoView?.({block:'nearest'});
+}
+function closePublicationScope(restoreFocus=false){
+  PUBLICATION_SCOPE_UI.open=false;const toggle=$('publication-scope-toggle'),list=$('publication-scope-list');
+  if(toggle)toggle.setAttribute('aria-expanded','false');
+  if(list){list.hidden=true;list.removeAttribute?.('aria-activedescendant');}
+  for(const option of PUBLICATION_SCOPE_UI.options)option.node.classList.remove('publication-scope-option-active');
+  PUBLICATION_SCOPE_UI.active=-1;
+  if(restoreFocus&&toggle&&!toggle.disabled)toggle.focus();
+}
+function openPublicationScope(position='selected'){
+  const toggle=$('publication-scope-toggle'),list=$('publication-scope-list');
+  if(!PUBLICATION_SCOPE_UI.ready||!toggle||!list||toggle.disabled||state.running||!state.corpus)return;
+  PUBLICATION_SCOPE_UI.open=true;list.hidden=false;toggle.setAttribute('aria-expanded','true');
+  const selected=PUBLICATION_SCOPE_UI.options.findIndex(option=>option.value===state.articleId);
+  const index=position==='first'?0:position==='last'?PUBLICATION_SCOPE_UI.options.length-1:Math.max(0,selected);
+  list.focus();setPublicationScopeActive(index);
+}
+function selectPublicationScopeOption(value){
+  const select=$('article-scope'),toggle=$('publication-scope-toggle');
+  if(!select||!toggle||toggle.disabled||state.running||!state.corpus)return;
+  const next=validPublicationScope(value);if(next===state.articleId){closePublicationScope(true);return;}
+  closePublicationScope(false);PUBLICATION_SCOPE_UI.restoreFocus=true;
+  select.value=next;select.dispatchEvent(new Event('change',{bubbles:true}));
+  if(PUBLICATION_SCOPE_UI.restoreFocus&&!toggle.disabled){PUBLICATION_SCOPE_UI.restoreFocus=false;toggle.focus();}
+}
+function publicationScopeKeydown(event,fromToggle=false){
+  const key=event.key;
+  if(key==='Tab'){if(PUBLICATION_SCOPE_UI.open)closePublicationScope(true);return;}
+  if(key==='Escape'){if(PUBLICATION_SCOPE_UI.open){event.preventDefault();event.stopPropagation?.();closePublicationScope(true);}return;}
+  if(key==='ArrowDown'||key==='ArrowUp'||key==='Home'||key==='End'){
+    event.preventDefault();
+    if(!PUBLICATION_SCOPE_UI.open){openPublicationScope(key==='Home'?'first':key==='End'?'last':'selected');return;}
+    setPublicationScopeActive(key==='Home'?0:key==='End'?PUBLICATION_SCOPE_UI.options.length-1:PUBLICATION_SCOPE_UI.active+(key==='ArrowDown'?1:-1));return;
+  }
+  if(key==='Enter'||key===' '||key==='Spacebar'){
+    event.preventDefault();
+    if(fromToggle){if(PUBLICATION_SCOPE_UI.open)closePublicationScope(true);else openPublicationScope();return;}
+    const option=PUBLICATION_SCOPE_UI.options[PUBLICATION_SCOPE_UI.active];if(option)selectPublicationScopeOption(option.value);
+  }
+}
+function initPublicationScope(){
+  const select=$('article-scope'),toggle=$('publication-scope-toggle'),list=$('publication-scope-list'),value=$('publication-scope-value');
+  if(PUBLICATION_SCOPE_UI.ready||!select||!toggle||!list||!value)return;
+  toggle.addEventListener('click',()=>{if(PUBLICATION_SCOPE_UI.open)closePublicationScope(true);else openPublicationScope();});
+  toggle.addEventListener('keydown',event=>publicationScopeKeydown(event,true));
+  list.addEventListener('keydown',event=>publicationScopeKeydown(event,false));
+  const outside=event=>{
+    if(!PUBLICATION_SCOPE_UI.open)return;
+    if(event.target===toggle||event.target===list||toggle.contains?.(event.target)||list.contains?.(event.target))return;
+    closePublicationScope(false);
+  };
+  document.addEventListener?.('pointerdown',outside);document.addEventListener?.('focusin',outside);
+  PUBLICATION_SCOPE_UI.ready=true;toggle.hidden=false;select.hidden=true;list.hidden=true;
+}
+function populateArticleScope(){
+  const select=$('article-scope');if(!select)return;
+  state.articleId=validPublicationScope(state.articleId);closePublicationScope(false);
+  const all=document.createElement('option');all.value='';all.textContent=t('Toutes les publications');select.replaceChildren(all);
+  const list=$('publication-scope-list');if(list)list.replaceChildren();PUBLICATION_SCOPE_UI.options=[];
+  const addCustom=(value,kind,doc=null)=>{
+    if(!PUBLICATION_SCOPE_UI.ready||!list)return;
+    const node=document.createElement('div'),index=PUBLICATION_SCOPE_UI.options.length;
+    node.id=`publication-scope-option-${index}`;node.className=`publication-scope-option publication-scope-option-${kind}`;node.dataset.scopeValue=value;node.dataset.scopeKind=kind;node.setAttribute('role','option');node.setAttribute('aria-selected',String(value===state.articleId));
+    if(doc){const text=document.createElement('span');text.className='publication-scope-option-text';appendPublicationReference(text,doc,{title:true,stacked:true});node.append(text);node.setAttribute('aria-label',publicationOptionLabel(doc));node.title=publicationOptionLabel(doc);}
+    else{node.textContent=kind==='year'?publicationScopeYear(value):t('Toutes les publications');if(kind==='year')node.setAttribute('aria-label',t('Toutes les publications de {year}',{year:publicationScopeYear(value)}));}
+    node.addEventListener('pointerdown',event=>event.preventDefault());node.addEventListener('click',()=>selectPublicationScopeOption(value));
+    node.addEventListener('mouseenter',()=>{if(PUBLICATION_SCOPE_UI.open)setPublicationScopeActive(index);});
+    list.append(node);PUBLICATION_SCOPE_UI.options.push({value,kind,doc,node});
+  };
+  addCustom('','all');
+  for(const [year,docs] of publicationScopeGroups()){
+    const group=document.createElement('optgroup');group.label=year||t('Autres publications');select.append(group);
+    if(year){const option=document.createElement('option');option.value=`year:${year}`;option.textContent=t('Toutes les publications de {year}',{year});group.append(option);addCustom(option.value,'year');}
+    else if(PUBLICATION_SCOPE_UI.ready&&list){const heading=document.createElement('div');heading.className='publication-scope-option publication-scope-option-year';heading.setAttribute('role','presentation');heading.textContent=t('Autres publications');list.append(heading);}
+    for(const doc of docs){const option=document.createElement('option');option.value=doc.id;option.textContent=publicationOptionLabel(doc);option.title=option.textContent;group.append(option);addCustom(doc.id,'document',doc);}
   }
   select.value=state.articleId;updateArticleScopeDescription();
 }
 function changeArticleScope(){
   const select=$('article-scope');if(!select)return;
   if(state.running||!state.corpus){select.value=state.articleId;return;}
-  state.articleId=state.docs.has(select.value)?select.value:'';select.value=state.articleId;
+  state.articleId=validPublicationScope(select.value);select.value=state.articleId;
   state.keywordRefinements=[];state.contextRefinements=[];state.contextExpanded={period:false,place:false,source:false};
   updateArticleScopeDescription();
   if($('theme-input').value.trim())return runSearch();
@@ -2141,6 +2248,8 @@ function changeArticleScope(){
 function updateSearchControls(){
   const unavailable=!state.corpus;
   if($('article-scope'))$('article-scope').disabled=unavailable||state.running;
+  const scopeToggle=$('publication-scope-toggle');
+  if(scopeToggle){scopeToggle.disabled=unavailable||state.running;if(scopeToggle.disabled)closePublicationScope(false);else if(PUBLICATION_SCOPE_UI.restoreFocus){PUBLICATION_SCOPE_UI.restoreFocus=false;scopeToggle.focus();}}
   $('theme-input').disabled=unavailable||state.running;
   updateScriptKeyboardControls(unavailable||state.running);
   $('search-button').disabled=unavailable||state.running;
@@ -2204,7 +2313,7 @@ function updateGrammarRelations(plan){
 }
 function showSearchResults(query,plan,lex){
   const scored=rankedResults(lex,query,plan);
-  const map=new Map(state.corpus.passages.map(p=>[p.id,p]));state.baseResult=scored.map(({id})=>map.get(id)).filter(passage=>passage&&(!state.articleId||passage.doc_id===state.articleId));
+  const map=new Map(state.corpus.passages.map(p=>[p.id,p]));state.baseResult=scored.map(({id})=>map.get(id)).filter(passage=>passage&&publicationMatchesScope(passage));
   if(plan.coptic)plan.terms=[...new Set(state.baseResult.flatMap(passage=>copticMatches(passage.text,query).map(hit=>hit.surface)))];
   else if(plan.variants)plan.terms=variantForms(query,state.baseResult);
   state.activeTerms=plan.terms;state.plan=plan;
@@ -2277,6 +2386,7 @@ async function init(){
   }finally{clearTimeout(timeout);updateSearchControls();}
 }
 
+initPublicationScope();
 initScriptKeyboards();
 $('search-form').addEventListener('submit',event=>{event.preventDefault();runSearch();});
 $('retry-corpus').addEventListener('click',init);

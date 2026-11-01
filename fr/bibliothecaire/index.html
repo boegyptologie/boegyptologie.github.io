@@ -59,8 +59,8 @@
   </script>
   <!-- La feuille BOE originale vient en premier ; les styles spécifiques à la recherche la complètent. -->
   <link rel="stylesheet" href="/assets/style.css?v=16">
-  <link rel="stylesheet" href="styles.css?v=32">
-  <script type="module" src="app.js?v=32"></script>
+  <link rel="stylesheet" href="styles.css?v=33">
+  <script type="module" src="app.js?v=33"></script>
 </head>
 <body class="bibliothecaire-page">
 <header>
@@ -93,12 +93,16 @@
       <p id="search-help" class="search-help">Recherchez dans les publications de la BOE, en plusieurs langues. Les variantes d’écriture et certaines équivalences sont prises en compte.</p>
       <form id="search-form" aria-describedby="search-help">
         <div class="article-scope">
-          <label for="article-scope">Rechercher dans</label>
-          <select id="article-scope" name="article" aria-describedby="article-scope-description" disabled>
+          <label id="publication-scope-label" for="publication-scope-toggle">Rechercher dans</label>
+          <select id="article-scope" name="article" aria-labelledby="publication-scope-label" aria-describedby="article-scope-description" disabled>
             <option value="">Toutes les publications</option>
           </select>
-          <p id="article-scope-description" class="article-scope-description" hidden></p>
+          <button id="publication-scope-toggle" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="publication-scope-list" aria-labelledby="publication-scope-label publication-scope-value" aria-describedby="article-scope-description" disabled hidden>
+            <span id="publication-scope-value">Toutes les publications</span><span class="publication-scope-chevron" aria-hidden="true"></span>
+          </button>
+          <div id="publication-scope-list" role="listbox" aria-labelledby="publication-scope-label" tabindex="-1" hidden></div>
         </div>
+        <p id="article-scope-description" class="article-scope-description" hidden></p>
         <label for="theme-input">Thème ou mots-clés</label>
         <textarea id="theme-input" name="theme" rows="3" maxlength="1800" required dir="auto" enterkeyhint="search" placeholder="Ex. : Plutarque, Textes des Pyramides, mꜣꜥ"></textarea>
         <div class="script-keyboards" role="group" aria-label="Claviers de saisie">

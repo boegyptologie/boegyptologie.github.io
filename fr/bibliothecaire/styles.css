@@ -106,10 +106,25 @@ h1, h2, h3, h4 { font-weight: 700; }
 .search-section { padding: 10px 0 22px; }
 .search-help { margin: 0 0 16px !important; color: var(--muted) !important; text-align: left !important; }
 #search-form label { display: block; font-weight: 600; margin: 0 0 8px; }
-.article-scope { min-width: 0; margin: 0 0 16px; }
+.article-scope { position: relative; width: 22rem; max-width: 100%; min-width: 0; margin: 0 0 16px; }
 #article-scope { display: block; box-sizing: border-box; width: 100%; max-width: 100%; min-width: 0; min-height: 44px; padding: 8px 12px; border: 1px solid #aaa; border-radius: 0; background: #fff; color: var(--ink); font-family: var(--font-body); font-size: 1rem; line-height: 1.6; text-overflow: ellipsis; }
 #article-scope:focus-visible { outline: 2px solid var(--accent-red); outline-offset: 3px; }
-.article-scope-description { margin: 6px 0 0; color: var(--muted); font-size: .94rem; text-align: left; overflow-wrap: anywhere; }
+.article-scope-description { margin: -6px 0 16px; color: var(--muted); font-size: .94rem; text-align: left; overflow-wrap: anywhere; }
+#publication-scope-toggle { display: flex; align-items: center; justify-content: space-between; gap: 12px; box-sizing: border-box; width: 100%; min-height: 44px; padding: 8px 12px; border: 1px solid #aaa; border-radius: 0; background: #fff; color: var(--ink); text-align: left; font-weight: 400; }
+#publication-scope-value { display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.publication-scope-chevron { flex: 0 0 6px; width: 6px; height: 6px; margin: -3px 3px 0 0; border-right: 1px solid currentColor; border-bottom: 1px solid currentColor; transform: rotate(45deg); }
+#publication-scope-toggle[aria-expanded="true"] .publication-scope-chevron { margin-top: 3px; transform: rotate(225deg); }
+#publication-scope-list { position: absolute; z-index: 20; top: 100%; left: 0; right: 0; box-sizing: border-box; max-height: 22rem; overflow-y: auto; overscroll-behavior: contain; margin-top: 4px; padding: 4px 0; border: 1px solid #aaa; background: #fff; }
+.publication-scope-option { display: block; box-sizing: border-box; width: 100%; border: 0; border-radius: 0; padding: 8px 12px; background: #fff; color: var(--ink); font-family: var(--font-body); font-size: .96rem; line-height: 1.45; font-weight: 400; text-align: left; white-space: normal; overflow-wrap: anywhere; cursor: pointer; }
+.publication-scope-option-year { margin-top: 4px; border-top: 1px solid #ddd; font-weight: 600; }
+.publication-scope-option-document { padding-left: 20px; }
+.publication-scope-option-text { display: block; min-width: 0; }
+.publication-scope-option-title { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; margin-top: 2px; color: var(--muted); font-size: .94em; }
+.publication-scope-point { font-size: 2.2em !important; line-height: 0; position: relative; top: .02em; margin: 0 .06em; }
+.publication-scope-option:hover, .publication-scope-option[aria-selected="true"] { background: #fff5f3; }
+.publication-scope-option-active { box-shadow: inset 2px 0 var(--accent-red); background: #fff5f3; }
+#publication-scope-list:focus-visible { outline: 2px solid var(--accent-red); outline-offset: 2px; }
+#publication-scope-toggle[hidden], #publication-scope-list[hidden], #article-scope[hidden] { display: none; }
 #theme-input {
   display: block;
   box-sizing: border-box;
