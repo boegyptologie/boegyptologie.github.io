@@ -1,0 +1,35 @@
+BOE Coptic search segmentation reference
+=======================================
+
+Derived from Coptic Scriptorium's Coptic NLP repository:
+https://github.com/CopticScriptorium/coptic-nlp
+Revision: 30e02f9e2d6a64386eaf788ec5d6ccb467daca4b
+
+Source files:
+  data/segmentation_table.tab
+  data/ambig.tab
+  data.b/segmentation_table.tab
+  data.b/ambig.tab
+
+The source repository distributes these files under its Apache License 2.0.
+A copy is included as coptic-LICENSE-2.0.txt.
+
+Credits retained from the project acknowledgments and official tools page:
+  Coptic Scriptorium and contributors;
+  Tito Orlandi and the CMCL project, for Sahidic lexical data;
+  Hany Takla, Saint Shenouda the Archimandrite Society, for Bohairic data;
+  Pishoy Georgios, for Bohairic lexical data.
+https://copticscriptorium.org/tools
+http://cmcl.let.uniroma1.it/
+
+BOE modifications (2026-11-01): normalized lookup keys to lowercase NFD without
+combining marks; combined the Sahidic and Bohairic tables; excluded every key
+listed as ambiguous, conflicting normalized analyses, non-Coptic entries and
+non-concatenative analyses; retained only multi-unit groups; replaced each
+segmentation with code-point boundary offsets to reduce transfer size.
+
+This is a conservative lookup reference, not the full Coptic NLP pipeline.
+It does not infer a part of speech, lemma, translation, or contextual reading.
+Unknown groups and excluded ambiguities remain unsplit. Absence from an
+ambiguity list is not a claim that a form has only one possible analysis.
+The original BOE passages remain unchanged.
