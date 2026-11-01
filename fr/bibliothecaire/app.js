@@ -4,7 +4,9 @@ const $ = id => document.getElementById(id);
 const LANGUAGE=(document.documentElement?.lang||'fr').toLowerCase().startsWith('en')?'en':'fr';
 const ASSET_BASE=new URL('.',import.meta.url);
 const ENGLISH_UI={
-  "Tous les articles": "All articles",
+  "Toutes les publications": "All publications",
+  "Autres publications": "Other publications",
+  "N° {number}": "No. {number}",
   "variation finale -t": "final -t variation",
   "Insérer {character}": "Insert {character}",
   "Majuscules": "Uppercase",
@@ -26,7 +28,7 @@ const ENGLISH_UI={
   "La recherche n’a pas abouti. Veuillez réessayer.": "The search could not be completed. Please try again.",
   "Chargement du corpus…": "Loading the corpus…",
   "Corpus indisponible": "Corpus unavailable",
-  "Le chargement des articles a échoué. Vérifiez votre connexion puis réessayez.": "The articles could not be loaded. Check your connection and try again.",
+  "Le chargement des publications a échoué. Vérifiez votre connexion puis réessayez.": "The publications could not be loaded. Check your connection and try again.",
   "Recherche en cours…": "Searching…",
   "Rechercher": "Search",
   "Aucun extrait dans cette catégorie.": "No excerpts in this category.",
@@ -39,7 +41,7 @@ const ENGLISH_UI={
   "Terme attesté dans le corpus": "Term attested in the corpus",
   "Note à contrôler": "Note to verify",
   "Bibliographie": "Bibliography",
-  "Texte de l’article": "Article text",
+  "Texte principal": "Main text",
   "Note {number}": "Note {number}",
   "n.": "note",
   "« {text} »": "“{text}”",
@@ -47,7 +49,7 @@ const ENGLISH_UI={
   "Afficher {count} autres extraits": "Show {count} more excerpts",
   "Indices présents dans cet extrait : {terms}{more}": "Evidence in this excerpt: {terms}{more}",
   "Graphies et termes rapprochés : {terms}.": "Related spellings and terms: {terms}.",
-  "{count} articles": "{count} articles",
+  "{count} publications": "{count} publications",
   "{notes} notes · {passages} passages": "{notes} notes · {passages} passages",
   "catégorie grammaticale": "grammatical category",
   "langue / écriture": "language / script",
@@ -1675,7 +1677,7 @@ function buildPlan(query,mode='expanded'){
   const terms=[...new Set(groups.flatMap(g=>g.terms))].slice(0,55);
   return {groups,terms,topics,corrections,relations:queryRelations(query,groups),matchMode:'expanded'};
 }
-function excerptType(p){return p.kind==='note'?(p.number?t('Note {number}',{number:p.number}):t('Note à contrôler')):p.kind==='bibliography'?t('Bibliographie'):t('Texte de l’article');}
+function excerptType(p){return p.kind==='note'?(p.number?t('Note {number}',{number:p.number}):t('Note à contrôler')):p.kind==='bibliography'?t('Bibliographie'):t('Texte principal');}
 function pdfURL(p){const d=state.docs.get(p.doc_id);return d.url?`${d.url}#page=${p.page}`:d.doi?`https://doi.org/${encodeURIComponent(d.doi)}`:null;}
 function reference(p){const d=state.docs.get(p.doc_id);return t('{author}, « {title} », {journal}, p. {page}{note}{doi}.',{author:d.author,title:d.title,journal:d.journal,page:p.page,note:p.number?`, ${t('n.')} ${p.number}`:'',doi:d.doi?`, DOI ${d.doi}`:''});}
 
@@ -2094,17 +2096,36 @@ function updateScriptKeyboardControls(disabled){
   for(const button of SCRIPT_KEYBOARD_STATE.buttons)button.disabled=Boolean(disabled);
 }
 
+function publicationReference(doc){
+  const identifier=/^boe-(\d{4})-(\d+)$/u.exec(String(doc.id||''));
+  const dated=/^(\d{4})(?:-|$)/u.exec(String(doc.publication_date||''));
+  return {year:identifier?identifier[1]:dated?dated[1]:'',number:identifier?Number(identifier[2]):null};
+}
+function publicationOptionLabel(doc){
+  const {number}=publicationReference(doc);
+  return `${number===null?'':`${t('N° {number}',{number})} · `}${doc.author} : ${doc.title}`;
+}
 function updateArticleScopeDescription(){
   const note=$('article-scope-description');if(!note)return;
-  const doc=state.docs.get(state.articleId);note.hidden=!doc;note.textContent=doc?`${doc.author} — ${doc.title}`:'';
+  const doc=state.docs.get(state.articleId);note.hidden=!doc;
+  note.textContent=doc?`${publicationReference(doc).year?`${publicationReference(doc).year} · `:''}${publicationOptionLabel(doc)}`:'';
 }
 function populateArticleScope(){
   const select=$('article-scope');if(!select)return;
   if(state.articleId&&!state.docs.has(state.articleId))state.articleId='';
-  const all=document.createElement('option');all.value='';all.textContent=t('Tous les articles');
+  const all=document.createElement('option');all.value='';all.textContent=t('Toutes les publications');
   select.replaceChildren(all);
-  for(const doc of state.docs.values()){
-    const option=document.createElement('option');option.value=doc.id;option.textContent=`${doc.author} — ${doc.title}`;option.title=option.textContent;select.append(option);
+  const groups=new Map();
+  const docs=[...state.docs.values()].sort((a,b)=>{
+    const left=publicationReference(a),right=publicationReference(b);
+    return right.year.localeCompare(left.year)||(left.number??Infinity)-(right.number??Infinity);
+  });
+  for(const doc of docs){
+    const {year}=publicationReference(doc);
+    if(!groups.has(year)){
+      const group=document.createElement('optgroup');group.label=year||t('Autres publications');select.append(group);groups.set(year,group);
+    }
+    const option=document.createElement('option');option.value=doc.id;option.textContent=publicationOptionLabel(doc);option.title=option.textContent;groups.get(year).append(option);
   }
   select.value=state.articleId;updateArticleScopeDescription();
 }
@@ -2243,7 +2264,7 @@ async function init(){
     for(const doc of corpus.documents)state.docs.set(doc.id,doc);
     populateArticleScope();
     initializeLexicon();
-    $('corpus-total').textContent=t('{count} articles',{count:corpus.documents.length});
+    $('corpus-total').textContent=t('{count} publications',{count:corpus.documents.length});
     $('corpus-subtitle').textContent=t('{notes} notes · {passages} passages',{notes:corpus.passages.filter(p=>p.kind==='note'&&p.number).length,passages:corpus.passages.length});
     $('method-status').hidden=true;
     $('method-status').textContent='';
@@ -2251,7 +2272,7 @@ async function init(){
     state.corpus=null;
     $('corpus-total').textContent=t('Corpus indisponible');
     $('method-status').hidden=false;
-    $('method-status').textContent=t('Le chargement des articles a échoué. Vérifiez votre connexion puis réessayez.');
+    $('method-status').textContent=t('Le chargement des publications a échoué. Vérifiez votre connexion puis réessayez.');
     retry.hidden=false;retry.disabled=false;
   }finally{clearTimeout(timeout);updateSearchControls();}
 }
