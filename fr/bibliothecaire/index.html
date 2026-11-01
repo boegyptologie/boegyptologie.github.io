@@ -59,8 +59,8 @@
   </script>
   <!-- La feuille BOE originale vient en premier ; les styles spécifiques à la recherche la complètent. -->
   <link rel="stylesheet" href="/assets/style.css?v=16">
-  <link rel="stylesheet" href="styles.css?v=24">
-  <script type="module" src="app.js?v=24"></script>
+  <link rel="stylesheet" href="styles.css?v=25">
+  <script type="module" src="app.js?v=25"></script>
 </head>
 <body class="bibliothecaire-page">
 <header>
@@ -94,6 +94,17 @@
       <form id="search-form" aria-describedby="search-help">
         <label for="theme-input">Thème ou mots-clés</label>
         <textarea id="theme-input" name="theme" rows="3" maxlength="1800" required dir="auto" enterkeyhint="search" placeholder="Ex. : Plutarque, Textes des Pyramides, mꜣꜥ"></textarea>
+        <div class="script-keyboards" role="group" aria-label="Claviers de saisie">
+          <details class="script-keyboard" id="keyboard-egyptian">
+            <summary>Clavier égyptien · translittération</summary>
+            <div class="script-keyboard-keys" id="keyboard-egyptian-keys" role="group" aria-label="Caractères égyptologiques"></div>
+          </details>
+          <details class="script-keyboard" id="keyboard-coptic">
+            <summary>Clavier copte</summary>
+            <div class="script-keyboard-keys coptic-keys" id="keyboard-coptic-keys" role="group" aria-label="Caractères coptes"></div>
+          </details>
+          <p id="keyboard-status" class="keyboard-status" role="status" aria-live="polite"></p>
+        </div>
         <div class="form-bottom">
           <fieldset class="search-match-options" aria-describedby="search-match-help">
             <legend>Correspondances</legend>
@@ -107,7 +118,6 @@
           <button id="search-button" type="submit" disabled>Rechercher</button>
         </div>
       </form>
-        <details class="coptic-help"><summary>Rechercher un segment copte</summary><p>En recherche élargie et en variantes proches, une saisie en écriture copte peut retrouver les segments répertoriés de certains groupes liés. Par exemple, <bdi>ⲙⲉ</bdi> ou <bdi>ϩⲛ ⲟⲩ ⲙⲉ</bdi> peuvent retrouver <bdi>Ϩ︦ⲚⲞⲨⲘⲈ</bdi>. Saisissez le segment seul ou avec d’autres segments coptes. Majuscules et marques suscrites sont ignorées pour cette recherche ; le texte cité reste inchangé. Les formes inconnues ou signalées comme ambiguës ne sont pas découpées. Le mode « Exacte » exige la graphie saisie, comme mot ou expression entiers.</p></details>
 
       <details class="examples-disclosure">
         <summary>Exemples de recherches</summary>
@@ -196,7 +206,6 @@
     <details class="vocabulary-sources">
       <summary>Sources du vocabulaire</summary>
       <p>Le référentiel BOE s’appuie sur une sélection de notices de <a href="https://rameau.bnf.fr/informations/produits" target="_blank" rel="noopener noreferrer">RAMEAU — Bibliothèque nationale de France</a>, de <a href="https://www.frantiq.fr/pactols/le-thesaurus/" target="_blank" rel="noopener noreferrer">PACTOLS — CNRS–Frantiq</a>, ainsi que sur les catalogues des collections et les sources égyptologiques citées dans les <a href="data/referentiels.json">références et attributions</a>. Les données adaptées de PACTOLS sont réutilisées sous licence ODbL.</p>
-        <p>La recherche de segments coptes utilise une sélection conservatrice des tables sahidiques et bohaïriques de <a href="https://github.com/CopticScriptorium/coptic-nlp" target="_blank" rel="noopener noreferrer">Coptic Scriptorium / Coptic NLP</a>. Ce découpage graphique ne tranche pas les interprétations grammaticales. <a href="data/coptic-sources.txt">Sources, méthode et attribution</a>.</p>
     </details>
 
     <div class="boma-logo-wrap">

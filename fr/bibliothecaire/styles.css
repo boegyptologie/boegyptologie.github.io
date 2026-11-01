@@ -315,7 +315,21 @@ mark { background: #ffe7bc; color: #222; }
   .corpus-count span { display: block; margin-left: 0; }
 }
 
-.coptic-help { margin: 10px 0 16px; color: var(--muted); font-size: .91rem; }
-.coptic-help summary { cursor: pointer; min-height: 44px; padding: 10px 0; }
-.coptic-help p { margin: 0 0 10px; text-align: start; overflow-wrap: anywhere; }
-.coptic-segmentation { text-align: start; overflow-wrap: anywhere; }
+
+.script-keyboards { display: flex; flex-wrap: wrap; gap: 0 24px; margin: 8px 0 12px; }
+.script-keyboard { flex: 1 1 280px; min-width: 0; }
+.script-keyboard summary { cursor: pointer; min-height: 44px; padding: 10px 0; color: var(--muted); font-size: .94rem; }
+.script-keyboard-keys { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 14px; }
+#search-form .script-keyboard-keys button { flex: 0 0 44px; min-width: 44px; min-height: 44px; padding: 3px 6px; border: 1px solid #ddd; background: #fff; color: var(--ink); font-weight: 400; font-size: 1.12rem; }
+#search-form .script-keyboard-keys button:hover { border-color: var(--accent-red); color: var(--accent-red); }
+#search-form .script-keyboard-keys button[aria-pressed="true"] { border-color: var(--accent-red); color: var(--accent-red); background: #fff5f3; }
+.script-keyboard-actions { flex: 1 0 100%; display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+#search-form .script-keyboard-keys .script-keyboard-action { flex-basis: auto; padding: 3px 12px; font-family: var(--font-body); font-size: .94rem; }
+#search-form .script-keyboard-keys [data-keyboard-action="insert"] { font-family: "BOE Unicode", sans-serif; }
+#search-form .coptic-keys [data-keyboard-action="insert"] { font-family: "BOE Coptic", "BOE Unicode", sans-serif; }
+.keyboard-status { flex: 1 0 100%; margin: 0; color: var(--muted); font-size: .9rem; text-align: start; }
+.keyboard-status:empty { display: none; }
+@media (max-width: 520px) {
+  .script-keyboards { display: block; }
+  .script-keyboard-keys { gap: 5px; }
+}

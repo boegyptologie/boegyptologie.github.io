@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "version": 24,
-  "engine_sha256": "1c055d7fe4830733dfe733dde9149082980bf10b9f0d6955e467ce77c3060b58",
+  "version": 25,
+  "engine_sha256": "3d7d81c55bc6dc20c2b4b4834ff110e3a45db90eed6cfcb497c55df67fef6158",
   "vocabulary": {
     "periods": [
       {
@@ -5063,7 +5063,7 @@
     "periods": [],
     "places": []
   },
-  "engine_normalized_lf_sha256": "3bd6111532cbc05be816d2f2be9b74c06fd187a74fabf90b5a4e8e198cc36d8e",
+  "engine_normalized_lf_sha256": "706a4af78f8fc9bbf00d140d20a1409bd4d9b26d9544800d0e1c058cac2a4ec4",
   "source_vocabulary": {
     "museums": {
       "schema": 1,
@@ -13335,5 +13335,12 @@
     },
     "corpus_coverage": "Seven currently present joined graphic groups have listed multi-unit analyses. Future imported articles use the full 45,920-group lookup without rebuilding it.",
     "limitation": "A listed analysis need not be the only linguistically possible analysis. This lookup is not the complete Coptic NLP pipeline or a universal Coptic morphological analyzer."
+  },
+  "script_keyboards": {
+    "version": 1,
+    "egyptian": "Egyptological transliteration characters",
+    "coptic": "Coptic Unicode alphabet, with case control and combining marks",
+    "input": "Insert at the text selection, preserve the cursor, respect maxlength, never submit automatically. Space and grapheme-aware backspace controls. Disabled while the search input is unavailable.",
+    "interface": "Collapsible French and English keyboards. Explanatory Coptic search text removed; search functionality and provenance retained."
   }
 }
