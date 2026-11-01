@@ -1803,7 +1803,7 @@ function render(){
 
 // Local input controls. These keys edit the query; they never launch a search.
 const SCRIPT_KEYBOARD_LETTERS={
-  egyptian:['ꜣ','ꞽ','ꜥ','w','b','p','f','m','n','r','h','ḥ','ḫ','ẖ','z','s','š','q','k','g','t','ṯ','d','ḏ'],
+  egyptian:['ꜣ','ꞽ','ꜥ','w','b','p','f','m','n','r','h','ḥ','ḫ','ẖ','z','s','š','q','k','g','t','ṯ','d','ḏ','č','č̣','i̯'],
   coptic:['ⲁ','ⲃ','ⲅ','ⲇ','ⲉ','ⲋ','ⲍ','ⲏ','ⲑ','ⲓ','ⲕ','ⲗ','ⲙ','ⲛ','ⲝ','ⲟ','ⲡ','ⲣ','ⲥ','ⲧ','ⲩ','ⲫ','ⲭ','ⲯ','ⲱ','ϣ','ϥ','ϧ','ϩ','ϫ','ϭ','ϯ']
 };
 const SCRIPT_KEYBOARD_STATE={selection:null,uppercase:false,buttons:[],letterButtons:[],caseButton:null};
