@@ -308,6 +308,12 @@ function fold(value){return String(value||'').toLowerCase().normalize('NFKC').no
   .replace(/[^\p{L}\p{N}]+/gu,' ').trim();}
 function words(value){return fold(value).split(/\s+/).filter(w=>
   (w.length>1||/^[\p{Script=Coptic}\p{Script=Greek}]$/u.test(w))&&!STOP.has(w));}
+// Dans les modes étendus, un trait d'union entre deux mots vaut une espace.
+// Les jetons contenant un chiffre gardent leurs séparateurs d'inventaire ou
+// de datation. Remplacer uniquement le signe conserve les offsets du texte.
+function lexicalHyphenText(value){
+  return String(value||'').replace(/(?<![\p{L}\p{M}\p{N}])[\p{L}\p{M}]+[ \t]*[-‐‑‒–—](?=[ \t]*[\p{L}\p{M}]+(?![\p{L}\p{M}\p{N}]))/gu,match=>match.slice(0,-1)+' ');
+}
 
 // Les siècles sont des expressions datées, jamais des nombres isolés :
 // XIXe siècle, 19th century et nineteenth-century désignent la même période.
@@ -968,8 +974,8 @@ function arabicVariants(token){
 // Clé philologique indépendante de l'encodage : Unicode égyptologique,
 // variantes traditionnelles (ȝ, ʿ, ꞽ), Unicode décomposé et Manuel de Codage.
 // Les capitales de MdC sont significatives : H ≠ h, x ≠ X, S ≠ s.
-const EGYPT_MARKED=/[ꜣꜢꜥꜤȝȜʿʕˁʾʔʼʻꞽꞼỉḥḤḫḪẖẖśŚšŠṯṮṱṰṭṬčČḏḎḳḲïÏ\u032F]/u;
-const EGYPT_SINGLE=/(?:[iI]\u032F|[uU]\u032F|[Hh][\u0331\u032d]|[čČ]\u0323|[ꜣꜢꜥꜤȝȜʿʕˁʾʔʼʻꞽꞼỉḥḤḫḪẖẖśŚšŠṯṮṱṰṭṬčČḏḎḳḲïÏ])/gu;
+const EGYPT_MARKED=/(?:[ıI]\u0357|[ꜣꜢꜥꜤȝȜʿʕˁʾʔʼʻꞽꞼỉḥḤḫḪẖẖśŚšŠṯṮṱṰṭṬčČḏḎḳḲïÏ\u032F])/u;
+const EGYPT_SINGLE=/(?:[ıI]\u0357|[iI]\u032F|[uU]\u032F|[Hh][\u0331\u032d]|[čČ]\u0323|[ꜣꜢꜥꜤȝȜʿʕˁʾʔʼʻꞽꞼỉḥḤḫḪẖẖśŚšŠṯṮṱṰṭṬčČḏḎḳḲïÏ])/gu;
 const EGYPT_UNIT=/[\p{L}\p{M}\p{N}]+(?:[.·\-()\[\]{}⟨⟩〈〉⸢⸣⸗=:]*[\p{L}\p{M}\p{N}]+)*/gu;
 const EGYPT_SEPARATORS=/[.·\-()\[\]{}⟨⟩〈〉⸢⸣⸗=:]/u;
 function egyptianKey(value){
@@ -982,7 +988,7 @@ function egyptianKey(value){
     .replace(/[čČ][\u0323]/gu,'ḏ')
     .replace(/[ꜣꜢȝȜ]/gu,'A').replace(/[ʾʔʼ]/gu,'E')
     .replace(/[ꜥꜤʿʕˁʻ]/gu,'a')
-    .replace(/[ꞽꞼỉ]/gu,'j')
+    .replace(/[ıI]\u0357|[ꞽꞼỉ]/gu,'j')
     .replace(/[ḥḤ]/gu,'H').replace(/[ḫḪ]/gu,'x').replace(/ẖ/gu,'X')
     .replace(/[śŚ]/gu,'s').replace(/[šŠ]/gu,'S')
     .replace(/[ṯṮṱṰčČ]/gu,'T').replace(/[ṭṬ]/gu,'d').replace(/[ḏḎ]/gu,'D')
@@ -1273,12 +1279,12 @@ for(let index=0;index<CLOSE_VARIANT_FAMILIES.length;index++)for(const form of CL
 }
 function variantEgyptianKey(value,markedOnly=false){
  const nfc=String(value||'').normalize('NFC');
- const marked=/[ꜣꜢꜥꜤȝȜʿʕˁʾʔʼʻꞽꞼỉḥḤḫḪẖśŚšŠṯṮṱṰṭṬčČḏḎḳḲïÏ\u032F]/u.test(nfc);
+ const marked=/(?:[ıI]\u0357|[ꜣꜢꜥꜤȝȜʿʕˁʾʔʼʻꞽꞼỉḥḤḫḪẖśŚšŠṯṮṱṰṭṬčČḏḎḳḲïÏ\u032F])/u.test(nfc);
  // Les capitales de MdC ne sont pas la casse d'un mot ordinaire.
  const mdc=!markedOnly&&/^[A-Za-z]{2,8}$/u.test(nfc)&&(/[a-z][AHXSTD][a-z]/u.test(nfc)||(/^[AHXSTD][a-z]{2,7}$/u.test(nfc)&&!/[aeiou]/iu.test(nfc)));
  if(!marked&&!mdc)return null;
  let key=nfc.replace(/[iI]\u032F/gu,'I').replace(/[uU]\u032F/gu,'U').replace(/[Hh][\u0331\u032d]/gu,'ẖ').replace(/[čČ]\u0323/gu,'ḏ')
-  .replace(/[ꜣꜢȝȜ]/gu,'A').replace(/[ʾʔʼ]/gu,'E').replace(/[ꜥꜤʿʕˁʻ]/gu,'a').replace(/[ꞽꞼỉ]/gu,'j')
+  .replace(/[ꜣꜢȝȜ]/gu,'A').replace(/[ʾʔʼ]/gu,'E').replace(/[ꜥꜤʿʕˁʻ]/gu,'a').replace(/[ıI]\u0357|[ꞽꞼỉ]/gu,'j')
   .replace(/[ḥḤ]/gu,'H').replace(/[ḫḪ]/gu,'x').replace(/ẖ/gu,'X').replace(/[śŚ]/gu,'s').replace(/[šŠ]/gu,'S')
   .replace(/[ṯṮṱṰčČ]/gu,'T').replace(/[ṭṬ]/gu,'d').replace(/[ḏḎ]/gu,'D').replace(/[ïÏ]/gu,'V').replace(/[ḳḲ]/gu,'q').replace(/3/gu,'A');
  if(/[^A-Za-z0-9]/u.test(key))return 'marked:'+nfc;
@@ -1297,7 +1303,7 @@ function variantTokens(value){
  if(corpus!==closeVariantCorpus){CLOSE_VARIANT_TEXT_CACHE.clear();closeVariantCorpus=corpus;}
  const text=String(value||'');if(CLOSE_VARIANT_TEXT_CACHE.has(text))return CLOSE_VARIANT_TEXT_CACHE.get(text);
  const tokens=[];
- for(const match of text.matchAll(/[\p{L}\p{M}\p{N}]+|\s+|[^\p{L}\p{M}\p{N}\s]/gu)){
+ for(const match of lexicalHyphenText(text).matchAll(/[\p{L}\p{M}\p{N}]+|\s+|[^\p{L}\p{M}\p{N}\s]/gu)){
   const raw=match[0],kind=/^[\p{L}\p{M}\p{N}]/u.test(raw)?'word':/^\s/u.test(raw)?'space':'punct';
   const key=kind==='word'?variantWordKey(raw):kind==='space'?' ':raw.replace(/[’‘]/gu,"'").replace(/[‐‑]/gu,'-');
   tokens.push({kind,key,start:match.index,end:match.index+raw.length});
@@ -1413,7 +1419,7 @@ function copticKey(value){
 }
 function copticContains(value){return /\p{Script=Coptic}/u.test(String(value||''));}
 function copticQuery(value){
- return /^(?:\p{Script=Coptic}[\p{Script=Coptic}\p{M}]*)(?:[\s|]+\p{Script=Coptic}[\p{Script=Coptic}\p{M}]*)*$/u.test(String(value||'').trim());
+ return /^(?:\p{Script=Coptic}[\p{Script=Coptic}\p{M}]*)(?:[\s|]+\p{Script=Coptic}[\p{Script=Coptic}\p{M}]*)*$/u.test(lexicalHyphenText(value).trim());
 }
 function copticAnalyses(value){
  const text=String(value||''),table=typeof COPTIC_SEGMENTS==='undefined'?null:COPTIC_SEGMENTS;
@@ -1449,7 +1455,7 @@ function copticAnalyses(value){
  COPTIC_TEXT_CACHE.set(text,groups);return groups;
 }
 function copticMatches(value,query){
- const text=String(value||'');query=String(query||'').trim();if(!copticQuery(query))return [];
+ const text=String(value||''),separators=lexicalHyphenText(text);query=lexicalHyphenText(query).trim();if(!copticQuery(query))return [];
  const requested=copticAnalyses(query),wanted=requested.flatMap((group,groupIndex)=>group.segments.map(segment=>({...segment,groupIndex})));
  if(!wanted.length)return [];
  const groups=copticAnalyses(text),tokens=groups.flatMap((group,groupIndex)=>group.segments.map(segment=>({...segment,groupIndex}))),hits=[];
@@ -1458,7 +1464,7 @@ function copticMatches(value,query){
   for(let index=0;index<wanted.length;index++){
    const token=tokens[at+index];
    if(token.key!==wanted[index].key){matches=false;break;}
-   if(index){const previous=tokens[at+index-1];if(token.groupIndex!==previous.groupIndex&&!/^[\s|]+$/u.test(text.slice(previous.end,token.start))){matches=false;break;}}
+   if(index){const previous=tokens[at+index-1];if(token.groupIndex!==previous.groupIndex&&!/^[\s|]+$/u.test(separators.slice(previous.end,token.start))){matches=false;break;}}
   }
   if(!matches)continue;
   const matched=tokens.slice(at,at+wanted.length),first=matched[0],last=matched.at(-1),start=first.start,end=last.end;
@@ -1472,9 +1478,11 @@ function copticMatches(value,query){
 }
 
 function buildPlan(query,mode='expanded'){
+  if(mode!=='exact')query=lexicalHyphenText(query);
   if(mode!=='exact'&&copticQuery(query))return {coptic:true,variants:mode==='variants',matchMode:mode,query,groups:[{source:query,terms:[query],coreTerms:[query],egyptKeys:[]}],terms:[query],topics:[{label:query}],corrections:[],relations:[]};
   if(mode==='exact'||mode==='variants')return {exact:mode==='exact',variants:mode==='variants',matchMode:mode,query,groups:[{source:query,terms:[query],coreTerms:[query],egyptKeys:[]}],terms:[query],topics:[{label:query}],corrections:[],relations:[]};
   query=corpusQuestion(query);
+  const philological=EGYPT_MARKED.test(query);
   const egyptian=egyptianQueryMatches(query);
   const egyptByStart=new Map(egyptian.map(m=>[m.start,m]));
   const meaningful=[];
@@ -1482,7 +1490,10 @@ function buildPlan(query,mode='expanded'){
     if(part.concept){meaningful.push(part);continue;}
     if(QUERY_RELATION_WORDS.has(fold(part.source)))continue;
     const special=egyptByStart.get(part.start);
-    for(const source of (part.phrase?[part.source]:special?[special.source]:words(part.source)))meaningful.push({source,start:part.start});
+    // Un suffixe d'une lettre reste une contrainte dans une translittération
+    // espacée : « ꜥḥꜥ-f » ne doit pas se réduire à la seule base « ꜥḥꜥ ».
+    const literalLetter=philological&&/^[A-Za-z]$/u.test(part.source)?[fold(part.source)]:null;
+    for(const source of (part.phrase?[part.source]:special?[special.source]:literalLetter||words(part.source)))meaningful.push({source,start:part.start});
   }
   const tokens=[...new Map(meaningful.map(part=>[`${part.concept||''}:${part.source}:${part.section||''}`,part])).values()];
   const groups=[],corrections=[],foundThemes=new Map();
@@ -1779,7 +1790,7 @@ function render(){
 
 // Local input controls. These keys edit the query; they never launch a search.
 const SCRIPT_KEYBOARD_LETTERS={
-  egyptian:['ꜣ','ꞽ','ꜥ','w','b','p','f','m','n','r','h','ḥ','ḫ','ẖ','z','s','š','q','k','g','t','ṯ','d','ḏ','i','j','y','ḳ'],
+  egyptian:['ꜣ','ꞽ','ꜥ','w','b','p','f','m','n','r','h','ḥ','ḫ','ẖ','z','s','š','q','k','g','t','ṯ','d','ḏ','i','j','y','ḳ','ı͗','i̯','ï','u̯','e','l','ʾ','h̭','ś','ṱ','č','ṭ','č̣','⸗','⸢','⸣','⟨','⟩'],
   coptic:['ⲁ','ⲃ','ⲅ','ⲇ','ⲉ','ⲋ','ⲍ','ⲏ','ⲑ','ⲓ','ⲕ','ⲗ','ⲙ','ⲛ','ⲝ','ⲟ','ⲡ','ⲣ','ⲥ','ⲧ','ⲩ','ⲫ','ⲭ','ⲯ','ⲱ','ϣ','ϥ','ϧ','ϩ','ϫ','ϭ','ϯ']
 };
 const SCRIPT_KEYBOARD_STATE={selection:null,uppercase:false,buttons:[],letterButtons:[],caseButton:null};
