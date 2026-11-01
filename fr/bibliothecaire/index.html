@@ -59,8 +59,8 @@
   </script>
   <!-- La feuille BOE originale vient en premier ; les styles spécifiques à la recherche la complètent. -->
   <link rel="stylesheet" href="/assets/style.css?v=16">
-  <link rel="stylesheet" href="styles.css?v=23">
-  <script type="module" src="app.js?v=23"></script>
+  <link rel="stylesheet" href="styles.css?v=24">
+  <script type="module" src="app.js?v=24"></script>
 </head>
 <body class="bibliothecaire-page">
 <header>
@@ -107,6 +107,7 @@
           <button id="search-button" type="submit" disabled>Rechercher</button>
         </div>
       </form>
+        <details class="coptic-help"><summary>Rechercher un segment copte</summary><p>En recherche élargie et en variantes proches, une saisie en écriture copte peut retrouver les segments répertoriés de certains groupes liés. Par exemple, <bdi>ⲙⲉ</bdi> ou <bdi>ϩⲛ ⲟⲩ ⲙⲉ</bdi> peuvent retrouver <bdi>Ϩ︦ⲚⲞⲨⲘⲈ</bdi>. Saisissez le segment seul ou avec d’autres segments coptes. Majuscules et marques suscrites sont ignorées pour cette recherche ; le texte cité reste inchangé. Les formes inconnues ou signalées comme ambiguës ne sont pas découpées. Le mode « Exacte » exige la graphie saisie, comme mot ou expression entiers.</p></details>
 
       <details class="examples-disclosure">
         <summary>Exemples de recherches</summary>
@@ -195,6 +196,7 @@
     <details class="vocabulary-sources">
       <summary>Sources du vocabulaire</summary>
       <p>Le référentiel BOE s’appuie sur une sélection de notices de <a href="https://rameau.bnf.fr/informations/produits" target="_blank" rel="noopener noreferrer">RAMEAU — Bibliothèque nationale de France</a>, de <a href="https://www.frantiq.fr/pactols/le-thesaurus/" target="_blank" rel="noopener noreferrer">PACTOLS — CNRS–Frantiq</a>, ainsi que sur les catalogues des collections et les sources égyptologiques citées dans les <a href="data/referentiels.json">références et attributions</a>. Les données adaptées de PACTOLS sont réutilisées sous licence ODbL.</p>
+        <p>La recherche de segments coptes utilise une sélection conservatrice des tables sahidiques et bohaïriques de <a href="https://github.com/CopticScriptorium/coptic-nlp" target="_blank" rel="noopener noreferrer">Coptic Scriptorium / Coptic NLP</a>. Ce découpage graphique ne tranche pas les interprétations grammaticales. <a href="data/coptic-sources.txt">Sources, méthode et attribution</a>.</p>
     </details>
 
     <div class="boma-logo-wrap">

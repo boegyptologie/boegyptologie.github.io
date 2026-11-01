@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "version": 23,
-  "engine_sha256": "3ee8db0e0c60bc1eeba4aa1579f559ef57839caa9a1f03d97034b4e029c9c5a1",
+  "version": 24,
+  "engine_sha256": "1c055d7fe4830733dfe733dde9149082980bf10b9f0d6955e467ce77c3060b58",
   "vocabulary": {
     "periods": [
       {
@@ -5063,7 +5063,7 @@
     "periods": [],
     "places": []
   },
-  "engine_normalized_lf_sha256": "abf52ef1c966fe102159370cfbec11c1cc35d3b28ec38802cc734367ef838c29",
+  "engine_normalized_lf_sha256": "3bd6111532cbc05be816d2f2be9b74c06fd187a74fabf90b5a4e8e198cc36d8e",
   "source_vocabulary": {
     "museums": {
       "schema": 1,
@@ -12841,7 +12841,8 @@
     "expanded": {
       "fr": "Élargie",
       "en": "Expanded",
-      "policy": "Le plan thématique, les concepts et les équivalences contrôlées restent disponibles. Les nouvelles familles de formes proches enrichissent aussi les composantes lexicales non conceptuelles."
+      "policy": "Le plan thématique, les concepts et les équivalences contrôlées restent disponibles. Les nouvelles familles de formes proches enrichissent aussi les composantes lexicales non conceptuelles.",
+      "coptic": "See coptic_segmentation: listed bound-group segment matching for entirely Coptic queries."
     },
     "variants": {
       "fr": "Variantes proches",
@@ -13274,7 +13275,8 @@
           }
         ],
         "helper_sha256": "a4a44c1458f056535559c6e1f5ea90a3dccad88238d204b7763a10089b11e958"
-      }
+      },
+      "coptic": "See coptic_segmentation: listed bound-group segment matching for entirely Coptic queries."
     },
     "exact": {
       "fr": "Exacte",
@@ -13282,5 +13284,56 @@
       "policy": "Mot entier ou expression contiguë saisis, présents dans passage.text. Équivalence Unicode canonique en NFD, casse et espaces normalisés ; accents, marques et ponctuation conservés. Aucune correction, équivalence lexicale, traduction ou inférence de catalogue. Les positions de surlignage renvoient au texte original."
     },
     "controls": "Trois choix natifs exclusifs. Une bascule relance la même requête en réinitialisant les filtres et la pagination ; les filtres peuvent ensuite être combinés avec la nouvelle base de résultats."
+  },
+  "coptic_segmentation": {
+    "source": {
+      "name": "Coptic Scriptorium, Coptic NLP",
+      "repository": "https://github.com/CopticScriptorium/coptic-nlp",
+      "revision": "30e02f9e2d6a64386eaf788ec5d6ccb467daca4b",
+      "license": "Apache-2.0",
+      "license_url": "https://github.com/CopticScriptorium/coptic-nlp/blob/30e02f9e2d6a64386eaf788ec5d6ccb467daca4b/LICENSE",
+      "files": [
+        "data/segmentation_table.tab",
+        "data/ambig.tab",
+        "data.b/segmentation_table.tab",
+        "data.b/ambig.tab"
+      ],
+      "attribution": [
+        "Coptic Scriptorium and contributors",
+        "Tito Orlandi and the CMCL project (Sahidic lexical data)",
+        "Hany Takla, Saint Shenouda the Archimandrite Society (Bohairic data)",
+        "Pishoy Georgios (Bohairic lexical data)"
+      ],
+      "cmcl_url": "http://cmcl.let.uniroma1.it/",
+      "tools_url": "https://copticscriptorium.org/tools"
+    },
+    "asset": {
+      "path": "data/coptic-segments.json",
+      "selected_groups": 45920,
+      "asset_bytes": 1593392,
+      "asset_gzip_bytes": 238135,
+      "asset_sha256": "0e1c964cde50dca1bbd94022701b2fe2181af9870e85586a261449156aaf62ec"
+    },
+    "license_notice": "data/coptic-sources.txt",
+    "license_text": "data/coptic-LICENSE-2.0.txt",
+    "scope": "Queries entirely in Coptic script (space or | separated groups), in expanded and variants modes. Loaded on first such query, retained in page memory; exact mode never uses segmentation.",
+    "policy": "Only concatenative whole-group lookup analyses. Exclude all keys in either dialect ambiguity table and normalized/interdialect conflicts. Unknown or excluded forms remain unsplit. Case and combining marks ignored for lookup, original quotation and UTF16 highlight positions retained. No inferred POS, lemma, translation, or interpretation of homographs.",
+    "example": {
+      "source": "Ϩ︦ⲚⲞⲨⲘⲈ",
+      "segments": [
+        "Ϩ︦Ⲛ",
+        "ⲞⲨ",
+        "ⲘⲈ"
+      ],
+      "queries": [
+        "ϩⲛ",
+        "ⲟⲩ",
+        "ⲙⲉ",
+        "ϩⲛ ⲟⲩ ⲙⲉ"
+      ],
+      "caution": "The grammatical role of ⲟⲩ in this expression is discussed in David Mihalyfy’s BOE article; this graphic match does not settle the interpretation."
+    },
+    "corpus_coverage": "Seven currently present joined graphic groups have listed multi-unit analyses. Future imported articles use the full 45,920-group lookup without rebuilding it.",
+    "limitation": "A listed analysis need not be the only linguistically possible analysis. This lookup is not the complete Coptic NLP pipeline or a universal Coptic morphological analyzer."
   }
 }

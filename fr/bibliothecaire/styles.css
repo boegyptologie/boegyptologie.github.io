@@ -314,3 +314,8 @@ mark { background: #ffe7bc; color: #222; }
   .source-top { flex-direction: column; }
   .corpus-count span { display: block; margin-left: 0; }
 }
+
+.coptic-help { margin: 10px 0 16px; color: var(--muted); font-size: .91rem; }
+.coptic-help summary { cursor: pointer; min-height: 44px; padding: 10px 0; }
+.coptic-help p { margin: 0 0 10px; text-align: start; overflow-wrap: anywhere; }
+.coptic-segmentation { text-align: start; overflow-wrap: anywhere; }

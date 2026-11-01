@@ -4,6 +4,13 @@ const $ = id => document.getElementById(id);
 const LANGUAGE=(document.documentElement?.lang||'fr').toLowerCase().startsWith('en')?'en':'fr';
 const ASSET_BASE=new URL('.',import.meta.url);
 const ENGLISH_UI={
+  "Chargement du lexique copte…": "Loading the Coptic word list…",
+  "Le lexique copte n’a pas pu être chargé. Réessayez, ou choisissez « Exacte » pour une recherche littérale.": "The Coptic word list could not be loaded. Try again, or choose “Exact” for a literal search.",
+  "Découpage copte répertorié : {groups}.": "Listed Coptic segmentation: {groups}.",
+  "Le découpage ne détermine pas la fonction grammaticale.": "Segmentation does not determine grammatical function.",
+  "Les segments coptes répertoriés sont aussi recherchés.": "Listed Coptic segments are also searched.",
+  "Recherche copte : segments répertoriés, sans analyse grammaticale automatique.": "Coptic search: listed segments, without automatic grammatical analysis.",
+
   "Cliquez sur un mot-clé pour ne garder que les extraits qui le contiennent. Cliquez à nouveau pour retirer ce filtre.": "Click a keyword to keep only excerpts that contain it. Click it again to remove this filter.",
   "Filtres actifs : {terms}.": "Active filters: {terms}.",
   "Affiner avec « {term} »": "Narrow results with “{term}”",
@@ -1352,11 +1359,11 @@ function getSearchMatchMode(){
 }
 function updateSearchMatchHelp(){
   const mode=getSearchMatchMode(),note=$('search-match-help');if(!note)return;
-  note.textContent=t(mode==='exact'?'Sans équivalences. Majuscules ignorées, accents conservés.':mode==='variants'?'Variantes graphiques et formes proches répertoriées, sans associations thématiques.':'Inclut les variantes et certaines équivalences.');
+  note.textContent=t(mode==='exact'?'Sans équivalences. Majuscules ignorées, accents conservés.':mode==='variants'?'Variantes graphiques et formes proches répertoriées, sans associations thématiques.':'Inclut les variantes et certaines équivalences.')+(mode!=='exact'&&copticQuery($('theme-input').value)?' '+t('Les segments coptes répertoriés sont aussi recherchés.'):'');
 }
 function highlightSearchMatch(node,text,query,mode){
-  const primary=mode==='variants'?variantMatches(text,query):exactMatches(text,query);
-  const spans=[...primary,...state.keywordRefinements.flatMap(term=>exactMatches(text,term))].sort((a,b)=>a.start-b.start||b.end-a.end),merged=[];
+  const primary=state.plan?.coptic?copticMatches(text,query):mode==='variants'?variantMatches(text,query):exactMatches(text,query);
+  const spans=[...primary,...state.keywordRefinements.flatMap(term=>state.matchMode!=='exact'&&copticLexiconReady&&copticQuery(term)?copticMatches(text,term):exactMatches(text,term))].sort((a,b)=>a.start-b.start||b.end-a.end),merged=[];
   for(const span of spans){const previous=merged.at(-1);if(previous&&span.start<previous.end)previous.end=Math.max(previous.end,span.end);else merged.push({...span});}
   let at=0;for(const span of merged){node.append(document.createTextNode(text.slice(at,span.start)));const mark=document.createElement('mark');mark.textContent=text.slice(span.start,span.end);node.append(mark);at=span.end;}node.append(document.createTextNode(text.slice(at)));
 }
@@ -1369,7 +1376,106 @@ function changeSearchMatchMode(){
   render();
 }
 
+let COPTIC_SEGMENTS=Object.create(null);
+let copticLexiconReady=false;
+async function loadCopticLexicon(){
+  if(copticLexiconReady)return;
+  const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),20000);
+  try{
+    const response=await fetch(new URL('data/coptic-segments.json?v=24',ASSET_BASE),{cache:'force-cache',signal:controller.signal});
+    if(!response.ok)throw Error(`HTTP ${response.status}`);
+    const data=await response.json();
+    if(data.schema!==1||data.version!=='boe-coptic-segmentation-1'||!data.boundaries||typeof data.boundaries!=='object'||Array.isArray(data.boundaries))throw Error('Invalid Coptic word list');
+    const table=Object.create(null);
+    for(const [key,cuts] of Object.entries(data.boundaries)){
+      if(!/^\p{Script=Coptic}+$/u.test(key)||!Array.isArray(cuts)||!cuts.length||cuts.some((cut,i)=>!Number.isInteger(cut)||cut<1||cut>=key.length||(i&&cut<=cuts[i-1])))throw Error('Invalid Coptic segmentation');
+      const limits=[0,...cuts,key.length];table[key]=limits.slice(1).map((end,i)=>key.slice(limits[i],end));
+    }
+    if(!table['ϩⲛⲟⲩⲙⲉ']||Object.keys(table).length!==45920)throw Error('Incomplete Coptic word list');
+    COPTIC_SEGMENTS=table;copticLexiconReady=true;
+  }finally{clearTimeout(timeout);}
+}
+function copticScores(query){
+  return state.corpus.passages.map(passage=>[passage.id,copticMatches(passage.text,query).length]).filter(([,count])=>count).sort((a,b)=>b[1]-a[1]);
+}
+function searchCopticHits(text){
+  return state.plan?.coptic?copticMatches(text,state.search):[];
+}
+function copticSegmentationNote(text){
+  const groups=new Map();
+  for(const hit of searchCopticHits(text).filter(hit=>hit.segmented))for(const group of hit.groups)if(group.known)groups.set(group.surface,`${group.surface} → ${group.segments.map(segment=>segment.surface).join(' | ')}`);
+  return [...groups.values()];
+}
+
+// Graphic matching against reviewed, concatenative whole-group analyses.
+// COPTIC_SEGMENTS is supplied by the caller; no grammatical category is inferred.
+const COPTIC_TEXT_CACHE=new Map();
+let copticCachedTable;
+function copticKey(value){
+ return String(value||'').normalize('NFD').toLowerCase().replace(/\p{M}/gu,'');
+}
+function copticContains(value){return /\p{Script=Coptic}/u.test(String(value||''));}
+function copticQuery(value){
+ return /^(?:\p{Script=Coptic}[\p{Script=Coptic}\p{M}]*)(?:[\s|]+\p{Script=Coptic}[\p{Script=Coptic}\p{M}]*)*$/u.test(String(value||'').trim());
+}
+function copticAnalyses(value){
+ const text=String(value||''),table=typeof COPTIC_SEGMENTS==='undefined'?null:COPTIC_SEGMENTS;
+ if(table!==copticCachedTable){COPTIC_TEXT_CACHE.clear();copticCachedTable=table;}
+ if(COPTIC_TEXT_CACHE.has(text))return COPTIC_TEXT_CACHE.get(text);
+ const groups=[];
+ for(const match of text.matchAll(/\p{Script=Coptic}[\p{Script=Coptic}\p{M}]*/gu)){
+  const surface=match[0],start=match.index,end=start+surface.length,units=[];
+  let key='',offset=start;
+  for(const character of surface){
+   const last=units.at(-1),characterEnd=offset+character.length;
+   if(/\p{M}/u.test(character)){
+    if(last)last.end=characterEnd;
+   }else{
+    const normalized=copticKey(character);key+=normalized;
+    for(let index=0;index<normalized.length;index++)units.push({start:offset,end:characterEnd});
+   }
+   offset=characterEnd;
+  }
+  const proposed=table&&Object.hasOwn(table,key)?table[key]:null;
+  const known=Array.isArray(proposed)&&proposed.length>1&&proposed.every(segment=>typeof segment==='string'&&/^\p{Script=Coptic}+$/u.test(segment))&&proposed.join('')===key;
+  const keys=known?proposed:[key],segments=[];
+  let at=0;
+  for(const segment of keys){
+   const first=units[at],last=units[at+segment.length-1];
+   if(!first||!last)continue;
+   segments.push({key:segment,start:first.start,end:last.end,surface:text.slice(first.start,last.end),index:segments.length});
+   at+=segment.length;
+  }
+  groups.push({start,end,surface,key,known,segments});
+ }
+ if(COPTIC_TEXT_CACHE.size>=900)COPTIC_TEXT_CACHE.delete(COPTIC_TEXT_CACHE.keys().next().value);
+ COPTIC_TEXT_CACHE.set(text,groups);return groups;
+}
+function copticMatches(value,query){
+ const text=String(value||'');query=String(query||'').trim();if(!copticQuery(query))return [];
+ const requested=copticAnalyses(query),wanted=requested.flatMap((group,groupIndex)=>group.segments.map(segment=>({...segment,groupIndex})));
+ if(!wanted.length)return [];
+ const groups=copticAnalyses(text),tokens=groups.flatMap((group,groupIndex)=>group.segments.map(segment=>({...segment,groupIndex}))),hits=[];
+ for(let at=0;at<=tokens.length-wanted.length;at++){
+  let matches=true;
+  for(let index=0;index<wanted.length;index++){
+   const token=tokens[at+index];
+   if(token.key!==wanted[index].key){matches=false;break;}
+   if(index){const previous=tokens[at+index-1];if(token.groupIndex!==previous.groupIndex&&!/^[\s|]+$/u.test(text.slice(previous.end,token.start))){matches=false;break;}}
+  }
+  if(!matches)continue;
+  const matched=tokens.slice(at,at+wanted.length),first=matched[0],last=matched.at(-1),start=first.start,end=last.end;
+  const firstGroup=groups[first.groupIndex],lastGroup=groups[last.groupIndex];
+  const boundaryDifference=matched.some((token,index)=>index>0&&((token.groupIndex!==matched[index-1].groupIndex)!==(wanted[index].groupIndex!==wanted[index-1].groupIndex)));
+  const segmented=start!==firstGroup.start||end!==lastGroup.end||boundaryDifference;
+  hits.push({start,end,surface:text.slice(start,end),segmented,groups:groups.slice(first.groupIndex,last.groupIndex+1),segments:matched});
+  at+=wanted.length-1;
+ }
+ return hits;
+}
+
 function buildPlan(query,mode='expanded'){
+  if(mode!=='exact'&&copticQuery(query))return {coptic:true,variants:mode==='variants',matchMode:mode,query,groups:[{source:query,terms:[query],coreTerms:[query],egyptKeys:[]}],terms:[query],topics:[{label:query}],corrections:[],relations:[]};
   if(mode==='exact'||mode==='variants')return {exact:mode==='exact',variants:mode==='variants',matchMode:mode,query,groups:[{source:query,terms:[query],coreTerms:[query],egyptKeys:[]}],terms:[query],topics:[{label:query}],corrections:[],relations:[]};
   query=corpusQuestion(query);
   const egyptian=egyptianQueryMatches(query);
@@ -1569,7 +1675,7 @@ function rankedResults(lexical,question,plan=null){
   // Chaque résultat conserve les attestations lexicales, grammaticales
   // et philologiques exigées par la recherche.
   if(!lexical.length)return [];
-  if(plan?.exact||plan?.variants)return lexical.map(([id,score])=>({id,score}));
+  if(plan?.exact||plan?.variants||plan?.coptic)return lexical.map(([id,score])=>({id,score}));
   const groups=plan?.groups||[];
   if(groups.length===1&&groups[0].egyptKeys?.length){
     const keys=groups[0].egyptKeys;
@@ -1635,7 +1741,7 @@ function drawKeywordChips(){
   }
 }
 function applyKeywordRefinements(){
-  state.result=state.baseResult.filter(passage=>state.keywordRefinements.every(term=>includesTerm(passage.text,term))&&state.contextRefinements.every(id=>(contextEvidenceFor(passage.text).get(id)||[]).length));
+  state.result=state.baseResult.filter(passage=>state.keywordRefinements.every(term=>state.matchMode!=='exact'&&copticLexiconReady&&copticQuery(term)?copticMatches(passage.text,term).length>0:includesTerm(passage.text,term))&&state.contextRefinements.every(id=>(contextEvidenceFor(passage.text).get(id)||[]).length));
   state.activeTerms=[...new Set([...(state.plan?.terms||[]),...state.keywordRefinements])];
   $('topic-analysis').hidden=!state.baseResult.length&&!state.keywordRefinements.length;
   drawKeywordChips();
@@ -1667,15 +1773,18 @@ function render(){
     const egyptEvidence=state.plan?.exact||state.plan?.variants?[]:(state.plan?.groups||[]).flatMap(g=>(g.egyptKeys||[]).flatMap(key=>state.egyptianIndex.get(key)?.byId.get(item.id)?.map(hit=>hit.raw)||[]));
     const corpusEvidence=state.plan?.exact||state.plan?.variants?[]:[...(state.plan?.groups||[]),...state.contextRefinements.map(concept=>({concept}))].flatMap(g=>g.concept?conceptMentions(item.text,g).map(hit=>hit.surface):[]);
     const keys=[...new Set([...words(state.search),...state.activeTerms,...egyptEvidence,...corpusEvidence.slice(0,10)])];
-    const evidence=state.plan?.exact||state.plan?.variants?[...new Set((state.plan.variants?variantMatches(item.text,state.search):exactMatches(item.text,state.search)).map(hit=>hit.surface))]:[...new Set([...state.keywordRefinements,...corpusEvidence,...egyptEvidence,...(state.plan?.groups||[]).map(g=>g.terms.find(term=>includesTerm(item.text,term))).filter(Boolean)])];
+    const evidence=state.plan?.exact||state.plan?.variants||state.plan?.coptic?[...new Set((state.plan.coptic?copticMatches(item.text,state.search):state.plan.variants?variantMatches(item.text,state.search):exactMatches(item.text,state.search)).map(hit=>hit.surface))]:[...new Set([...state.keywordRefinements,...corpusEvidence,...egyptEvidence,...(state.plan?.groups||[]).map(g=>g.terms.find(term=>includesTerm(item.text,term))).filter(Boolean)])];
     if(evidence.length){const why=document.createElement('div');why.className='source-meta';why.textContent=t('Indices présents dans cet extrait : {terms}{more}',{terms:evidence.slice(0,6).join(' · '),more:evidence.length>6?'…':''});card.append(why);}
-    const excerpt=document.createElement('blockquote');excerpt.dir='auto';if(state.plan?.exact||state.plan?.variants)highlightSearchMatch(excerpt,item.text,state.search,state.plan.matchMode);else highlight(excerpt,item.text,keys);card.append(excerpt);const bar=document.createElement('div');bar.className='source-links';const link=document.createElement('a');link.textContent=t('Vérifier sur le PDF ↗');const url=pdfURL(item);if(url){link.href=url;link.target='_blank';link.rel='noopener noreferrer';}else{link.textContent=t('PDF à renseigner');}
+    const segmentation=copticSegmentationNote(item.text);
+    if(segmentation.length){const note=document.createElement('p');note.className='source-meta coptic-segmentation';note.dir='auto';note.textContent=t('Découpage copte répertorié : {groups}.',{groups:segmentation.join(' · ')})+' '+t('Le découpage ne détermine pas la fonction grammaticale.');card.append(note);}
+    const excerpt=document.createElement('blockquote');excerpt.dir='auto';if(state.plan?.exact||state.plan?.variants||state.plan?.coptic)highlightSearchMatch(excerpt,item.text,state.search,state.plan.matchMode);else highlight(excerpt,item.text,keys);card.append(excerpt);const bar=document.createElement('div');bar.className='source-links';const link=document.createElement('a');link.textContent=t('Vérifier sur le PDF ↗');const url=pdfURL(item);if(url){link.href=url;link.target='_blank';link.rel='noopener noreferrer';}else{link.textContent=t('PDF à renseigner');}
     const copy=document.createElement('button');copy.type='button';copy.textContent=t('Copier l’extrait et la référence');copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(`${reference(item)}\n${t('« {text} »',{text:item.text})}`);copy.textContent=t('Référence copiée ✓');setTimeout(()=>copy.textContent=t('Copier l’extrait et la référence'),2000);}catch{copy.textContent=t('Copie indisponible');}});bar.append(link,copy);card.append(bar);wrap.append(card);
   }
 }
 
 function updateSearchControls(){
   const unavailable=!state.corpus;
+  $('theme-input').disabled=unavailable||state.running;
   $('search-button').disabled=unavailable||state.running;
   for(const id of ['match-expanded','match-variants','match-exact'])if($(id))$(id).disabled=unavailable||state.running;
   updateSearchMatchHelp();
@@ -1738,13 +1847,14 @@ function updateGrammarRelations(plan){
 function showSearchResults(query,plan,lex){
   const scored=rankedResults(lex,query,plan);
   const map=new Map(state.corpus.passages.map(p=>[p.id,p]));state.baseResult=scored.map(({id})=>map.get(id)).filter(Boolean);
-  if(plan.variants)plan.terms=variantForms(query,state.baseResult);
+  if(plan.coptic)plan.terms=[...new Set(state.baseResult.flatMap(passage=>copticMatches(passage.text,query).map(hit=>hit.surface)))];
+  else if(plan.variants)plan.terms=variantForms(query,state.baseResult);
   state.activeTerms=plan.terms;state.plan=plan;
   updateGrammarRelations(plan);updateContextRelations(plan);
   applyKeywordRefinements();
   drawChips('topic-chips',plan.topics.length?plan.topics.map(topic=>t(topic.label)):[t('Terme attesté dans le corpus')]);
 
-  const corrections=$('query-corrections');if(corrections){corrections.hidden=!plan.exact&&!plan.variants&&!plan.corrections.length;corrections.textContent=plan.exact?t('Recherche exacte : « {query} ». Aucun élargissement aux équivalences.',{query}):plan.variants?t('Recherche avec variantes proches : « {query} ». Sans associations thématiques.',{query})+(plan.terms.length?' '+t('Formes attestées : {forms}.',{forms:plan.terms.slice(0,12).join(' · ')}):''):plan.corrections.length?t('Graphies et termes rapprochés : {terms}.',{terms:plan.corrections.join(' ; ')}):'';}
+  const corrections=$('query-corrections');if(corrections){corrections.hidden=!plan.exact&&!plan.variants&&!plan.coptic&&!plan.corrections.length;corrections.textContent=plan.coptic?t('Recherche copte : segments répertoriés, sans analyse grammaticale automatique.'):plan.exact?t('Recherche exacte : « {query} ». Aucun élargissement aux équivalences.',{query}):plan.variants?t('Recherche avec variantes proches : « {query} ». Sans associations thématiques.',{query})+(plan.terms.length?' '+t('Formes attestées : {forms}.',{forms:plan.terms.slice(0,12).join(' · ')}):''):plan.corrections.length?t('Graphies et termes rapprochés : {terms}.',{terms:plan.corrections.join(' ; ')}):'';}
   state.filter='all';state.visibleCount=18;
   for(const btn of document.querySelectorAll('[data-filter]')){
     const selected=btn.dataset.filter===state.filter;
@@ -1753,19 +1863,28 @@ function showSearchResults(query,plan,lex){
   render();
   $('result-list').setAttribute('aria-busy','false');
 }
-function runSearch(){
+async function runSearch(){
   if(state.running||!state.corpus)return;
   const query=$('theme-input').value.trim();if(!query)return;
   const mode=getSearchMatchMode();
   if(query!==state.search||mode!==state.matchMode){state.keywordRefinements=[];state.contextRefinements=[];state.contextExpanded={period:false,place:false,source:false};}
   state.running=true;state.search=query;state.matchMode=mode;state.exact=mode==='exact';updateSearchControls();
   $('method-status').hidden=true;
+  let loadingCoptic=false;
   try{
-    const plan=buildPlan(query,mode),lex=mode==='exact'?exactScores(query):mode==='variants'?variantScores(query):lexicalScores(query,plan.terms,plan);
+    if(mode!=='exact'&&copticQuery(query)&&!copticLexiconReady){
+      loadingCoptic=true;state.baseResult=[];state.result=[];state.plan=null;state.activeTerms=[];
+      $('result-list').replaceChildren();$('result-count').textContent='…';drawKeywordChips();drawContextFilters();updateGrammarRelations(null);updateContextRelations(null);
+      $('method-status').hidden=false;$('method-status').textContent=t('Chargement du lexique copte…');
+      await loadCopticLexicon();loadingCoptic=false;
+    }
+    const plan=buildPlan(query,mode),lex=mode==='exact'?exactScores(query):plan.coptic?copticScores(query):mode==='variants'?variantScores(query):lexicalScores(query,plan.terms,plan);
+    $('method-status').hidden=true;$('method-status').textContent='';
     showSearchResults(query,plan,lex);
   }catch(error){
     $('method-status').hidden=false;
-    $('method-status').textContent=t('La recherche n’a pas abouti. Veuillez réessayer.');
+    state.baseResult=[];state.result=[];state.plan=null;state.activeTerms=[];applyKeywordRefinements();render();
+    $('method-status').textContent=t(loadingCoptic?'Le lexique copte n’a pas pu être chargé. Réessayez, ou choisissez « Exacte » pour une recherche littérale.':'La recherche n’a pas abouti. Veuillez réessayer.');
   }finally{
     state.running=false;updateSearchControls();
   }
