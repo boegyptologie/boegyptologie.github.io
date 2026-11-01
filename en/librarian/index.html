@@ -57,8 +57,8 @@
   </script>
   <!-- BOE institutional styles, followed by shared search-tool styles. -->
   <link rel="stylesheet" href="/assets/style.css?v=16">
-  <link rel="stylesheet" href="../../fr/bibliothecaire/styles.css?v=32">
-  <script type="module" src="../../fr/bibliothecaire/app.js?v=32"></script>
+  <link rel="stylesheet" href="../../fr/bibliothecaire/styles.css?v=33">
+  <script type="module" src="../../fr/bibliothecaire/app.js?v=33"></script>
   <meta property="og:locale:alternate" content="fr_FR">
   <meta name="twitter:image:alt" content="Bibliothèque Ouverte d’Égyptologie logo">
   <meta name="DC.description" content="Explore BOE publications: multilingual search, periods, sites, museums and papyri, with source excerpts and links to the original PDFs.">
@@ -94,12 +94,16 @@
       <p id="search-help" class="search-help">Search BOE publications in several languages. Spelling variants and some equivalents are included.</p>
       <form id="search-form" aria-describedby="search-help">
         <div class="article-scope">
-          <label for="article-scope">Search in</label>
-          <select id="article-scope" name="article" aria-describedby="article-scope-description" disabled>
+          <label id="publication-scope-label" for="publication-scope-toggle">Search in</label>
+          <select id="article-scope" name="article" aria-labelledby="publication-scope-label" aria-describedby="article-scope-description" disabled>
             <option value="">All publications</option>
           </select>
-          <p id="article-scope-description" class="article-scope-description" hidden></p>
+          <button id="publication-scope-toggle" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="publication-scope-list" aria-labelledby="publication-scope-label publication-scope-value" aria-describedby="article-scope-description" disabled hidden>
+            <span id="publication-scope-value">All publications</span><span class="publication-scope-chevron" aria-hidden="true"></span>
+          </button>
+          <div id="publication-scope-list" role="listbox" aria-labelledby="publication-scope-label" tabindex="-1" hidden></div>
         </div>
+        <p id="article-scope-description" class="article-scope-description" hidden></p>
         <label for="theme-input">Topic or keywords</label>
         <textarea id="theme-input" name="theme" rows="3" maxlength="1800" required dir="auto" enterkeyhint="search" placeholder="E.g. Coptic, Pyramid Texts, mꜣꜥ"></textarea>
         <div class="script-keyboards" role="group" aria-label="Character keyboards">
