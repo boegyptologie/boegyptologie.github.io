@@ -59,8 +59,8 @@
   </script>
   <!-- La feuille BOE originale vient en premier ; les styles spécifiques à la recherche la complètent. -->
   <link rel="stylesheet" href="/assets/style.css?v=16">
-  <link rel="stylesheet" href="styles.css?v=30">
-  <script type="module" src="app.js?v=30"></script>
+  <link rel="stylesheet" href="styles.css?v=31">
+  <script type="module" src="app.js?v=31"></script>
 </head>
 <body class="bibliothecaire-page">
 <header>
@@ -92,6 +92,13 @@
       <h2 id="search-heading">Recherche par thème</h2>
       <p id="search-help" class="search-help">Recherchez dans les articles, notes et bibliographies, en plusieurs langues. Les variantes d’écriture et certaines équivalences sont prises en compte.</p>
       <form id="search-form" aria-describedby="search-help">
+        <div class="article-scope">
+          <label for="article-scope">Rechercher dans</label>
+          <select id="article-scope" name="article" aria-describedby="article-scope-description" disabled>
+            <option value="">Tous les articles</option>
+          </select>
+          <p id="article-scope-description" class="article-scope-description" hidden></p>
+        </div>
         <label for="theme-input">Thème ou mots-clés</label>
         <textarea id="theme-input" name="theme" rows="3" maxlength="1800" required dir="auto" enterkeyhint="search" placeholder="Ex. : Plutarque, Textes des Pyramides, mꜣꜥ"></textarea>
         <div class="script-keyboards" role="group" aria-label="Claviers de saisie">

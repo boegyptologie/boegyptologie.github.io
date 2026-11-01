@@ -106,6 +106,10 @@ h1, h2, h3, h4 { font-weight: 700; }
 .search-section { padding: 10px 0 22px; }
 .search-help { margin: 0 0 16px !important; color: var(--muted) !important; text-align: left !important; }
 #search-form label { display: block; font-weight: 600; margin: 0 0 8px; }
+.article-scope { min-width: 0; margin: 0 0 16px; }
+#article-scope { display: block; box-sizing: border-box; width: 100%; max-width: 100%; min-width: 0; min-height: 44px; padding: 8px 12px; border: 1px solid #aaa; border-radius: 0; background: #fff; color: var(--ink); font-family: var(--font-body); font-size: 1rem; line-height: 1.6; text-overflow: ellipsis; }
+#article-scope:focus-visible { outline: 2px solid var(--accent-red); outline-offset: 3px; }
+.article-scope-description { margin: 6px 0 0; color: var(--muted); font-size: .94rem; text-align: left; overflow-wrap: anywhere; }
 #theme-input {
   display: block;
   width: 100%;
