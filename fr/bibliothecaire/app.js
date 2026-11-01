@@ -4,12 +4,18 @@ const $ = id => document.getElementById(id);
 const LANGUAGE=(document.documentElement?.lang||'fr').toLowerCase().startsWith('en')?'en':'fr';
 const ASSET_BASE=new URL('.',import.meta.url);
 const ENGLISH_UI={
+  "Insérer {character}": "Insert {character}",
+  "Majuscules": "Uppercase",
+  "Minuscules": "Lowercase",
+  "Trait suscrit": "Overline",
+  "Tréma": "Diaeresis",
+  "Espace": "Space",
+  "Effacer": "Backspace",
+  "Le champ est limité à {count} caractères.": "This field is limited to {count} characters.",
+  "Placez le curseur après une lettre copte.": "Place the cursor after a Coptic letter.",
+
   "Chargement du lexique copte…": "Loading the Coptic word list…",
   "Le lexique copte n’a pas pu être chargé. Réessayez, ou choisissez « Exacte » pour une recherche littérale.": "The Coptic word list could not be loaded. Try again, or choose “Exact” for a literal search.",
-  "Découpage copte répertorié : {groups}.": "Listed Coptic segmentation: {groups}.",
-  "Le découpage ne détermine pas la fonction grammaticale.": "Segmentation does not determine grammatical function.",
-  "Les segments coptes répertoriés sont aussi recherchés.": "Listed Coptic segments are also searched.",
-  "Recherche copte : segments répertoriés, sans analyse grammaticale automatique.": "Coptic search: listed segments, without automatic grammatical analysis.",
 
   "Cliquez sur un mot-clé pour ne garder que les extraits qui le contiennent. Cliquez à nouveau pour retirer ce filtre.": "Click a keyword to keep only excerpts that contain it. Click it again to remove this filter.",
   "Filtres actifs : {terms}.": "Active filters: {terms}.",
@@ -1359,7 +1365,7 @@ function getSearchMatchMode(){
 }
 function updateSearchMatchHelp(){
   const mode=getSearchMatchMode(),note=$('search-match-help');if(!note)return;
-  note.textContent=t(mode==='exact'?'Sans équivalences. Majuscules ignorées, accents conservés.':mode==='variants'?'Variantes graphiques et formes proches répertoriées, sans associations thématiques.':'Inclut les variantes et certaines équivalences.')+(mode!=='exact'&&copticQuery($('theme-input').value)?' '+t('Les segments coptes répertoriés sont aussi recherchés.'):'');
+  note.textContent=t(mode==='exact'?'Sans équivalences. Majuscules ignorées, accents conservés.':mode==='variants'?'Variantes graphiques et formes proches répertoriées, sans associations thématiques.':'Inclut les variantes et certaines équivalences.');
 }
 function highlightSearchMatch(node,text,query,mode){
   const primary=state.plan?.coptic?copticMatches(text,query):mode==='variants'?variantMatches(text,query):exactMatches(text,query);
@@ -1398,15 +1404,6 @@ async function loadCopticLexicon(){
 function copticScores(query){
   return state.corpus.passages.map(passage=>[passage.id,copticMatches(passage.text,query).length]).filter(([,count])=>count).sort((a,b)=>b[1]-a[1]);
 }
-function searchCopticHits(text){
-  return state.plan?.coptic?copticMatches(text,state.search):[];
-}
-function copticSegmentationNote(text){
-  const groups=new Map();
-  for(const hit of searchCopticHits(text).filter(hit=>hit.segmented))for(const group of hit.groups)if(group.known)groups.set(group.surface,`${group.surface} → ${group.segments.map(segment=>segment.surface).join(' | ')}`);
-  return [...groups.values()];
-}
-
 // Graphic matching against reviewed, concatenative whole-group analyses.
 // COPTIC_SEGMENTS is supplied by the caller; no grammatical category is inferred.
 const COPTIC_TEXT_CACHE=new Map();
@@ -1775,16 +1772,134 @@ function render(){
     const keys=[...new Set([...words(state.search),...state.activeTerms,...egyptEvidence,...corpusEvidence.slice(0,10)])];
     const evidence=state.plan?.exact||state.plan?.variants||state.plan?.coptic?[...new Set((state.plan.coptic?copticMatches(item.text,state.search):state.plan.variants?variantMatches(item.text,state.search):exactMatches(item.text,state.search)).map(hit=>hit.surface))]:[...new Set([...state.keywordRefinements,...corpusEvidence,...egyptEvidence,...(state.plan?.groups||[]).map(g=>g.terms.find(term=>includesTerm(item.text,term))).filter(Boolean)])];
     if(evidence.length){const why=document.createElement('div');why.className='source-meta';why.textContent=t('Indices présents dans cet extrait : {terms}{more}',{terms:evidence.slice(0,6).join(' · '),more:evidence.length>6?'…':''});card.append(why);}
-    const segmentation=copticSegmentationNote(item.text);
-    if(segmentation.length){const note=document.createElement('p');note.className='source-meta coptic-segmentation';note.dir='auto';note.textContent=t('Découpage copte répertorié : {groups}.',{groups:segmentation.join(' · ')})+' '+t('Le découpage ne détermine pas la fonction grammaticale.');card.append(note);}
     const excerpt=document.createElement('blockquote');excerpt.dir='auto';if(state.plan?.exact||state.plan?.variants||state.plan?.coptic)highlightSearchMatch(excerpt,item.text,state.search,state.plan.matchMode);else highlight(excerpt,item.text,keys);card.append(excerpt);const bar=document.createElement('div');bar.className='source-links';const link=document.createElement('a');link.textContent=t('Vérifier sur le PDF ↗');const url=pdfURL(item);if(url){link.href=url;link.target='_blank';link.rel='noopener noreferrer';}else{link.textContent=t('PDF à renseigner');}
     const copy=document.createElement('button');copy.type='button';copy.textContent=t('Copier l’extrait et la référence');copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(`${reference(item)}\n${t('« {text} »',{text:item.text})}`);copy.textContent=t('Référence copiée ✓');setTimeout(()=>copy.textContent=t('Copier l’extrait et la référence'),2000);}catch{copy.textContent=t('Copie indisponible');}});bar.append(link,copy);card.append(bar);wrap.append(card);
   }
 }
 
+// Local input controls. These keys edit the query; they never launch a search.
+const SCRIPT_KEYBOARD_LETTERS={
+  egyptian:['ꜣ','ꞽ','ꜥ','w','b','p','f','m','n','r','h','ḥ','ḫ','ẖ','z','s','š','q','k','g','t','ṯ','d','ḏ','i','j','y','ḳ'],
+  coptic:['ⲁ','ⲃ','ⲅ','ⲇ','ⲉ','ⲋ','ⲍ','ⲏ','ⲑ','ⲓ','ⲕ','ⲗ','ⲙ','ⲛ','ⲝ','ⲟ','ⲡ','ⲣ','ⲥ','ⲧ','ⲩ','ⲫ','ⲭ','ⲯ','ⲱ','ϣ','ϥ','ϧ','ϩ','ϫ','ϭ','ϯ']
+};
+const SCRIPT_KEYBOARD_STATE={selection:null,uppercase:false,buttons:[],letterButtons:[],caseButton:null};
+const SCRIPT_KEYBOARD_GRAPHEMES=typeof Intl.Segmenter==='function'?new Intl.Segmenter(undefined,{granularity:'grapheme'}):null;
+function scriptKeyboardSegments(value){
+  if(SCRIPT_KEYBOARD_GRAPHEMES)return [...SCRIPT_KEYBOARD_GRAPHEMES.segment(value)].map(item=>({start:item.index,end:item.index+item.segment.length,text:item.segment}));
+  const groups=[];let offset=0;
+  for(const character of value){
+    const previous=groups.at(-1),end=offset+character.length;
+    if(previous&&(/\p{M}|[\uFE00-\uFE0F\u200D]/u.test(character)||previous.text.endsWith('\u200D'))){previous.text+=character;previous.end=end;}
+    else groups.push({start:offset,end,text:character});
+    offset=end;
+  }
+  return groups;
+}
+function rememberScriptKeyboardSelection(){
+  const input=$('theme-input');if(!input)return;
+  SCRIPT_KEYBOARD_STATE.selection={value:input.value,start:input.selectionStart??input.value.length,end:input.selectionEnd??input.value.length,direction:input.selectionDirection||'none'};
+}
+function scriptKeyboardRange(input){
+  const remembered=SCRIPT_KEYBOARD_STATE.selection;
+  const range=document.activeElement!==input&&remembered?.value===input.value?remembered:{start:input.selectionStart??input.value.length,end:input.selectionEnd??input.value.length,direction:input.selectionDirection||'none'};
+  const start=Math.max(0,Math.min(input.value.length,range.start)),end=Math.max(start,Math.min(input.value.length,range.end));
+  return {start,end,direction:range.direction||'none'};
+}
+function scriptKeyboardStatus(message=''){
+  const status=$('keyboard-status');if(status)status.textContent=message;
+}
+function scriptKeyboardFocus(input,start,end=start,direction='none'){
+  try{input.focus({preventScroll:true});}catch{input.focus();}
+  input.setSelectionRange(start,end,direction);rememberScriptKeyboardSelection();
+}
+function replaceScriptKeyboardRange(input,text,start,end){
+  const maxLength=Number(input.maxLength),limit=Number.isFinite(maxLength)&&maxLength>=0?maxLength:1800;
+  if(input.value.length-(end-start)+text.length>limit){
+    scriptKeyboardStatus(t('Le champ est limité à {count} caractères.',{count:limit}));
+    scriptKeyboardFocus(input,start,end);return false;
+  }
+  input.setRangeText(text,start,end,'end');scriptKeyboardFocus(input,start+text.length);
+  scriptKeyboardStatus();input.dispatchEvent(new Event('input',{bubbles:true}));return true;
+}
+function insertScriptKeyboardText(text){
+  const input=$('theme-input');if(!input||input.disabled)return false;
+  const {start,end}=scriptKeyboardRange(input);return replaceScriptKeyboardRange(input,text,start,end);
+}
+function deleteScriptKeyboardSelection(){
+  const input=$('theme-input');if(!input||input.disabled)return false;
+  const range=scriptKeyboardRange(input);let {start,end}=range;
+  if(start===end){
+    if(!start){scriptKeyboardFocus(input,0);return false;}
+    const previous=scriptKeyboardSegments(input.value).find(segment=>segment.start<start&&segment.end>=start);
+    if(!previous)return false;start=previous.start;end=previous.end;
+  }
+  return replaceScriptKeyboardRange(input,'',start,end);
+}
+function markScriptKeyboardCoptic(mark){
+  const input=$('theme-input');if(!input||input.disabled)return false;
+  const range=scriptKeyboardRange(input);
+  const previous=scriptKeyboardSegments(input.value).find(segment=>segment.start<range.end&&segment.end>=range.end);
+  if(!previous||!/^\p{Script=Coptic}\p{M}*$/u.test(previous.text)){
+    scriptKeyboardStatus(t('Placez le curseur après une lettre copte.'));scriptKeyboardFocus(input,range.start,range.end,range.direction);return false;
+  }
+  if(previous.text.normalize('NFD').includes(mark)){scriptKeyboardFocus(input,previous.end);return false;}
+  return replaceScriptKeyboardRange(input,mark,previous.end,previous.end);
+}
+function toggleScriptKeyboardCase(){
+  const input=$('theme-input');if(!input||input.disabled)return;
+  SCRIPT_KEYBOARD_STATE.uppercase=!SCRIPT_KEYBOARD_STATE.uppercase;
+  for(const button of SCRIPT_KEYBOARD_STATE.letterButtons){
+    const character=SCRIPT_KEYBOARD_STATE.uppercase?button.dataset.keyboardKey.toUpperCase():button.dataset.keyboardKey;
+    button.textContent=character;button.dataset.keyboardValue=character;
+    button.setAttribute('aria-label',t('Insérer {character}',{character}));
+  }
+  const button=SCRIPT_KEYBOARD_STATE.caseButton;
+  if(button){button.setAttribute('aria-pressed',String(SCRIPT_KEYBOARD_STATE.uppercase));button.textContent=t(SCRIPT_KEYBOARD_STATE.uppercase?'Minuscules':'Majuscules');button.setAttribute('aria-label',button.textContent);}
+  scriptKeyboardStatus();
+}
+function makeScriptKeyboardButton(kind,action,label,value=''){
+  const button=document.createElement('button');button.type='button';button.className='script-keyboard-key';
+  button.dataset.keyboardKind=kind;button.dataset.keyboardAction=action;button.textContent=label;
+  if(action==='insert'){
+    button.dataset.keyboardKey=value;button.dataset.keyboardValue=value;button.setAttribute('aria-label',t('Insérer {character}',{character:value}));
+    if(kind==='coptic')SCRIPT_KEYBOARD_STATE.letterButtons.push(button);
+  }else{button.className+=' script-keyboard-action';button.setAttribute('aria-label',label);}
+  button.addEventListener('pointerdown',event=>{if(!button.disabled)event.preventDefault();});
+  button.addEventListener('click',()=>{
+    if(button.disabled)return;
+    if(action==='case')toggleScriptKeyboardCase();
+    else if(action==='backspace')deleteScriptKeyboardSelection();
+    else if(action==='overline'||action==='diaeresis')markScriptKeyboardCoptic(action==='overline'?'\u0305':'\u0308');
+    else insertScriptKeyboardText(action==='space'?' ':button.dataset.keyboardValue);
+  });
+  SCRIPT_KEYBOARD_STATE.buttons.push(button);return button;
+}
+function initScriptKeyboards(){
+  const input=$('theme-input');if(!input)return;
+  for(const event of ['select','input','click','keyup','focus','blur'])input.addEventListener(event,rememberScriptKeyboardSelection);
+  for(const [kind,letters] of Object.entries(SCRIPT_KEYBOARD_LETTERS)){
+    const wrap=$(`keyboard-${kind}-keys`);if(!wrap)continue;
+    wrap.replaceChildren();
+    for(const character of letters)wrap.append(makeScriptKeyboardButton(kind,'insert',character,character));
+    const actions=document.createElement('div');actions.className='script-keyboard-actions';
+    if(kind==='coptic'){
+      const caseButton=makeScriptKeyboardButton(kind,'case',t('Majuscules'));caseButton.setAttribute('aria-pressed','false');SCRIPT_KEYBOARD_STATE.caseButton=caseButton;actions.append(caseButton);
+      for(const [action,label,character] of [['overline','Trait suscrit','\u0305'],['diaeresis','Tréma','\u0308']]){
+        const button=makeScriptKeyboardButton(kind,action,t(label));button.dataset.keyboardKey=character;actions.append(button);
+      }
+    }
+    actions.append(makeScriptKeyboardButton(kind,'space',t('Espace')),makeScriptKeyboardButton(kind,'backspace',t('Effacer')));wrap.append(actions);
+  }
+  rememberScriptKeyboardSelection();updateScriptKeyboardControls(input.disabled);
+}
+function updateScriptKeyboardControls(disabled){
+  for(const button of SCRIPT_KEYBOARD_STATE.buttons)button.disabled=Boolean(disabled);
+}
+
 function updateSearchControls(){
   const unavailable=!state.corpus;
   $('theme-input').disabled=unavailable||state.running;
+  updateScriptKeyboardControls(unavailable||state.running);
   $('search-button').disabled=unavailable||state.running;
   for(const id of ['match-expanded','match-variants','match-exact'])if($(id))$(id).disabled=unavailable||state.running;
   updateSearchMatchHelp();
@@ -1854,7 +1969,7 @@ function showSearchResults(query,plan,lex){
   applyKeywordRefinements();
   drawChips('topic-chips',plan.topics.length?plan.topics.map(topic=>t(topic.label)):[t('Terme attesté dans le corpus')]);
 
-  const corrections=$('query-corrections');if(corrections){corrections.hidden=!plan.exact&&!plan.variants&&!plan.coptic&&!plan.corrections.length;corrections.textContent=plan.coptic?t('Recherche copte : segments répertoriés, sans analyse grammaticale automatique.'):plan.exact?t('Recherche exacte : « {query} ». Aucun élargissement aux équivalences.',{query}):plan.variants?t('Recherche avec variantes proches : « {query} ». Sans associations thématiques.',{query})+(plan.terms.length?' '+t('Formes attestées : {forms}.',{forms:plan.terms.slice(0,12).join(' · ')}):''):plan.corrections.length?t('Graphies et termes rapprochés : {terms}.',{terms:plan.corrections.join(' ; ')}):'';}
+  const corrections=$('query-corrections');if(corrections){corrections.hidden=!!plan.coptic||(!plan.exact&&!plan.variants&&!plan.corrections.length);corrections.textContent=plan.coptic?'':plan.exact?t('Recherche exacte : « {query} ». Aucun élargissement aux équivalences.',{query}):plan.variants?t('Recherche avec variantes proches : « {query} ». Sans associations thématiques.',{query})+(plan.terms.length?' '+t('Formes attestées : {forms}.',{forms:plan.terms.slice(0,12).join(' · ')}):''):plan.corrections.length?t('Graphies et termes rapprochés : {terms}.',{terms:plan.corrections.join(' ; ')}):'';}
   state.filter='all';state.visibleCount=18;
   for(const btn of document.querySelectorAll('[data-filter]')){
     const selected=btn.dataset.filter===state.filter;
@@ -1917,6 +2032,7 @@ async function init(){
   }finally{clearTimeout(timeout);updateSearchControls();}
 }
 
+initScriptKeyboards();
 $('search-form').addEventListener('submit',event=>{event.preventDefault();runSearch();});
 $('retry-corpus').addEventListener('click',init);
 for(const id of ['match-expanded','match-variants','match-exact'])$(id)?.addEventListener('change',changeSearchMatchMode);
