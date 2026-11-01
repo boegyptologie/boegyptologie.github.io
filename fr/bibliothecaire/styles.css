@@ -330,6 +330,7 @@ mark { background: #ffe7bc; color: #222; }
 .script-keyboard { flex: 1 1 280px; min-width: 0; }
 .script-keyboard summary { cursor: pointer; min-height: 44px; padding: 10px 0; color: var(--muted); font-size: .94rem; }
 .script-keyboard-keys { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 14px; }
+#keyboard-egyptian-keys { max-width: 294px; }
 #search-form .script-keyboard-keys button { flex: 0 0 44px; min-width: 44px; min-height: 44px; padding: 3px 6px; border: 1px solid #ddd; background: #fff; color: var(--ink); font-weight: 400; font-size: 1.12rem; }
 #search-form .script-keyboard-keys button:hover { border-color: var(--accent-red); color: var(--accent-red); }
 #search-form .script-keyboard-keys button[aria-pressed="true"] { border-color: var(--accent-red); color: var(--accent-red); background: #fff5f3; }

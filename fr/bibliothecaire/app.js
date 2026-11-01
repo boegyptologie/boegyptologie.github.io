@@ -603,6 +603,18 @@ function sourceLocalContext(text,start,end,window=180){
 function sourcePartialNumber(tail){return /^(?:[./\-–]\s*\d|[./\-–][\p{L}]|,\s*\d|,[\p{L}])/u.test(tail);}
 
 const SOURCE_MUSEUM_ANCHORS=[...SOURCE_MUSEUMS,...SOURCE_LIBRARY_MUSEUMS].flatMap(museum=>museum.aliases.map(alias=>({museum:museum.id,alias:fold(alias)})));
+function sourceAuthorInitials(before,code,number){
+ // « Hoch, J.E. 1997 » est une référence auteur-date, pas un inventaire.
+ // Un numéro ressemblant à une année reste valable hors de cette syntaxe.
+ if(!/^(?:[A-Z][.]){2,3}$/u.test(code)||!/^(?:1[5-9]|20|21)\d{2}[a-z]?$/iu.test(number.replace(/\s+/gu,'')))return false;
+ const name=before.match(/(?:^|[\s(])([\p{Lu}][\p{L}\p{M}'’‐‑-]*(?:\s+[\p{Lu}][\p{L}\p{M}'’‐‑-]*){0,3}),\s*$/u)?.[1];
+ if(!name)return false;
+ const label=fold(name).replace(/^(?:le|la|les)\s+/u,'');
+ // Une désignation de musée ou d'objet avant le code peut aussi finir par
+ // une virgule : « Musée égyptien du Caire, J.E. 1997 » reste un inventaire.
+ if(SOURCE_MUSEUM_ANCHORS.some(anchor=>anchor.alias===label||anchor.alias.endsWith(' '+label))||SOURCE_REFERENCE_RULES.some(item=>item.anchors.includes(label))||/^(?:statues?|steles?|papyrus|ostraca?|ostracon|fragments?|reliefs?|objets?|objects?|inventory|inventaire|catalogue|collection)$/u.test(label))return false;
+ return true;
+}
 function sourceAnchorDistance(local,position,anchors){let distance=Infinity;for(const alias of anchors){let at=-1;while((at=local.indexOf(alias,at+1))>=0){if((at&&local[at-1]!==' ')||(at+alias.length<local.length&&local[at+alias.length]!==' '))continue;distance=Math.min(distance,position<at?at-position:Math.max(0,position-at-alias.length));}}return distance;}
 function sourceReferenceExpressions(value,query=false){
  const original=String(value||''),text=inventoryText(original),candidates=[];
@@ -616,6 +628,7 @@ function sourceReferenceExpressions(value,query=false){
   if(embedded){side=/^r/iu.test(embedded[1])?'recto':'verso';number=number.slice(0,-embedded[0].length);}
   const explicit=explicitReferenceSide(after);if(explicit){side=explicit.side;end+=explicit.length;}
   const before=text.slice(Math.max(0,match.index-(item.rule.context_window||140)),match.index),tail=text.slice(end,end+(item.rule.context_window||140));
+  if(sourceAuthorInitials(before,item.code,number))continue;
   // Un contexte d'une autre clause ne qualifie pas le code fragile qui suit.
   const localBefore=before.split(/[;!?\n]/u).at(-1),local=fold(localBefore+' '+match[0]+' '+tail.split(/[;!?\n]/u)[0]),position=fold(localBefore).length;
   const contextDistance=sourceAnchorDistance(local,position,item.anchors);
@@ -1790,7 +1803,7 @@ function render(){
 
 // Local input controls. These keys edit the query; they never launch a search.
 const SCRIPT_KEYBOARD_LETTERS={
-  egyptian:['ꜣ','ꞽ','ꜥ','w','b','p','f','m','n','r','h','ḥ','ḫ','ẖ','z','s','š','q','k','g','t','ṯ','d','ḏ','i','j','y','ḳ','ı͗','i̯','ï','u̯','e','l','ʾ','h̭','ś','ṱ','č','ṭ','č̣','⸗','⸢','⸣','⟨','⟩'],
+  egyptian:['ꜣ','ꞽ','ꜥ','w','b','p','f','m','n','r','h','ḥ','ḫ','ẖ','z','s','š','q','k','g','t','ṯ','d','ḏ'],
   coptic:['ⲁ','ⲃ','ⲅ','ⲇ','ⲉ','ⲋ','ⲍ','ⲏ','ⲑ','ⲓ','ⲕ','ⲗ','ⲙ','ⲛ','ⲝ','ⲟ','ⲡ','ⲣ','ⲥ','ⲧ','ⲩ','ⲫ','ⲭ','ⲯ','ⲱ','ϣ','ϥ','ϧ','ϩ','ϫ','ϭ','ϯ']
 };
 const SCRIPT_KEYBOARD_STATE={selection:null,uppercase:false,buttons:[],letterButtons:[],caseButton:null};
