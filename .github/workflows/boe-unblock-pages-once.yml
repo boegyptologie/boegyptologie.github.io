@@ -52,9 +52,21 @@ jobs:
                       return response.status, json.loads(payload) if payload else {}
               except HTTPError as error:
                   if error.code in accepted_errors:
-                      return error.code, {}
+                      try:
+                          response = json.loads(error.read())
+                      except (ValueError, UnicodeDecodeError):
+                          response = {}
+                      if not isinstance(response, dict):
+                          response = {}
+                      return error.code, {'message': str(response.get('message', ''))[:250]}
                   # Avoid printing request headers or any authentication data.
                   raise RuntimeError(f'GitHub rejected {method} {endpoint}: HTTP {error.code}') from None
+
+
+          def require_target(run):
+              if (run.get('id') != RUN or run.get('run_number') != 650 or
+                      run.get('head_sha') != RELEASE or run.get('head_branch') != 'main'):
+                  raise RuntimeError('The target run does not match the reviewed release.')
 
 
           def main():
@@ -62,30 +74,15 @@ jobs:
                   raise RuntimeError('Recovery is restricted to the designated BOE branch.')
               endpoint = f'/actions/runs/{RUN}'
               _, run = api('GET', endpoint)
-              if (run.get('id') != RUN or run.get('run_number') != 650 or
-                      run.get('head_sha') != RELEASE or run.get('head_branch') != 'main'):
-                  raise RuntimeError('The target run does not match the reviewed release.')
+              require_target(run)
               print('Target release confirmed; run status:', run.get('status'), flush=True)
               if run.get('status') == 'completed' and run.get('conclusion') == 'success':
                   print('The reviewed publication has already succeeded; no recovery required.', flush=True)
                   return
 
-              if run.get('status') != 'completed':
-                  code, _ = api('POST', endpoint + '/force-cancel', accepted_errors=(409,))
-                  print('Requested cancellation of the stalled run:', code, flush=True)
-                  for _ in range(40):
-                      _, current = api('GET', endpoint)
-                      if current.get('head_sha') != RELEASE:
-                          raise RuntimeError('Target identity changed during recovery.')
-                      if current.get('status') == 'completed':
-                          print('Run stopped:', current.get('conclusion'), flush=True)
-                          break
-                      time.sleep(2)
-                  else:
-                      raise RuntimeError('GitHub did not stop the target run within the bounded wait.')
-
               pages_endpoint = '/pages/deployments/' + OLD_DEPLOYMENT
               code, deployment = api('GET', pages_endpoint, accepted_errors=(404,))
+              print('Previous Pages status:', code, deployment.get('status'), deployment.get('message', ''), flush=True)
               if code == 404:
                   print('The previously reported Pages deployment is no longer found; no cancellation requested.', flush=True)
               elif deployment.get('status') in TERMINAL_PAGES:
@@ -103,6 +100,25 @@ jobs:
                       raise RuntimeError('GitHub still reports the previous Pages deployment as pending.')
               else:
                   raise RuntimeError('Unknown Pages status; no Pages cancellation requested.')
+              if run.get('status') != 'completed':
+                  code, response = api('POST', endpoint + '/cancel', accepted_errors=(409,))
+                  print('Normal cancellation:', code, response.get('message', ''), flush=True)
+                  time.sleep(2)
+                  _, current = api('GET', endpoint)
+                  require_target(current)
+                  if current.get('status') != 'completed':
+                      code, response = api('POST', endpoint + '/force-cancel', accepted_errors=(409,))
+                      print('Forced cancellation:', code, response.get('message', ''), flush=True)
+                  for _ in range(40):
+                      _, current = api('GET', endpoint)
+                      require_target(current)
+                      if current.get('status') == 'completed':
+                          print('Run stopped:', current.get('conclusion'), flush=True)
+                          break
+                      time.sleep(2)
+                  else:
+                      raise RuntimeError('GitHub did not stop the target run within the bounded wait.')
+
               print('Recovery checks complete. Re-run the reviewed release through the normal publication workflow.', flush=True)
 
 
