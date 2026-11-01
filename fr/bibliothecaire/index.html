@@ -59,8 +59,8 @@
   </script>
   <!-- La feuille BOE originale vient en premier ; les styles spécifiques à la recherche la complètent. -->
   <link rel="stylesheet" href="/assets/style.css?v=16">
-  <link rel="stylesheet" href="styles.css?v=31">
-  <script type="module" src="app.js?v=31"></script>
+  <link rel="stylesheet" href="styles.css?v=32">
+  <script type="module" src="app.js?v=32"></script>
 </head>
 <body class="bibliothecaire-page">
 <header>
@@ -90,12 +90,12 @@
 
     <section class="search-section" aria-labelledby="search-heading">
       <h2 id="search-heading">Recherche par thème</h2>
-      <p id="search-help" class="search-help">Recherchez dans les articles, notes et bibliographies, en plusieurs langues. Les variantes d’écriture et certaines équivalences sont prises en compte.</p>
+      <p id="search-help" class="search-help">Recherchez dans les publications de la BOE, en plusieurs langues. Les variantes d’écriture et certaines équivalences sont prises en compte.</p>
       <form id="search-form" aria-describedby="search-help">
         <div class="article-scope">
           <label for="article-scope">Rechercher dans</label>
           <select id="article-scope" name="article" aria-describedby="article-scope-description" disabled>
-            <option value="">Tous les articles</option>
+            <option value="">Toutes les publications</option>
           </select>
           <p id="article-scope-description" class="article-scope-description" hidden></p>
         </div>
@@ -201,7 +201,7 @@
       <div class="filters" role="group" aria-label="Filtrer les extraits">
         <button type="button" class="filter selected" data-filter="all" aria-pressed="true">Tous les extraits</button>
         <button type="button" class="filter" data-filter="note" aria-pressed="false">Notes</button>
-        <button type="button" class="filter" data-filter="body" aria-pressed="false">Corps des articles</button>
+        <button type="button" class="filter" data-filter="body" aria-pressed="false">Texte principal</button>
         <button type="button" class="filter" data-filter="bibliography" aria-pressed="false">Bibliographies</button>
       </div>
       <div id="result-list" class="result-list" aria-live="polite" aria-busy="false"></div>

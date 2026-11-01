@@ -112,6 +112,7 @@ h1, h2, h3, h4 { font-weight: 700; }
 .article-scope-description { margin: 6px 0 0; color: var(--muted); font-size: .94rem; text-align: left; overflow-wrap: anywhere; }
 #theme-input {
   display: block;
+  box-sizing: border-box;
   width: 100%;
   max-width: 100%;
   min-height: 95px;
