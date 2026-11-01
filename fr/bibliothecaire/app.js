@@ -155,7 +155,7 @@ const ENGLISH_UI={
   "Recherche exacte : « {query} ». Aucun élargissement aux équivalences.": "Exact search: “{query}”. No expansion to equivalents.",
   "Recherche avec variantes proches : « {query} ». Sans associations thématiques.": "Close-variant search: “{query}”. No thematic associations.",
   "Formes attestées : {forms}.": "Attested forms: {forms}.",
-  "Sans équivalences. Majuscules ignorées, accents conservés.": "No equivalents. Case is ignored; accents are preserved.",
+  "Sans équivalences. Accents conservés ; casse des codes de translittération respectée.": "No equivalents. Accents and the case of transliteration codes are preserved.",
   "Variantes graphiques et formes proches répertoriées, sans associations thématiques.": "Listed spelling variants and close forms, without thematic associations.",
   "Inclut les variantes et certaines équivalences.": "Includes spelling variants and some equivalents.",
   "Copte": "Coptic"
@@ -1015,29 +1015,57 @@ function egyptianKey(value){
   return key.length>=1&&key.length<=48?key:null;
 }
 function mdcSurface(value){
-  if(!/^[A-Za-z]{2,18}$/u.test(value))return false;
-  // En plus des capitales internes (`nTr`), reconnaître des formes comme
-  // `Axt`, tout en excluant les noms latins ordinaires (`Aten`, `Asia`).
-  return /[a-z][AHXSTD][a-z]/u.test(value)||
-    (/^[AHXSTD][a-z]{2,8}$/u.test(value)&&/[xXHSTD]/u.test(value.slice(1))&&!/[eou]/iu.test(value));
+  value=String(value||'');
+  if(!/^[A-Za-z]{1,18}$/u.test(value)||/[BCEFGIJKLMNOPQRUVWYZ]/u.test(value)||/[eou]/iu.test(value))return false;
+  // T/D isolés et capitales codantes internes : DA, dA, nTr, Tmr, Dxr.
+  // La capitale d'un mot latin ordinaire (Data, Text, Dad) ne suffit pas.
+  return /^[TD]$/u.test(value)||/[a-zAHXSTD][AHXSTD]/u.test(value)||
+    /^[AHXSTD][bdfghjklmnpqrstvwxyz]{1,17}$/u.test(value);
+}
+function mdcSourceSurface(value,text,start){
+  if(!mdcSurface(value))return false;
+  text=String(text||'');const before=text.slice(0,start),after=text.slice(start+value.length);
+  // Initiales (D., Th.), élisions françaises et fragments de lettrines ne
+  // sont pas des signes MdC. Les lettres de figures exigent aussi un contexte.
+  if(/^[TD][a-z]?$/u.test(value)&&/^\s*[.]/u.test(after))return false;
+  if(!/^[TD]$/u.test(value))return true;
+  if(/^[’'][\p{L}]/u.test(after)||/[\p{L}][’']$/u.test(before))return false;
+  if(text.trim()===value||/^["'«“]\s*[TD]\s*["'»”][.!?]?$/u.test(text.trim()))return true;
+  if(/[«“"'‘]$/u.test(before)&&/^[»”"'’]/u.test(after))return true;
+  return /(?:\bMdC\b|Manuel de codage|Manual of Coding|translitt[ée]r|transliter|phon[èé]m|phonem)/iu.test(text.slice(Math.max(0,start-65),start+value.length+65));
+}
+function mdcCaseMismatch(left,right){
+  left=String(left||'').normalize('NFC');right=String(right||'').normalize('NFC');
+  if(!/^[A-Za-z]+$/u.test(left)||!/^[A-Za-z]+$/u.test(right)||left.toLowerCase()!==right.toLowerCase()||(!mdcSurface(left)&&!mdcSurface(right)))return false;
+  return Array.from(left).some((char,index)=>/[AHXSTD]/iu.test(char)&&char!==right[index]);
+}
+function mdcExactCaseCompatible(query,surface){
+  const words=value=>Array.from(String(value).matchAll(/[\p{L}\p{M}\p{N}]+/gu),match=>match[0]);
+  const wanted=words(query),actual=words(surface);
+  return wanted.length!==actual.length||wanted.every((word,index)=>!mdcCaseMismatch(word,actual[index]));
+}
+function mdcConflictPositions(text,term){
+  const conflicts=new Set();if(!/^[A-Za-z]+$/u.test(term))return conflicts;
+  const key=egyptianKey(term),needle=fold(term);if(!key)return conflicts;
+  for(const match of String(text).matchAll(/[\p{L}\p{M}\p{N}]+/gu)){
+    const raw=match[0];if(fold(raw)!==needle||(!EGYPT_MARKED.test(raw)&&!mdcSourceSurface(raw,text,match.index)))continue;
+    const other=egyptianKey(raw);if(other&&other!==key)conflicts.add(fold(String(text).slice(0,match.index+raw.length)).replace(/\b([a-z])\s+(\d{2,3})\b/g,'$1$2').length-needle.length);
+  }
+  return conflicts;
 }
 function egyptianQueryMatches(query){
   const found=[],seen=new Set();
-  if(!state.egyptianIndex.size)return found;
   for(const match of String(query||'').matchAll(EGYPT_UNIT)){
     const raw=match[0],key=egyptianKey(raw);
     if(!key)continue;
     let chosen=state.egyptianIndex.has(key)?key:null;
-    // Une graphie entièrement ASCII, éventuellement en minuscules, ne peut
-    // être rapprochée que d'une SEULE entrée de l'index philologique.
-    if(!chosen&&/^[A-Za-z]+$/u.test(raw)&&raw.length>=3){
-      const alternatives=[...state.egyptianIndex.keys()].filter(x=>x.toLowerCase()===key.toLowerCase());
-      if(alternatives.length===1)chosen=alternatives[0];
-    }
     if(!chosen&&/^[a-z]{3,}$/u.test(raw)&&/kh|sh|dj/.test(raw)){
       const digraph=raw.replace(/kh/g,'x').replace(/sh/g,'S').replace(/dj/g,'D');
       if(state.egyptianIndex.has(digraph))chosen=digraph;
     }
+    // Une graphie explicitement égyptologique reste une contrainte même
+    // lorsqu'aucune attestation ne porte sa clé exacte. Jamais D -> d.
+    if(!chosen&&(EGYPT_MARKED.test(raw)||mdcSurface(raw)))chosen=key;
     if(!chosen)continue;
     const source=/[.·\-()⟨⟩⸢⸣⸗]/u.test(raw)?fold(raw).replace(/\s/g,''):(words(raw)[0]||fold(raw).replace(/\s/g,''));
     if(!source||seen.has(`${source}:${chosen}`))continue;
@@ -1055,7 +1083,7 @@ function initializeLexicon(){
     if(!state.egyptianIndex.has(key))state.egyptianIndex.set(key,{forms:new Set(),byId:new Map()});
     const entry=state.egyptianIndex.get(key);entry.forms.add(surface);
     if(!entry.byId.has(p.id))entry.byId.set(p.id,[]);
-    entry.byId.get(p.id).push({pos:fold(p.text.slice(0,at)).length,raw:surface});
+    entry.byId.get(p.id).push({pos:fold(p.text.slice(0,at)).length,raw:surface,start:at,end:at+surface.length});
   };
   for(const p of state.corpus.passages){
     for(const w of words(p.text)){const x=state.lexicon.get(w)||{term:w,count:0};x.count++;state.lexicon.set(w,x);}
@@ -1067,10 +1095,13 @@ function initializeLexicon(){
       for(const surface of surfaces){
         // Un mot latin ordinaire ou un nom moderne ne doit jamais être traité
         // comme translittération par une simple ressemblance graphique.
-        if(!EGYPT_MARKED.test(surface)&&!mdcSurface(surface))continue;
+        const relative=raw.indexOf(surface),start=match.index+Math.max(0,relative);
+        if(!EGYPT_MARKED.test(surface)&&!mdcSourceSurface(surface,p.text,start))continue;
         const key=egyptianKey(surface);if(!key)continue;
-        const relative=raw.indexOf(surface);
-        recordEgyptian(surface,key,p,match.index+Math.max(0,relative));
+        recordEgyptian(surface,key,p,start);
+        // Les codes T/D à l'intérieur d'une translittération attestent aussi
+        // le signe correspondant, comme les formes Unicode ṯ/ḏ.
+        if(surface.length>1)for(const code of surface.matchAll(/[TD]/gu))recordEgyptian(code[0],egyptianKey(code[0]),p,start+code.index);
       }
       // Les signes individuels restent interrogeables même s'ils sont
       // uniquement attestés à l'intérieur d'un mot (ꜣ dans mꜣꜥ).
@@ -1294,7 +1325,7 @@ function variantEgyptianKey(value,markedOnly=false){
  const nfc=String(value||'').normalize('NFC');
  const marked=/(?:[ıI]\u0357|[ꜣꜢꜥꜤȝȜʿʕˁʾʔʼʻꞽꞼỉḥḤḫḪẖśŚšŠṯṮṱṰṭṬčČḏḎḳḲïÏ\u032F])/u.test(nfc);
  // Les capitales de MdC ne sont pas la casse d'un mot ordinaire.
- const mdc=!markedOnly&&/^[A-Za-z]{2,8}$/u.test(nfc)&&(/[a-z][AHXSTD][a-z]/u.test(nfc)||(/^[AHXSTD][a-z]{2,7}$/u.test(nfc)&&!/[aeiou]/iu.test(nfc)));
+ const mdc=!markedOnly&&mdcSurface(nfc);
  if(!marked&&!mdc)return null;
  let key=nfc.replace(/[iI]\u032F/gu,'I').replace(/[uU]\u032F/gu,'U').replace(/[Hh][\u0331\u032d]/gu,'ẖ').replace(/[čČ]\u0323/gu,'ḏ')
   .replace(/[ꜣꜢȝȜ]/gu,'A').replace(/[ʾʔʼ]/gu,'E').replace(/[ꜥꜤʿʕˁʻ]/gu,'a').replace(/[ıI]\u0357|[ꞽꞼỉ]/gu,'j')
@@ -1318,7 +1349,8 @@ function variantTokens(value){
  const tokens=[];
  for(const match of lexicalHyphenText(text).matchAll(/[\p{L}\p{M}\p{N}]+|\s+|[^\p{L}\p{M}\p{N}\s]/gu)){
   const raw=match[0],kind=/^[\p{L}\p{M}\p{N}]/u.test(raw)?'word':/^\s/u.test(raw)?'space':'punct';
-  const key=kind==='word'?variantWordKey(raw):kind==='space'?' ':raw.replace(/[’‘]/gu,"'").replace(/[‐‑]/gu,'-');
+  const initial=kind==='word'&&mdcSurface(raw)&&!mdcSourceSurface(raw,text,match.index);
+  const key=kind==='word'?(initial?'initial:'+raw:variantWordKey(raw)):kind==='space'?' ':raw.replace(/[’‘]/gu,"'").replace(/[‐‑]/gu,'-');
   tokens.push({kind,key,start:match.index,end:match.index+raw.length});
  }
  if(CLOSE_VARIANT_TEXT_CACHE.size>=900)CLOSE_VARIANT_TEXT_CACHE.delete(CLOSE_VARIANT_TEXT_CACHE.keys().next().value);
@@ -1370,6 +1402,7 @@ function exactMatches(text,query){
   const pattern=exactPattern(query);if(!pattern)return [];
   text=String(text||'');const normalized=text.normalize('NFD'),hits=[];let offsets=null;
   for(const match of normalized.matchAll(pattern)){
+    if(!mdcExactCaseCompatible(String(query).normalize('NFD'),match[0]))continue;
     if(normalized!==text&&!offsets)offsets=exactOffsets(text);
     const start=offsets?offsets.starts[match.index]:match.index,end=offsets?offsets.ends[match.index+match[0].length-1]:match.index+match[0].length;
     hits.push({start,end,surface:text.slice(start,end)});
@@ -1384,7 +1417,7 @@ function getSearchMatchMode(){
 }
 function updateSearchMatchHelp(){
   const mode=getSearchMatchMode(),note=$('search-match-help');if(!note)return;
-  note.textContent=t(mode==='exact'?'Sans équivalences. Majuscules ignorées, accents conservés.':mode==='variants'?'Variantes graphiques et formes proches répertoriées, sans associations thématiques.':'Inclut les variantes et certaines équivalences.');
+  note.textContent=t(mode==='exact'?'Sans équivalences. Accents conservés ; casse des codes de translittération respectée.':mode==='variants'?'Variantes graphiques et formes proches répertoriées, sans associations thématiques.':'Inclut les variantes et certaines équivalences.');
 }
 function highlightSearchMatch(node,text,query,mode){
   const primary=state.plan?.coptic?copticMatches(text,query):mode==='variants'?variantMatches(text,query):exactMatches(text,query);
@@ -1495,7 +1528,7 @@ function buildPlan(query,mode='expanded'){
   if(mode!=='exact'&&copticQuery(query))return {coptic:true,variants:mode==='variants',matchMode:mode,query,groups:[{source:query,terms:[query],coreTerms:[query],egyptKeys:[]}],terms:[query],topics:[{label:query}],corrections:[],relations:[]};
   if(mode==='exact'||mode==='variants')return {exact:mode==='exact',variants:mode==='variants',matchMode:mode,query,groups:[{source:query,terms:[query],coreTerms:[query],egyptKeys:[]}],terms:[query],topics:[{label:query}],corrections:[],relations:[]};
   query=corpusQuestion(query);
-  const philological=EGYPT_MARKED.test(query);
+  const philological=EGYPT_MARKED.test(query)||Array.from(query.matchAll(EGYPT_UNIT)).some(match=>mdcSurface(match[0]));
   const egyptian=egyptianQueryMatches(query);
   const egyptByStart=new Map(egyptian.map(m=>[m.start,m]));
   const meaningful=[];
@@ -1506,9 +1539,9 @@ function buildPlan(query,mode='expanded'){
     // Un suffixe d'une lettre reste une contrainte dans une translittération
     // espacée : « ꜥḥꜥ-f » ne doit pas se réduire à la seule base « ꜥḥꜥ ».
     const literalLetter=philological&&/^[A-Za-z]$/u.test(part.source)?[fold(part.source)]:null;
-    for(const source of (part.phrase?[part.source]:special?[special.source]:literalLetter||words(part.source)))meaningful.push({source,start:part.start});
+    for(const source of (part.phrase?[part.source]:special?[special.source]:literalLetter||words(part.source)))meaningful.push({source,start:part.start,egyptKey:special?.key});
   }
-  const tokens=[...new Map(meaningful.map(part=>[`${part.concept||''}:${part.source}:${part.section||''}`,part])).values()];
+  const tokens=[...new Map(meaningful.map(part=>[`${part.concept||''}:${part.source}:${part.section||''}:${part.egyptKey||''}`,part])).values()];
   const groups=[],corrections=[],foundThemes=new Map();
   for(const part of tokens){
     const source=part.source;
@@ -1529,13 +1562,13 @@ function buildPlan(query,mode='expanded'){
     const fixed=(CURATED_EQUIVALENTS.has(source)?null:typoCorrection(source))||source;
     if(fixed!==source)corrections.push(`${source} → ${fixed}`);
     const variants=[...new Set([...arabicVariants(source),fixed])];
-    const egyptMatches=egyptian.filter(m=>m.source===source);
+    const egyptMatches=egyptian.filter(m=>m.start===part.start);
     const egyptKeys=[...new Set(egyptMatches.map(m=>m.key))];
-    const egyptAliases=[...new Set(egyptKeys.flatMap(key=>[...state.egyptianIndex.get(key).forms].flatMap(words)))];
+    const egyptAliases=[...new Set(egyptKeys.flatMap(key=>[...(state.egyptianIndex.get(key)?.forms||[])].flatMap(words)))];
     const curated=[...new Set(variants.flatMap(v=>CURATED_EQUIVALENTS.get(v)||[]))];
     const suggestions=[...new Set([...egyptAliases,...curated,...variantLexicalForms(source).flatMap(words)])];
     for(const match of egyptMatches){
-      const representative=[...state.egyptianIndex.get(match.key).forms].find(form=>EGYPT_MARKED.test(form));
+      const representative=[...(state.egyptianIndex.get(match.key)?.forms||[])].find(form=>EGYPT_MARKED.test(form));
       if(representative&&fold(representative)!==source)corrections.push(`${match.raw} → ${representative} (${t('translittération égyptologique')})`);
     }
     for(const choice of suggestions)if(choice!==fixed)corrections.push(`${source} → ${choice} (${curated.includes(choice)?t('équivalent lexical'):t('translittération égyptologique')})`);
@@ -1560,6 +1593,8 @@ function lexicalScores(query,terms,plan=null){
   const df=new Map(keys.map(w=>[w,collection.reduce((n,p)=>n+((w.includes(' ')?includesTerm(p.text,w):fold(p.text).split(' ').includes(w))?1:0),0)]));
   const scores=new Map();const focusNotes=/notes?|citations?|bibliograph|bibliograf|références?|sources?|cité|cite|cf\.|المراجع/i.test(query);
   for(const p of collection){const t=words(p.text.replace(/\b([A-Za-z])\s+(\d{2,3})\b/g,'$1$2')),frequency=new Map();for(const token of t)if(keys.includes(token))frequency.set(token,(frequency.get(token)||0)+1);
+    // Le repli lexical ne confond pas un code MdC avec sa minuscule.
+    for(const term of keys){const conflicts=mdcConflictPositions(p.text,term);if(conflicts.size&&frequency.has(term))frequency.set(term,Math.max(0,frequency.get(term)-conflicts.size));}
     // Une famille peut ne contenir que des locutions. Compter leur suite
     // entière, sans créer de candidature à partir d'un mot isolé de la locution.
     if(phrases.length){
@@ -1603,9 +1638,10 @@ function groupEvidence(p,group){
   const text=fold(p.text).replace(/\b([a-z])\s+(\d{2,3})\b/g,'$1$2'),found=[];
   for(const term of new Set(group.coreTerms||group.terms)){
     const needle=fold(term);if(!needle)continue;
+    const conflicts=mdcConflictPositions(p.text,term);
     let at=-1;
     while((at=text.indexOf(needle,at+1))>=0){
-      if((at===0||text[at-1]===' ')&&(at+needle.length===text.length||text[at+needle.length]===' '))found.push({pos:at,end:at+needle.length,term:needle});
+      if(!conflicts.has(at)&&(at===0||text[at-1]===' ')&&(at+needle.length===text.length||text[at+needle.length]===' '))found.push({pos:at,end:at+needle.length,term:needle});
     }
   }
   return found;
@@ -1655,10 +1691,11 @@ function expressionEvidence(p,groups,explicitAnd=false,bibliography=false){
     }
   });
   const occurrences=[];
+  const caseConflicts=new Map([...byTerm.keys()].map(term=>[term,mdcConflictPositions(p.text,term)]));
   const normalized=fold(p.text).replace(/\b([a-z])\s+(\d{2,3})\b/g,'$1$2');
   let pos=0;
   for(const word of normalized.split(' ')){
-    if(byTerm.has(word))occurrences.push({pos,term:word,groups:byTerm.get(word)});
+    if(byTerm.has(word)&&!caseConflicts.get(word).has(pos))occurrences.push({pos,term:word,groups:byTerm.get(word)});
     pos+=word.length+1;
   }
   for(const [i,group] of groups.entries())for(const key of group.egyptKeys||[]){
@@ -1737,17 +1774,31 @@ function drawChips(container,list){const node=$(container);node.replaceChildren(
 function keywordRefinementHelp(){
   return t('Cliquez sur un mot-clé pour ne garder que les extraits qui le contiennent. Cliquez à nouveau pour retirer ce filtre.');
 }
+function keywordIdentity(value){return variantEgyptianKey(value)||fold(value);}
+function keywordMatchSpans(text,term){
+  if(state.matchMode!=='exact'&&copticLexiconReady&&copticQuery(term))return copticMatches(text,term);
+  return state.matchMode!=='exact'&&variantEgyptianKey(term)?variantMatches(text,term):exactMatches(text,term);
+}
+function egyptianOriginalSpans(item,groups=state.plan?.groups||[]){
+  return groups.flatMap(group=>(group.egyptKeys||[]).flatMap(key=>state.egyptianIndex.get(key)?.byId.get(item.id)||[]))
+    .filter(hit=>Number.isInteger(hit.start)&&Number.isInteger(hit.end)&&item.text.slice(hit.start,hit.end)===hit.raw)
+    .map(hit=>({start:hit.start,end:hit.end,surface:hit.raw}));
+}
 function drawKeywordChips(){
   const wrap=$('keyword-chips'),note=$('keyword-refinement-note');
   const focused=document.activeElement?.dataset?.keyword;
-  const selected=new Set(state.keywordRefinements.map(fold));
+  const selected=new Set(state.keywordRefinements.map(keywordIdentity));
   const plan=state.plan||{terms:[]};
-  const extracted=sourceTerms(state.result,plan.terms);
-  const values=[...new Map([...state.keywordRefinements,...plan.terms.filter(word=>!words(state.search).includes(word)).slice(0,15),...extracted]
-    .map(value=>[fold(value),value])).values()].slice(0,18);
+  const philological=(plan.groups||[]).filter(group=>group.egyptKeys?.length);
+  const egyptForms=[...new Set(philological.flatMap(group=>group.egyptKeys.flatMap(key=>[...(state.egyptianIndex.get(key)?.forms||[])])))];
+  const egyptFolded=new Set(egyptForms.map(fold));
+  const terms=philological.length?[...(plan.groups||[]).filter(group=>!group.egyptKeys?.length).flatMap(group=>group.terms),...egyptForms]:plan.terms;
+  const extracted=sourceTerms(state.result,plan.terms).filter(word=>!egyptFolded.has(fold(word)));
+  const values=[...new Map([...state.keywordRefinements,...terms.filter(word=>!words(state.search).includes(word)).slice(0,15),...extracted]
+    .map(value=>[keywordIdentity(value),value])).values()].slice(0,18);
   wrap.replaceChildren();
   for(const value of values){
-    const button=document.createElement('button'),active=selected.has(fold(value));
+    const button=document.createElement('button'),active=selected.has(keywordIdentity(value));
     button.type='button';button.className='chip';button.textContent=value;button.dataset.keyword=value;
     button.setAttribute('aria-pressed',String(active));
     button.setAttribute('aria-label',t(active?'Retirer le filtre « {term} »':'Affiner avec « {term} »',{term:value}));
@@ -1762,23 +1813,51 @@ function drawKeywordChips(){
   }
 }
 function applyKeywordRefinements(){
-  state.result=state.baseResult.filter(passage=>state.keywordRefinements.every(term=>state.matchMode!=='exact'&&copticLexiconReady&&copticQuery(term)?copticMatches(passage.text,term).length>0:includesTerm(passage.text,term))&&state.contextRefinements.every(id=>(contextEvidenceFor(passage.text).get(id)||[]).length));
+  state.result=state.baseResult.filter(passage=>state.keywordRefinements.every(term=>variantEgyptianKey(term)||state.matchMode!=='exact'&&copticLexiconReady&&copticQuery(term)?keywordMatchSpans(passage.text,term).length>0:groupEvidence(passage,{coreTerms:[term]}).length>0)&&state.contextRefinements.every(id=>(contextEvidenceFor(passage.text).get(id)||[]).length));
   state.activeTerms=[...new Set([...(state.plan?.terms||[]),...state.keywordRefinements])];
   $('topic-analysis').hidden=!state.baseResult.length&&!state.keywordRefinements.length;
   drawKeywordChips();
 }
 function toggleKeywordRefinement(value){
   if(!state.corpus||!state.search)return;
-  const key=fold(value);if(!key)return;
-  const found=state.keywordRefinements.findIndex(term=>fold(term)===key);
+  const key=keywordIdentity(value);if(!key)return;
+  const found=state.keywordRefinements.findIndex(term=>keywordIdentity(term)===key);
   if(found>=0)state.keywordRefinements.splice(found,1);
   else state.keywordRefinements.push(value);
   // Les filtres ajoutent des contraintes littérales à la recherche affichée.
   state.visibleCount=18;
   applyKeywordRefinements();render();
 }
-function sourceTerms(foundResults, queryTerms){const frequency=new Map(),avoid=new Set(queryTerms);for(const p of foundResults.slice(0,10)){for(const word of words(p.text)){if(word.length<4||avoid.has(word))continue;frequency.set(word,(frequency.get(word)||0)+1);}}return [...frequency].sort((a,b)=>b[1]-a[1]).slice(0,8).map(([word])=>word);}
+function sourceTerms(foundResults,queryTerms){
+  const frequency=new Map(),avoid=new Set(queryTerms.map(keywordIdentity));
+  const add=value=>{
+    const key=keywordIdentity(value);if(fold(value).length<4||avoid.has(key))return;
+    const item=frequency.get(key)||{value,count:0};item.count++;frequency.set(key,item);
+  };
+  for(const passage of foundResults.slice(0,10)){
+    const originals=[...state.egyptianIndex.values()].flatMap(entry=>entry.byId.get(passage.id)||[]);
+    const protectedForms=new Set(originals.map(hit=>fold(hit.raw)));
+    for(const word of words(passage.text))if(!protectedForms.has(word))add(word);
+    for(const hit of originals)add(hit.raw);
+  }
+  return [...frequency.values()].sort((a,b)=>b.count-a.count).slice(0,8).map(item=>item.value);
+}
 function highlight(node,text,terms){const keys=[...new Set(terms)].filter(x=>x.length>2).sort((a,b)=>b.length-a.length).slice(0,14);if(!keys.length){node.textContent=text;return;}const pattern=new RegExp(`(${keys.map(x=>x.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|')})`,'giu');let at=0;for(const m of text.matchAll(pattern)){node.append(document.createTextNode(text.slice(at,m.index)));const mark=document.createElement('mark');mark.textContent=m[0];node.append(mark);at=m.index+m[0].length;}node.append(document.createTextNode(text.slice(at)));}
+function highlightExpanded(node,item,terms,egyptSpans){
+  const spans=[...egyptSpans,...state.keywordRefinements.filter(term=>variantEgyptianKey(term)).flatMap(term=>keywordMatchSpans(item.text,term))];
+  const keys=[...new Set(terms)].filter(value=>value.length>2&&!variantEgyptianKey(value)).sort((a,b)=>b.length-a.length).slice(0,14);
+  if(keys.length){
+    const pattern=new RegExp(keys.map(value=>value.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|'),'giu');
+    for(const match of item.text.matchAll(pattern))spans.push({start:match.index,end:match.index+match[0].length});
+  }
+  const merged=[];
+  for(const span of spans.sort((a,b)=>a.start-b.start||b.end-a.end)){
+    const previous=merged.at(-1);if(previous&&span.start<previous.end)previous.end=Math.max(previous.end,span.end);else merged.push({...span});
+  }
+  let at=0;
+  for(const span of merged){node.append(document.createTextNode(item.text.slice(at,span.start)));const mark=document.createElement('mark');mark.textContent=item.text.slice(span.start,span.end);node.append(mark);at=span.end;}
+  node.append(document.createTextNode(item.text.slice(at)));
+}
 function render(){
   const wrap=$('result-list');wrap.replaceChildren();
   const matching=state.result.filter(x=>state.filter==='all'||x.kind===state.filter);
@@ -1791,12 +1870,16 @@ function render(){
   for(const item of selected){const d=state.docs.get(item.doc_id);const card=document.createElement('article');card.className='source-card';
     const head=document.createElement('div');head.className='source-top';const tag=document.createElement('span');tag.className=`source-kind ${item.kind}`;tag.textContent=excerptType(item);const page=document.createElement('span');page.className='source-page';page.textContent=`p. ${item.page} · ${d.author}`;head.append(tag,page);card.append(head);
     const title=document.createElement('h4');title.textContent=d.title;card.append(title);const meta=document.createElement('div');meta.className='source-meta';meta.textContent=`${d.journal}${d.doi?' · '+d.doi:''}`;card.append(meta);
-    const egyptEvidence=state.plan?.exact||state.plan?.variants?[]:(state.plan?.groups||[]).flatMap(g=>(g.egyptKeys||[]).flatMap(key=>state.egyptianIndex.get(key)?.byId.get(item.id)?.map(hit=>hit.raw)||[]));
+    const egyptSpans=state.plan?.exact||state.plan?.variants?[]:egyptianOriginalSpans(item);
+    const egyptEvidence=egyptSpans.map(hit=>hit.surface);
     const corpusEvidence=state.plan?.exact||state.plan?.variants?[]:[...(state.plan?.groups||[]),...state.contextRefinements.map(concept=>({concept}))].flatMap(g=>g.concept?conceptMentions(item.text,g).map(hit=>hit.surface):[]);
-    const keys=[...new Set([...words(state.search),...state.activeTerms,...egyptEvidence,...corpusEvidence.slice(0,10)])];
-    const evidence=state.plan?.exact||state.plan?.variants||state.plan?.coptic?[...new Set((state.plan.coptic?copticMatches(item.text,state.search):state.plan.variants?variantMatches(item.text,state.search):exactMatches(item.text,state.search)).map(hit=>hit.surface))]:[...new Set([...state.keywordRefinements,...corpusEvidence,...egyptEvidence,...(state.plan?.groups||[]).map(g=>g.terms.find(term=>includesTerm(item.text,term))).filter(Boolean)])];
+    const philological=(state.plan?.groups||[]).some(group=>group.egyptKeys?.length);
+    const genericTerms=philological?(state.plan?.groups||[]).filter(group=>!group.egyptKeys?.length).flatMap(group=>group.terms):[...words(state.search),...state.activeTerms];
+    const keys=[...new Set([...genericTerms,...state.keywordRefinements,...corpusEvidence.slice(0,10)])];
+    const refinementEvidence=state.keywordRefinements.flatMap(term=>variantEgyptianKey(term)?keywordMatchSpans(item.text,term).map(hit=>hit.surface):[term]);
+    const evidence=state.plan?.exact||state.plan?.variants||state.plan?.coptic?[...new Set((state.plan.coptic?copticMatches(item.text,state.search):state.plan.variants?variantMatches(item.text,state.search):exactMatches(item.text,state.search)).map(hit=>hit.surface))]:[...new Set([...refinementEvidence,...corpusEvidence,...egyptEvidence,...(state.plan?.groups||[]).filter(group=>!group.egyptKeys?.length).map(g=>g.terms.find(term=>includesTerm(item.text,term))).filter(Boolean)])];
     if(evidence.length){const why=document.createElement('div');why.className='source-meta';why.textContent=t('Indices présents dans cet extrait : {terms}{more}',{terms:evidence.slice(0,6).join(' · '),more:evidence.length>6?'…':''});card.append(why);}
-    const excerpt=document.createElement('blockquote');excerpt.dir='auto';if(state.plan?.exact||state.plan?.variants||state.plan?.coptic)highlightSearchMatch(excerpt,item.text,state.search,state.plan.matchMode);else highlight(excerpt,item.text,keys);card.append(excerpt);const bar=document.createElement('div');bar.className='source-links';const link=document.createElement('a');link.textContent=t('Vérifier sur le PDF ↗');const url=pdfURL(item);if(url){link.href=url;link.target='_blank';link.rel='noopener noreferrer';}else{link.textContent=t('PDF à renseigner');}
+    const excerpt=document.createElement('blockquote');excerpt.dir='auto';if(state.plan?.exact||state.plan?.variants||state.plan?.coptic)highlightSearchMatch(excerpt,item.text,state.search,state.plan.matchMode);else if(philological||state.keywordRefinements.some(term=>variantEgyptianKey(term)))highlightExpanded(excerpt,item,keys,egyptSpans);else highlight(excerpt,item.text,keys);card.append(excerpt);const bar=document.createElement('div');bar.className='source-links';const link=document.createElement('a');link.textContent=t('Vérifier sur le PDF ↗');const url=pdfURL(item);if(url){link.href=url;link.target='_blank';link.rel='noopener noreferrer';}else{link.textContent=t('PDF à renseigner');}
     const copy=document.createElement('button');copy.type='button';copy.textContent=t('Copier l’extrait et la référence');copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(`${reference(item)}\n${t('« {text} »',{text:item.text})}`);copy.textContent=t('Référence copiée ✓');setTimeout(()=>copy.textContent=t('Copier l’extrait et la référence'),2000);}catch{copy.textContent=t('Copie indisponible');}});bar.append(link,copy);card.append(bar);wrap.append(card);
   }
 }
