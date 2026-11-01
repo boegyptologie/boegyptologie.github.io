@@ -1569,9 +1569,9 @@ function buildPlan(query,mode='expanded'){
     const suggestions=[...new Set([...egyptAliases,...curated,...variantLexicalForms(source).flatMap(words)])];
     for(const match of egyptMatches){
       const representative=[...(state.egyptianIndex.get(match.key)?.forms||[])].find(form=>EGYPT_MARKED.test(form));
-      if(representative&&fold(representative)!==source)corrections.push(`${match.raw} → ${representative} (${t('translittération égyptologique')})`);
+      if(representative&&representative.normalize('NFC')!==match.raw.normalize('NFC'))corrections.push(`${match.raw} → ${representative} (${t('translittération égyptologique')})`);
     }
-    for(const choice of suggestions)if(choice!==fixed)corrections.push(`${source} → ${choice} (${curated.includes(choice)?t('équivalent lexical'):t('translittération égyptologique')})`);
+    for(const choice of suggestions)if(choice!==fixed&&(!egyptKeys.length||curated.includes(choice)))corrections.push(`${source} → ${choice} (${curated.includes(choice)?t('équivalent lexical'):t('translittération égyptologique')})`);
     const themes=[...new Set([...variants,...suggestions].flatMap(themesForWord))];
     for(const theme of themes)foundThemes.set(theme.label,theme);
     const coreTerms=[...new Set([...variants,...suggestions])];
