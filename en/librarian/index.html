@@ -57,8 +57,8 @@
   </script>
   <!-- BOE institutional styles, followed by shared search-tool styles. -->
   <link rel="stylesheet" href="/assets/style.css?v=16">
-  <link rel="stylesheet" href="../../fr/bibliothecaire/styles.css?v=23">
-  <script type="module" src="../../fr/bibliothecaire/app.js?v=23"></script>
+  <link rel="stylesheet" href="../../fr/bibliothecaire/styles.css?v=24">
+  <script type="module" src="../../fr/bibliothecaire/app.js?v=24"></script>
   <meta property="og:locale:alternate" content="fr_FR">
   <meta name="twitter:image:alt" content="Bibliothèque Ouverte d’Égyptologie logo">
   <meta name="DC.description" content="Explore BOE publications: multilingual search, periods, sites, museums and papyri, with source excerpts and links to the original PDFs.">
@@ -108,6 +108,7 @@
           <button id="search-button" type="submit" disabled>Search</button>
         </div>
       </form>
+        <details class="coptic-help"><summary>Search for a Coptic segment</summary><p>In Expanded and Close variants searches, a query in Coptic script can find listed segments within certain bound groups. For example, <bdi>ⲙⲉ</bdi> or <bdi>ϩⲛ ⲟⲩ ⲙⲉ</bdi> can find <bdi>Ϩ︦ⲚⲞⲨⲘⲈ</bdi>. Enter the segment alone or with other Coptic segments. Case and combining marks are ignored for this search; quotations remain unchanged. Unknown forms and forms marked as ambiguous are not segmented. Exact requires the spelling entered, as a whole word or phrase.</p></details>
 
       <details class="examples-disclosure">
         <summary>Example searches</summary>
@@ -196,6 +197,7 @@
     <details class="vocabulary-sources">
       <summary>Sources for the vocabulary</summary>
       <p>The BOE reference vocabulary draws on selected records from <a href="https://rameau.bnf.fr/informations/produits" target="_blank" rel="noopener noreferrer">RAMEAU — Bibliothèque nationale de France</a>, <a href="https://www.frantiq.fr/pactols/le-thesaurus/" target="_blank" rel="noopener noreferrer">PACTOLS — CNRS–Frantiq</a>, collection catalogues and the Egyptological sources listed in the <a href="../../fr/bibliothecaire/data/referentiels.json">references and credits</a>. Adapted PACTOLS data are reused under the ODbL licence.</p>
+        <p>Coptic segment searches use a conservative selection from the Sahidic and Bohairic tables of <a href="https://github.com/CopticScriptorium/coptic-nlp" target="_blank" rel="noopener noreferrer">Coptic Scriptorium / Coptic NLP</a>. Graphic segmentation does not settle grammatical interpretations. <a href="../../fr/bibliothecaire/data/coptic-sources.txt">Sources, method and attribution</a>.</p>
     </details>
 
     <div class="boma-logo-wrap">
