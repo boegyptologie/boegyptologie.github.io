@@ -4,6 +4,8 @@ const $ = id => document.getElementById(id);
 const LANGUAGE=(document.documentElement?.lang||'fr').toLowerCase().startsWith('en')?'en':'fr';
 const ASSET_BASE=new URL('.',import.meta.url);
 const ENGLISH_UI={
+  "Tous les articles": "All articles",
+  "variation finale -t": "final -t variation",
   "Insérer {character}": "Insert {character}",
   "Majuscules": "Uppercase",
   "Minuscules": "Lowercase",
@@ -161,7 +163,7 @@ const ENGLISH_UI={
   "Copte": "Coptic"
 };
 function t(message,values={}){const template=LANGUAGE==='en'?(ENGLISH_UI[message]??message):message;return template.replace(/\{(\w+)\}/g,(match,key)=>Object.hasOwn(values,key)?String(values[key]):match);}
-const state = { corpus:null, docs:new Map(), result:[], baseResult:[], keywordRefinements:[], contextRefinements:[], contextExpanded:{period:false,place:false,source:false}, contextEvidence:new Map(), search:'', filter:'all', visibleCount:18, lexicon:new Map(), egyptianIndex:new Map(), citedNames:new Set(), activeTerms:[], plan:null, running:false, exact:false, matchMode:'expanded' };
+const state = { corpus:null, docs:new Map(), articleId:'', result:[], baseResult:[], keywordRefinements:[], contextRefinements:[], contextExpanded:{period:false,place:false,source:false}, contextEvidence:new Map(), search:'', filter:'all', visibleCount:18, lexicon:new Map(), egyptianIndex:new Map(), citedNames:new Set(), activeTerms:[], plan:null, running:false, exact:false, matchMode:'expanded' };
 const STOP = new Set('a à au aux avec car ce ces cet cette comme dans de des du elle elles en est et être il ils je la le les leur leurs mais me mon ne non nos notre nous on ont ou où par pas plus pour qu que quel quelle quels quelles qui quoi sa se ses son sont sous sur ta te tes ton tous tout un une vos votre vous y about after all also an and are as at be been between by can for from had has have in into is it its more not of on or other our over that the their there these this those to was were what when where which who why with would your der die das den dem ein eine einer eins nicht und über von im mit zur des aux sous sont في من عن على الى إلى مع كما الذي التي هذا هذه ذلك هناك بين عند هو هي هم ثم او أو'.split(' '));
 const THEMES = [
   {label:'Vérité', triggers:['truth','true','truthfulness','vérité','vérités','verite','verdade','verdad','verità','Wahrheit','الحقيقة','حقيقة','الصدق'], keywords:['truth','true','truly','vérité']},
@@ -987,10 +989,16 @@ function arabicVariants(token){
 // Clé philologique indépendante de l'encodage : Unicode égyptologique,
 // variantes traditionnelles (ȝ, ʿ, ꞽ), Unicode décomposé et Manuel de Codage.
 // Les capitales de MdC sont significatives : H ≠ h, x ≠ X, S ≠ s.
-const EGYPT_MARKED=/(?:[ıI]\u0357|[ꜣꜢꜥꜤȝȜʿʕˁʾʔʼʻꞽꞼỉḥḤḫḪẖẖśŚšŠṯṮṱṰṭṬčČḏḎḳḲïÏ\u032F])/u;
-const EGYPT_SINGLE=/(?:[ıI]\u0357|[iI]\u032F|[uU]\u032F|[Hh][\u0331\u032d]|[čČ]\u0323|[ꜣꜢꜥꜤȝȜʿʕˁʾʔʼʻꞽꞼỉḥḤḫḪẖẖśŚšŠṯṮṱṰṭṬčČḏḎḳḲïÏ])/gu;
+const EGYPT_MARKED=/(?:[ıI]\u0357|[Hh][\u0331\u032d]|[ꜣꜢꜥꜤȝȜʿʕˁʾʔʼʻꞽꞼỉḥḤḫḪẖẖśŚšŠṯṮṱṰṭṬčČḏḎḳḲïÏ\u032F])/u;
+const EGYPT_SIGN_GRAPHEME=/\P{M}\p{M}*/gu;
 const EGYPT_UNIT=/[\p{L}\p{M}\p{N}]+(?:[.·\-()\[\]{}⟨⟩〈〉⸢⸣⸗=:]*[\p{L}\p{M}\p{N}]+)*/gu;
 const EGYPT_SEPARATORS=/[.·\-()\[\]{}⟨⟩〈〉⸢⸣⸗=:]/u;
+// Common phoneme pairs whose ASCII MdC case is significant. Legacy aliases
+// below remain separate from these core code correspondences.
+const EGYPT_MDC_CASE_CODES='AaHhXxSsTtDd';
+const EGYPT_MDC_UPPER_CODES='AHXSTD';
+function egyptianMarked(value){return EGYPT_MARKED.test(String(value||'').normalize('NFC'));}
+
 function egyptianKey(value){
   const converted=String(value||'').normalize('NFC')
     // Variantes Unicode normalisées par Werning/EpiDoc et l'IFAO :
@@ -1016,28 +1024,72 @@ function egyptianKey(value){
 }
 function mdcSurface(value){
   value=String(value||'');
-  if(!/^[A-Za-z]{1,18}$/u.test(value)||/[BCEFGIJKLMNOPQRUVWYZ]/u.test(value)||/[eou]/iu.test(value))return false;
-  // T/D isolés et capitales codantes internes : DA, dA, nTr, Tmr, Dxr.
-  // La capitale d'un mot latin ordinaire (Data, Text, Dad) ne suffit pas.
-  return /^[TD]$/u.test(value)||/[a-zAHXSTD][AHXSTD]/u.test(value)||
-    /^[AHXSTD][bdfghjklmnpqrstvwxyz]{1,17}$/u.test(value);
+  if(value.length===1)return EGYPT_MDC_CASE_CODES.includes(value);
+  if(!/^[A-Za-z]{2,18}$/u.test(value)||/[BCEFGIJKLMNOPQRUVWYZ]/u.test(value)||/[eou]/iu.test(value)||/^[ivxlcdm]+$/iu.test(value))return false;
+  // Capitales codantes, ou x dans une suite consonantique : Axt, HAr,
+  // nTr, DA, xpr. Une capitale latine ordinaire ne suffit pas (Data, Dad).
+  return /[a-zAHXSTD][AHXSTD]/u.test(value)||
+    /^[AHXSTD][bdfghjklmnpqrstvwxyz]{1,17}$/u.test(value)||
+    /^(?=[bdfghjklmnpqrstvwxyz]*x)[bdfghjklmnpqrstvwxyz]{2,18}$/u.test(value);
+}
+function mdcDeclaredListContext(text,start,end){
+  const left=Math.max(0,start-240),prefix=text.slice(left,start);
+  const declarations=Array.from(prefix.matchAll(/\bMdC\b\s*[:=→↔]\s*/giu));
+  if(!declarations.length)return null;
+  const marker=declarations.at(-1),from=left+marker.index+marker[0].length,tail=text.slice(from,from+240);
+  const stop=tail.search(/[\n;]|\.(?=\s|$)/u),list=stop<0?tail:tail.slice(0,stop);
+  if(start<from||end>from+list.length)return null;
+  const tokens=list.split(/[\s,\/:=→↔«»“”"'‘’()\[\]{}]+/u).filter(Boolean);
+  return tokens.length>0&&tokens.length<=32&&tokens.every(token=>{
+    if(/^[AaijywbpfmnrhHxXzsSqkgtTdD]$/u.test(token))return true;
+    return Array.from(token.matchAll(EGYPT_SIGN_GRAPHEME)).length===1&&egyptianMarked(token)&&egyptianKey(token)?.length===1;
+  });
+}
+function mdcCodeContext(text,start,end){
+  const declared=mdcDeclaredListContext(text,start,end);if(declared!==null)return declared;
+  const before=text.slice(Math.max(0,start-90),start),after=text.slice(end,end+90);
+  // A relation directly attached to a code qualifies it; an English article
+  // somewhere near the word "transliteration" does not.
+  if(/(?:\bMdC\b|Manuel de codage|Manual of Coding|translitt[ée]ration|transliteration|phon[èé]me|phoneme)\s*(?:(?:code|signe|sign|de|of|du|the)\s+){0,2}(?:[:=→↔]\s*)?(?:[AaHhXxSsTtDd](?:\s*[,/=→↔]\s*|\s+)){0,12}$/iu.test(before))return true;
+  if(/^\s*(?:=|→|↔|\()\s*(?:MdC\b|Manuel de codage|Manual of Coding|translitt[ée]ration|transliteration)/iu.test(after))return true;
+  const left=before.match(/([\p{L}\p{M}]+)\s*(?:=|→|↔)\s*$/u),right=after.match(/^\s*(?:=|→|↔)\s*([\p{L}\p{M}]+)/u);
+  if((left&&egyptianMarked(left[1]))||(right&&egyptianMarked(right[1])))return true;
+  // A local list/relation of atomic phonemes is explicit too: « ḏ sans d ».
+  const previous=before.match(/(?:^|\s)(\P{M}\p{M}*)\s+(?:(?:et|and|avec|with|sans|without)\s+)?$/u);
+  if(previous&&egyptianMarked(previous[1])&&/^\s*(?:$|[,;:.!?»”"')])/u.test(after))return true;
+  const next=after.match(/^\s+(?:(?:et|and|avec|with|sans|without)\s+)?(\P{M}\p{M}*)\s*(?:$|[,;:.!?»”"')])/u);
+  return !!(next&&egyptianMarked(next[1]));
 }
 function mdcSourceSurface(value,text,start){
   if(!mdcSurface(value))return false;
-  text=String(text||'');const before=text.slice(0,start),after=text.slice(start+value.length);
-  // Initiales (D., Th.), élisions françaises et fragments de lettrines ne
-  // sont pas des signes MdC. Les lettres de figures exigent aussi un contexte.
-  if(/^[TD][a-z]?$/u.test(value)&&/^\s*[.]/u.test(after))return false;
-  if(!/^[TD]$/u.test(value))return true;
+  text=String(text||'');const before=text.slice(0,start),after=text.slice(start+value.length),context=mdcCodeContext(text,start,start+value.length);
+  // Initials (H., Th.), French elisions, figures and drop caps are not codes.
+  if(/^[AHXSTD][a-z]?$/u.test(value)&&/^\s*[.]/u.test(after)&&!context)return false;
+  if(value.length!==1)return true;
   if(/^[’'][\p{L}]/u.test(after)||/[\p{L}][’']$/u.test(before))return false;
-  if(text.trim()===value||/^["'«“]\s*[TD]\s*["'»”][.!?]?$/u.test(text.trim()))return true;
+  if(/\b(?:section|chap(?:itre)?|chapter|part|volume|tome|dynasti[ey]|siècle|century|fig(?:ure)?|panneau|panel|type|tableau|table|illustration|colonne|column|annexe|appendix)(?:[.\s]+(?:[0-9]+|[ivxlcdm]+))?[.\s:,«“"'‘]*$/iu.test(before))return false;
+  if(text.trim()===value||/^["'«“]\s*[AaHhXxSsTtDd]\s*["'»”][.!?]?$/u.test(text.trim()))return true;
   if(/[«“"'‘]$/u.test(before)&&/^[»”"'’]/u.test(after))return true;
-  return /(?:\bMdC\b|Manuel de codage|Manual of Coding|translitt[ée]r|transliter|phon[èé]m|phonem)/iu.test(text.slice(Math.max(0,start-65),start+value.length+65));
+  return context;
+}
+function mdcAtomicWord(value,text,start,container){
+  if(!/^[A-Za-z]+$/u.test(value)||!mdcSourceSurface(value,text,start))return false;
+  const before=text.slice(0,start),after=text.slice(start+value.length);
+  if(mdcCodeContext(text,start,start+value.length)||(/[«“"'‘]$/u.test(before)&&/^[»”"'’]/u.test(after)))return true;
+  // Capitalization in a Unicode word/name is not an ASCII encoding switch.
+  if(container&&egyptianMarked(container))return false;
+  // Initial A in As/An/And/Aptly, or S in Sky, is ordinary typography.
+  return /[a-zAHXSTD][AHXSTD]/u.test(value)||
+    /^(?=[A-Za-z]*x)[AHXSTDbdfghjklmnpqrstvwxz]{2,18}$/u.test(value)||
+    /^[HXTDS][bdfghjklmnpqrstvwxz]{2,17}$/u.test(value);
+}
+function egyptianCoreWord(value){
+  return /[ꜣꜢꜥꜤȝȜʿʕˁꞽꞼỉḥḤḫḪẖšŠṯṮḏḎ]/u.test(String(value).normalize('NFC'));
 }
 function mdcCaseMismatch(left,right){
   left=String(left||'').normalize('NFC');right=String(right||'').normalize('NFC');
   if(!/^[A-Za-z]+$/u.test(left)||!/^[A-Za-z]+$/u.test(right)||left.toLowerCase()!==right.toLowerCase()||(!mdcSurface(left)&&!mdcSurface(right)))return false;
-  return Array.from(left).some((char,index)=>/[AHXSTD]/iu.test(char)&&char!==right[index]);
+  return Array.from(left).some((char,index)=>EGYPT_MDC_CASE_CODES.includes(char)&&char!==right[index]);
 }
 function mdcExactCaseCompatible(query,surface){
   const words=value=>Array.from(String(value).matchAll(/[\p{L}\p{M}\p{N}]+/gu),match=>match[0]);
@@ -1048,7 +1100,7 @@ function mdcConflictPositions(text,term){
   const conflicts=new Set();if(!/^[A-Za-z]+$/u.test(term))return conflicts;
   const key=egyptianKey(term),needle=fold(term);if(!key)return conflicts;
   for(const match of String(text).matchAll(/[\p{L}\p{M}\p{N}]+/gu)){
-    const raw=match[0];if(fold(raw)!==needle||(!EGYPT_MARKED.test(raw)&&!mdcSourceSurface(raw,text,match.index)))continue;
+    const raw=match[0];if(fold(raw)!==needle||(!egyptianMarked(raw)&&!mdcSourceSurface(raw,text,match.index)))continue;
     const other=egyptianKey(raw);if(other&&other!==key)conflicts.add(fold(String(text).slice(0,match.index+raw.length)).replace(/\b([a-z])\s+(\d{2,3})\b/g,'$1$2').length-needle.length);
   }
   return conflicts;
@@ -1065,7 +1117,7 @@ function egyptianQueryMatches(query){
     }
     // Une graphie explicitement égyptologique reste une contrainte même
     // lorsqu'aucune attestation ne porte sa clé exacte. Jamais D -> d.
-    if(!chosen&&(EGYPT_MARKED.test(raw)||mdcSurface(raw)))chosen=key;
+    if(!chosen&&(egyptianMarked(raw)||mdcSurface(raw)))chosen=key;
     if(!chosen)continue;
     const source=/[.·\-()⟨⟩⸢⸣⸗]/u.test(raw)?fold(raw).replace(/\s/g,''):(words(raw)[0]||fold(raw).replace(/\s/g,''));
     if(!source||seen.has(`${source}:${chosen}`))continue;
@@ -1074,6 +1126,38 @@ function egyptianQueryMatches(query){
   }
   return found;
 }
+// Reviewed terminal-t search families, not a general morphological analyser.
+// A final t may belong to a root (e.g. mwt) rather than be a feminine ending.
+// Only the user-confirmed Dw / Dwt family is enabled here; extend deliberately.
+const EGYPT_REVIEWED_FINAL_T_STEMS=new Set(['Dw']);
+
+function egyptianExpandedFinalT(matches,index,mode='expanded'){
+  const keys=new Set((matches||[]).map(match=>match.key).filter(Boolean)),variations=[];
+  if(mode!=='expanded'||!index||typeof index.get!=='function')return {keys:[...keys],variations};
+  const recorded=new Set();
+  const eligible=raw=>/^[\p{L}\p{M}]+(?:[.·]t)?$/u.test(raw)&&
+    (egyptianMarked(raw)||mdcSurface(raw.replace(/[.·]t$/u,'')));
+  for(const match of matches||[]){
+    const raw=String(match.raw||'').normalize('NFC'),key=match.key;
+    if(!eligible(raw)||egyptianKey(raw)!==key||!/^[A-Za-z]+$/u.test(key||''))continue;
+    const stem=EGYPT_REVIEWED_FINAL_T_STEMS.has(key)?key:key.endsWith('t')?key.slice(0,-1):null;
+    if(!stem||stem.length<2||!EGYPT_REVIEWED_FINAL_T_STEMS.has(stem))continue;
+    const related=[],forms=new Set();
+    for(const candidate of [stem,stem+'t']){
+      if(candidate===key)continue;
+      const entry=index.get(candidate);
+      const attested=[...(entry?.forms||[])].filter(form=>eligible(String(form).normalize('NFC'))&&egyptianKey(form)===candidate);
+      if(!attested.length)continue;
+      keys.add(candidate);related.push(candidate);for(const form of attested)forms.add(form);
+    }
+    const identity=raw+'\0'+stem;
+    if(related.length&&!recorded.has(identity)){
+      recorded.add(identity);variations.push({source:match.raw,stem,keys:related,forms:[...forms]});
+    }
+  }
+  return {keys:[...keys],variations};
+}
+
 function topicsFor(input){const query=fold(input);const matched=THEMES.map(t=>({...t,weight:t.triggers.reduce((score,w)=>score+(query.includes(fold(w))?1:0),0)})).filter(t=>t.weight).sort((a,b)=>b.weight-a.weight);return matched.slice(0,3);}
 function expand(input,found){const basis=new Set(words(input));for(const t of found)for(const term of t.keywords)for(const token of words(term))basis.add(token);return [...basis].slice(0,38);}
 
@@ -1096,16 +1180,21 @@ function initializeLexicon(){
         // Un mot latin ordinaire ou un nom moderne ne doit jamais être traité
         // comme translittération par une simple ressemblance graphique.
         const relative=raw.indexOf(surface),start=match.index+Math.max(0,relative);
-        if(!EGYPT_MARKED.test(surface)&&!mdcSourceSurface(surface,p.text,start))continue;
+        if(!egyptianMarked(surface)&&!mdcSourceSurface(surface,p.text,start))continue;
         const key=egyptianKey(surface);if(!key)continue;
         recordEgyptian(surface,key,p,start);
-        // Les codes T/D à l'intérieur d'une translittération attestent aussi
-        // le signe correspondant, comme les formes Unicode ṯ/ḏ.
-        if(surface.length>1)for(const code of surface.matchAll(/[TD]/gu))recordEgyptian(code[0],egyptianKey(code[0]),p,start+code.index);
+        // ASCII codes require an unambiguous MdC word. In a Unicode word,
+        // only the ordinary base letters h/s/t/d directly attest themselves.
+        const encodedWord=mdcAtomicWord(surface,p.text,start,raw),unicodeWord=egyptianCoreWord(surface);
+        if(surface.length>1)for(const code of surface.matchAll(EGYPT_SIGN_GRAPHEME)){
+          if(code[0].length!==1)continue;
+          if((encodedWord&&EGYPT_MDC_CASE_CODES.includes(code[0]))||(unicodeWord&&/^[hstd]$/u.test(code[0])))recordEgyptian(code[0],egyptianKey(code[0]),p,start+code.index);
+        }
       }
       // Les signes individuels restent interrogeables même s'ils sont
       // uniquement attestés à l'intérieur d'un mot (ꜣ dans mꜣꜥ).
-      for(const single of raw.matchAll(EGYPT_SINGLE)){
+      for(const single of raw.matchAll(EGYPT_SIGN_GRAPHEME)){
+        if(!egyptianMarked(single[0]))continue;
         const key=egyptianKey(single[0]);
         if(key)recordEgyptian(single[0],key,p,match.index+single.index);
       }
@@ -1323,7 +1412,7 @@ for(let index=0;index<CLOSE_VARIANT_FAMILIES.length;index++)for(const form of CL
 }
 function variantEgyptianKey(value,markedOnly=false){
  const nfc=String(value||'').normalize('NFC');
- const marked=/(?:[ıI]\u0357|[ꜣꜢꜥꜤȝȜʿʕˁʾʔʼʻꞽꞼỉḥḤḫḪẖśŚšŠṯṮṱṰṭṬčČḏḎḳḲïÏ\u032F])/u.test(nfc);
+ const marked=egyptianMarked(nfc);
  // Les capitales de MdC ne sont pas la casse d'un mot ordinaire.
  const mdc=!markedOnly&&mdcSurface(nfc);
  if(!marked&&!mdc)return null;
@@ -1528,7 +1617,7 @@ function buildPlan(query,mode='expanded'){
   if(mode!=='exact'&&copticQuery(query))return {coptic:true,variants:mode==='variants',matchMode:mode,query,groups:[{source:query,terms:[query],coreTerms:[query],egyptKeys:[]}],terms:[query],topics:[{label:query}],corrections:[],relations:[]};
   if(mode==='exact'||mode==='variants')return {exact:mode==='exact',variants:mode==='variants',matchMode:mode,query,groups:[{source:query,terms:[query],coreTerms:[query],egyptKeys:[]}],terms:[query],topics:[{label:query}],corrections:[],relations:[]};
   query=corpusQuestion(query);
-  const philological=EGYPT_MARKED.test(query)||Array.from(query.matchAll(EGYPT_UNIT)).some(match=>mdcSurface(match[0]));
+  const philological=egyptianMarked(query)||Array.from(query.matchAll(EGYPT_UNIT)).some(match=>mdcSurface(match[0]));
   const egyptian=egyptianQueryMatches(query);
   const egyptByStart=new Map(egyptian.map(m=>[m.start,m]));
   const meaningful=[];
@@ -1563,14 +1652,16 @@ function buildPlan(query,mode='expanded'){
     if(fixed!==source)corrections.push(`${source} → ${fixed}`);
     const variants=[...new Set([...arabicVariants(source),fixed])];
     const egyptMatches=egyptian.filter(m=>m.start===part.start);
-    const egyptKeys=[...new Set(egyptMatches.map(m=>m.key))];
+    const finalT=egyptianExpandedFinalT(egyptMatches,state.egyptianIndex,'expanded');
+    const egyptKeys=finalT.keys;
     const egyptAliases=[...new Set(egyptKeys.flatMap(key=>[...(state.egyptianIndex.get(key)?.forms||[])].flatMap(words)))];
     const curated=[...new Set(variants.flatMap(v=>CURATED_EQUIVALENTS.get(v)||[]))];
     const suggestions=[...new Set([...egyptAliases,...curated,...variantLexicalForms(source).flatMap(words)])];
     for(const match of egyptMatches){
-      const representative=[...(state.egyptianIndex.get(match.key)?.forms||[])].find(form=>EGYPT_MARKED.test(form));
+      const representative=[...(state.egyptianIndex.get(match.key)?.forms||[])].find(form=>egyptianMarked(form));
       if(representative&&representative.normalize('NFC')!==match.raw.normalize('NFC'))corrections.push(`${match.raw} → ${representative} (${t('translittération égyptologique')})`);
     }
+    for(const variation of finalT.variations)corrections.push(`${variation.source} → ${variation.forms.join(' / ')} (${t('variation finale -t')})`);
     for(const choice of suggestions)if(choice!==fixed&&(!egyptKeys.length||curated.includes(choice)))corrections.push(`${source} → ${choice} (${curated.includes(choice)?t('équivalent lexical'):t('translittération égyptologique')})`);
     const themes=[...new Set([...variants,...suggestions].flatMap(themesForWord))];
     for(const theme of themes)foundThemes.set(theme.label,theme);
@@ -1790,7 +1881,7 @@ function drawKeywordChips(){
   const selected=new Set(state.keywordRefinements.map(keywordIdentity));
   const plan=state.plan||{terms:[]};
   const philological=(plan.groups||[]).filter(group=>group.egyptKeys?.length);
-  const egyptForms=[...new Set(philological.flatMap(group=>group.egyptKeys.flatMap(key=>[...(state.egyptianIndex.get(key)?.forms||[])])))];
+  const egyptForms=[...new Set(philological.flatMap(group=>group.egyptKeys.flatMap(key=>state.result.flatMap(passage=>(state.egyptianIndex.get(key)?.byId.get(passage.id)||[]).map(hit=>hit.raw)))))];
   const egyptFolded=new Set(egyptForms.map(fold));
   const terms=philological.length?[...(plan.groups||[]).filter(group=>!group.egyptKeys?.length).flatMap(group=>group.terms),...egyptForms]:plan.terms;
   const extracted=sourceTerms(state.result,plan.terms).filter(word=>!egyptFolded.has(fold(word)));
@@ -2003,8 +2094,32 @@ function updateScriptKeyboardControls(disabled){
   for(const button of SCRIPT_KEYBOARD_STATE.buttons)button.disabled=Boolean(disabled);
 }
 
+function updateArticleScopeDescription(){
+  const note=$('article-scope-description');if(!note)return;
+  const doc=state.docs.get(state.articleId);note.hidden=!doc;note.textContent=doc?`${doc.author} — ${doc.title}`:'';
+}
+function populateArticleScope(){
+  const select=$('article-scope');if(!select)return;
+  if(state.articleId&&!state.docs.has(state.articleId))state.articleId='';
+  const all=document.createElement('option');all.value='';all.textContent=t('Tous les articles');
+  select.replaceChildren(all);
+  for(const doc of state.docs.values()){
+    const option=document.createElement('option');option.value=doc.id;option.textContent=`${doc.author} — ${doc.title}`;option.title=option.textContent;select.append(option);
+  }
+  select.value=state.articleId;updateArticleScopeDescription();
+}
+function changeArticleScope(){
+  const select=$('article-scope');if(!select)return;
+  if(state.running||!state.corpus){select.value=state.articleId;return;}
+  state.articleId=state.docs.has(select.value)?select.value:'';select.value=state.articleId;
+  state.keywordRefinements=[];state.contextRefinements=[];state.contextExpanded={period:false,place:false,source:false};
+  updateArticleScopeDescription();
+  if($('theme-input').value.trim())return runSearch();
+  changeSearchMatchMode();
+}
 function updateSearchControls(){
   const unavailable=!state.corpus;
+  if($('article-scope'))$('article-scope').disabled=unavailable||state.running;
   $('theme-input').disabled=unavailable||state.running;
   updateScriptKeyboardControls(unavailable||state.running);
   $('search-button').disabled=unavailable||state.running;
@@ -2068,7 +2183,7 @@ function updateGrammarRelations(plan){
 }
 function showSearchResults(query,plan,lex){
   const scored=rankedResults(lex,query,plan);
-  const map=new Map(state.corpus.passages.map(p=>[p.id,p]));state.baseResult=scored.map(({id})=>map.get(id)).filter(Boolean);
+  const map=new Map(state.corpus.passages.map(p=>[p.id,p]));state.baseResult=scored.map(({id})=>map.get(id)).filter(passage=>passage&&(!state.articleId||passage.doc_id===state.articleId));
   if(plan.coptic)plan.terms=[...new Set(state.baseResult.flatMap(passage=>copticMatches(passage.text,query).map(hit=>hit.surface)))];
   else if(plan.variants)plan.terms=variantForms(query,state.baseResult);
   state.activeTerms=plan.terms;state.plan=plan;
@@ -2113,6 +2228,7 @@ async function runSearch(){
 }
 async function init(){
   state.corpus=null;state.docs.clear();state.contextRefinements=[];state.contextEvidence.clear();updateSearchControls();
+  state.articleId='';populateArticleScope();
   const retry=$('retry-corpus');retry.hidden=true;retry.disabled=true;
   $('corpus-total').textContent=t('Chargement du corpus…');
   $('method-status').hidden=false;
@@ -2125,6 +2241,7 @@ async function init(){
     if(!Array.isArray(corpus.documents)||!Array.isArray(corpus.passages))throw Error('Corpus invalide');
     state.corpus=corpus;
     for(const doc of corpus.documents)state.docs.set(doc.id,doc);
+    populateArticleScope();
     initializeLexicon();
     $('corpus-total').textContent=t('{count} articles',{count:corpus.documents.length});
     $('corpus-subtitle').textContent=t('{notes} notes · {passages} passages',{notes:corpus.passages.filter(p=>p.kind==='note'&&p.number).length,passages:corpus.passages.length});
@@ -2142,6 +2259,7 @@ async function init(){
 initScriptKeyboards();
 $('search-form').addEventListener('submit',event=>{event.preventDefault();runSearch();});
 $('retry-corpus').addEventListener('click',init);
+$('article-scope')?.addEventListener('change',changeArticleScope);
 for(const id of ['match-expanded','match-variants','match-exact'])$(id)?.addEventListener('change',changeSearchMatchMode);
 for(const button of document.querySelectorAll('[data-example]'))button.addEventListener('click',()=>{if(state.running||!state.corpus)return;$('theme-input').value=button.dataset.example;runSearch();});
 for(const button of document.querySelectorAll('[data-filter]'))button.addEventListener('click',()=>{state.filter=button.dataset.filter;state.visibleCount=18;for(const b of document.querySelectorAll('[data-filter]')){const selected=b===button;b.classList.toggle('selected',selected);b.setAttribute('aria-pressed',String(selected));}render();});
