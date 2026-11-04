@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+<title>Bibliothèque Ouverte d’Égyptologie (BOE)</title>
+<id>https://boegyptologie.github.io/</id>
+<link rel="self" href="https://boegyptologie.github.io/feed.xml"/>
+<link rel="alternate" href="https://boegyptologie.github.io/fr/numeros.html"/>
+<updated>2026-11-04T00:00:00Z</updated>
+<entry>
+<id>https://doi.org/10.5281/zenodo.22377988</id>
+<title>From ancient Egypt to the catwalks: fashion as an expression of Egyptomania in the 19th century and the beginning of the 20th century</title>
+<link rel="alternate" href="https://boegyptologie.github.io/articles/2026-5/"/>
+<link rel="related" href="https://doi.org/10.5281/zenodo.22377988"/>
+<published>2026-09-27T00:00:00Z</published>
+<updated>2026-11-04T00:00:00Z</updated>
+<author><name>José das Candeias Sales</name></author>
+<author><name>Susana Mota</name></author>
+<author><name>Carla Mota</name></author>
+<summary type="html" xml:lang="en">From architecture to furniture, from cinema to video games, and from literature to comic books, ancient Egypt has been a constant presence for centuries through the adoption and adaptation of its themes, symbolism, and even its fantastical imagery. We call these manifestations of appreciation for ancient Egypt, as well as its reuse and reinterpretation, Egyptomania, a concept that encompasses the different aspects of the reception and globalisation of knowledge about ancient Egypt. Among the expressions of Egyptomania, we must consider fashion – a theme that has not been the subject of an in-depth and broad analysis.
+          &lt;br&gt;&lt;br&gt;
+          This investigation has allowed us to conclude that the influence of ancient Egypt on fashion can be divided into two different periods: the period from Napoleon’s expedition to Egypt (1798–1801) to the discovery of Pharaoh Tutankhamun’s tomb (4th of November 1922), and the post-discovery period, which continues to the present day. This text is devoted to exploring the characteristics of Egyptomania in fashion during the first period, analysing the factors that spurred this interest and the ways in which it manifested itself throughout the nineteenth century and the first decades of the twentieth century. As we consider illustrations essential to a proper understanding of this theme, the text is extensively illustrated, offering readers the opportunity to see concrete representations of what is being discussed.</summary>
+</entry>
+<entry>
+<id>https://doi.org/10.5281/zenodo.22730318</id>
+<title>Le prisme typhonien : faune, flore, minéraux et passions nuisibles d'après Plutarque (Isis et Osiris, 50)</title>
+<link rel="alternate" href="https://boegyptologie.github.io/articles/2026-4/"/>
+<link rel="related" href="https://doi.org/10.5281/zenodo.22730318"/>
+<published>2026-09-24T00:00:00Z</published>
+<updated>2026-11-04T00:00:00Z</updated>
+<author><name>Sydney H. Aufrère</name></author>
+<summary type="html" xml:lang="fr">Cette étude démontre que dans la pensée sacerdotale égyptienne considérée sous le prisme étique par Plutarque, le dieu Typhon-Seth fusionne en un continuum absolu le désordre de la nature et la déchéance morale. Le philosophe synthétise cette vision en la déployant en trois volets qui lient les animaux venimeux, dangereux ou stupides, les végétaux toxiques et les passions humaines néfastes (vices), tous définis comme des objets d’emprise directe du dieu. Du point de vue émique des théologiens, cette pensée postule qu’un crime moral ou une déviance sexuelle relèvent d’une perturbation d’essence cosmique de même ordre. La fureur, la cruauté ou la stérilité (qui justifie l’interdiction des eunuques à l’Abaton de Philae) découleraient de la même force brute séthienne qui dessèche les sycomores sacrés, tarit les sources, libère le venin des serpents, fait surgir le sel de la mer ou le salpêtre de la terre, se traduit par la médiocrité des qualités des simples. L’étude, en déconstruisant de façon sur-étique le regard étique de Plutarque, restitue un système interconnecté où les vices de l’homme et les désordres causés par des hôtes de l’environnement sont les manifestations indissociables d’une seule et même essence chaotique. Toutefois, l’analyse de Plutarque témoigne d’un réductionnisme étique qui, loin de traduire la richesse théologique du dieu Seth, finit par fossiliser une sur-systématisation d’époque romaine employée à des fins politiques et morales, laquelle permet de déshumaniser Cléopâtre en l’associant à de déplaisants monstres du Nil.</summary>
+</entry>
+<entry>
+<id>https://doi.org/10.5281/zenodo.22280762</id>
+<title>Le reïs Roubi Hamzaoui (c. 1838/1254-1904/1322)</title>
+<link rel="alternate" href="https://boegyptologie.github.io/articles/2026-3/"/>
+<link rel="related" href="https://doi.org/10.5281/zenodo.22280762"/>
+<published>2026-09-08T00:00:00Z</published>
+<updated>2026-11-04T00:00:00Z</updated>
+<author><name>Stéphane Pasquali</name></author>
+<summary type="html" xml:lang="fr">Brève note sur Roubi Hamzaoui, reïs égyptien (contremaître des ouvriers de fouilles) qui, recruté dès son plus jeune âge, travailla pour le Service des antiquités de l’Égypte pendant plus de cinquante ans. Avec Mariette, il fut sans doute l’un des plus grands fouilleurs de Saqqara.</summary>
+</entry>
+<entry>
+<id>https://doi.org/10.5281/zenodo.20841508</id>
+<title>Explaining the Odd Foot Sign of Gardiner D58 in the Egyptian Negator Transliterated bn: A Case for Innovative Orthographic Reuse Based on the Phonetic Reduction of the Nominalizer bw (&gt; -ⲞⲨ-) and the Non-Etymological Writing bw nb for wn nb (&gt; ⲞⲨⲞⲚ ⲚⲒⲘ)</title>
+<link rel="alternate" href="https://boegyptologie.github.io/articles/2026-2/"/>
+<link rel="related" href="https://doi.org/10.5281/zenodo.20841508"/>
+<published>2026-06-26T00:00:00Z</published>
+<updated>2026-11-04T00:00:00Z</updated>
+<author><name>David Mihalyfy</name></author>
+<summary type="html" xml:lang="en">In the mid-2nd millennium BCE, Egyptian scribes began writing a common negator as bn, with an odd foot sign of Gardiner D58 at its start. Building on past scholarship that recognizes the sign's semantic function and a larger, pre-existing orthographic link between negation and other body parts, this analysis identifies why disambiguation was needed in this specific case and why this specific sign was chosen as a disambiguator. On the one hand, the negator was at risk of confusion for other sentence-beginning entities potentially representable as a bare n. On the other hand, the not infrequent nominalizer bw that was also used to spell the word bw nb &quot;everyone&quot; began with a phonetically reduced b that had been retained in orthography, making it susceptible to reinterpretation as a semantic &quot;beginning-of-unit&quot; marker also applicable to negation. As two important steps in this argument, the nominalizer bw is shown to survive in the currently-misparsed section &lt;span class=&quot;coptic&quot;&gt;-ⲞⲨ-&lt;/span&gt; of Coptic adverbial phrases (e.g. &lt;span class=&quot;coptic&quot;&gt;Ϩ︦ⲚⲞⲨⲘⲈ&lt;/span&gt; &quot;truly&quot;), and bw nb &quot;everyone&quot; is identified as a non-etymological writing for wn nb &quot;every being&quot; (&amp;gt;&amp;nbsp;Coptic &lt;span class=&quot;coptic&quot;&gt;ⲞⲨⲞⲚ ⲚⲒⲘ&lt;/span&gt;).</summary>
+</entry>
+<entry>
+<id>https://doi.org/10.5281/zenodo.19086657</id>
+<title>The Phonetic Value of Gardiner's Sign U 23 (𓍋) in Earlier Egyptian</title>
+<link rel="alternate" href="https://boegyptologie.github.io/articles/2026-1/"/>
+<link rel="related" href="https://doi.org/10.5281/zenodo.19086657"/>
+<published>2026-03-19T00:00:00Z</published>
+<updated>2026-11-04T00:00:00Z</updated>
+<author><name>Peter Pathappan</name></author>
+<summary type="html" xml:lang="en">The article examines the reading of the sign 𓍋 in the Old and Middle Kingdom and concludes that the phonetic value must be mr and not mḥr. Four pieces of evidence are used to support this conclusion. The first three come from onomastics and show the interchangeability of 𓍋 with 𓅓𓂋, 𓈘, and 𓌸. The fourth piece of evidence is a prefixed form of the verb 𓍋𓅓𓂋𓅪 from the Pyramid Texts, which proves that the verb consists of two radicals, meaning that it must be mr and not mḥr.</summary>
+</entry>
+</feed>

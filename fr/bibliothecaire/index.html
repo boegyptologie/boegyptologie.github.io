@@ -6,7 +6,7 @@
   <title>Le bibliothécaire | Recherche dans les publications de la BOE</title>
   <meta name="description" content="Explorez les publications de la BOE : recherche multilingue, périodes, sites, musées et papyrus, avec extraits sourcés et liens vers les PDF.">
   <meta name="author" content="Bibliothèque Ouverte des Mondes Anciens (BOMA)">
-  <meta name="robots" content="index, follow">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <link rel="canonical" href="https://boegyptologie.github.io/fr/bibliothecaire/">
   <link rel="alternate" hreflang="fr" href="https://boegyptologie.github.io/fr/bibliothecaire/">
   <link rel="alternate" hreflang="en" href="https://boegyptologie.github.io/en/librarian/">
@@ -35,32 +35,170 @@
   <meta name="twitter:image:alt" content="Logo de la Bibliothèque Ouverte d'Égyptologie">
   <meta name="DC.description" content="Explorez les publications de la BOE : recherche multilingue, périodes, sites, musées et papyrus, avec extraits sourcés et liens vers les PDF.">
   <link rel="icon" type="image/png" href="/favicon.png">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Le bibliothécaire",
-    "description": "Explorez les publications de la BOE : recherche multilingue, périodes, sites, musées et papyrus, avec extraits sourcés et liens vers les PDF.",
-    "url": "https://boegyptologie.github.io/fr/bibliothecaire/",
-    "applicationCategory": "EducationalApplication",
-    "inLanguage": "fr",
-    "isAccessibleForFree": true,
-    "publisher": {
-      "@type": "Organization",
-      "name": "Bibliothèque Ouverte des Mondes Anciens (BOMA)"
-    },
-    "isPartOf": {
-      "@type": "Periodical",
-      "name": "Bibliothèque Ouverte d'Égyptologie",
-      "alternateName": "BOE",
-      "issn": "3129-6424"
-    }
-  }
-  </script>
   <!-- La feuille BOE originale vient en premier ; les styles spécifiques à la recherche la complètent. -->
   <link rel="stylesheet" href="/assets/style.css?v=16">
   <link rel="stylesheet" href="styles.css?v=33">
   <script type="module" src="app.js?v=33"></script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://boegyptologie.github.io/#boma",
+      "name": "Bibliothèque Ouverte des Mondes Anciens",
+      "alternateName": "BOMA",
+      "logo": "https://boegyptologie.github.io/assets/boma-logo.png"
+    },
+    {
+      "@type": "Periodical",
+      "@id": "https://boegyptologie.github.io/#boe",
+      "name": "Bibliothèque Ouverte d'Égyptologie",
+      "alternateName": [
+        "BOE",
+        "Bibliothèque ouverte d'égyptologie",
+        "Bibl. ouverte égyptol."
+      ],
+      "issn": "3129-6424",
+      "description": "Revue scientifique d’égyptologie en libre accès : articles évalués en double insu, publication sans frais sur Zenodo et licence CC BY 4.0.",
+      "url": "https://boegyptologie.github.io/fr/about.html",
+      "publisher": {
+        "@id": "https://boegyptologie.github.io/#boma"
+      },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "inLanguage": [
+        "fr",
+        "de",
+        "en",
+        "ar",
+        "es",
+        "it",
+        "pt"
+      ],
+      "isAccessibleForFree": true,
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Égyptologie"
+        },
+        {
+          "@type": "Thing",
+          "name": "Égypte ancienne"
+        },
+        {
+          "@type": "Thing",
+          "name": "Monde copte"
+        },
+        {
+          "@type": "Thing",
+          "name": "Soudan antique"
+        },
+        {
+          "@type": "Thing",
+          "name": "Préhistoire égyptienne"
+        }
+      ],
+      "editor": [
+        {
+          "@type": "Person",
+          "name": "Edson Poiati Filho"
+        },
+        {
+          "@type": "Person",
+          "name": "Guilherme Borges Pires"
+        },
+        {
+          "@type": "Person",
+          "name": "Victor Braga Gurgel"
+        },
+        {
+          "@type": "Person",
+          "name": "Alessandro Calò"
+        },
+        {
+          "@type": "Person",
+          "name": "Jérémie Chemin"
+        },
+        {
+          "@type": "Person",
+          "name": "Noémie Lecroq"
+        },
+        {
+          "@type": "Person",
+          "name": "Ghada Ramadan"
+        },
+        {
+          "@type": "Person",
+          "name": "Jacqueline Robin"
+        }
+      ],
+      "logo": "https://boegyptologie.github.io/assets/logo.png",
+      "sameAs": [
+        "https://portal.issn.org/resource/ISSN/3129-6424",
+        "https://catalogue.bnf.fr/ark:/12148/cb48736477j",
+        "https://reseau-mirabel.info/revue/26849/Bibliotheque-ouverte-d-egyptologie-BOE",
+        "https://zenodo.org/communities/boe/"
+      ],
+      "subjectOf": {
+        "@type": "WebPage",
+        "url": "https://ancientworldonline.blogspot.com/2025/09/forthcoming-open-access-journal.html",
+        "name": "New Open Access Journal: Bibliothèque Ouverte d’Égyptologie"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://boegyptologie.github.io/#website",
+      "url": "https://boegyptologie.github.io/",
+      "name": "Bibliothèque Ouverte d'Égyptologie",
+      "alternateName": "BOE",
+      "inLanguage": [
+        "fr",
+        "en"
+      ],
+      "publisher": {
+        "@id": "https://boegyptologie.github.io/#boma"
+      },
+      "about": {
+        "@id": "https://boegyptologie.github.io/#boe"
+      }
+    },
+    {
+      "@type": "WebApplication",
+      "name": "Le bibliothécaire",
+      "description": "Explorez les publications de la BOE : recherche multilingue, périodes, sites, musées et papyrus, avec extraits sourcés et liens vers les PDF.",
+      "url": "https://boegyptologie.github.io/fr/bibliothecaire/",
+      "applicationCategory": "EducationalApplication",
+      "inLanguage": "fr",
+      "isAccessibleForFree": true,
+      "publisher": {
+        "@type": "Organization",
+        "name": "Bibliothèque Ouverte des Mondes Anciens (BOMA)"
+      },
+      "isPartOf": {
+        "@id": "https://boegyptologie.github.io/#boe"
+      },
+      "@id": "https://boegyptologie.github.io/fr/bibliothecaire/#application"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://boegyptologie.github.io/fr/bibliothecaire/#webpage",
+      "url": "https://boegyptologie.github.io/fr/bibliothecaire/",
+      "name": "Le bibliothécaire | Recherche dans les publications de la BOE",
+      "description": "Explorez les publications de la BOE : recherche multilingue, périodes, sites, musées et papyrus, avec extraits sourcés et liens vers les PDF.",
+      "inLanguage": "fr",
+      "isPartOf": {
+        "@id": "https://boegyptologie.github.io/#website"
+      },
+      "mainEntity": {
+        "@id": "https://boegyptologie.github.io/fr/bibliothecaire/#application"
+      }
+    }
+  ]
+}
+  </script>
+  <link rel="alternate" type="application/atom+xml" href="https://boegyptologie.github.io/feed.xml" title="BOE – Articles">
+  <meta name="msvalidate.01" content="6F13CF2F10060A8E3FCA432B5CE9584A">
+  <meta name="google-site-verification" content="13fWnbIzFY5O50vil2BRlWN6CnOat8lf4cVWPPZFbFo">
 </head>
 <body class="bibliothecaire-page">
 <header>

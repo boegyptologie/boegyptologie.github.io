@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://boegyptologie.github.io/sitemap.xml
+Sitemap: https://boegyptologie.github.io/sitemap-articles.xml
