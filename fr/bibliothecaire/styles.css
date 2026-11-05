@@ -294,8 +294,8 @@ h1, h2, h3, h4 { font-weight: 700; }
   font-weight: 400;
 }
 mark { background: #ffe7bc; color: #222; }
-.source-links { display: flex; flex-wrap: wrap; gap: 12px 24px; }
-.source-links a, .source-links button {
+.source-links { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 12px 24px; }
+.source-links :is(a, button, summary) {
   display: inline-flex;
   align-items: center;
   max-width: 100%;
@@ -308,7 +308,18 @@ mark { background: #ffe7bc; color: #222; }
   text-decoration: none;
   color: var(--ink);
 }
-.source-links a:hover, .source-links button:hover { color: var(--accent-red); }
+.source-links :is(a, button, summary):hover { color: var(--accent-red); }
+.source-links .source-choice summary { display: list-item; cursor: pointer; }
+.source-choice summary::marker { color: var(--accent-red); }
+.source-choice-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .4em;
+  margin-block-start: .4em;
+  padding: .45em .65em;
+  border: 1px solid var(--accent-red);
+}
 .corpus-count {
   margin: 25px 0 0;
   padding-top: 11px;

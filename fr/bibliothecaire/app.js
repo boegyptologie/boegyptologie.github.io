@@ -33,7 +33,9 @@ const ENGLISH_UI={
   "Rechercher": "Search",
   "Aucun extrait dans cette catégorie.": "No excerpts in this category.",
   "Aucun extrait correspondant.": "No matching excerpts.",
-  "Lire dans l’article ↗": "Read in the article ↗",
+  "Lire dans l’article": "Read in the article",
+  "Ouvrir dans un nouvel onglet": "Open in a new tab",
+  "Aller vers l’article": "Go to the article",
   "Vérifier sur le PDF ↗": "Check the PDF ↗",
   "PDF à renseigner": "PDF unavailable",
   "Copier l’extrait et la référence": "Copy excerpt and reference",
@@ -1689,7 +1691,7 @@ function sourceLink(p) {
     else if (p.page > 2) fragment = `pdf-page-${p.page}`;
     return {
       url: doc.public_html_url + (fragment ? '#' + fragment : ''),
-      label: 'Lire dans l’article ↗',
+      label: 'Lire dans l’article',
     };
   }
   const url = doc.url ? `${doc.url}#page=${p.page}` : doc.doi ? `https://doi.org/${encodeURIComponent(doc.doi)}` : null;
@@ -1997,7 +1999,24 @@ function render(){
       link.target = '_blank';
       link.rel = 'noopener noreferrer';
     }
-    const copy=document.createElement('button');copy.type='button';copy.textContent=t('Copier l’extrait et la référence');copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(`${reference(item)}\n${t('« {text} »',{text:item.text})}`);copy.textContent=t('Référence copiée ✓');setTimeout(()=>copy.textContent=t('Copier l’extrait et la référence'),2000);}catch{copy.textContent=t('Copie indisponible');}});bar.append(link,copy);card.append(bar);wrap.append(card);
+    if (source.url && d.public_html_url) {
+      const choice = document.createElement('details');
+      choice.className = 'source-choice';
+      const summary = document.createElement('summary');
+      summary.textContent = t(source.label);
+      const options = document.createElement('div');
+      options.className = 'source-choice-actions';
+      link.textContent = t('Ouvrir dans un nouvel onglet');
+      const sameTab = document.createElement('a');
+      sameTab.href = source.url;
+      sameTab.textContent = t('Aller vers l’article');
+      options.append(link, sameTab);
+      choice.append(summary, options);
+      bar.append(choice);
+    } else {
+      bar.append(link);
+    }
+    const copy=document.createElement('button');copy.type='button';copy.textContent=t('Copier l’extrait et la référence');copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(`${reference(item)}\n${t('« {text} »',{text:item.text})}`);copy.textContent=t('Référence copiée ✓');setTimeout(()=>copy.textContent=t('Copier l’extrait et la référence'),2000);}catch{copy.textContent=t('Copie indisponible');}});bar.append(copy);card.append(bar);wrap.append(card);
   }
 }
 
