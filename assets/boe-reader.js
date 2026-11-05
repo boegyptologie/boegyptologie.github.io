@@ -2,7 +2,9 @@
   const reader = document.getElementById('boe-reader');
   const contents = reader.querySelector('.boe-plan');
   const margin = reader.querySelector('.boe-margin');
-  const compact = matchMedia('(max-width: 660px)');
+  const landscapeQuery = '(orientation: landscape) and (max-width: 1000px) and (max-height: 500px)';
+  const landscape = matchMedia(landscapeQuery);
+  const compact = matchMedia('(max-width: 660px), ' + landscapeQuery);
   const touch = matchMedia('(hover: none) and (pointer: coarse)');
   const endmatter = reader.querySelector('.boe-endmatter');
   const nav = contents.querySelector('nav');
@@ -70,7 +72,9 @@
   }
 
   function updateReadingMarks() {
-    const offset = compact.matches ? Math.max(95, margin.getBoundingClientRect().height + 20) : 46;
+    const offset = compact.matches
+      ? Math.max(landscape.matches ? 70 : 95, margin.getBoundingClientRect().height + 20)
+      : 46;
     const passage = endmatter.getBoundingClientRect().top > offset ? atReadingLine(passages, offset) : null;
     if (passage !== activePassage) {
       outline.get(activePassage)?.removeAttribute('aria-current');
@@ -112,6 +116,7 @@
     queueReadingUpdate();
   }
   compact.addEventListener('change', fitContents);
+  landscape.addEventListener('change', fitContents);
   fitContents();
   contents.addEventListener('click', event => {
     if (compact.matches && event.target.closest('a')) contents.open = false;
