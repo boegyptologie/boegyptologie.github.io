@@ -33,6 +33,7 @@ const ENGLISH_UI={
   "Rechercher": "Search",
   "Aucun extrait dans cette catégorie.": "No excerpts in this category.",
   "Aucun extrait correspondant.": "No matching excerpts.",
+  "Lire dans l’article ↗": "Read in the article ↗",
   "Vérifier sur le PDF ↗": "Check the PDF ↗",
   "PDF à renseigner": "PDF unavailable",
   "Copier l’extrait et la référence": "Copy excerpt and reference",
@@ -1678,7 +1679,22 @@ function buildPlan(query,mode='expanded'){
   return {groups,terms,topics,corrections,relations:queryRelations(query,groups),matchMode:'expanded'};
 }
 function excerptType(p){return p.kind==='note'?(p.number?t('Note {number}',{number:p.number}):t('Note à contrôler')):p.kind==='bibliography'?t('Bibliographie'):t('Texte principal');}
-function pdfURL(p){const d=state.docs.get(p.doc_id);return d.url?`${d.url}#page=${p.page}`:d.doi?`https://doi.org/${encodeURIComponent(d.doi)}`:null;}
+function sourceLink(p) {
+  const doc = state.docs.get(p.doc_id);
+  if (doc.public_html_url) {
+    let fragment = '';
+    if (p.kind === 'note' && p.number) fragment = `note-${p.number}`;
+    else if (p.kind === 'bibliography') fragment = `bibliography-page-${p.page}`;
+    else if (p.page === 2) fragment = 'abstract';
+    else if (p.page > 2) fragment = `pdf-page-${p.page}`;
+    return {
+      url: doc.public_html_url + (fragment ? '#' + fragment : ''),
+      label: 'Lire dans l’article ↗',
+    };
+  }
+  const url = doc.url ? `${doc.url}#page=${p.page}` : doc.doi ? `https://doi.org/${encodeURIComponent(doc.doi)}` : null;
+  return { url, label: url ? 'Vérifier sur le PDF ↗' : 'PDF à renseigner' };
+}
 function reference(p){const d=state.docs.get(p.doc_id);return t('{author}, « {title} », {journal}, p. {page}{note}{doi}.',{author:d.author,title:d.title,journal:d.journal,page:p.page,note:p.number?`, ${t('n.')} ${p.number}`:'',doi:d.doi?`, DOI ${d.doi}`:''});}
 
 function lexicalScores(query,terms,plan=null){
@@ -1972,7 +1988,15 @@ function render(){
     const refinementEvidence=state.keywordRefinements.flatMap(term=>variantEgyptianKey(term)?keywordMatchSpans(item.text,term).map(hit=>hit.surface):[term]);
     const evidence=state.plan?.exact||state.plan?.variants||state.plan?.coptic?[...new Set((state.plan.coptic?copticMatches(item.text,state.search):state.plan.variants?variantMatches(item.text,state.search):exactMatches(item.text,state.search)).map(hit=>hit.surface))]:[...new Set([...refinementEvidence,...corpusEvidence,...egyptEvidence,...(state.plan?.groups||[]).filter(group=>!group.egyptKeys?.length).map(g=>g.terms.find(term=>includesTerm(item.text,term))).filter(Boolean)])];
     if(evidence.length){const why=document.createElement('div');why.className='source-meta';why.textContent=t('Indices présents dans cet extrait : {terms}{more}',{terms:evidence.slice(0,6).join(' · '),more:evidence.length>6?'…':''});card.append(why);}
-    const excerpt=document.createElement('blockquote');excerpt.dir='auto';if(state.plan?.exact||state.plan?.variants||state.plan?.coptic)highlightSearchMatch(excerpt,item.text,state.search,state.plan.matchMode);else if(philological||state.keywordRefinements.some(term=>variantEgyptianKey(term)))highlightExpanded(excerpt,item,keys,egyptSpans);else highlight(excerpt,item.text,keys);card.append(excerpt);const bar=document.createElement('div');bar.className='source-links';const link=document.createElement('a');link.textContent=t('Vérifier sur le PDF ↗');const url=pdfURL(item);if(url){link.href=url;link.target='_blank';link.rel='noopener noreferrer';}else{link.textContent=t('PDF à renseigner');}
+    const excerpt=document.createElement('blockquote');excerpt.dir='auto';if(state.plan?.exact||state.plan?.variants||state.plan?.coptic)highlightSearchMatch(excerpt,item.text,state.search,state.plan.matchMode);else if(philological||state.keywordRefinements.some(term=>variantEgyptianKey(term)))highlightExpanded(excerpt,item,keys,egyptSpans);else highlight(excerpt,item.text,keys);card.append(excerpt);const bar=document.createElement('div');bar.className='source-links';
+    const link = document.createElement('a');
+    const source = sourceLink(item);
+    link.textContent = t(source.label);
+    if (source.url) {
+      link.href = source.url;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+    }
     const copy=document.createElement('button');copy.type='button';copy.textContent=t('Copier l’extrait et la référence');copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(`${reference(item)}\n${t('« {text} »',{text:item.text})}`);copy.textContent=t('Référence copiée ✓');setTimeout(()=>copy.textContent=t('Copier l’extrait et la référence'),2000);}catch{copy.textContent=t('Copie indisponible');}});bar.append(link,copy);card.append(bar);wrap.append(card);
   }
 }

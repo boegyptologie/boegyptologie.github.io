@@ -5,6 +5,7 @@
   const service = 'https://boegyptologie.goatcounter.com';
   const preference = 'boe-audience-disabled';
   const path = footer.dataset.boeAudience;
+  const pdfEvent = path.slice(1) + 'pdf';
   const choice = document.querySelector('#boe-audience-choice');
   const browserOptOut = navigator.globalPrivacyControl === true || navigator.doNotTrack === '1';
   let optedOut;
@@ -46,7 +47,7 @@
 
   function recordPdfClick(event) {
     if (event.type === 'auxclick' && event.button !== 1) return;
-    if (event.target.closest('a[data-boe-pdf]')) count(path + 'pdf', true);
+    if (event.target.closest('a[data-boe-pdf]')) count(pdfEvent, true);
   }
 
   if (footer.querySelector('[data-boe-views="pdf"]')) {
@@ -55,7 +56,7 @@
   }
 
   async function showCount(counter) {
-    const key = counter.dataset.boeViews === 'pdf' ? path + 'pdf' : path;
+    const key = counter.dataset.boeViews === 'pdf' ? pdfEvent : path;
     try {
       const url = service + '/counter/' + encodeURIComponent(key) + '.json?start=year';
       const response = await fetch(url, request);

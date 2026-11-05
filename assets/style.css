@@ -264,7 +264,7 @@ text-decoration: underline;
 }
 
 /* Petit bouton Zenodo : fond blanc, contour rouge */
-.boe-zenodo-btn {
+:is(.boe-zenodo-btn, .boe-reading-link) {
 display: inline-block;
 padding: 0.08em 0.48em;
 font-size: 0.75em !important;
@@ -278,8 +278,8 @@ text-decoration: none;
 white-space: nowrap;
 }
 
-.boe-zenodo-btn:hover,
-.boe-zenodo-btn:focus {
+:is(.boe-zenodo-btn, .boe-reading-link):hover,
+:is(.boe-zenodo-btn, .boe-reading-link):focus {
 background: var(--accent-red);
 color: #fff !important;
 text-decoration: none;

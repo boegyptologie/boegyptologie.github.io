@@ -5,16 +5,15 @@
   color: #666;
 }
 
-.boe-audience a {
+.boe-audience :is(a, span) {
+  font-size: inherit;
   color: inherit;
+}
+
+.boe-audience a {
   text-underline-offset: .15em;
 }
 
 .boe-audience [data-boe-views]:not([hidden])::after {
   content: " · ";
-}
-
-.boe-reading-link {
-  color: #b52617;
-  text-underline-offset: .2em;
 }
