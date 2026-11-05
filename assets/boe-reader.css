@@ -153,8 +153,8 @@
   #boe-reader .boe-plan :is(a, .boe-toc-heading) { min-height: 44px; padding-block: .55em; }
   #boe-reader .boe-plan-punkt { inset-block-start: 18px; }
 }
-#boe-reader .boe-plan a[aria-current="location"] .boe-plan-punkt { visibility: visible; }
-#boe-reader .boe-toc-group:not([open]):has(a[aria-current="location"]) > .boe-toc-heading .boe-plan-punkt,
+#boe-reader .boe-plan [aria-current="location"] .boe-plan-punkt { visibility: visible; }
+#boe-reader .boe-toc-group:not([open]):has([aria-current="location"]) > .boe-toc-heading .boe-plan-punkt,
 #boe-reader .boe-toc-group:has(> .boe-toc-children > .boe-toc-start[aria-current="location"]) > .boe-toc-heading .boe-plan-punkt {
   visibility: visible;
 }

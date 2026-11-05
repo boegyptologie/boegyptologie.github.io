@@ -10,9 +10,8 @@
   const endmatter = reader.querySelector('.boe-endmatter');
   const nav = contents.querySelector('nav');
   const tocLinks = [...nav.querySelectorAll('a')];
-  const outline = new Map(tocLinks.map(link => [
-    document.getElementById(link.hash.slice(1)), link,
-  ]));
+  const targets = tocLinks.map(link => document.getElementById(link.hash.slice(1)));
+  const outline = new Map(targets.map((target, index) => [target, tocLinks[index]]));
   const passages = [...outline.keys()];
   const pdfMarks = [...reader.querySelectorAll('[data-pdf-page]')];
   const pdfLink = reader.querySelector('.boe-current-pdf');
@@ -23,6 +22,15 @@
   let activePassage = null;
   let activePage = null;
   let updatePending = false;
+
+  function hasSectionOpening(section, firstSubsection) {
+    const opening = document.createRange();
+    opening.setStartAfter(section);
+    opening.setEndBefore(firstSubsection);
+    if (opening.toString().trim()) return true;
+    return [...opening.commonAncestorContainer.querySelectorAll('img, svg, table')]
+      .some(element => opening.intersectsNode(element));
+  }
 
   const tocDepth = link => link?.classList.contains('boe-outline-detail') ? 3 :
     link?.classList.contains('boe-outline-sub') ? 2 : 1;
@@ -46,10 +54,15 @@
     heading.append(...link.childNodes);
     const children = document.createElement('div');
     children.className = 'boe-toc-children';
-    link.classList.add('boe-toc-start');
-    link.setAttribute('aria-label', sectionStartLabel + ' · ' + link.title);
-    link.textContent = sectionStartLabel;
-    children.append(link);
+    const section = targets[index];
+    if (hasSectionOpening(section, targets[index + 1])) {
+      link.classList.add('boe-toc-start');
+      link.setAttribute('aria-label', sectionStartLabel + ' · ' + link.title);
+      link.textContent = sectionStartLabel;
+      children.append(link);
+    } else {
+      outline.set(section, heading);
+    }
     group.append(heading, children);
     parent.append(group);
     branches.push(children);
@@ -57,8 +70,8 @@
   nav.replaceChildren(outlineTree);
 
   function openLinkedBranch() {
-    const link = outline.get(document.getElementById(location.hash.slice(1)));
-    for (let group = link?.closest('.boe-toc-group'); group; group = group.parentElement.closest('.boe-toc-group')) {
+    const entry = outline.get(document.getElementById(location.hash.slice(1)));
+    for (let group = entry?.closest('.boe-toc-group'); group; group = group.parentElement.closest('.boe-toc-group')) {
       group.open = true;
     }
     queueReadingUpdate();
@@ -86,12 +99,12 @@
     const passage = endmatter.getBoundingClientRect().top > offset ? atReadingLine(passages, offset) : null;
     if (passage !== activePassage) {
       outline.get(activePassage)?.removeAttribute('aria-current');
-      const link = outline.get(passage);
-      if (link) {
-        link.setAttribute('aria-current', 'location');
+      const entry = outline.get(passage);
+      if (entry) {
+        entry.setAttribute('aria-current', 'location');
         if (!compact.matches && contents.open && !nav.matches(':hover, :focus-within')) {
-          let row = link;
-          for (let group = link.closest('.boe-toc-group'); group; group = group.parentElement.closest('.boe-toc-group')) {
+          let row = entry;
+          for (let group = entry.closest('.boe-toc-group'); group; group = group.parentElement.closest('.boe-toc-group')) {
             if (!group.open) row = group.firstElementChild;
           }
           const item = row.getBoundingClientRect();
