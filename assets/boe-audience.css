@@ -1,0 +1,20 @@
+.boe-audience {
+  display: block;
+  margin-block-start: .4rem;
+  font-size: .82em;
+  color: #666;
+}
+
+.boe-audience a {
+  color: inherit;
+  text-underline-offset: .15em;
+}
+
+.boe-audience [data-boe-views]:not([hidden])::after {
+  content: " · ";
+}
+
+.boe-reading-link {
+  color: #b52617;
+  text-underline-offset: .2em;
+}

@@ -170,6 +170,8 @@
   <link rel="alternate" type="application/atom+xml" href="https://boegyptologie.github.io/feed.xml" title="BOE – Articles">
   <meta name="msvalidate.01" content="6F13CF2F10060A8E3FCA432B5CE9584A">
   <meta name="google-site-verification" content="13fWnbIzFY5O50vil2BRlWN6CnOat8lf4cVWPPZFbFo">
+  <link rel="stylesheet" href="/assets/boe-audience.css">
+  <script src="/assets/boe-audience.js" defer></script>
 </head>
 <body>
 <header>
@@ -219,9 +221,17 @@
       <h2 id="donnees"><br><strong>Formulaires et traitement des données personnelles<span class="verspunkt">·</span></strong></h2>
       <p>Les formulaires de soumission d'article et d'évaluation collectent des données personnelles : nom, adresse e-mail, affiliation institutionnelle et, le cas échéant, identifiant ORCID. Des fichiers sont également transmis (article en PDF et en version éditable). Ces données transitent via Google Apps Script et sont stockées sur les services Gmail et Google Drive de Google LLC (États-Unis), qui agit comme sous-traitant au sens de l'article 28 du RGPD. Le transfert vers les États-Unis est encadré par l'EU-US Data Privacy Framework, reconnu par la Commission européenne depuis juillet 2023 comme garantissant un niveau de protection adéquat. Les données sont utilisées exclusivement à des fins de traitement éditorial ; elles ne sont communiquées à aucune autre entité tierce.</p>
       <p>La base légale du traitement est l'intérêt légitime de BOMA en tant qu'éditeur (traitement des soumissions et des évaluations dans le cadre de la publication scientifique), au sens de l'article 6, paragraphe 1, point f) du RGPD.</p>
-      <p>Le site ne dépose pas de cookies propres. Aucune donnée de navigation n'est collectée par la BOE ou BOMA en dehors des formulaires susmentionnés.</p>
       <p>Conformément au Règlement (UE) 2016/679 (RGPD), toute personne concernée dispose d'un droit d'accès, de rectification et de suppression de ses données. Pour exercer ces droits, adressez-vous à : <a href="mailto:boegyptologie@gmail.com">boegyptologie@gmail.com</a>.</p>
       <p>La déclaration de droits d'auteur acceptée lors de la soumission est conservée comme trace datée du consentement de l'auteur·rice, conformément aux obligations éditoriales de la revue.</p>
+    </section>
+
+
+    <section aria-labelledby="audience">
+      <h2 id="audience"><br><strong>Mesure d’audience<span class="verspunkt">·</span></strong></h2>
+      <p>BOMA utilise GoatCounter pour connaître la fréquentation des pages de la BOE et le nombre de clics sur les liens PDF des articles. Cette mesure répond à l’intérêt légitime de BOMA d’évaluer l’usage de la revue.</p>
+      <p>La requête indique le chemin de la page publique consultée ou le lien PDF activé. GoatCounter reçoit l’adresse IP et les en-têtes HTTP nécessaires à la connexion. La configuration de la BOE se limite à des totaux par page, conservés 365 jours, et fonctionne sans cookie ni identifiant de lecteur. Le tableau de bord est réservé à l’équipe de la revue. Les données sont hébergées en Finlande et en Allemagne. Voir la <a href="https://www.goatcounter.com/help/privacy">politique de confidentialité de GoatCounter</a>.</p>
+      <p>Vous pouvez vous opposer à la mesure dans ce navigateur. Il mémorise votre choix sur cet appareil. Les signaux de confidentialité du navigateur s’appliquent également.</p>
+      <p><label><input type="checkbox" id="boe-audience-choice"> Désactiver la mesure d’audience dans ce navigateur</label></p>
     </section>
 
     <section aria-labelledby="propriete">
@@ -257,6 +267,7 @@
     © Bibliothèque Ouverte des Mondes Anciens, 2026 ·
     <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC&nbsp;BY&nbsp;4.0</a> ·
     <a href="/fr/mentions-legales.html">Mentions légales</a>
+    <small class="boe-audience" data-boe-audience="/fr/mentions-legales.html"><span data-boe-views="page" hidden>Consultations <span></span></span><a href="/fr/mentions-legales.html#audience">Mesure d’audience</a></small>
   </div>
 </footer>
 <script>
