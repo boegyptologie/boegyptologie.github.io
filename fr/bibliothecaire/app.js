@@ -34,8 +34,10 @@ const ENGLISH_UI={
   "Aucun extrait dans cette catégorie.": "No excerpts in this category.",
   "Aucun extrait correspondant.": "No matching excerpts.",
   "Lire dans l’article": "Read in the article",
+  "Lire dans la notice": "Read in the biographical note",
   "Ouvrir dans un nouvel onglet": "Open in a new tab",
   "Aller vers l’article": "Go to the article",
+  "Aller à la notice": "Go to the biographical note",
   "Vérifier sur le PDF ↗": "Check the PDF ↗",
   "PDF à renseigner": "PDF unavailable",
   "Copier l’extrait et la référence": "Copy excerpt and reference",
@@ -1691,7 +1693,7 @@ function sourceLink(p) {
     else if (p.page > 2) fragment = `pdf-page-${p.page}`;
     return {
       url: doc.public_html_url + (fragment ? '#' + fragment : ''),
-      label: 'Lire dans l’article',
+      label: doc.genre === 'notice' ? 'Lire dans la notice' : 'Lire dans l’article',
     };
   }
   const url = doc.url ? `${doc.url}#page=${p.page}` : doc.doi ? `https://doi.org/${encodeURIComponent(doc.doi)}` : null;
@@ -2009,7 +2011,7 @@ function render(){
       link.textContent = t('Ouvrir dans un nouvel onglet');
       const sameTab = document.createElement('a');
       sameTab.href = source.url;
-      sameTab.textContent = t('Aller vers l’article');
+      sameTab.textContent = t(d.genre === 'notice' ? 'Aller à la notice' : 'Aller vers l’article');
       options.append(link, sameTab);
       choice.append(summary, options);
       bar.append(choice);
