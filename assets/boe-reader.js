@@ -1,6 +1,7 @@
 (() => {
   const reader = document.getElementById('boe-reader');
   const contents = reader.querySelector('.boe-plan');
+  const contentsToggle = contents.querySelector('summary');
   const margin = reader.querySelector('.boe-margin');
   const landscapeQuery = '(orientation: landscape) and (max-width: 1000px) and (max-height: 500px)';
   const landscape = matchMedia(landscapeQuery);
@@ -18,6 +19,7 @@
   const pdfLabel = pdfLink.querySelector('span');
   const pdfUrl = pdfLink.href.split('#')[0];
   const pdfPageLabel = pdfLink.dataset.pageLabel;
+  const isFrench = document.documentElement.lang.startsWith('fr');
   let activePassage = null;
   let activePage = null;
   let updatePending = false;
@@ -26,8 +28,7 @@
     link?.classList.contains('boe-outline-sub') ? 2 : 1;
   const outlineTree = document.createDocumentFragment();
   const branches = [outlineTree];
-  const expandBranch = new Map();
-  const subsectionLabel = document.documentElement.lang.startsWith('fr') ? 'Sous-sections de ' : 'Subsections of ';
+  const sectionStartLabel = isFrench ? 'Début de la section' : 'Section start';
   for (const [index, link] of tocLinks.entries()) {
     const depth = tocDepth(link);
     branches.length = Math.min(depth, branches.length);
@@ -37,32 +38,31 @@
       continue;
     }
 
-    const group = document.createElement('div');
+    const group = document.createElement('details');
     group.className = 'boe-toc-group';
-    const row = document.createElement('div');
-    row.className = 'boe-toc-row';
+    const heading = document.createElement('summary');
+    heading.className = 'boe-toc-heading';
+    heading.title = link.title;
+    heading.append(...link.childNodes);
     const children = document.createElement('div');
     children.className = 'boe-toc-children';
-    children.id = 'boe-toc-' + link.hash.slice(1);
-    const toggle = document.createElement('button');
-    toggle.className = 'boe-toc-toggle';
-    toggle.type = 'button';
-    toggle.setAttribute('aria-label', subsectionLabel + link.title);
-    toggle.setAttribute('aria-controls', children.id);
-
-    const setOpen = open => {
-      children.hidden = !open;
-      toggle.setAttribute('aria-expanded', String(open));
-    };
-    setOpen(false);
-    toggle.addEventListener('click', () => setOpen(children.hidden));
-    expandBranch.set(children, setOpen);
-    row.append(link, toggle);
-    group.append(row, children);
+    link.classList.add('boe-toc-start');
+    link.setAttribute('aria-label', sectionStartLabel + ' · ' + link.title);
+    link.textContent = sectionStartLabel;
+    children.append(link);
+    group.append(heading, children);
     parent.append(group);
     branches.push(children);
   }
   nav.replaceChildren(outlineTree);
+
+  function openLinkedBranch() {
+    const link = outline.get(document.getElementById(location.hash.slice(1)));
+    for (let group = link?.closest('.boe-toc-group'); group; group = group.parentElement.closest('.boe-toc-group')) {
+      group.open = true;
+    }
+    queueReadingUpdate();
+  }
 
   function atReadingLine(items, offset) {
     for (let index = items.length - 1; index >= 0; index--) {
@@ -72,8 +72,16 @@
   }
 
   function updateReadingMarks() {
-    const offset = compact.matches
-      ? Math.max(landscape.matches ? 70 : 95, margin.getBoundingClientRect().height + 20)
+    const bar = compact.matches ? margin.getBoundingClientRect() : null;
+    if (bar && contents.open) {
+      const below = window.innerHeight - bar.bottom;
+      const above = bar.top;
+      const opensAbove = below < Math.min(window.innerHeight * .55, above);
+      contents.classList.toggle('boe-plan-up', opensAbove);
+      nav.style.setProperty('--boe-toc-space', Math.max(0, (opensAbove ? above : below) - 6) + 'px');
+    }
+    const offset = bar
+      ? Math.max(landscape.matches ? 70 : 95, bar.height + 20)
       : 46;
     const passage = endmatter.getBoundingClientRect().top > offset ? atReadingLine(passages, offset) : null;
     if (passage !== activePassage) {
@@ -81,11 +89,12 @@
       const link = outline.get(passage);
       if (link) {
         link.setAttribute('aria-current', 'location');
-        for (let branch = link.closest('.boe-toc-children'); branch; branch = branch.parentElement.closest('.boe-toc-children')) {
-          expandBranch.get(branch)(true);
-        }
-        if (!compact.matches) {
-          const item = link.getBoundingClientRect();
+        if (!compact.matches && contents.open && !nav.matches(':hover, :focus-within')) {
+          let row = link;
+          for (let group = link.closest('.boe-toc-group'); group; group = group.parentElement.closest('.boe-toc-group')) {
+            if (!group.open) row = group.firstElementChild;
+          }
+          const item = row.getBoundingClientRect();
           const rail = nav.getBoundingClientRect();
           if (item.top < rail.top) nav.scrollTop += item.top - rail.top;
           if (item.bottom > rail.bottom) nav.scrollTop += item.bottom - rail.bottom;
@@ -118,10 +127,12 @@
   compact.addEventListener('change', fitContents);
   landscape.addEventListener('change', fitContents);
   fitContents();
+  openLinkedBranch();
+  contents.addEventListener('toggle', queueReadingUpdate);
   contents.addEventListener('click', event => {
     if (compact.matches && event.target.closest('a')) contents.open = false;
   });
-  window.addEventListener('hashchange', queueReadingUpdate);
+  window.addEventListener('hashchange', openLinkedBranch);
   document.fonts.ready.then(queueReadingUpdate);
   window.addEventListener('load', queueReadingUpdate, { once: true });
 
@@ -212,13 +223,19 @@
   noteClose.addEventListener('click', () => hidePreview(true));
   document.addEventListener('pointerdown', event => {
     if (noteCard.hasAttribute('href') && !tooltip.contains(event.target) && !noteLink.contains(event.target)) hidePreview();
+    if (compact.matches && contents.open && !contents.contains(event.target)) contents.open = false;
   });
   tooltip.addEventListener('pointerenter', () => clearTimeout(hideTimer));
   tooltip.addEventListener('pointerleave', dismissAfterPointerLeaves);
   reader.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && noteLink) {
+    if (event.key !== 'Escape' || event.target.closest('.boe-image-view')) return;
+    if (noteLink) {
       event.preventDefault();
       hidePreview(true);
+    } else if (compact.matches && contents.open) {
+      event.preventDefault();
+      contents.open = false;
+      contentsToggle.focus({ preventScroll: true });
     }
   });
   window.addEventListener('scroll', () => {
@@ -229,4 +246,51 @@
     hidePreview();
     queueReadingUpdate();
   });
+
+  const figures = reader.querySelectorAll('.boe-figure > img');
+  const imageView = document.createElement('dialog');
+  if (figures.length && typeof imageView.showModal === 'function') {
+    imageView.className = 'boe-image-view';
+    imageView.setAttribute('aria-label', isFrench ? 'Figure agrandie' : 'Enlarged figure');
+    const close = document.createElement('button');
+    close.className = 'boe-image-close';
+    close.type = 'button';
+    close.autofocus = true;
+    close.setAttribute('aria-label', isFrench ? 'Fermer la figure' : 'Close figure');
+    close.textContent = '×';
+    close.addEventListener('click', () => imageView.close());
+    const enlarged = document.createElement('img');
+    imageView.append(close, enlarged);
+    reader.append(imageView);
+    imageView.addEventListener('click', event => {
+      if (event.target === imageView) imageView.close();
+    });
+
+    const enlargeLabel = isFrench ? 'Agrandir la figure' : 'Enlarge figure';
+    for (const image of figures) {
+      const trigger = document.createElement('button');
+      trigger.className = 'boe-figure-trigger';
+      trigger.type = 'button';
+      trigger.setAttribute('aria-haspopup', 'dialog');
+      trigger.setAttribute('aria-label', image.alt ? enlargeLabel + ' · ' + image.alt : enlargeLabel);
+      const width = Number(image.getAttribute('width'));
+      const height = Number(image.getAttribute('height'));
+      const ratio = width > 0 && height > 0 ? width / height : null;
+      if (ratio) {
+        trigger.style.inlineSize = `min(${width}px, calc(var(--boe-figure-height) * ${ratio}))`;
+        trigger.style.aspectRatio = String(ratio);
+      }
+      image.replaceWith(trigger);
+      trigger.append(image);
+      trigger.addEventListener('click', () => {
+        hidePreview();
+        enlarged.alt = image.alt;
+        enlarged.style.inlineSize = ratio
+          ? `min(${1.5 * width}px, calc(var(--boe-image-view-height) * ${ratio}))`
+          : '';
+        enlarged.src = image.currentSrc || image.src;
+        imageView.showModal();
+      });
+    }
+  }
 })();

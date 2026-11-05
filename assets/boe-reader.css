@@ -33,7 +33,7 @@
 #boe-reader .boe-footer::after { inset-block: 0 auto; }
 #boe-reader .boe-matrix { position: relative; isolation: isolate; }
 #boe-reader .boe-ruling {
-  position: absolute; inset-block: calc(-6px - var(--boe-extension)) calc(-1 * var(--boe-extension)); inset-inline: 0;
+  position: absolute; inset-block: calc(-1 * var(--boe-extension)); inset-inline: 0;
   z-index: 2; pointer-events: none;
 }
 #boe-reader .boe-ruling::before,
@@ -47,16 +47,16 @@
 #boe-reader .boe-columns { display: grid; grid-template-columns: var(--boe-rail) minmax(0,1fr); }
 
 #boe-reader .boe-masthead {
-  display: flex; align-items: center; gap: 10px; padding: 16px var(--boe-inset) 21px;
-}
-#boe-reader .boe-masthead::before {
-  content: ""; position: absolute; inset-inline: calc(-1 * var(--boe-extension)); inset-block-end: 6px;
-  border-top: 1px solid var(--boe-red);
+  display: flex; align-items: center; gap: 10px; padding: 16px var(--boe-inset) 17px;
 }
 #boe-reader .boe-logo { display: block; flex: none; width: auto; height: 37px; }
 #boe-reader .boe-brand { display: grid; gap: 2px; }
 #boe-reader .boe-brand strong { font: 600 17px/1.05 var(--boe-display); }
 #boe-reader .boe-brand small { color: var(--boe-muted); font-size: 11px; line-height: 1.2; }
+/* Same wordmark breakpoint as the main BOE header. */
+@media (max-width: 800px) {
+  #boe-reader .boe-brand { display: none; }
+}
 #boe-reader .boe-context {
   display: flex; flex-direction: column; align-items: flex-start; gap: 12px;
   padding: 21px 12px 18px var(--boe-inset); color: var(--boe-muted); font-size: 15px;
@@ -89,14 +89,15 @@
   margin-inline-end: 12px; padding: 11px 5px 15px var(--boe-inset);
   background: var(--boe-paper);
 }
-#boe-reader .boe-plan summary { padding: 4px 0; font-weight: 600; }
-#boe-reader .boe-plan summary::marker { color: var(--boe-red); }
+#boe-reader .boe-plan > summary { padding: 4px 0; font-weight: 600; cursor: pointer; }
+#boe-reader .boe-plan > summary::marker { color: var(--boe-red); }
 #boe-reader .boe-plan nav { display: grid; gap: 2px; margin-top: 4px; }
-#boe-reader .boe-plan a {
+#boe-reader .boe-plan :is(a, .boe-toc-heading) {
+  position: relative;
   display: flex; align-items: baseline; gap: .35em; min-height: 29px;
-  padding: 4px 0; line-height: 1.22; font-size: 15.5px; text-decoration: none;
+  padding: 4px 0 4px 12px; line-height: 1.22; font-size: 15.5px; text-decoration: none;
 }
-#boe-reader .boe-plan a:hover { text-decoration: underline; }
+#boe-reader .boe-plan :is(a, .boe-toc-heading):hover { text-decoration: underline; }
 #boe-reader .boe-contents-number { flex: none; white-space: nowrap; color: var(--boe-link-red); }
 #boe-reader .boe-article { min-width: 0; }
 #boe-reader .boe-tools {
@@ -133,27 +134,28 @@
 #boe-reader .boe-biblio-list li + li { margin-top: .65em; }
 #boe-reader .boe-citation { padding-left: .7em; border-inline-start: 1px solid var(--boe-red); }
 #boe-reader .boe-footer {
-  display: flex; justify-content: space-between; flex-wrap: wrap; gap: .3em 1em;
+  display: flex; justify-content: flex-end;
   padding: 10px var(--boe-inset); color: var(--boe-muted); font-size: 14px;
 }
 
-
-@media (pointer: coarse) {
-  #boe-reader :is(.boe-tools a,.boe-plan a,.boe-plan summary) { min-height: 44px; }
-}
 
 #boe-reader .boe-current-pdf {
   display: inline-flex; align-items: center; gap: .35em; min-height: 29px;
   color: var(--boe-link-red); font-size: 15px; text-decoration: none;
 }
 #boe-reader .boe-current-pdf:hover { text-decoration: underline; }
-#boe-reader .boe-plan a { position: relative; padding-inline-start: 12px; }
 #boe-reader .boe-plan-punkt {
   position: absolute; inset-inline-start: 0; inset-block-start: 14px;
   color: var(--boe-red); font: 600 2.45em/0 var(--boe-display); visibility: hidden;
 }
+@media (max-width: 660px), (pointer: coarse) {
+  #boe-reader :is(.boe-tools a, .boe-plan > summary) { min-height: 44px; }
+  #boe-reader .boe-plan :is(a, .boe-toc-heading) { min-height: 44px; padding-block: .55em; }
+  #boe-reader .boe-plan-punkt { inset-block-start: 18px; }
+}
 #boe-reader .boe-plan a[aria-current="location"] .boe-plan-punkt { visibility: visible; }
-#boe-reader .boe-toc-group:has(> .boe-toc-children[hidden] a[aria-current="location"]) > .boe-toc-row .boe-plan-punkt {
+#boe-reader .boe-toc-group:not([open]):has(a[aria-current="location"]) > .boe-toc-heading .boe-plan-punkt,
+#boe-reader .boe-toc-group:has(> .boe-toc-children > .boe-toc-start[aria-current="location"]) > .boe-toc-heading .boe-plan-punkt {
   visibility: visible;
 }
 #boe-reader .boe-pdf-boundary { display: inline-block; width: 0; height: 0; }
@@ -223,16 +225,41 @@ body { margin: 0; overflow-x: clip; }
   padding-inline-start: 1em;
   border-inline-start: 1px solid var(--boe-red);
 }
+#boe-reader .boe-figure { --boe-figure-width: 32rem; --boe-figure-height: min(65vh, 26rem); }
+#boe-reader .boe-figure--diagram { --boe-figure-width: 13rem; }
 #boe-reader .boe-figure img {
   display: block;
   width: auto;
   height: auto;
-  max-inline-size: min(100%, 32rem);
-  max-block-size: min(65vh, 26rem);
+  max-inline-size: min(100%, var(--boe-figure-width));
+  max-block-size: var(--boe-figure-height);
   margin-inline: auto;
   object-fit: contain;
 }
-#boe-reader .boe-figure--diagram img { max-inline-size: min(100%, 13rem); }
+#boe-reader .boe-figure-trigger {
+  display: block; width: fit-content; max-inline-size: min(100%, var(--boe-figure-width));
+  padding: 0; margin-inline: auto; border: 0; background: transparent; cursor: zoom-in;
+}
+#boe-reader .boe-image-view {
+  --boe-image-view-height: calc(100vh - 66px);
+  --boe-image-view-height: calc(100dvh - 66px);
+  max-inline-size: calc(100% - 20px); max-block-size: calc(100% - 20px);
+  padding: 44px 0 0; border: 1px solid var(--boe-red); background: var(--boe-paper);
+}
+#boe-reader .boe-image-view::backdrop { background: #000a; }
+#boe-reader .boe-image-view img {
+  display: block; inline-size: auto; block-size: auto; margin-inline: auto;
+  max-inline-size: calc(100vw - 22px);
+  max-block-size: var(--boe-image-view-height);
+}
+#boe-reader .boe-image-close {
+  position: absolute; inset-block-start: 0; inset-inline-end: 0;
+  inline-size: 44px; block-size: 44px; padding: 0; border: 0;
+  background: transparent; color: var(--boe-link-red); cursor: pointer;
+  font: 400 24px/1 var(--boe-display);
+}
+#boe-reader .boe-image-close:focus-visible { outline-offset: -3px; }
+html:has(.boe-image-view[open]) { overflow-y: hidden; }
 #boe-reader .boe-figure figcaption {
   margin-block-start: .5em;
   color: var(--boe-muted);
@@ -247,8 +274,6 @@ body { margin: 0; overflow-x: clip; }
 #boe-reader :is(.boe-reading-copy > *, .boe-notes-list li, .boe-biblio-list li) { scroll-margin-top: 19px; }
 #boe-reader .boe-text { scroll-margin-top: 19px; }
 #boe-reader .boe-pdf-boundary { vertical-align: top; }
-#boe-reader .boe-footer .boe-audience { margin: 0; }
-#boe-reader .boe-footer .boe-audience a { color: inherit; text-decoration-color: currentColor; }
 #boe-reader .boe-back-top {
   display: inline-block;
   padding-block: 4px;
@@ -258,26 +283,24 @@ body { margin: 0; overflow-x: clip; }
   white-space: nowrap;
 }
 #boe-reader .boe-back-top:hover { text-decoration: underline; }
-#boe-reader .boe-toc-row { display: flex; align-items: flex-start; }
-#boe-reader .boe-toc-row a { flex: 1; min-width: 0; }
 #boe-reader .boe-toc-children { margin-inline-start: .65em; }
-#boe-reader .boe-toc-toggle {
-  flex: 0 0 29px; min-height: 29px; padding: 0; border: 0;
-  color: var(--boe-red); background: transparent; cursor: pointer;
-  font: 600 18px/1 var(--boe-display);
+#boe-reader .boe-toc-heading { cursor: pointer; list-style: none; }
+#boe-reader .boe-toc-heading::-webkit-details-marker { display: none; }
+#boe-reader .boe-toc-heading::after {
+  content: ""; align-self: flex-start; flex: none; inline-size: 7px; block-size: 7px;
+  margin: .33em 4px 0 auto; border: solid var(--boe-link-red); border-width: 0 1px 1px 0;
+  transform: rotate(-45deg);
 }
-#boe-reader .boe-toc-toggle::before { content: "▸"; }
-#boe-reader .boe-toc-toggle[aria-expanded="true"]::before { content: "▾"; }
-@media (max-width: 660px), (pointer: coarse) {
-  #boe-reader .boe-toc-toggle { flex-basis: 44px; min-height: 44px; }
+#boe-reader .boe-toc-group[open] > .boe-toc-heading::after { transform: rotate(45deg); }
+#boe-reader .boe-plan .boe-toc-start {
+  color: var(--boe-link-red); font-size: 14.5px;
 }
 #boe-reader { --boe-bleed: max(15px, calc((100vw - 994px) / 2)); }
 @supports (width: 1cqw) {
   html { container-type: inline-size; }
   #boe-reader { --boe-bleed: max(15px, calc((100cqw - 994px) / 2)); }
 }
-#boe-reader :is(.boe-masthead, .boe-heading, .boe-footer).boe-across::after,
-#boe-reader .boe-masthead::before {
+#boe-reader :is(.boe-masthead, .boe-heading, .boe-footer).boe-across::after {
   inset-inline: calc(-1 * var(--boe-bleed));
 }
 #boe-reader :is(.boe-field, .boe-endmatter section)::after {
@@ -285,6 +308,9 @@ body { margin: 0; overflow-x: clip; }
 }
 @media (min-width: 661px) {
   #boe-reader .boe-plan nav { max-height: calc(100dvh - 158px); overflow-y: auto; scrollbar-width: thin; }
+  #boe-reader .boe-plan :is(a, .boe-toc-heading):not(:focus-visible) .boe-outline-text {
+    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;
+  }
   #boe-reader .boe-back-top { margin-block-start: .4em; }
 }
 @media (min-width: 661px) and (pointer: coarse) {
@@ -294,6 +320,7 @@ body { margin: 0; overflow-x: clip; }
   #boe-reader { --boe-scroll-margin: 85px; }
   #boe-reader .boe-columns { grid-template-columns: minmax(0,1fr); }
   #boe-reader .boe-ruling span { display: none; }
+  #boe-reader .boe-heading::after { display: none; }
   #boe-reader .boe-context {
     flex-direction: row; justify-content: space-between; align-items: baseline; flex-wrap: wrap;
     gap: 4px 15px; padding: 12px var(--boe-inset) 0;
@@ -309,14 +336,17 @@ body { margin: 0; overflow-x: clip; }
     position: relative; margin: 0; padding: 3px var(--boe-inset); max-block-size: none; overflow: visible;
     display: flex; justify-content: space-between; align-items: center; gap: 10px;
   }
+  #boe-reader .boe-plan > summary { line-height: 36px; }
   #boe-reader .boe-plan nav {
     position: absolute; inset-block-start: 100%; inset-inline: var(--boe-inset); margin-top: 0;
     grid-template-columns: minmax(0,1fr); padding: 7px 10px;
     background: var(--boe-paper); border: 1px solid var(--boe-red);
-    max-height: 55vh; max-height: 55dvh; overflow-y: auto;
+    max-height: min(55vh, var(--boe-toc-space, 55vh));
+    max-height: min(55dvh, var(--boe-toc-space, 55dvh));
+    overflow-y: auto;
   }
+  #boe-reader .boe-plan-up nav { inset-block: auto 100%; }
   #boe-reader .boe-logo { height: 32px; }
-  #boe-reader .boe-brand strong { font-size: 16px; }
   #boe-reader :is(.boe-field, .boe-endmatter section)::after {
     inset-inline-start: calc(-1 * var(--boe-bleed));
   }
