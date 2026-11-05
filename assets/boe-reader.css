@@ -283,6 +283,10 @@ body { margin: 0; }
 @media (min-width: 801px) {
   body { overflow-x: clip; }
   #boe-reader { --boe-bleed: max(15px, calc((100vw - 994px) / 2)); }
+  @supports (width: 1cqw) {
+    html { container-type: inline-size; }
+    #boe-reader { --boe-bleed: max(15px, calc((100cqw - 994px) / 2)); }
+  }
   #boe-reader :is(.boe-masthead, .boe-heading, .boe-footer).boe-across::after,
   #boe-reader .boe-masthead::before {
     inset-inline: calc(-1 * var(--boe-bleed));
