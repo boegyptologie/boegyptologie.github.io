@@ -271,6 +271,15 @@ html:has(.boe-image-view[open]) { overflow-y: hidden; }
 #boe-reader table { width: 100%; border-collapse: collapse; font-size: .9em; }
 #boe-reader :is(th, td) { padding: .25em .4em; text-align: start; border-bottom: 1px solid #e7c9c5; }
 #boe-reader caption { color: var(--boe-muted); margin-block: .3em .5em; }
+#boe-reader .boe-periodicals :is(th, td):first-child { overflow-wrap: break-word; }
+@media (max-width: 660px), (orientation: landscape) and (max-width: 1000px) and (max-height: 500px) {
+  #boe-reader .boe-periodicals table { table-layout: fixed; line-height: 1.45; }
+  #boe-reader .boe-periodicals :is(th, td) {
+    padding: .45em; vertical-align: top; overflow-wrap: break-word;
+  }
+  #boe-reader .boe-periodicals th:first-child { width: 6.75rem; }
+  #boe-reader .boe-periodicals th { border-bottom-color: var(--boe-red); }
+}
 #boe-reader :is(.boe-reading-copy > *, .boe-notes-list li, .boe-biblio-list li) { scroll-margin-top: 19px; }
 #boe-reader .boe-text { scroll-margin-top: 19px; }
 #boe-reader .boe-pdf-boundary { vertical-align: top; }
