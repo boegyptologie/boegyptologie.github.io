@@ -32,14 +32,66 @@
 .print-gallery {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.5rem;
+  gap: clamp(.5rem, 3vw, 1rem);
+  max-inline-size: min(23rem, 88%);
   margin-block: 1.5rem;
 }
 
 .print-gallery figure { margin: 0; min-width: 0; }
-.print-gallery img { display: block; width: 100%; }
-.print-gallery figcaption { margin-top: .35rem; font-size: .9rem; }
+.print-gallery figcaption { margin-top: .35rem; font-size: .88rem; line-height: 1.25; }
 
-@media (max-width: 620px) {
-  .print-gallery { grid-template-columns: minmax(0, 1fr); }
+.print-gallery a {
+  display: block;
+  padding: 3px;
+  border: 1px solid var(--accent-red);
+  border-radius: 2px;
+  background: #fff;
+  cursor: zoom-in;
+}
+
+.print-gallery img { display: block; width: 100%; height: auto; }
+.print-gallery a:hover { outline: 1px solid var(--accent-red); }
+
+.print-gallery a:focus-visible,
+.print-photo-dialog button:focus-visible {
+  outline: 2px solid var(--accent-red);
+  outline-offset: 3px;
+}
+
+.print-photo-dialog {
+  box-sizing: border-box;
+  max-inline-size: calc(100% - 1.5rem);
+  max-block-size: calc(100% - 1.5rem);
+  margin: auto;
+  padding: .65rem;
+  border: 1px solid var(--accent-red);
+  border-radius: 2px;
+  background: #fff;
+  color: inherit;
+}
+
+.print-photo-dialog::backdrop { background: rgb(0 0 0 / 70%); }
+.print-photo-dialog form { margin: 0 0 .45rem; text-align: right; }
+.print-photo-dialog figure { margin: 0; text-align: center; }
+.print-photo-dialog figcaption { margin-top: .35rem; font-size: .9rem; }
+
+.print-photo-dialog img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: min(44rem, calc(100vh - 6rem));
+  max-height: min(44rem, calc(100dvh - 6rem));
+  margin-inline: auto;
+}
+
+.print-photo-dialog button {
+  padding: .2rem .5rem;
+  border: 1px solid var(--accent-red);
+  border-radius: 2px;
+  background: #fff;
+  color: var(--accent-red);
+  font: inherit;
+  line-height: 1.15;
+  cursor: pointer;
 }
