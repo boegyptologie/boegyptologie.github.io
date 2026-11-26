@@ -2,6 +2,7 @@
 from pathlib import Path
 from html import escape
 from html.parser import HTMLParser
+from urllib.parse import unquote, urlsplit
 import argparse
 import copy
 import json
@@ -14,6 +15,7 @@ JSON_LD = re.compile(r'<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>.*
 HEAD = re.compile(r'(<head\b[^>]*>)(.*?)(</head>)', re.S | re.I)
 META = re.compile(r'<meta\b[^>]*>', re.I)
 LINK = re.compile(r'<link\b[^>]*>', re.I)
+SCHOLAR_PDF_LIMIT = 5_000_000
 
 class Tags(HTMLParser):
     def __init__(self, source):
@@ -184,12 +186,30 @@ def build_page(path, source):
     assert active(result)==active(source),rel+' scripts/styles changed'
     return result
 
+def validate_publication_pdf(publication):
+    pdf_url = dict(publication['citations']).get('citation_pdf_url')
+    if not pdf_url or not pdf_url.startswith(ORIGIN):
+        return  # The archive URL remains valid when a local copy is unavailable.
+    relative = Path(unquote(urlsplit(pdf_url).path.lstrip('/')))
+    if relative.parent != Path(publication['notice']).parent or relative.suffix.lower() != '.pdf':
+        raise ValueError(f'{pdf_url}: place the local PDF alongside its notice')
+    pdf = ROOT / relative
+    if not pdf.is_file() or not 0 < pdf.stat().st_size <= SCHOLAR_PDF_LIMIT:
+        raise ValueError(f'{pdf_url}: local PDF missing or larger than 5 MB')
+    encodings = [
+        value for value in publication['article']['encoding']
+        if value.get('contentUrl') == pdf_url and value.get('encodingFormat') == 'application/pdf'
+    ]
+    if len(encodings) != 1 or encodings[0].get('contentSize') != str(pdf.stat().st_size):
+        raise ValueError(f'{pdf_url}: structured PDF size differs from the file')
+
 def generate(check=False):
     planned={}
     for article in DATA['articles']:
         for key in ('notice', 'reader'):
             if not (ROOT / article[key]).is_file():
                 raise ValueError(f'Missing publication page: {article[key]}')
+        validate_publication_pdf(article)
     for path in sorted(ROOT.rglob('*.html')):
         if '.git' in path.parts:continue
         source=path.read_bytes().decode('utf-8')
