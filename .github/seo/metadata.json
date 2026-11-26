@@ -1592,6 +1592,13 @@
         "encoding": [
           {
             "@type": "MediaObject",
+            "contentUrl": "https://boegyptologie.github.io/articles/2026-5/BOE_2026_5_Sales_Mota_Mota.pdf",
+            "encodingFormat": "application/pdf",
+            "contentSize": "4685687",
+            "isAccessibleForFree": true
+          },
+          {
+            "@type": "MediaObject",
             "contentUrl": "https://zenodo.org/records/22377988/files/BOE_2026_5_Sales_Mota_Mota.pdf",
             "encodingFormat": "application/pdf",
             "contentSize": "34141910",
@@ -1683,7 +1690,7 @@
         ],
         [
           "citation_pdf_url",
-          "https://zenodo.org/records/22377988/files/BOE_2026_5_Sales_Mota_Mota.pdf"
+          "https://boegyptologie.github.io/articles/2026-5/BOE_2026_5_Sales_Mota_Mota.pdf"
         ],
         [
           "citation_html_url",
