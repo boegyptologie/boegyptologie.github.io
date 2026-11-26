@@ -1,0 +1,1783 @@
+{
+  "origin": "https://boegyptologie.github.io/",
+  "checkedDate": "2026-11-25",
+  "publisher": {
+    "@type": "Organization",
+    "@id": "https://boegyptologie.github.io/#boma",
+    "name": "Bibliothèque Ouverte des Mondes Anciens",
+    "alternateName": "BOMA",
+    "logo": "https://boegyptologie.github.io/assets/boma-logo.png",
+    "description": "Maison d’édition associative, indépendante et à but non lucratif établie en France (association loi 1901).",
+    "sameAs": [
+      "https://www.idref.fr/296864633"
+    ],
+    "publishingPrinciples": [
+      "https://boegyptologie.github.io/fr/politique-editoriale.html",
+      "https://boegyptologie.github.io/en/editorial-policy-statement.html"
+    ],
+    "correctionsPolicy": [
+      "https://boegyptologie.github.io/fr/politique-editoriale.html#corrections",
+      "https://boegyptologie.github.io/en/editorial-policy-statement.html#corrections"
+    ]
+  },
+  "journal": {
+    "@type": "Periodical",
+    "@id": "https://boegyptologie.github.io/#boe",
+    "name": "Bibliothèque Ouverte d'Égyptologie",
+    "alternateName": [
+      "BOE",
+      "Bibliothèque ouverte d'égyptologie",
+      "Bibl. ouverte égyptol."
+    ],
+    "issn": "3129-6424",
+    "description": "Revue scientifique internationale et indépendante d’égyptologie en accès ouvert diamant, sans frais pour les auteurs. Les articles de recherche sont évalués en double insu par deux experts indépendants. La revue accueille la diversité des approches et le multilinguisme scientifique.",
+    "url": "https://boegyptologie.github.io/fr/about.html",
+    "publisher": {
+      "@id": "https://boegyptologie.github.io/#boma"
+    },
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "inLanguage": [
+      "fr",
+      "de",
+      "en",
+      "ar",
+      "es",
+      "it",
+      "pt"
+    ],
+    "isAccessibleForFree": true,
+    "about": [
+      {
+        "@type": "Thing",
+        "name": "Égyptologie"
+      },
+      {
+        "@type": "Thing",
+        "name": "Égypte ancienne"
+      },
+      {
+        "@type": "Thing",
+        "name": "Monde copte"
+      },
+      {
+        "@type": "Thing",
+        "name": "Soudan antique"
+      },
+      {
+        "@type": "Thing",
+        "name": "Préhistoire égyptienne"
+      }
+    ],
+    "editor": [
+      {
+        "@id": "https://boegyptologie.github.io/#person-guilherme-borges-pires",
+        "@type": "Person",
+        "name": "Guilherme Borges Pires"
+      },
+      {
+        "@id": "https://boegyptologie.github.io/#person-victor-braga-gurgel",
+        "@type": "Person",
+        "name": "Victor Braga Gurgel"
+      },
+      {
+        "@id": "https://boegyptologie.github.io/#person-alessandro-calo",
+        "@type": "Person",
+        "name": "Alessandro Calò"
+      },
+      {
+        "@id": "https://boegyptologie.github.io/#person-jeremie-chemin",
+        "@type": "Person",
+        "name": "Jérémie Chemin"
+      },
+      {
+        "@id": "https://boegyptologie.github.io/#person-noemie-lecroq",
+        "@type": "Person",
+        "name": "Noémie Lecroq"
+      },
+      {
+        "@id": "https://boegyptologie.github.io/#person-edson-poiati-filho",
+        "@type": "Person",
+        "name": "Edson Poiati Filho"
+      },
+      {
+        "@id": "https://boegyptologie.github.io/#person-ghada-ramadan",
+        "@type": "Person",
+        "name": "Ghada Ramadan"
+      },
+      {
+        "@id": "https://boegyptologie.github.io/#person-jacqueline-robin",
+        "@type": "Person",
+        "name": "Jacqueline Robin"
+      }
+    ],
+    "sameAs": [
+      "https://portal.issn.org/resource/ISSN/3129-6424",
+      "https://catalogue.bnf.fr/ark:/12148/cb48736477j",
+      "https://reseau-mirabel.info/revue/26849/Bibliotheque-ouverte-d-egyptologie-BOE",
+      "https://www.sudoc.fr/296288632"
+    ],
+    "subjectOf": [
+      {
+        "@type": "WebPage",
+        "url": "https://ancientworldonline.blogspot.com/2025/09/forthcoming-open-access-journal.html",
+        "name": "New Open Access Journal: Bibliothèque Ouverte d’Égyptologie"
+      },
+      {
+        "@type": "WebPage",
+        "url": "https://www.egyptologyforum.org/EEFDigijournals.html",
+        "name": "EEF: E-Journals and Digitized Paper Periodicals (Egyptology)"
+      },
+      {
+        "@id": "https://boegyptologie.github.io/fr/about.html#webpage"
+      },
+      {
+        "@id": "https://boegyptologie.github.io/en/about.html#webpage"
+      }
+    ],
+    "publishingPrinciples": [
+      "https://boegyptologie.github.io/fr/politique-editoriale.html",
+      "https://boegyptologie.github.io/en/editorial-policy-statement.html"
+    ],
+    "image": "https://boegyptologie.github.io/assets/logo.png",
+    "archivedAt": "https://zenodo.org/communities/boe/"
+  },
+  "website": {
+    "@type": "WebSite",
+    "@id": "https://boegyptologie.github.io/#website",
+    "url": "https://boegyptologie.github.io/",
+    "name": "Bibliothèque Ouverte d'Égyptologie",
+    "alternateName": "BOE",
+    "inLanguage": [
+      "fr",
+      "en"
+    ],
+    "publisher": {
+      "@id": "https://boegyptologie.github.io/#boma"
+    },
+    "about": {
+      "@id": "https://boegyptologie.github.io/#boe"
+    }
+  },
+  "people": [
+    {
+      "committee": "editorial",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-guilherme-borges-pires",
+        "name": "Guilherme Borges Pires",
+        "sameAs": [
+          "https://orcid.org/0000-0002-3923-5638"
+        ],
+        "affiliation": {
+          "@type": "Organization",
+          "name": "CHAM, FCSH, Universidade NOVA de Lisboa"
+        }
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html",
+        "https://cham.fcsh.unl.pt/grupos-de-investigacao-membros.php?p=1554",
+        "https://run.unl.pt/server/api/core/bitstreams/585eda3e-57eb-4157-bda3-e73f7313fbff/content"
+      ],
+      "status": "confirmed"
+    },
+    {
+      "committee": "editorial",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-victor-braga-gurgel",
+        "name": "Victor Braga Gurgel"
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html"
+      ],
+      "status": "publisher-roster-only"
+    },
+    {
+      "committee": "editorial",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-alessandro-calo",
+        "name": "Alessandro Calò",
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Università degli Studi di Torino"
+        }
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html"
+      ],
+      "status": "degree-only-no-current-affiliation"
+    },
+    {
+      "committee": "editorial",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-jeremie-chemin",
+        "name": "Jérémie Chemin",
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Sorbonne Université"
+        }
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html"
+      ],
+      "status": "degree-only-no-current-affiliation"
+    },
+    {
+      "committee": "editorial",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-noemie-lecroq",
+        "name": "Noémie Lecroq",
+        "sameAs": [
+          "https://archeo.ens.psl.eu/membre/lecroq-noemie/"
+        ],
+        "affiliation": {
+          "@type": "Organization",
+          "name": "École Pratique des Hautes Études [EPHE-PSL]"
+        }
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html",
+        "https://archeo.ens.psl.eu/membre/lecroq-noemie/"
+      ],
+      "status": "confirmed"
+    },
+    {
+      "committee": "editorial",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-edson-poiati-filho",
+        "name": "Edson Poiati Filho",
+        "sameAs": [
+          "https://orcid.org/0009-0003-5281-8429",
+          "https://www.montpellier-egyptologie.fr/edson-poiati-filho/",
+          "https://www.idref.fr/282691227"
+        ],
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Université de Montpellier Paul-Valéry"
+        }
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html",
+        "https://www.montpellier-egyptologie.fr/edson-poiati-filho/",
+        "https://run.unl.pt/server/api/core/bitstreams/8fd9e20e-08d6-4f1c-9e16-e78395b8bcbe/content",
+        "https://www.idref.fr/282691227.xml"
+      ],
+      "status": "confirmed; degree as published on BOE, not employment"
+    },
+    {
+      "committee": "editorial",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-ghada-ramadan",
+        "name": "Ghada Ramadan"
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html"
+      ],
+      "status": "publisher-roster-only-homonyms-excluded"
+    },
+    {
+      "committee": "editorial",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-jacqueline-robin",
+        "name": "Jacqueline Robin",
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Sorbonne - Paris IV"
+        }
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html"
+      ],
+      "status": "degree-only-no-current-affiliation"
+    },
+    {
+      "committee": "scientific",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-ninon-blond",
+        "name": "Ninon Blond",
+        "sameAs": [
+          "https://orcid.org/0000-0002-0149-0975",
+          "https://cv.hal.science/ninon-blond"
+        ],
+        "affiliation": {
+          "@type": "Organization",
+          "name": "École normale supérieure de Lyon"
+        }
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html",
+        "https://cv.hal.science/ninon-blond",
+        "https://cv.hal.science/ninon-blond"
+      ],
+      "status": "confirmed"
+    },
+    {
+      "committee": "scientific",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-carlos-carvalhar",
+        "name": "Carlos Carvalhar",
+        "sameAs": [
+          "https://bv.fapesp.br/pt/pesquisador/731310/carlos-augusto-de-oliveira-carvalhar/"
+        ],
+        "affiliation": {
+          "@type": "Organization",
+          "name": "Universidade de São Paulo"
+        }
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html",
+        "https://bv.fapesp.br/pt/pesquisador/731310/carlos-augusto-de-oliveira-carvalhar/"
+      ],
+      "status": "confirmed-name-institution-speciality-match"
+    },
+    {
+      "committee": "scientific",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-gaelle-chantrain",
+        "name": "Gaëlle Chantrain",
+        "sameAs": [
+          "https://uclouvain.be/fr/people/gaelle.chantrain"
+        ],
+        "affiliation": {
+          "@type": "Organization",
+          "name": "Université catholique de Louvain"
+        }
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html",
+        "https://uclouvain.be/fr/people/gaelle.chantrain"
+      ],
+      "status": "confirmed"
+    },
+    {
+      "committee": "scientific",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-marion-claude",
+        "name": "Marion Claude",
+        "sameAs": [
+          "https://www.ifao.egnet.net/recherche/chercheurs/mclaude/"
+        ],
+        "affiliation": {
+          "@type": "Organization",
+          "name": "Institut français d’archéologie orientale"
+        }
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html",
+        "https://www.ifao.egnet.net/recherche/chercheurs/mclaude/"
+      ],
+      "status": "confirmed"
+    },
+    {
+      "committee": "scientific",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-fabio-frizzo",
+        "name": "Fábio Frizzo",
+        "sameAs": [
+          "https://orcid.org/0000-0001-5523-5884"
+        ],
+        "affiliation": {
+          "@type": "Organization",
+          "name": "Universidade Federal do Triângulo Mineiro"
+        }
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html",
+        "https://rhhj.anpuh.org/RHHJ/article/download/1075/495/3890",
+        "https://rhhj.anpuh.org/RHHJ/article/download/1075/495/3890"
+      ],
+      "status": "confirmed-authored-paper"
+    },
+    {
+      "committee": "scientific",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-hanane-gaber",
+        "name": "Hanane Gaber",
+        "sameAs": [
+          "https://archimede.cnrs.fr/index.php/recherche-et-formation-doctorale/formation-doctorale?catid=123&id=646%3Ahanane-gaber&view=article"
+        ],
+        "affiliation": {
+          "@type": "Organization",
+          "name": "Université de Montpellier Paul-Valéry"
+        }
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html",
+        "https://archimede.cnrs.fr/index.php/recherche-et-formation-doctorale/formation-doctorale?catid=123&id=646%3Ahanane-gaber&view=article"
+      ],
+      "status": "confirmed"
+    },
+    {
+      "committee": "scientific",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-carlos-gracia-zamacona",
+        "name": "Carlos Gracia Zamacona",
+        "sameAs": [
+          "https://orcid.org/0000-0003-2181-4663",
+          "https://portalcientifico.uah.es/investigadores/150649/detalle?lang=gl"
+        ],
+        "affiliation": {
+          "@type": "Organization",
+          "name": "Universidad de Alcalá"
+        }
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html",
+        "https://portalcientifico.uah.es/investigadores/150649/detalle?lang=gl",
+        "https://portalcientifico.uah.es/investigadores/150649/detalle?lang=gl"
+      ],
+      "status": "confirmed"
+    },
+    {
+      "committee": "scientific",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-rita-lucarelli",
+        "name": "Rita Lucarelli",
+        "sameAs": [
+          "https://orcid.org/0000-0003-3117-7688",
+          "https://arf.berkeley.edu/who-we-are/affiliated-faculty/rita-lucarelli"
+        ],
+        "affiliation": {
+          "@type": "Organization",
+          "name": "University of California, Berkeley"
+        }
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html",
+        "https://arf.berkeley.edu/who-we-are/affiliated-faculty/rita-lucarelli",
+        "https://arf.berkeley.edu/who-we-are/affiliated-faculty/rita-lucarelli"
+      ],
+      "status": "confirmed"
+    },
+    {
+      "committee": "scientific",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-luiza-osorio-g-silva",
+        "name": "Luiza Osorio G. Silva",
+        "sameAs": [
+          "https://orcid.org/0000-0003-1848-3445",
+          "https://faculty.uci.edu/profile/?facultyId=7182"
+        ],
+        "affiliation": {
+          "@type": "Organization",
+          "name": "University of California, Irvine"
+        }
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html",
+        "https://faculty.uci.edu/profile/?facultyId=7182",
+        "https://run.unl.pt/server/api/core/bitstreams/585eda3e-57eb-4157-bda3-e73f7313fbff/content"
+      ],
+      "status": "confirmed"
+    },
+    {
+      "committee": "scientific",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-severine-marchi",
+        "name": "Séverine Marchi",
+        "sameAs": [
+          "https://arcan.unige.ch/personnes/actuel/severine-marchi"
+        ],
+        "affiliation": {
+          "@type": "Organization",
+          "name": "MEAE/CNRS, SFDAS"
+        }
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html",
+        "https://arcan.unige.ch/personnes/actuel/severine-marchi"
+      ],
+      "status": "confirmed"
+    },
+    {
+      "committee": "scientific",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-ahmed-m-mekawy-ouda",
+        "name": "Ahmed M. Mekawy Ouda",
+        "sameAs": [
+          "https://orcid.org/0000-0003-3220-2515",
+          "https://www.geschkult.fu-berlin.de/e/aegyptologie/personen/weitere/Mekawy/index.html"
+        ],
+        "affiliation": {
+          "@type": "Organization",
+          "name": "Cairo University"
+        }
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html",
+        "https://www.geschkult.fu-berlin.de/e/aegyptologie/personen/weitere/Mekawy/index.html",
+        "https://orcid.org/0000-0003-3220-2515"
+      ],
+      "status": "confirmed-with-orcid-verified-cu.edu.eg-domain"
+    },
+    {
+      "committee": "scientific",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-so-miyagawa",
+        "name": "So Miyagawa",
+        "sameAs": [
+          "https://orcid.org/0000-0002-2950-7193",
+          "https://tiar.centers.tsukuba.ac.jp/en/fellow/1911/"
+        ],
+        "affiliation": {
+          "@type": "Organization",
+          "name": "University of Tsukuba"
+        }
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html",
+        "https://tiar.centers.tsukuba.ac.jp/en/fellow/1911/",
+        "https://ancientindia-datascience.jp/en/members-en/"
+      ],
+      "status": "confirmed"
+    },
+    {
+      "committee": "scientific",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-nicolas-morand",
+        "name": "Nicolas Morand",
+        "sameAs": [
+          "https://archeozoo-archeobota.mnhn.fr/fr/annuaire/nicolas-morand-8842"
+        ]
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html",
+        "https://archeozoo-archeobota.mnhn.fr/fr/annuaire/nicolas-morand-8842"
+      ],
+      "status": "identity-confirmed-roster-current-affiliation-not-independently-confirmed"
+    },
+    {
+      "committee": "scientific",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-clemence-pagnoux",
+        "name": "Clémence Pagnoux",
+        "sameAs": [
+          "https://archeozoo-archeobota.mnhn.fr/fr/annuaire/clemence-pagnoux-9143"
+        ],
+        "affiliation": {
+          "@type": "Organization",
+          "name": "Muséum national d’Histoire naturelle"
+        }
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html",
+        "https://archeozoo-archeobota.mnhn.fr/fr/annuaire/clemence-pagnoux-9143"
+      ],
+      "status": "confirmed"
+    },
+    {
+      "committee": "scientific",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-stephane-pasquali",
+        "name": "Stéphane Pasquali",
+        "sameAs": [
+          "https://orcid.org/0000-0002-5508-2459",
+          "https://www.archimede.cnrs.fr/index.php/recherche-et-formation-doctorale/recherche-doctorale?id=377"
+        ],
+        "affiliation": {
+          "@type": "Organization",
+          "name": "Université de Montpellier Paul-Valéry"
+        }
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html",
+        "https://www.archimede.cnrs.fr/index.php/recherche-et-formation-doctorale/recherche-doctorale?id=377",
+        "https://zenodo.org/api/records/22280762"
+      ],
+      "status": "confirmed"
+    },
+    {
+      "committee": "scientific",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-felix-relats-montserrat",
+        "name": "Felix Relats Montserrat",
+        "sameAs": [
+          "https://lettres.sorbonne-universite.fr/personnes/felix-relats-montserrat"
+        ],
+        "affiliation": {
+          "@type": "Organization",
+          "name": "Sorbonne Université"
+        }
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html",
+        "https://lettres.sorbonne-universite.fr/personnes/felix-relats-montserrat"
+      ],
+      "status": "confirmed"
+    },
+    {
+      "committee": "scientific",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-dina-serova",
+        "name": "Dina Serova",
+        "sameAs": [
+          "https://orcid.org/0000-0002-8201-0696",
+          "https://sfb1412.hu-berlin.de/people/dina-serova/"
+        ],
+        "affiliation": {
+          "@type": "Organization",
+          "name": "Humboldt-Universität zu Berlin"
+        }
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html",
+        "https://sfb1412.hu-berlin.de/people/dina-serova/",
+        "https://sfb1412.hu-berlin.de/people/dina-serova/"
+      ],
+      "status": "confirmed"
+    },
+    {
+      "committee": "scientific",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-sherouk-shehada",
+        "name": "Sherouk Shehada",
+        "sameAs": [
+          "https://www.berliner-antike-kolleg.org/en/bergsas/predoc-stipendien/sherouk_shehada/index.html"
+        ],
+        "affiliation": {
+          "@type": "Organization",
+          "name": "Helwan University"
+        }
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html",
+        "https://www.berliner-antike-kolleg.org/en/bergsas/predoc-stipendien/sherouk_shehada/index.html"
+      ],
+      "status": "confirmed"
+    },
+    {
+      "committee": "scientific",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-marwa-soliman",
+        "name": "Marwa Soliman",
+        "affiliation": {
+          "@type": "Organization",
+          "name": "Mansoura University"
+        }
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html",
+        "https://cregyptology.org.uk/?page_id=4677"
+      ],
+      "status": "confirmed-conference-organizer-profile-homonyms-excluded"
+    },
+    {
+      "committee": "scientific",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-danijela-stefanovic",
+        "name": "Danijela Stefanović",
+        "sameAs": [
+          "https://cris.cobiss.net/ecris/sr/en/researcher/3181"
+        ],
+        "affiliation": {
+          "@type": "Organization",
+          "name": "University of Belgrade"
+        }
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html",
+        "https://cris.cobiss.net/ecris/sr/en/researcher/3181"
+      ],
+      "status": "confirmed"
+    },
+    {
+      "committee": "scientific",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-filip-taterka",
+        "name": "Filip Taterka",
+        "affiliation": {
+          "@type": "Organization",
+          "name": "Polish Academy of Sciences"
+        }
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html",
+        "https://anthropos.edu.pl/seminarium-anthropos-dla-doktorantow-i-roku/"
+      ],
+      "status": "confirmed"
+    },
+    {
+      "committee": "scientific",
+      "node": {
+        "@type": "Person",
+        "@id": "https://boegyptologie.github.io/#person-simon-thuault",
+        "name": "Simon Thuault",
+        "sameAs": [
+          "https://egittologia.cfs.unipi.it/it/team/simon-thuault/"
+        ]
+      },
+      "sources": [
+        "https://boegyptologie.github.io/fr/about.html",
+        "https://egittologia.cfs.unipi.it/it/team/simon-thuault/"
+      ],
+      "status": "identity-confirmed-current-pisa-profile-vs-independent-roster-conflict"
+    }
+  ],
+  "descriptions": {
+    "index.html": "Bibliothèque Ouverte d’Égyptologie (BOE), revue internationale en accès ouvert diamant : sans frais pour les auteurs, recherche évaluée en double insu et DOI Zenodo.",
+    "fr/about.html": "BOE, revue internationale et indépendante d’égyptologie en accès ouvert diamant, sans frais pour les auteurs. Diversité des approches et des traditions académiques.",
+    "en/about.html": "BOE is an independent Diamond Open Access Egyptology journal with no author fees. It welcomes diverse approaches and respects different scholarly conventions.",
+    "fr/politique-editoriale.html": "Politique de BOE : double insu par deux experts pour les articles de recherche, sans frais, droits des auteurs, CC BY 4.0, éthique, corrections et archivage Zenodo.",
+    "en/editorial-policy-statement.html": "BOE policies: double-blind review by two experts for research articles, no author fees, copyright, CC BY 4.0, publication ethics, corrections and Zenodo archiving.",
+    "fr/processus-editorial.html": "Le processus de BOE : sélection éditoriale, double insu par deux experts indépendants pour les articles de recherche, révision et publication avec DOI sur Zenodo.",
+    "en/processus-editorial.html": "BOE’s editorial process: initial screening, double-blind review by two independent experts for research articles, revisions and publication with a Zenodo DOI.",
+    "fr/soumettre-un-article-submit-a-paper.html": "Soumettre un article d’égyptologie à BOE : revue en accès ouvert diamant, sans frais de soumission ni de publication. Consignes et formulaire pour les auteurs.",
+    "en/soumettre-un-article-submit-a-paper.html": "Submit Egyptology research to BOE, a Diamond Open Access journal without submission fees or APCs. Manuscript requirements and submission form for authors.",
+    "fr/numeros.html": "Publications 2026 de BOE : articles de recherche et notice biographique en accès ouvert, avec lecture HTML, PDF et DOI Zenodo.",
+    "en/numeros.html": "BOE’s 2026 publications: open-access research articles and a biographical note, with full-text HTML, PDFs and Zenodo DOIs."
+  },
+  "articles": [
+    {
+      "notice": "articles/2026-1/index.html",
+      "reader": "articles/2026-1/read/index.html",
+      "article": {
+        "@id": "https://boegyptologie.github.io/articles/2026-1/#article",
+        "@type": "ScholarlyArticle",
+        "name": "The Phonetic Value of Gardiner's Sign U 23 (𓍋) in Earlier Egyptian",
+        "headline": "The Phonetic Value of Gardiner's Sign U 23 (𓍋) in Earlier Egyptian",
+        "author": [
+          {
+            "@type": "Person",
+            "name": "Peter Pathappan",
+            "@id": "https://boegyptologie.github.io/articles/2026-1/#author-1"
+          }
+        ],
+        "datePublished": "2026-03-19",
+        "url": "https://boegyptologie.github.io/articles/2026-1/read/",
+        "sameAs": [
+          "https://doi.org/10.5281/zenodo.19086657",
+          "https://zenodo.org/records/19086657",
+          "https://boegyptologie.github.io/articles/2026-1/"
+        ],
+        "identifier": {
+          "@type": "PropertyValue",
+          "propertyID": "DOI",
+          "value": "10.5281/zenodo.19086657"
+        },
+        "isPartOf": {
+          "@id": "https://boegyptologie.github.io/#issue-2026-1"
+        },
+        "publisher": {
+          "@id": "https://boegyptologie.github.io/#boma"
+        },
+        "inLanguage": "en",
+        "license": "https://creativecommons.org/licenses/by/4.0/",
+        "isAccessibleForFree": true,
+        "keywords": [
+          "Gardiner U23",
+          "U 23",
+          "𓍋",
+          "phonetic value mr",
+          "mḥr",
+          "onomastics",
+          "Pyramid Texts",
+          "Old Kingdom",
+          "Middle Kingdom",
+          "Egyptian hieroglyphs",
+          "Hieroglyph U 23 (𓍋)",
+          "Phonetic Value mr",
+          "Onomastics",
+          "Hiéroglyphe U 23 (𓍋)",
+          "Valeur phonétique mr",
+          "Onomastique",
+          "Textes des Pyramides",
+          "Ancien Empire",
+          "Moyen Empire"
+        ],
+        "about": [
+          {
+            "@type": "Thing",
+            "name": "Gardiner U23"
+          },
+          {
+            "@type": "Thing",
+            "name": "Ancient Egyptian language"
+          },
+          {
+            "@type": "Thing",
+            "name": "Egyptian hieroglyphs"
+          },
+          {
+            "@type": "Thing",
+            "name": "Pyramid Texts"
+          },
+          {
+            "@type": "Thing",
+            "name": "Onomastics"
+          }
+        ],
+        "abstract": "The article examines the reading of the sign 𓍋 in the Old and Middle Kingdom and concludes that the phonetic value must be mr and not mḥr. Four pieces of evidence are used to support this conclusion. The first three come from onomastics and show the interchangeability of 𓍋 with 𓅓𓂋, 𓈘, and 𓌸. The fourth piece of evidence is a prefixed form of the verb 𓍋𓅓𓂋𓅪 from the Pyramid Texts, which proves that the verb consists of two radicals, meaning that it must be mr and not mḥr.",
+        "mainEntityOfPage": {
+          "@id": "https://boegyptologie.github.io/articles/2026-1/read/#webpage"
+        },
+        "pagination": "1-9",
+        "encoding": [
+          {
+            "@type": "MediaObject",
+            "contentUrl": "https://boegyptologie.github.io/articles/2026-1/BOE_2026_1_Pathappan.pdf",
+            "encodingFormat": "application/pdf",
+            "contentSize": "4884270",
+            "isAccessibleForFree": true
+          },
+          {
+            "@type": "MediaObject",
+            "contentUrl": "https://boegyptologie.github.io/articles/2026-1/read/",
+            "encodingFormat": "text/html",
+            "inLanguage": "en",
+            "isAccessibleForFree": true
+          }
+        ],
+        "archivedAt": "https://zenodo.org/records/19086657"
+      },
+      "issue": {
+        "@type": "PublicationIssue",
+        "@id": "https://boegyptologie.github.io/#issue-2026-1",
+        "issueNumber": "1",
+        "datePublished": "2026-03-19",
+        "isPartOf": {
+          "@id": "https://boegyptologie.github.io/#volume-2026"
+        }
+      },
+      "volume": {
+        "@type": "PublicationVolume",
+        "@id": "https://boegyptologie.github.io/#volume-2026",
+        "volumeNumber": "2026",
+        "isPartOf": {
+          "@id": "https://boegyptologie.github.io/#boe"
+        }
+      },
+      "citations": [
+        [
+          "citation_title",
+          "The Phonetic Value of Gardiner's Sign U 23 (𓍋) in Earlier Egyptian"
+        ],
+        [
+          "citation_author",
+          "Peter Pathappan"
+        ],
+        [
+          "citation_publication_date",
+          "2026/03/19"
+        ],
+        [
+          "citation_journal_title",
+          "Bibliothèque ouverte d'égyptologie"
+        ],
+        [
+          "citation_issn",
+          "3129-6424"
+        ],
+        [
+          "citation_volume",
+          "2026"
+        ],
+        [
+          "citation_issue",
+          "1"
+        ],
+        [
+          "citation_firstpage",
+          "1"
+        ],
+        [
+          "citation_lastpage",
+          "9"
+        ],
+        [
+          "citation_doi",
+          "10.5281/zenodo.19086657"
+        ],
+        [
+          "citation_pdf_url",
+          "https://boegyptologie.github.io/articles/2026-1/BOE_2026_1_Pathappan.pdf"
+        ],
+        [
+          "citation_language",
+          "en"
+        ],
+        [
+          "citation_abstract_html_url",
+          "https://boegyptologie.github.io/articles/2026-1/"
+        ],
+        [
+          "citation_html_url",
+          "https://boegyptologie.github.io/articles/2026-1/read/"
+        ]
+      ],
+      "sources": [
+        "https://zenodo.org/records/19086657",
+        "https://boegyptologie.github.io/articles/2026-1/",
+        "https://boegyptologie.github.io/articles/2026-1/read/"
+      ]
+    },
+    {
+      "notice": "articles/2026-2/index.html",
+      "reader": "articles/2026-2/read/index.html",
+      "article": {
+        "@id": "https://boegyptologie.github.io/articles/2026-2/#article",
+        "@type": "ScholarlyArticle",
+        "name": "Explaining the Odd Foot Sign of Gardiner D58 in the Egyptian Negator Transliterated bn: A Case for Innovative Orthographic Reuse Based on the Phonetic Reduction of the Nominalizer bw (> -ⲞⲨ-) and the Non-Etymological Writing bw nb for wn nb (> ⲞⲨⲞⲚ ⲚⲒⲘ)",
+        "headline": "Explaining the Odd Foot Sign of Gardiner D58 in the Egyptian Negator Transliterated bn: A Case for Innovative Orthographic Reuse Based on the Phonetic Reduction of the Nominalizer bw (> -ⲞⲨ-) and the Non-Etymological Writing bw nb for wn nb (> ⲞⲨⲞⲚ ⲚⲒⲘ)",
+        "author": [
+          {
+            "@type": "Person",
+            "name": "David Mihalyfy",
+            "@id": "https://boegyptologie.github.io/articles/2026-2/#author-1"
+          }
+        ],
+        "datePublished": "2026-06-26",
+        "url": "https://boegyptologie.github.io/articles/2026-2/read/",
+        "sameAs": [
+          "https://doi.org/10.5281/zenodo.20841508",
+          "https://zenodo.org/records/20841508",
+          "https://boegyptologie.github.io/articles/2026-2/"
+        ],
+        "identifier": {
+          "@type": "PropertyValue",
+          "propertyID": "DOI",
+          "value": "10.5281/zenodo.20841508"
+        },
+        "isPartOf": {
+          "@id": "https://boegyptologie.github.io/#issue-2026-2"
+        },
+        "publisher": {
+          "@id": "https://boegyptologie.github.io/#boma"
+        },
+        "inLanguage": "en",
+        "license": "https://creativecommons.org/licenses/by/4.0/",
+        "isAccessibleForFree": true,
+        "keywords": [
+          "Gardiner D58",
+          "Egyptian negation",
+          "bn",
+          "nominalizer bw",
+          "bw nb",
+          "wn nb",
+          "Coptic",
+          "grammaticalization",
+          "non-etymological writing",
+          "Egyptian language",
+          "orthography",
+          "negative existential cycle",
+          "adverbial phrases",
+          "indefinite article"
+        ],
+        "about": [
+          {
+            "@type": "Thing",
+            "name": "Gardiner D58"
+          },
+          {
+            "@type": "Thing",
+            "name": "Egyptian negation"
+          },
+          {
+            "@type": "Thing",
+            "name": "Ancient Egyptian language"
+          },
+          {
+            "@type": "Thing",
+            "name": "Coptic language"
+          },
+          {
+            "@type": "Thing",
+            "name": "Grammaticalization"
+          }
+        ],
+        "abstract": "In the mid-2nd millennium BCE, Egyptian scribes began writing a common negator as bn, with an odd foot sign of Gardiner D58 at its start. Building on past scholarship that recognizes the sign's semantic function and a larger, pre-existing orthographic link between negation and other body parts, this analysis identifies why disambiguation was needed in this specific case and why this specific sign was chosen as a disambiguator. On the one hand, the negator was at risk of confusion for other sentence-beginning entities potentially representable as a bare n. On the other hand, the not infrequent nominalizer bw that was also used to spell the word bw nb \"everyone\" began with a phonetically reduced b that had been retained in orthography, making it susceptible to reinterpretation as a semantic \"beginning-of-unit\" marker also applicable to negation. As two important steps in this argument, the nominalizer bw is shown to survive in the currently-misparsed section -ⲞⲨ- of Coptic adverbial phrases (e.g. Ϩ︦ⲚⲞⲨⲘⲈ \"truly\"), and bw nb \"everyone\" is identified as a non-etymological writing for wn nb \"every being\" (> Coptic ⲞⲨⲞⲚ ⲚⲒⲘ ).",
+        "mainEntityOfPage": {
+          "@id": "https://boegyptologie.github.io/articles/2026-2/read/#webpage"
+        },
+        "pagination": "1-27",
+        "encoding": [
+          {
+            "@type": "MediaObject",
+            "contentUrl": "https://zenodo.org/records/20841508/files/BOE_2026_2_Mihalyfy.pdf",
+            "encodingFormat": "application/pdf",
+            "contentSize": "12648741",
+            "isAccessibleForFree": true
+          },
+          {
+            "@type": "MediaObject",
+            "contentUrl": "https://boegyptologie.github.io/articles/2026-2/read/",
+            "encodingFormat": "text/html",
+            "inLanguage": "en",
+            "isAccessibleForFree": true
+          }
+        ],
+        "archivedAt": "https://zenodo.org/records/20841508"
+      },
+      "issue": {
+        "@type": "PublicationIssue",
+        "@id": "https://boegyptologie.github.io/#issue-2026-2",
+        "issueNumber": "2",
+        "datePublished": "2026-06-26",
+        "isPartOf": {
+          "@id": "https://boegyptologie.github.io/#volume-2026"
+        }
+      },
+      "volume": {
+        "@type": "PublicationVolume",
+        "@id": "https://boegyptologie.github.io/#volume-2026",
+        "volumeNumber": "2026",
+        "isPartOf": {
+          "@id": "https://boegyptologie.github.io/#boe"
+        }
+      },
+      "citations": [
+        [
+          "citation_title",
+          "Explaining the Odd Foot Sign of Gardiner D58 in the Egyptian Negator Transliterated bn: A Case for Innovative Orthographic Reuse Based on the Phonetic Reduction of the Nominalizer bw (> -ⲞⲨ-) and the Non-Etymological Writing bw nb for wn nb (> ⲞⲨⲞⲚ ⲚⲒⲘ)"
+        ],
+        [
+          "citation_author",
+          "David Mihalyfy"
+        ],
+        [
+          "citation_publication_date",
+          "2026/06/26"
+        ],
+        [
+          "citation_journal_title",
+          "Bibliothèque ouverte d'égyptologie"
+        ],
+        [
+          "citation_issn",
+          "3129-6424"
+        ],
+        [
+          "citation_volume",
+          "2026"
+        ],
+        [
+          "citation_issue",
+          "2"
+        ],
+        [
+          "citation_firstpage",
+          "1"
+        ],
+        [
+          "citation_lastpage",
+          "27"
+        ],
+        [
+          "citation_doi",
+          "10.5281/zenodo.20841508"
+        ],
+        [
+          "citation_language",
+          "en"
+        ],
+        [
+          "citation_abstract_html_url",
+          "https://boegyptologie.github.io/articles/2026-2/"
+        ],
+        [
+          "citation_pdf_url",
+          "https://zenodo.org/records/20841508/files/BOE_2026_2_Mihalyfy.pdf"
+        ],
+        [
+          "citation_html_url",
+          "https://boegyptologie.github.io/articles/2026-2/read/"
+        ]
+      ],
+      "sources": [
+        "https://zenodo.org/records/20841508",
+        "https://boegyptologie.github.io/articles/2026-2/",
+        "https://boegyptologie.github.io/articles/2026-2/read/"
+      ]
+    },
+    {
+      "notice": "articles/2026-3/index.html",
+      "reader": "articles/2026-3/read/index.html",
+      "article": {
+        "@id": "https://boegyptologie.github.io/articles/2026-3/#article",
+        "@type": "ScholarlyArticle",
+        "name": "Le reïs Roubi Hamzaoui (c. 1838/1254-1904/1322)",
+        "headline": "Le reïs Roubi Hamzaoui (c. 1838/1254-1904/1322)",
+        "author": [
+          {
+            "@type": "Person",
+            "name": "Stéphane Pasquali",
+            "sameAs": [
+              "https://orcid.org/0000-0002-5508-2459",
+              "https://www.archimede.cnrs.fr/index.php/recherche-et-formation-doctorale/recherche-doctorale?id=377"
+            ],
+            "@id": "https://boegyptologie.github.io/#person-stephane-pasquali",
+            "affiliation": {
+              "@type": "Organization",
+              "name": "Université de Montpellier Paul-Valéry"
+            }
+          }
+        ],
+        "datePublished": "2026-09-08",
+        "url": "https://boegyptologie.github.io/articles/2026-3/read/",
+        "sameAs": [
+          "https://doi.org/10.5281/zenodo.22280762",
+          "https://zenodo.org/records/22280762",
+          "https://boegyptologie.github.io/articles/2026-3/"
+        ],
+        "identifier": {
+          "@type": "PropertyValue",
+          "propertyID": "DOI",
+          "value": "10.5281/zenodo.22280762"
+        },
+        "isPartOf": {
+          "@id": "https://boegyptologie.github.io/#issue-2026-3"
+        },
+        "publisher": {
+          "@id": "https://boegyptologie.github.io/#boma"
+        },
+        "inLanguage": "fr",
+        "license": "https://creativecommons.org/licenses/by/4.0/",
+        "isAccessibleForFree": true,
+        "keywords": [
+          "Roubi Hamzaoui",
+          "reïs",
+          "Saqqara",
+          "Auguste Mariette",
+          "Service des antiquités de l'Égypte",
+          "histoire de l'égyptologie",
+          "histoire de l'archéologie",
+          "fouilles archéologiques",
+          "archéologie égyptienne",
+          "Égypte au XIXe siècle",
+          "Hamzaoui, Roubi",
+          "Saqqarah",
+          "égyptologie",
+          "Hamzawi, Rubi",
+          "rais",
+          "Egyptology",
+          "archaeological excavations"
+        ],
+        "about": [
+          {
+            "@type": "Person",
+            "name": "Roubi Hamzaoui"
+          },
+          {
+            "@type": "Place",
+            "name": "Saqqara"
+          },
+          {
+            "@type": "Person",
+            "name": "Auguste Mariette"
+          },
+          {
+            "@type": "Thing",
+            "name": "History of Egyptology"
+          },
+          {
+            "@type": "Thing",
+            "name": "Egyptian archaeology"
+          }
+        ],
+        "abstract": "Brève note sur Roubi Hamzaoui, reïs égyptien (contremaître des ouvriers de fouilles) qui, recruté dès son plus jeune âge, travailla pour le Service des antiquités de l’Égypte pendant plus de cinquante ans. Avec Mariette, il fut sans doute l’un des plus grands fouilleurs de Saqqara.",
+        "mainEntityOfPage": {
+          "@id": "https://boegyptologie.github.io/articles/2026-3/read/#webpage"
+        },
+        "pagination": "1-10",
+        "encoding": [
+          {
+            "@type": "MediaObject",
+            "contentUrl": "https://zenodo.org/records/22280762/files/BOE_2026_3_Pasquali.pdf",
+            "encodingFormat": "application/pdf",
+            "contentSize": "19640817",
+            "isAccessibleForFree": true
+          },
+          {
+            "@type": "MediaObject",
+            "contentUrl": "https://boegyptologie.github.io/articles/2026-3/read/",
+            "encodingFormat": "text/html",
+            "inLanguage": "fr",
+            "isAccessibleForFree": true
+          }
+        ],
+        "genre": "Notice",
+        "archivedAt": "https://zenodo.org/records/22280762"
+      },
+      "issue": {
+        "@type": "PublicationIssue",
+        "@id": "https://boegyptologie.github.io/#issue-2026-3",
+        "issueNumber": "3",
+        "datePublished": "2026-09-08",
+        "isPartOf": {
+          "@id": "https://boegyptologie.github.io/#volume-2026"
+        }
+      },
+      "volume": {
+        "@type": "PublicationVolume",
+        "@id": "https://boegyptologie.github.io/#volume-2026",
+        "volumeNumber": "2026",
+        "isPartOf": {
+          "@id": "https://boegyptologie.github.io/#boe"
+        }
+      },
+      "citations": [
+        [
+          "citation_title",
+          "Le reïs Roubi Hamzaoui (c. 1838/1254-1904/1322)"
+        ],
+        [
+          "citation_author",
+          "Stéphane Pasquali"
+        ],
+        [
+          "citation_publication_date",
+          "2026/09/08"
+        ],
+        [
+          "citation_journal_title",
+          "Bibliothèque ouverte d'égyptologie"
+        ],
+        [
+          "citation_issn",
+          "3129-6424"
+        ],
+        [
+          "citation_volume",
+          "2026"
+        ],
+        [
+          "citation_issue",
+          "3"
+        ],
+        [
+          "citation_firstpage",
+          "1"
+        ],
+        [
+          "citation_lastpage",
+          "10"
+        ],
+        [
+          "citation_doi",
+          "10.5281/zenodo.22280762"
+        ],
+        [
+          "citation_language",
+          "fr"
+        ],
+        [
+          "citation_abstract_html_url",
+          "https://boegyptologie.github.io/articles/2026-3/"
+        ],
+        [
+          "citation_pdf_url",
+          "https://zenodo.org/records/22280762/files/BOE_2026_3_Pasquali.pdf"
+        ],
+        [
+          "citation_html_url",
+          "https://boegyptologie.github.io/articles/2026-3/read/"
+        ]
+      ],
+      "sources": [
+        "https://zenodo.org/records/22280762",
+        "https://boegyptologie.github.io/articles/2026-3/",
+        "https://boegyptologie.github.io/articles/2026-3/read/"
+      ]
+    },
+    {
+      "notice": "articles/2026-4/index.html",
+      "reader": "articles/2026-4/read/index.html",
+      "article": {
+        "@id": "https://boegyptologie.github.io/articles/2026-4/#article",
+        "@type": "ScholarlyArticle",
+        "name": "Le prisme typhonien : faune, flore, minéraux et passions nuisibles d'après Plutarque (Isis et Osiris, 50)",
+        "headline": "Le prisme typhonien : faune, flore, minéraux et passions nuisibles d'après Plutarque (Isis et Osiris, 50)",
+        "author": [
+          {
+            "@type": "Person",
+            "name": "Sydney H. Aufrère",
+            "@id": "https://boegyptologie.github.io/articles/2026-4/#author-1"
+          }
+        ],
+        "datePublished": "2026-09-24",
+        "url": "https://boegyptologie.github.io/articles/2026-4/read/",
+        "sameAs": [
+          "https://doi.org/10.5281/zenodo.22730318",
+          "https://zenodo.org/records/22730318",
+          "https://boegyptologie.github.io/articles/2026-4/"
+        ],
+        "identifier": {
+          "@type": "PropertyValue",
+          "propertyID": "DOI",
+          "value": "10.5281/zenodo.22730318"
+        },
+        "pagination": "1-49",
+        "isPartOf": {
+          "@id": "https://boegyptologie.github.io/#issue-2026-4"
+        },
+        "publisher": {
+          "@id": "https://boegyptologie.github.io/#boma"
+        },
+        "inLanguage": "fr",
+        "license": "https://creativecommons.org/licenses/by/4.0/",
+        "isAccessibleForFree": true,
+        "keywords": [
+          "Isis et Osiris",
+          "Seth",
+          "Typhon",
+          "Plutarque",
+          "passions",
+          "syncrétisme",
+          "faune",
+          "flore",
+          "minéraux",
+          "pensée sacerdotale égyptienne",
+          "Abaton de Philae",
+          "Cléopâtre",
+          "Passions",
+          "Syncrétisme"
+        ],
+        "about": [
+          {
+            "@type": "Book",
+            "name": "Isis et Osiris"
+          },
+          {
+            "@type": "Person",
+            "name": "Plutarque"
+          },
+          {
+            "@type": "Thing",
+            "name": "Seth-Typhon"
+          },
+          {
+            "@type": "Thing",
+            "name": "Ancient Egyptian religion"
+          },
+          {
+            "@type": "Thing",
+            "name": "Syncretism"
+          }
+        ],
+        "abstract": "Cette étude démontre que dans la pensée sacerdotale égyptienne considérée sous le prisme étique par Plutarque, le dieu Typhon-Seth fusionne en un continuum absolu le désordre de la nature et la déchéance morale. Le philosophe synthétise cette vision en la déployant en trois volets qui lient les animaux venimeux, dangereux ou stupides, les végétaux toxiques et les passions humaines néfastes (vices), tous définis comme des objets d’emprise directe du dieu. Du point de vue émique des théologiens, cette pensée postule qu’un crime moral ou une déviance sexuelle relèvent d’une perturbation d’essence cosmique de même ordre. La fureur, la cruauté ou la stérilité (qui justifie l’interdiction des eunuques à l’Abaton de Philae) découleraient de la même force brute séthienne qui dessèche les sycomores sacrés, tarit les sources, libère le venin des serpents, fait surgir le sel de la mer ou le salpêtre de la terre, se traduit par la médiocrité des qualités des simples. L’étude, en déconstruisant de façon sur-étique le regard étique de Plutarque, restitue un système interconnecté où les vices de l’homme et les désordres causés par des hôtes de l’environnement sont les manifestations indissociables d’une seule et même essence chaotique. Toutefois, l’analyse de Plutarque témoigne d’un réductionnisme étique qui, loin de traduire la richesse théologique du dieu Seth, finit par fossiliser une sur-systématisation d’époque romaine employée à des fins politiques et morales, laquelle permet de déshumaniser Cléopâtre en l’associant à de déplaisants monstres du Nil.",
+        "mainEntityOfPage": {
+          "@id": "https://boegyptologie.github.io/articles/2026-4/read/#webpage"
+        },
+        "encoding": [
+          {
+            "@type": "MediaObject",
+            "contentUrl": "https://zenodo.org/records/22730318/files/BOE_2026_4_Aufr%C3%A8re.pdf",
+            "encodingFormat": "application/pdf",
+            "contentSize": "22738825",
+            "isAccessibleForFree": true
+          },
+          {
+            "@type": "MediaObject",
+            "contentUrl": "https://boegyptologie.github.io/articles/2026-4/read/",
+            "encodingFormat": "text/html",
+            "inLanguage": "fr",
+            "isAccessibleForFree": true
+          }
+        ],
+        "archivedAt": "https://zenodo.org/records/22730318"
+      },
+      "issue": {
+        "@type": "PublicationIssue",
+        "@id": "https://boegyptologie.github.io/#issue-2026-4",
+        "issueNumber": "4",
+        "datePublished": "2026-09-24",
+        "isPartOf": {
+          "@id": "https://boegyptologie.github.io/#volume-2026"
+        }
+      },
+      "volume": {
+        "@type": "PublicationVolume",
+        "@id": "https://boegyptologie.github.io/#volume-2026",
+        "volumeNumber": "2026",
+        "isPartOf": {
+          "@id": "https://boegyptologie.github.io/#boe"
+        }
+      },
+      "citations": [
+        [
+          "citation_title",
+          "Le prisme typhonien : faune, flore, minéraux et passions nuisibles d'après Plutarque (Isis et Osiris, 50)"
+        ],
+        [
+          "citation_author",
+          "Sydney H. Aufrère"
+        ],
+        [
+          "citation_publication_date",
+          "2026/09/24"
+        ],
+        [
+          "citation_journal_title",
+          "Bibliothèque ouverte d'égyptologie"
+        ],
+        [
+          "citation_issn",
+          "3129-6424"
+        ],
+        [
+          "citation_volume",
+          "2026"
+        ],
+        [
+          "citation_issue",
+          "4"
+        ],
+        [
+          "citation_firstpage",
+          "1"
+        ],
+        [
+          "citation_lastpage",
+          "49"
+        ],
+        [
+          "citation_doi",
+          "10.5281/zenodo.22730318"
+        ],
+        [
+          "citation_language",
+          "fr"
+        ],
+        [
+          "citation_abstract_html_url",
+          "https://boegyptologie.github.io/articles/2026-4/"
+        ],
+        [
+          "citation_pdf_url",
+          "https://zenodo.org/records/22730318/files/BOE_2026_4_Aufr%C3%A8re.pdf"
+        ],
+        [
+          "citation_html_url",
+          "https://boegyptologie.github.io/articles/2026-4/read/"
+        ]
+      ],
+      "sources": [
+        "https://zenodo.org/records/22730318",
+        "https://boegyptologie.github.io/articles/2026-4/",
+        "https://boegyptologie.github.io/articles/2026-4/read/"
+      ]
+    },
+    {
+      "notice": "articles/2026-5/index.html",
+      "reader": "articles/2026-5/read/index.html",
+      "article": {
+        "@id": "https://boegyptologie.github.io/articles/2026-5/#article",
+        "@type": "ScholarlyArticle",
+        "name": "From ancient Egypt to the catwalks: fashion as an expression of Egyptomania in the 19th century and the beginning of the 20th century",
+        "headline": "From ancient Egypt to the catwalks: fashion as an expression of Egyptomania in the 19th century and the beginning of the 20th century",
+        "author": [
+          {
+            "@type": "Person",
+            "name": "José das Candeias Sales",
+            "sameAs": "https://orcid.org/0000-0003-1087-1478",
+            "@id": "https://boegyptologie.github.io/articles/2026-5/#author-1"
+          },
+          {
+            "@type": "Person",
+            "name": "Susana Mota",
+            "sameAs": "https://orcid.org/0000-0002-4819-6239",
+            "@id": "https://boegyptologie.github.io/articles/2026-5/#author-2"
+          },
+          {
+            "@type": "Person",
+            "name": "Carla Mota",
+            "sameAs": "https://orcid.org/0000-0002-2305-2511",
+            "@id": "https://boegyptologie.github.io/articles/2026-5/#author-3"
+          }
+        ],
+        "datePublished": "2026-09-27",
+        "url": "https://boegyptologie.github.io/articles/2026-5/read/",
+        "sameAs": [
+          "https://doi.org/10.5281/zenodo.22377988",
+          "https://zenodo.org/records/22377988",
+          "https://boegyptologie.github.io/articles/2026-5/"
+        ],
+        "identifier": {
+          "@type": "PropertyValue",
+          "propertyID": "DOI",
+          "value": "10.5281/zenodo.22377988"
+        },
+        "pagination": "1-51",
+        "isPartOf": {
+          "@id": "https://boegyptologie.github.io/#issue-2026-5"
+        },
+        "publisher": {
+          "@id": "https://boegyptologie.github.io/#boma"
+        },
+        "inLanguage": "en",
+        "license": "https://creativecommons.org/licenses/by/4.0/",
+        "isAccessibleForFree": true,
+        "keywords": [
+          "reception of ancient Egypt",
+          "haute couture",
+          "Cleopatra",
+          "Egyptian style",
+          "hieroglyphics",
+          "Egyptomania",
+          "fashion"
+        ],
+        "about": [
+          {
+            "@type": "Thing",
+            "name": "Reception of ancient Egypt"
+          },
+          {
+            "@type": "Thing",
+            "name": "Egyptomania"
+          },
+          {
+            "@type": "Thing",
+            "name": "Fashion"
+          },
+          {
+            "@type": "Person",
+            "name": "Cleopatra VII"
+          },
+          {
+            "@type": "Thing",
+            "name": "Egyptian hieroglyphs"
+          }
+        ],
+        "abstract": "From architecture to furniture, from cinema to video games, and from literature to comic books, ancient Egypt has been a constant presence for centuries through the adoption and adaptation of its themes, symbolism, and even its fantastical imagery. We call these manifestations of appreciation for ancient Egypt, as well as its reuse and reinterpretation, Egyptomania, a concept that encompasses the different aspects of the reception and globalisation of knowledge about ancient Egypt. Among the expressions of Egyptomania, we must consider fashion – a theme that has not been the subject of an in-depth and broad analysis. This investigation has allowed us to conclude that the influence of ancient Egypt on fashion can be divided into two different periods: the period from Napoleon’s expedition to Egypt (1798–1801) to the discovery of Pharaoh Tutankhamun’s tomb (4th of November 1922), and the post-discovery period, which continues to the present day. This text is devoted to exploring the characteristics of Egyptomania in fashion during the first period, analysing the factors that spurred this interest and the ways in which it manifested itself throughout the nineteenth century and the first decades of the twentieth century. As we consider illustrations essential to a proper understanding of this theme, the text is extensively illustrated, offering readers the opportunity to see concrete representations of what is being discussed.",
+        "mainEntityOfPage": {
+          "@id": "https://boegyptologie.github.io/articles/2026-5/read/#webpage"
+        },
+        "encoding": [
+          {
+            "@type": "MediaObject",
+            "contentUrl": "https://zenodo.org/records/22377988/files/BOE_2026_5_Sales_Mota_Mota.pdf",
+            "encodingFormat": "application/pdf",
+            "contentSize": "34141910",
+            "isAccessibleForFree": true
+          },
+          {
+            "@type": "MediaObject",
+            "contentUrl": "https://boegyptologie.github.io/articles/2026-5/read/",
+            "encodingFormat": "text/html",
+            "inLanguage": "en",
+            "isAccessibleForFree": true
+          }
+        ],
+        "archivedAt": "https://zenodo.org/records/22377988"
+      },
+      "issue": {
+        "@type": "PublicationIssue",
+        "@id": "https://boegyptologie.github.io/#issue-2026-5",
+        "issueNumber": "5",
+        "datePublished": "2026-09-27",
+        "isPartOf": {
+          "@id": "https://boegyptologie.github.io/#volume-2026"
+        }
+      },
+      "volume": {
+        "@type": "PublicationVolume",
+        "@id": "https://boegyptologie.github.io/#volume-2026",
+        "volumeNumber": "2026",
+        "isPartOf": {
+          "@id": "https://boegyptologie.github.io/#boe"
+        }
+      },
+      "citations": [
+        [
+          "citation_title",
+          "From ancient Egypt to the catwalks: fashion as an expression of Egyptomania in the 19th century and the beginning of the 20th century"
+        ],
+        [
+          "citation_author",
+          "José das Candeias Sales"
+        ],
+        [
+          "citation_author",
+          "Susana Mota"
+        ],
+        [
+          "citation_author",
+          "Carla Mota"
+        ],
+        [
+          "citation_publication_date",
+          "2026/09/27"
+        ],
+        [
+          "citation_journal_title",
+          "Bibliothèque ouverte d'égyptologie"
+        ],
+        [
+          "citation_issn",
+          "3129-6424"
+        ],
+        [
+          "citation_volume",
+          "2026"
+        ],
+        [
+          "citation_issue",
+          "5"
+        ],
+        [
+          "citation_firstpage",
+          "1"
+        ],
+        [
+          "citation_lastpage",
+          "51"
+        ],
+        [
+          "citation_doi",
+          "10.5281/zenodo.22377988"
+        ],
+        [
+          "citation_language",
+          "en"
+        ],
+        [
+          "citation_abstract_html_url",
+          "https://boegyptologie.github.io/articles/2026-5/"
+        ],
+        [
+          "citation_pdf_url",
+          "https://zenodo.org/records/22377988/files/BOE_2026_5_Sales_Mota_Mota.pdf"
+        ],
+        [
+          "citation_html_url",
+          "https://boegyptologie.github.io/articles/2026-5/read/"
+        ]
+      ],
+      "sources": [
+        "https://zenodo.org/records/22377988",
+        "https://boegyptologie.github.io/articles/2026-5/",
+        "https://boegyptologie.github.io/articles/2026-5/read/"
+      ]
+    }
+  ],
+  "policySections": {
+    "fr/politique-editoriale.html": [
+      [
+        "evaluation",
+        "Politique d’évaluation",
+        "Sélection éditoriale puis évaluation des articles de recherche par deux experts indépendants en double insu."
+      ],
+      [
+        "ethique",
+        "Éthique de publication",
+        "Déclaration des conflits d’intérêts et récusation des évaluateurs concernés. La revue suit les principes éthiques du COPE."
+      ],
+      [
+        "endogenie",
+        "Endogénie",
+        "Les articles de recherche des membres des comités sont soumis au même processus d’évaluation et ne bénéficient d’aucun traitement préférentiel."
+      ],
+      [
+        "corrections",
+        "Corrections et rétractations",
+        "Les avis de correction ou de rétractation font l’objet d’un dépôt distinct sur Zenodo avec son propre DOI."
+      ],
+      [
+        "archivage",
+        "Archivage et conservation",
+        "La version finale de chaque article est déposée sur Zenodo et reçoit un DOI."
+      ],
+      [
+        "frais",
+        "Frais de publication",
+        "Aucun frais de soumission, d’évaluation ou de publication."
+      ],
+      [
+        "acces-libre",
+        "Accès libre",
+        "Les textes sont accessibles intégralement dès la publication, sans paiement ni embargo."
+      ]
+    ],
+    "en/editorial-policy-statement.html": [
+      [
+        "peer-review",
+        "Peer review policy",
+        "Initial editorial screening followed by double-blind review of research articles by two independent experts."
+      ],
+      [
+        "ethics",
+        "Publication ethics",
+        "Authors disclose conflicts of interest and reviewers with a conflict recuse themselves. BOE follows COPE ethical principles."
+      ],
+      [
+        "endogeny",
+        "Endogeny",
+        "Research articles authored by committee members follow the same review process and receive no preferential treatment."
+      ],
+      [
+        "corrections",
+        "Corrections and retractions",
+        "Corrections and retractions are published as separate records on Zenodo with their own DOIs."
+      ],
+      [
+        "archiving",
+        "Archiving and preservation",
+        "The final published version of each article is deposited on Zenodo and assigned a DOI."
+      ],
+      [
+        "fees",
+        "Publication fees",
+        "There are no submission, review or publication fees."
+      ],
+      [
+        "open-access",
+        "Open access",
+        "Full texts are available immediately upon publication without payment or embargo."
+      ]
+    ]
+  },
+  "policyPages": [
+    "fr/politique-editoriale.html",
+    "en/editorial-policy-statement.html"
+  ],
+  "rosterPages": [
+    "fr/about.html",
+    "en/about.html",
+    "fr/politique-editoriale.html",
+    "en/editorial-policy-statement.html"
+  ],
+  "sources": {
+    "journalIdentity": [
+      "https://portal.issn.org/resource/ISSN/3129-6424",
+      "https://catalogue.bnf.fr/ark:/12148/cb48736477j",
+      "https://www.sudoc.fr/296288632",
+      "https://reseau-mirabel.info/api/revues/26849"
+    ],
+    "editorialFacts": [
+      "https://boegyptologie.github.io/fr/about.html",
+      "https://boegyptologie.github.io/en/about.html",
+      "https://boegyptologie.github.io/fr/politique-editoriale.html",
+      "https://boegyptologie.github.io/en/editorial-policy-statement.html"
+    ],
+    "externalMentions": [
+      "https://ancientworldonline.blogspot.com/2025/09/forthcoming-open-access-journal.html",
+      "https://www.egyptologyforum.org/EEFDigijournals.html"
+    ]
+  }
+}
